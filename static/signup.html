@@ -9,10 +9,8 @@
 <body>
   <main>
     <div class="page-column">
-      <div class="auth-bar">
-        <div class="bar__header">
-          <h3 >Sign up</h3>
-        </div>
+      <form id="form__main" class="auth-bar">
+        <h3 class="bar__header">Sign up</h3>
         <div class="bar__content">
           <div class="auth-bar-input">
             <label class="auth-bar-input__label" for="auth-bar-input__input">First name</label>
@@ -40,9 +38,10 @@
           </div>
         </div>
         <div class="bar__footer">
-          <button class="button-main" id="button-sign-in">Sign up</button>
+          <button type="submit" class="button-main"id="button-sign-in">Sign up</button>
           <a class="button-secondary" id="button-to-log-up" rel="stylesheet" href="login.html">Log in</a>
         </div>
+      </form>
     </div>
   </main>
   <script src="../js/index.js"></script>

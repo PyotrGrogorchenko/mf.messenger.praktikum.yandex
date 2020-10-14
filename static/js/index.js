@@ -1,10 +1,28 @@
-let inputs = document.getElementsByTagName('input')
-let res = {}
-for (let i = 0; i < inputs.length; ++i) {
-  let input = inputs[i];
-  if (!input.value) {
-    continue
+
+const createListeners = () => {
+  
+  const form__main = document.getElementById('form__main')
+  if (form__main) {form__main.addEventListener('submit', (e) => {consoleFilledInputs (e)})}
+  
+  const form__header = document.getElementById('form__header')
+  if (form__header) {form__header.addEventListener('submit', (e) => {consoleFilledInputs (e)})}
+  
+  const form__footer = document.getElementById('form__footer')
+  if (form__footer) {form__footer.addEventListener('submit', (e) => {consoleFilledInputs (e)})}
+  
+}
+
+function consoleFilledInputs (e) {
+  e.preventDefault()
+  
+  let res = {}
+  for(let field of e.target) {
+    if (field.tagName === "INPUT" && field.value){
+      res[field.id] = field;
+    }
   }
-  res[i] = input
-} 
-console.log(res)
+  console.log(res)
+
+}
+
+createListeners()
