@@ -1,7 +1,7 @@
 import { PARSER_TYPES } from './parser.js'
 
 class VirtDom {
-  constructor() {
+  constructor(parsedTemplate, params) {
     
     this._nodes = []
     //this._types = PARSER_TYPES
@@ -10,6 +10,7 @@ class VirtDom {
     
     this._REGEXP_PARAM = /\{\{(.*?)\}\}/gi
   
+    this.init(parsedTemplate, params)
   }
 
   init(parsedTemplate, params) {
@@ -17,6 +18,9 @@ class VirtDom {
     parsedTemplate.forEach(item => {
 
       switch (item.type) {
+        case PARSER_TYPES.CODE:
+          //this._closeTag()
+          break
         case PARSER_TYPES.END:
           this._closeTag()
           break
@@ -102,7 +106,6 @@ class VirtDom {
       let owner = this._getOwner()
       if (owner && !owner.isComponent){
         owner.content = this._setContentProps(header, params)
-        let a = 1
       }  
     
     }
@@ -140,8 +143,6 @@ class VirtDom {
         count++
       }
     }
-    console.log(header, cacheTxt)
-
 
     header.split(' ').forEach(keyValue => {
       if (!keyValue || keyValue === node.tagName){
@@ -153,10 +154,7 @@ class VirtDom {
         arrKeyValue[1] = cacheTxt[arrKeyValue[1]]
       }  
 
-      console.log(arrKeyValue)
       const param = new RegExp(this._REGEXP_PARAM).exec(arrKeyValue[1])
-
-
 
       if (arrKeyValue[0] === 'className') {
         const classes = []

@@ -1,6 +1,6 @@
-import Block from "../component/block.js"
+import Component from "../component/component.js"
 
-class PageColumn extends Block {
+class PageColumn extends Component {
 
   template() { 
     return (

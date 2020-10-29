@@ -1,6 +1,6 @@
-import Block from "../../component/block.js"
+import Component from "../../component/component.js"
 
-class BarContent extends Block {
+class BarContent extends Component {
 
   template() { 
     return (

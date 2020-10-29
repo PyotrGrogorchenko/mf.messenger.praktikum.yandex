@@ -1,6 +1,6 @@
-import Block from "../../component/block.js"
+import Component from "../../component/component.js"
 
-class FormMain extends Block {
+class FormMain extends Component {
 
   template() { 
     return (

@@ -1,6 +1,6 @@
-import Block from "../../component/block.js"
+import Component from "../../component/component.js"
 
-class ButtonSecondary extends Block {
+class ButtonSecondary extends Component {
 
   // constructor(props){
   //   console.log(props)

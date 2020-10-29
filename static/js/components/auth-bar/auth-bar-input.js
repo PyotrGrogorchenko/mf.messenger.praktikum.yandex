@@ -1,6 +1,6 @@
-import Block from "../../component/block.js"
+import Component from "../../component/component.js"
 
-class AuthBarInput extends Block {
+class AuthBarInput extends Component {
 
   template() { 
     return (

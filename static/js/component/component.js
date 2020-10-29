@@ -2,7 +2,7 @@ import EventBus from './event-bus.js'
 import VirtDom from './virtDOM.js'
 import { parser } from './parser.js'
 
-class Block {
+class Component {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
@@ -32,21 +32,21 @@ class Block {
     this._props = props
 
     this._registerEvents(eventBus)
-    eventBus.emit(Block.EVENTS.INIT)
+    eventBus.emit(Component.EVENTS.INIT)
   }
 
   _registerEvents(eventBus) {
-    eventBus.on(Block.EVENTS.INIT, this.init.bind(this))
-    eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
+    eventBus.on(Component.EVENTS.INIT, this.init.bind(this))
+    eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
     // PP \\
-    eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this))
+    eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this))
     // PP //
-    eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this))
+    eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this))
   }
 
   init() {
     this._compile()
-    this.eventBus().emit(Block.EVENTS.FLOW_CDM)
+    this.eventBus().emit(Component.EVENTS.FLOW_CDM)
   }
 
 
@@ -57,7 +57,7 @@ class Block {
 
   _componentDidUpdate(oldProps, newProps) {
     // const response = this.componentDidUpdate(oldProps, newProps)
-    // this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+    // this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
   }
   componentDidUpdate(oldProps, newProps) {
     return true
@@ -69,7 +69,7 @@ class Block {
 
   render(root) {
     this._root = root
-    this.eventBus().emit(Block.EVENTS.FLOW_RENDER)
+    this.eventBus().emit(Component.EVENTS.FLOW_RENDER)
   }
 
 
@@ -101,9 +101,8 @@ class Block {
     const params = {state, props: this.getProps()}
     
     const parsedTemplate = parser(template)
-    
-    const virtDom = new VirtDom()
-    virtDom.init(parsedTemplate, params)
+
+    const virtDom = new VirtDom(parsedTemplate, params)
 
     virtDom.getIsComponent().forEach(component => {
       let code = `component.componentLink = new components.${component.tagName}(component.props)`
@@ -172,7 +171,7 @@ class Block {
         if (JSON.stringify(oldProps) !== JSON.stringify(target)) {
           self._render()  
         }
-        self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, target)
+        self.eventBus().emit(Component.EVENTS.FLOW_CDU, oldProps, target)
         return true
       },
       
@@ -202,5 +201,5 @@ class Block {
 }
 
 // PP \\
-export default Block
+export default Component
 // PP //

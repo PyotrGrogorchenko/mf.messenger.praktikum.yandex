@@ -1,7 +1,8 @@
 let PARSER_TYPES = {
   BEGIN: "BEGIN",
   END: "END",
-  TEXT: "TEXT"
+  TEXT: "TEXT",
+  CODE: "CODE"
 }
 
 function parser(str) {
@@ -47,25 +48,31 @@ function parserREGEXP(str) {
 
 function parserNoREGEXP(str) {
 
-  const strOrigin = str
   const res = []
-  
+
+  str = str.replace(/{%/g, '<{%')
+  str = str.replace(/%}/g, '%}>')
+
   const addItem = (type, content) => {
     res.push({type, content})
   }  
   
   while (str) {
-    
+  
     const endTagPos = str.indexOf('>')
     
-    const tagProps = {type: null, content: null}
     const isEndTag = str.startsWith('</')  
+    const isCode = str.startsWith('<{%')  
 
-    let tagContent = str.slice(1, endTagPos)
-
+    let tagContent = str.slice(1, endTagPos).trim()
     tagContent = tagContent.replace(/[\r\n]+/g, '')
 
-    addItem(isEndTag ? PARSER_TYPES.END : PARSER_TYPES.BEGIN, isEndTag ? tagContent.slice(1) : tagContent)
+    if (isCode) {
+      addItem(PARSER_TYPES.CODE, tagContent)
+    } else {
+      addItem(isEndTag ? PARSER_TYPES.END : PARSER_TYPES.BEGIN, isEndTag ? tagContent.slice(1) : tagContent)
+    }
+      
     str = str.slice(endTagPos + 1).trim()
 
     if (!isEndTag) {

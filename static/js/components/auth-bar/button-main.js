@@ -1,6 +1,6 @@
-import Block from "../../component/block.js"
+import Component from "../../component/component.js"
 
-class ButtonMain extends Block {
+class ButtonMain extends Component {
 
   template() { 
     return (
