@@ -102,12 +102,8 @@ class Block {
     
     const parsedTemplate = parser(template)
     
-    console.log(parsedTemplate)
-
     const virtDom = new VirtDom()
     virtDom.init(parsedTemplate, params)
-
-    console.log(virtDom)
 
     virtDom.getIsComponent().forEach(component => {
       let code = `component.componentLink = new components.${component.tagName}(component.props)`

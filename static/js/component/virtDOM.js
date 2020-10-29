@@ -102,6 +102,7 @@ class VirtDom {
       let owner = this._getOwner()
       if (owner && !owner.isComponent){
         owner.content = this._setContentProps(header, params)
+        let a = 1
       }  
     
     }
@@ -121,13 +122,41 @@ class VirtDom {
 
   _setHeaderProps(node, params) {
 
-    node.header.split(' ').forEach(keyValue => {
+    let header = node.header;
+    
+    // for (let i = 0; i < header.length; i++){
+    //   const letter = header[i]
+    //   if ()
+    // }
+
+    const cacheTxt = {}
+    let txt = null
+    const regExp = new RegExp(/[\'\"](.*?)[\'\"]/gi)
+    let count = 1
+    while ((txt = regExp.exec(header))) {
+      if (txt[0]) {
+        cacheTxt[`text${count}`] = txt[0]
+        header = header.replace(txt[0], `text${count}`)
+        count++
+      }
+    }
+    console.log(header, cacheTxt)
+
+
+    header.split(' ').forEach(keyValue => {
       if (!keyValue || keyValue === node.tagName){
         return
       }
       
       const arrKeyValue = keyValue.split('=')
+      if (cacheTxt[arrKeyValue[1]]) {
+        arrKeyValue[1] = cacheTxt[arrKeyValue[1]]
+      }  
+
+      console.log(arrKeyValue)
       const param = new RegExp(this._REGEXP_PARAM).exec(arrKeyValue[1])
+
+
 
       if (arrKeyValue[0] === 'className') {
         const classes = []
@@ -144,7 +173,7 @@ class VirtDom {
         node.props[arrKeyValue[0]] = eval('params.' + param[1]) 
         //window.get(params, param[1], '')
       } else{
-        node.props[arrKeyValue[0]] = arrKeyValue[1].replace(/"/g, '')
+        node.props[arrKeyValue[0]] = arrKeyValue[1].replace(/[\'\"]/g, '')
       }
     })
 
@@ -161,7 +190,6 @@ class VirtDom {
     while ((param = regExp.exec(content))) {
       if (param[1]) {
         const paramVal = eval('params.' + param[1]) 
-        console.log(content)
         content = content.replace(param[0], paramVal)
       }
     }    
@@ -169,7 +197,6 @@ class VirtDom {
     return content
 
   }
-
 
   _getTagName(header) {
     const begin =  0

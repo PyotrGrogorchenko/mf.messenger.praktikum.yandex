@@ -4,7 +4,7 @@ class BarHeader extends Block {
 
   template() { 
     return (
-      `<h3 class="bar__header">Log in</h3>`
+      `<h3 class="bar__header">{{props.text}}</h3>`
     )
   }
 

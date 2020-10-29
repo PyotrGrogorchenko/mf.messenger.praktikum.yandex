@@ -4,7 +4,7 @@ class ButtonMain extends Block {
 
   template() { 
     return (
-      `<button type="submit" class="button-main" id="button_log-in">{{props.text}}</button>`
+      `<button type="submit" class="button-main" id={{props.id}}>{{props.text}}</button>`
     )
   }
 

@@ -13,7 +13,8 @@ class App extends Block {
   components() {return {PageColumn, FormMain, BarHeader, BarContent, AuthBarInput, BarFooter, ButtonMain, ButtonSecondary}}
   
   state() {return {
-    btnSignUp: {id: 'button_to-sign-up', text: 'Log in    ssds'},  
+    btnLogIn: {id: 'button_log-in'},  
+    btnSignUp: {id: 'button_to-sign-up'},  
     inputLogin: {text: 'login', type: 'text', id: 'input_login'},
     inputPassword: {text: 'password', type: 'password', id: 'input_password'}  
   }}
@@ -22,14 +23,30 @@ class App extends Block {
 
     return  (
       `<PageColumn>
-
-
-          <ButtonMain>
-              text='state.btnSignUp.text'
-            </ButtonMain>
-
-
-
+        <FormMain>
+          <BarHeader text='Log in'></BarHeader>
+            <BarContent>
+            <AuthBarInput 
+              text={{state.inputLogin.text}}
+              id={{state.inputLogin.id}}
+            ></AuthBarInput>                  
+            <AuthBarInput
+              text={{state.inputPassword.text}}
+              type={{state.inputPassword.type}}
+              id={{state.inputPassword.id}}
+            ></AuthBarInput>                  
+          </BarContent>
+          <BarFooter>
+            <ButtonMain
+              text='Log in'
+              id={{state.btnLogIn.id}}
+            ></ButtonMain>
+            <ButtonSecondary 
+              text='Sign up'
+              id={{state.btnSignUp.id}}
+            ></ButtonSecondary>
+          </BarFooter>
+        </FormMain>
       </PageColumn>`
     )
 
@@ -37,29 +54,8 @@ class App extends Block {
 
 }  
 
-// text={{state.inputPassword.text}}
-// type={{state.inputPassword.type}}>
-// <FormMain>
-//   <BarHeader></BarHeader>
-//     <BarContent>
-//     <AuthBarInput 
-//       text={{state.inputLogin.text}}
-//       id={{state.inputLogin.id}}
-//     ></AuthBarInput>                  
-//     <AuthBarInput
-//       text={{state.inputPassword.text}}
-//       type={{state.inputPassword.type}}
-//       id={{state.inputPassword.id}}
-//     ></AuthBarInput>                  
-//   </BarContent>
-//   <BarFooter>
 
 
-//<ButtonSecondary 
-//id={{state.btnSignUp.id}}
-//></ButtonSecondary>
-//</BarFooter>
-//</FormMain>
 
 
 const root = document.querySelector(".app")
