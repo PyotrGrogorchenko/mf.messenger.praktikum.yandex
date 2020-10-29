@@ -10,7 +10,7 @@ app.get('/', function(request, res){
   res.status(200).sendFile('index.html', {root: path.join(__dirname, './static')})
 })
 app.get('/login', function(request, res){
-  res.status(200).sendFile('html/login.html', {root: path.join(__dirname, './static')})
+  res.status(200).sendFile('login.html', {root: path.join(__dirname, './static')})
 })
 app.get('/signup', function(request, res){
   res.status(200).sendFile('html/signup.html', {root: path.join(__dirname, './static')})
