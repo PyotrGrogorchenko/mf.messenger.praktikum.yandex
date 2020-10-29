@@ -7,7 +7,7 @@ const PORT = 4000
 app.use(express.static(path.join(__dirname, 'static')));
 
 app.get('/', function(request, res){
-  res.status(200).sendFile('html/index.html', {root: path.join(__dirname, './static')})
+  res.status(200).sendFile('index.html', {root: path.join(__dirname, './static')})
 })
 app.get('/login', function(request, res){
   res.status(200).sendFile('html/login.html', {root: path.join(__dirname, './static')})
