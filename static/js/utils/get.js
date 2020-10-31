@@ -1,16 +1,15 @@
 function get(obj, path, defaultValue) {
-  const keys = path.split('.');
+  const keys = path.split('.')
 
-  let result = obj;
+  let result = obj
   for (let key of keys) {
-    result = result[key];
-
+    result = result[key]
     if (result === undefined || result === null) {
       return defaultValue;        
     }
   }
 
-  return result ?? defaultValue; // "??" — [оператор нуллевого слияния](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator) (не поддерживается старыми браузерами, для них нужен полифил)
+  return result ?? defaultValue // "??" — [оператор нуллевого слияния](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator) (не поддерживается старыми браузерами, для них нужен полифил)
 }
 
 export default get

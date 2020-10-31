@@ -25,7 +25,7 @@ function parserREGEXP(str) {
   let key = null
   while ((key = PARSE_REGEXP.exec(strOrigin))) {
     
-    const tagProps = {type: null, content: null}
+    //const tagProps = {type: null, content: null}
     const isEndTag = key[0].startsWith('</')  
 
     addItem(isEndTag ? PARSER_TYPES.END : PARSER_TYPES.BEGIN, isEndTag ? key[1].slice(1) : key[1])
@@ -59,13 +59,16 @@ function parserNoREGEXP(str) {
   
   while (str) {
   
-    const endTagPos = str.indexOf('>')
+    const beginTagPos = str.indexOf('<')
+    let endTagPos = str.indexOf('>')
     
-    const isEndTag = str.startsWith('</')  
     const isCode = str.startsWith('<{%')  
+    endTagPos = isCode ? str.indexOf('%}>') + 2 : endTagPos
 
-    let tagContent = str.slice(1, endTagPos).trim()
+    let tagContent = str.slice(beginTagPos + 1, endTagPos).trim()
     tagContent = tagContent.replace(/[\r\n]+/g, '')
+
+    const isEndTag = tagContent.startsWith('/')  
 
     if (isCode) {
       addItem(PARSER_TYPES.CODE, tagContent)
@@ -75,7 +78,8 @@ function parserNoREGEXP(str) {
       
     str = str.slice(endTagPos + 1).trim()
 
-    if (!isEndTag) {
+
+    //if (!isEndTag) {
       if (str.indexOf('<') >= 0) {
         const content = str.substring(0, str.indexOf('<')).trim()
         if (content){
@@ -83,7 +87,7 @@ function parserNoREGEXP(str) {
         }
         str = str.slice(str.indexOf('<')).trim()
       }
-    }
+    //}
 
   }
 

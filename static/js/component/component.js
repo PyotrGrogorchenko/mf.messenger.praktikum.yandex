@@ -1,6 +1,6 @@
 import EventBus from './event-bus.js'
 import VirtDom from './virtDOM.js'
-import { parser } from './parser.js'
+import { parser, PARSER_TYPES } from './parser.js'
 
 class Component {
   static EVENTS = {
@@ -63,7 +63,23 @@ class Component {
     return true
   }
 
-  components(){return {}}
+  components(parsedTemplate){
+   
+    // const importComponents = []
+    // for(let i = 0; i < parsedTemplate.length; i++) {
+    //   const item = parsedTemplate[i]
+    //   if (item.type === PARSER_TYPES.BEGIN && window.startsWithUpper(item.content)) { 
+    //     importComponents.push(VirtDom.getTagName(item.content))
+    //   }   
+    // }
+
+    // const importComponentsStr = '{' + String(importComponents) + '}'
+    // let res
+    // eval(`res = {${String(importComponents) }}`)
+
+    return {}
+  }
+
   state(){return {}}
   template(){return ''}
 
@@ -73,12 +89,12 @@ class Component {
   }
 
 
-  setProps = nextProps => {
-    if (!nextProps) {
-      return
-    }
-    Object.assign(this.props, nextProps)
-  }
+  // setProps = nextProps => {
+  //   if (!nextProps) {
+  //     return
+  //   }
+  //   Object.assign(this.props, nextProps)
+  // }
 
   // get element() {
   //   return this._element
@@ -94,22 +110,37 @@ class Component {
 
   _compile() {
 
-    const components = this.components()
     const template = this.template()
-   
-    const state = this.state()
-    const params = {state, props: this.getProps()}
-    
+    const components = this.components()
+
     const parsedTemplate = parser(template)
+    
+    //console.log(parsedTemplate)
 
-    const virtDom = new VirtDom(parsedTemplate, params)
+    const state = this.state()
+    const props = this.getProps()
+    
 
-    virtDom.getIsComponent().forEach(component => {
-      let code = `component.componentLink = new components.${component.tagName}(component.props)`
+    const virtDom = new VirtDom(parsedTemplate, state, props)
+
+    virtDom.getIsComponent().forEach(node => {
+      let code = `node.componentLink = new components.${node.tagName}(node.props)`
       eval(code)
     })
 
+    // virtDom.getNodes().forEach(node => {
+    //   if (node.isComponent){
+    //     let code = `node.componentLink = new components.${node.tagName}(node.props)`
+    //     eval(code)
+    //   } else {
+    //     node.componentLink = this   
+    //   }
+    // })
+
+
     this._virtDOM = virtDom
+
+    //console.log(virtDom)
 
   }
   
@@ -131,12 +162,19 @@ class Component {
             node.props.classes.forEach(nodeClass => {
               element.classList.add(nodeClass)
             })
+          } else if (typeof node.props[prop] === "function") {
+            if (prop.startsWith('on')) {
+              element.addEventListener(prop.slice(2).toLowerCase(), node.props[prop])
+            } else {
+              element[prop] = node.props[prop]
+            }
           } else {
             element.setAttribute(prop, node.props[prop])
           }
 
         })
 
+        element.setAttribute('uid', node.uid)
         element.textContent = node.content
         root.appendChild(element)
         this._rootOut = element

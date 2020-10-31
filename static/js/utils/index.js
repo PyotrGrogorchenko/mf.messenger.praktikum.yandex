@@ -1,5 +1,7 @@
-import isStartsWithUpper from './isStartsWithUpper.js'
+import startsWithUpper from './startsWithUpper.js'
 import get from './get.js'
+import uid from './uid.js'
 
-window.isStartsWithUpper = isStartsWithUpper
+window.startsWithUpper = startsWithUpper
 window.get = get
+window.uid = uid

@@ -5,8 +5,8 @@ import BarHeader from './components/auth-bar/bar__header.js'
 import BarContent from './components/auth-bar/bar__content.js'
 import AuthBarInput from './components/auth-bar/auth-bar-input.js'
 import BarFooter from './components/auth-bar/bar__footer.js'
-import ButtonMain from './components/auth-bar/button-main.js'
-import ButtonSecondary from './components/auth-bar/button-secondary.js'
+import ButtonMain from './components/UI/buttons/button-main.js'
+import ButtonSecondary from './components/UI/buttons/button-secondary.js'
 
 class App extends Component {
 

@@ -1,4 +1,4 @@
-import Component from "../../component/component.js"
+import Component from "../../../component/component.js"
 
 class ButtonSecondary extends Component {
 
@@ -8,7 +8,7 @@ class ButtonSecondary extends Component {
 
   template() { 
     return (
-      `<a class="button-secondary" id={{props.id}} rel="stylesheet" href="signup.html">{{props.text}}</a>`
+      `<a className="button-secondary" id={{props.id}} rel="stylesheet" href="signup.html">{{props.text}}</a>`
     )
   }
 

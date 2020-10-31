@@ -1,4 +1,4 @@
-function isStartsWithUpper(str) {
+function startsWithUpper(str) {
   str = str.trim()
   if (str.length === 0){
     return false
@@ -6,4 +6,4 @@ function isStartsWithUpper(str) {
   return str[0] === str[0].toUpperCase()
 }
 
-export default isStartsWithUpper
+export default startsWithUpper
