@@ -20,8 +20,8 @@ class UsersBar__UsersList extends Component {
 
   template() { 
     return (
-      `<div class="users-bar__users-list">
-        <ul class="users-list__list">
+      `<div className="users-bar__users-list">
+        <ul className="users-list__list">
           
           {% for (let i = 0; i < state.users.length; i++) { 
             const user = state.users[i];

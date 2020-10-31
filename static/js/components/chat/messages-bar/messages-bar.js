@@ -9,6 +9,7 @@ class MessagesBar extends Component {
   components() {return {MessagesBar__Header, Messages__Date, Message, MessagesBar__Footer}}
 
   state() {return {
+    user: { name: 'Serafima', lastSeen: 'last seen 1 minute ago'},
     messages: 
     [
       {type: 'in',  date: '13:15', text: 'Putting the page number in the middle of the wording is a bad idea'},
@@ -23,7 +24,7 @@ class MessagesBar extends Component {
   template() { 
     return (
       `<div className="messages-bar">
-        <MessagesBar__Header></MessagesBar__Header>
+        <MessagesBar__Header name={{state.user.name}} lastSeen={{state.user.lastSeen}}></MessagesBar__Header>
         <div className="messages-bar__messages">
           <Messages__Date></Messages__Date>
           {% for (let i = 0; i < state.messages.length; i++) { 
@@ -36,7 +37,7 @@ class MessagesBar extends Component {
             ></Message>
           {% } %}
         </div>
-        <MessagesBar__Footer></MessagesBar__Footer>
+        <MessagesBar__Footer func={{props.func}}></MessagesBar__Footer>
       </div>`
     )
   }

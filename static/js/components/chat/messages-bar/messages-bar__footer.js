@@ -11,7 +11,7 @@ class MessagesBar__Footer extends Component {
         <div className="input-gray5">
           <input className="input-gray5__input" type="search" id="input_send-message" placeholder="Write...">
         </div>
-        <button type="submit" className="button-round background-blue1 margin5px">
+        <button className="button-round background-blue1 margin5px" onClick={{props.func}}>
           <i className="color-white fas fa-long-arrow-alt-right"></i>
         </button>
       </form>`

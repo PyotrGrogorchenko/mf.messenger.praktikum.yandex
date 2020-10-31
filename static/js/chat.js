@@ -21,12 +21,20 @@ class App extends Component {
   //   inputPassword: {text: 'password', type: 'password', id: 'input_password'}  
   // }}
 
+  func (e) {
+    { console.log(e) }  
+  }
+
+  state() {return {
+    func: this.func 
+  }}
+
   template() { 
 
     return  (
       `<div className="page-chat">
         <UsersBar></UsersBar>
-        <MessagesBar></MessagesBar>
+        <MessagesBar func={{state.func}}></MessagesBar>
       </div>`
     )
   }

@@ -10,7 +10,7 @@ class UsersBar extends Component {
   template() { 
     return (
       `<div className="users-bar">
-        <form id="form__header" class="users-bar_header">
+        <form id="form__header" className="users-bar_header">
           <ButtonToGo></ButtonToGo>
           <InputGray5></InputGray5>
         </form>

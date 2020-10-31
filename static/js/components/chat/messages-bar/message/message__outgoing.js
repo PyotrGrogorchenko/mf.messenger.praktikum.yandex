@@ -7,14 +7,14 @@ class Message__Outgoing extends Component {
 
   template() { 
     return (
-      `<div class="message__free-space">
+      `<div className="message__free-space">
       </div>
-      <div class="message__outgoing">
-        <div class="message__decor background-gray5">
-          Стоя по пояс 
-          <span class="message__info">
-            <i class="color-gray2 fas fa-check-double"></i>
-            22:14
+      <div className="message__outgoing">
+        <div className="message__decor background-gray5">
+          {{props.text}}  
+          <span className="message__info">
+            <i className="color-gray2 fas fa-check-double"></i>
+            {{props.date}}
           </span>
         </div>
       </div>`

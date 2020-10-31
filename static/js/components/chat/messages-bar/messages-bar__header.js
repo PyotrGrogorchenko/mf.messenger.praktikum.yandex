@@ -19,10 +19,10 @@ class MessagesBar__Header extends Component {
         
         <div className="header__content">
           <div className="header__username">
-            <h1>Liza</h1>
+            <h1>{{props.name}}</h1>
           </div>
           <div className="header__last-seen">
-            last seen 1 minute ago
+            {{props.lastSeen}}
           </div>
         </div>
         

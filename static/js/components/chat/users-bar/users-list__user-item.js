@@ -11,35 +11,34 @@ class UsersList__UserItem extends Component {
     console.log('UsersList__UserItem', this.getProps())
 
     return (
-      `<li class="users-list__user-item">
-        <div class="user-item__avatar">
-          <div class="avatar">
-            <i class="color-gray3 fas fa-camera"></i>
+      `<li className="users-list__user-item">
+        <div className="user-item__avatar">
+          <div className="avatar">
+            <i className="color-gray3 fas fa-camera"></i>
           </div>
         </div>
-        <div class="user-item__content">
-          <div class="user-item__content-top">
-            <h4 class="user-item__username">{{props.name}}</h4>
-            <div class="user-item__last-message-time">
-              <span class="last-message-time__value">{{props.lastMessageDate}}</span>
+        <div className="user-item__content">
+          <div className="user-item__content-top">
+            <h4 className="user-item__username">{{props.name}}</h4>
+            <div className="user-item__last-message-time">
+              <span className="last-message-time__value">{{props.lastMessageDate}}</span>
             </div>
           </div>    
-          <div class="user-item__content-bottom">
-            <div class="user-item__last-message">
+          <div className="user-item__content-bottom">
+            <div className="user-item__last-message">
               {% if (props.lastMessageType === 'out') { %}
                 <b>You:</b>
               {% } %}
-              <div class="last-message__value">{{props.lastMessageText}}</div>
+              <div className="last-message__value">{{props.lastMessageText}}</div>
             </div>
             {% if (props.counUread > 0) { %}
-              <div class="user-item__count-message">
-                <a class="count-message__value">{{props.counUread}}</a>
+              <div className="user-item__count-message">
+                <a className="count-message__value">{{props.counUread}}</a>
               </div>
             {% } %}
           </div>    
         </div>
-      </li>
-`
+      </li>`
     )
   }
 
