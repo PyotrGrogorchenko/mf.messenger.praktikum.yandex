@@ -8,7 +8,7 @@ class Message__Incoming extends Component {
   template() { 
     return (
       `<div className="message__incoming">
-        <div className="message__decor background-gray5">
+        <div className="message__decor background-gray4">
           {{props.text}} 
         <span className="message__info">
           <i className="hide color-gray2 fas fa-check-double"></i>

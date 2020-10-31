@@ -8,11 +8,9 @@ class Message extends Component {
 
   template() { 
     
-    console.log('Message,props', this.getProps())
-
     return (
       `<div className="message">
-        {% if (props.type === 'in') { console.log(props.type)%}
+        {% if (props.type === 'in') { %}
           <Message__Incoming
             text={{props.text}}
             date={{props.date}}

@@ -1,15 +1,9 @@
 import Component from '../../../component/component.js'
-//import ButtonToGo from '../UI/buttons/button-to-go.js'
-//import InputGray5 from '../UI/inputs/input-gray5.js'
 
 class UsersList__UserItem extends Component {
 
-  //components() {return {ButtonToGo, InputGray5}}
-
   template() { 
     
-    console.log('UsersList__UserItem', this.getProps())
-
     return (
       `<li className="users-list__user-item">
         <div className="user-item__avatar">

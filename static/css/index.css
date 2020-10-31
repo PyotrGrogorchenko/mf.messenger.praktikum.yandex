@@ -72,6 +72,10 @@
   background: var(--color-gray4);
 }
 
+.background-gray3 {
+  background: var(--color-gray3);
+}
+
 .background-white {
   background: var(--color-white);
 }

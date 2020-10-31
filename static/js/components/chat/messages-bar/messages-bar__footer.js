@@ -5,7 +5,7 @@ class MessagesBar__Footer extends Component {
   template() { 
     return (
       `<form id="form__footer" className="messages-bar__footer">
-        <button type="submit" className="button-round background-white">
+        <button className="button-round background-white" onClick={{props.func}}>
           <i className="color-gray3 fas fa-paperclip"></i>
         </button>
         <div className="input-gray5">

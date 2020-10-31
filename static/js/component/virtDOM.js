@@ -130,7 +130,6 @@ class VirtDom {
 
   _compileCode(itemBegin, state, props, parsedTemplate, iObj) {
     
-    console.log(parsedTemplate)
     let code = itemBegin.content.slice(2, itemBegin.content.indexOf('%}')).trim() 
 
     if (code.startsWith('for') || code.startsWith('while')) {
@@ -179,7 +178,7 @@ class VirtDom {
     
     }
 
-    console.log($code)
+    //console.log($code)
     eval($code)
 
     $iObj.i = $i
@@ -187,8 +186,6 @@ class VirtDom {
   }
 
   _compileCode__if($itemBegin, state, props, $parsedTemplate, $iObj) {
-
-    //console.log('if', $parsedTemplate)
 
     const $stackItems = []
 
@@ -205,7 +202,6 @@ class VirtDom {
         const $middleCode = $item.content.slice(2, $item.content.indexOf('%}')).trim() 
         $code = $code + '\n' + $middleCode 
         if ($middleCode.indexOf('else') > 0){
-          console.log('enf if', $item.content, $middleCode, $middleCode.indexOf('else' > 0))
           continue
         }
         break
@@ -219,7 +215,7 @@ class VirtDom {
     
     }
 
-    console.log($code)
+    //console.log($code)
     eval($code)
 
     $iObj.i = $i
