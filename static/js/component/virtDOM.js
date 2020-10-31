@@ -171,7 +171,7 @@ class VirtDom {
         regExp = new RegExp(this._REGEXP_PARAM)
         while ((param = regExp.exec(item.content))) {
           if (param[1] && !param[1].startsWith('state') && !param[1].startsWith('props')) {
-            item.content = item.content.replace(param[0], eval(param[1]))
+            item.content = item.content.replace(param[0], '"' + eval(param[1]) + '"')
           }
         }`
       
@@ -179,6 +179,7 @@ class VirtDom {
     
     }
 
+    console.log($code)
     eval($code)
 
     $iObj.i = $i

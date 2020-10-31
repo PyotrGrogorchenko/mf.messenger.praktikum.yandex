@@ -7,11 +7,12 @@ import AuthBarInput from './components/auth-bar/auth-bar-input.js'
 import BarFooter from './components/auth-bar/bar__footer.js'
 import ButtonMain from './components/UI/buttons/button-main.js'
 import ButtonSecondary from './components/UI/buttons/button-secondary.js'
-
+import Message__Incoming from './components/chat/messages-bar/message/message__incoming.js'
+import Message__Outgoing from './components/chat/messages-bar/message/message__outgoing.js'
 class App extends Component {
 
   components() {return {PageColumn, FormMain, BarHeader, BarContent, AuthBarInput, BarFooter, ButtonMain, ButtonSecondary, 
-                            MessagesBar__Header, Messages__Date, Message, MessagesBar__Footer}}
+                          Message__Incoming, Message__Outgoing}}
   
   // func (e) {
   //   { console.log(e) }  
@@ -33,6 +34,22 @@ class App extends Component {
   template() { 
 
     return  (
+      
+      `<div className="messages-bar">
+        <MessagesBar__Header></MessagesBar__Header>
+        <div className="messages-bar__messages">
+          <Messages__Date></Messages__Date>
+          {% for (let i = 0; i < 5; i++) { 
+            const message = state.messages[i]  %}
+            <Message 
+              incoming={{message.incoming}}  
+              date={{message.date}}  
+              text={{message.text}}  
+            ></Message>
+          {% } %}
+        </div>
+        <MessagesBar__Footer></MessagesBar__Footer>
+      </div>`
       
       // `<form id="form__footer" className="messages-bar__footer">
       //   <button type="submit" className="button-round background-white">
@@ -72,17 +89,17 @@ class App extends Component {
       //   <div className="test ttt"></div>  
       // {% } %}`
 
-      `<PageColumn>
-      {% if (1 < 2) { %}
-        <div className="test ttt">
-          <ButtonMain text='Chat ' onClick={{state.func}} > </ButtonMain>
-        </div>  
-      {% } else { %}
-        <div className="test ttt">
-          <ButtonSecondary text='Chat '> </ButtonSecondary>
-        </div>  
-      {% } %}
-      </PageColumn>`
+      // `<PageColumn>
+      // {% if (1 < 2) { %}
+      //   <div className="test ttt">
+      //     <ButtonMain text='Chat ' onClick={{state.func}} > </ButtonMain>
+      //   </div>  
+      // {% } else { %}
+      //   <div className="test ttt">
+      //     <ButtonSecondary text='Chat '> </ButtonSecondary>
+      //   </div>  
+      // {% } %}
+      // </PageColumn>`
 
 )
 

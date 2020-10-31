@@ -9,11 +9,11 @@ class Message__Incoming extends Component {
     return (
       `<div className="message__incoming">
         <div className="message__decor background-gray5">
-          Стоя по пояс 
+          {{props.text}} 
         <span className="message__info">
           <i className="hide color-gray2 fas fa-check-double"></i>
-            22:14
-          </span>
+          {{props.date}} 
+        </span>
         </div>
           
         <Message__FreeSpace></Message__FreeSpace>

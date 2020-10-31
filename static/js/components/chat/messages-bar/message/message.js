@@ -7,12 +7,21 @@ class Message extends Component {
   components() {return {Message__Incoming, Message__Outgoing}}
 
   template() { 
+    
+    console.log('Message,props', this.getProps())
+
     return (
       `<div className="message">
-        {% if (1 > 2) { %}
-          <Message__Incoming></Message__Incoming>     
+        {% if (props.type === 'in') { console.log(props.type)%}
+          <Message__Incoming
+            text={{props.text}}
+            date={{props.date}}
+          ></Message__Incoming>     
         {% } else { %}
-          <Message__Outgoing></Message__Outgoing>     
+          <Message__Outgoing
+            text={{props.text}}
+            date={{props.date}}
+          ></Message__Outgoing>     
         {% } %} 
       </div>`
     )
