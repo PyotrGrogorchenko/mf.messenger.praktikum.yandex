@@ -1,6 +1,6 @@
-import Component from './component/component.js'
-import UsersBar from './components/chat/users-bar/users-bar.js'
-import MessagesBar from './components/chat/messages-bar/messages-bar.js'
+import Component from '../../component/component.js'
+import UsersBar from '../chat/users-bar/users-bar.js'
+import MessagesBar from '../chat/messages-bar/messages-bar.js'
 
 class App extends Component {
 

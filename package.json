@@ -15,7 +15,8 @@
     "express": "^4.17.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node app.ts"
   },
   "repository": {
     "type": "git",

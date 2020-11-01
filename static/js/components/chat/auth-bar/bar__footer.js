@@ -1,4 +1,4 @@
-import Component from "../../component/component.js"
+import Component from '../../component/component.js'
 
 class BarFooter extends Component {
 
