@@ -1,5 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+import Component from '../ts/component/component'
 // import PageColumn from './components/page-column.js'
 // import FormMain from './components/auth-bar/form__main.js'
 // import BarHeader from './components/auth-bar/bar__header.js'
@@ -10,26 +9,37 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // import ButtonSecondary from './components/UI/buttons/button-secondary.js'
 // import Message__Incoming from './components/chat/messages-bar/message/message__incoming.js'
 // import Message__Outgoing from './components/chat/messages-bar/message/message__outgoing.js'
-// class App extends Component {
+
+class App extends Component {
+
 //   components() {return {PageColumn, FormMain, BarHeader, BarContent, AuthBarInput, BarFooter, ButtonMain, ButtonSecondary, 
 //                           Message__Incoming, Message__Outgoing}}
+  
 //   // func (e) {
 //   //   { console.log(e) }  
 //   // }
+
 //   // state() {return {
 //   //   func: this.func 
 //   // }}
+
 //   state() {return {
 //     messages: 
 //     [
 //       {incoming: true, date: '22:14', text: 'Putting the page number in the middle of the wording is a bad idea,'}
 //     ]
+  
 //   }}
+ 
+
 //   template() { 
+
 //     return  (
+      
 //       `<PageColumn>
 //         <div>Messanger</div>
 //       </PageColumn>`
+      
 //       // `<div className="messages-bar">
 //       //   <MessagesBar__Header></MessagesBar__Header>
 //       //   <div className="messages-bar__messages">
@@ -45,6 +55,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //       //   </div>
 //       //   <MessagesBar__Footer></MessagesBar__Footer>
 //       // </div>`
+      
 //       // `<form id="form__footer" className="messages-bar__footer">
 //       //   <button type="submit" className="button-round background-white">
 //       //     <i className="color-gray3 fas fa-paperclip"></i>
@@ -52,17 +63,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //       //   <div className="input-gray5">
 //       //   </div>
 //       // </form>`
+
 //      // `<input className="input-gray5__input" type="search" id="input_send-message" placeholder="Write..."></input>`
+
 //     // <div className="input-gray5">
 //     //   <input className="input-gray5__input" type="search" id="input_send-message" placeholder=" Write a message...">
 //     // </div>
 //     // <button type="submit" className="button-round background-blue1 margin5px">
 //     //   <i className="color-white fas fa-long-arrow-alt-right"></i>
 //     // </button>
+  
+
 //       // `<span className="message__info">
 //       //   <i className="hide color-gray2 fas fa-check-double"></i>
 //       //   22:14
 //       // </span>`
+      
 //       // `<PageColumn>
 //       // {% for (let i = 0; i < 5; i++) { %}
 //       //   <ButtonMain text='Chat ' onClick={{state.func}} > </ButtonMain>
@@ -71,11 +87,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //       //   </div>  
 //       // {% } %}
 //       // </PageColumn>`
+
 //       // `{% if (1 > 2) { %}
 //       //   <div className="test ttt"></div>  
 //       // {% } else { %}
 //       //   <div className="test ttt"></div>  
 //       // {% } %}`
+
 //       // `<PageColumn>
 //       // {% if (1 < 2) { %}
 //       //   <div className="test ttt">
@@ -87,10 +105,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //       //   </div>  
 //       // {% } %}
 //       // </PageColumn>`
+
 // )
+
 //   }
-// }
+
+}
+
+
+
 // const root = document.querySelector(".app")
 // const app = new App()
 // app.render(root)
-//# sourceMappingURL=index.js.map

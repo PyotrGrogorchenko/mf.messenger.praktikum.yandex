@@ -1,23 +1,41 @@
-import { PARSER_TYPES } from './parser.js'
+import { type } from 'os'
+import { PARSER_TYPES, Node as PARSER_NODE } from './parser.js'
+
+type Node {
+  uid: number = window.uid(),
+  level: null | number,
+  owner: null | Node,
+  header: null | string,
+  tagName: null | string,
+  content: null | string,
+  isComponent: boolean = false,
+  props: {classes: []},
+  componentLink: null | VirtDom 
+}
 
 class VirtDom {
-  constructor(parsedTemplate, state, props) {
+  
+  _nodes: Array<Node> = Array<Node>()
+  _getOwner: () => Node = this._func_getOwner()
+  _REGEXP_PARAM: RegExp = /\{\{(.*?)\}\}/gi
+
+  constructor(parsedTemplate: Array<PARSER_NODE>, state: any, props: any) {
     
-    this._nodes = []
+    //this._nodes = []
     //this._id = this._func_id()
-    this._getOwner = this._func_getOwner() 
+    //this._getOwner = this._func_getOwner() 
     
-    this._REGEXP_PARAM = /\{\{(.*?)\}\}/gi
+    //this._REGEXP_PARAM = /\{\{(.*?)\}\}/gi
   
     this.init(parsedTemplate, state, props)
   }
 
-  init(parsedTemplate, state, props) {
+  init(parsedTemplate: Array<PARSER_NODE>, state: any, props: any): void {
   
     //parsedTemplate.forEach(item => {
     
-    for(let i = 0; i < parsedTemplate.length; i++) {
-      const item = parsedTemplate[i]
+    for(let i: number = 0; i < parsedTemplate.length; i++) {
+      const item: PARSER_NODE = parsedTemplate[i]
       //this._compileItem(item, state, props, parsedTemplate, i)
 
       if (item.type === PARSER_TYPES.CODE) {
@@ -31,21 +49,21 @@ class VirtDom {
     }
   }
 
-  getIsComponent() {
+  getIsComponent(): Array<Node> {
     return this._nodes.filter(node => node.isComponent === true)
   }
 
-  getNodes() {
+  getNodes(): Array<Node> {
     return this._nodes
   }
 
-  static getTagName(str) {
-    const begin =  0
-    const end =  str.indexOf(' ') === -1 ? str.length : str.indexOf(' ')
+  static getTagName(str: string): string {
+    const begin: number =  0
+    const end: number =  str.indexOf(' ') === -1 ? str.length : str.indexOf(' ')
     return str.slice(begin, end)
   }
 
-  _compileItem(item, state, props) {
+  _compileItem(item: PARSER_NODE, state: any, props: any) {
   
     switch (item.type) {
       case PARSER_TYPES.END:
@@ -71,10 +89,10 @@ class VirtDom {
   //   }
   // }
 
-  _func_getOwner() {
-    const ownersStack = []
-    return function(command = '', node = null) {
-      let res = null
+  _func_getOwner(): (command: string, node: null | Node) => Node | null {
+    const ownersStack: Array<Node> = Array<Node>() 
+    return function(command: string = '', node: null | Node = null): Node | null {
+      let res: Node | null = null
       if (command === 'remove') {
         ownersStack.pop()
       } else if (ownersStack.length > 0){
@@ -82,7 +100,7 @@ class VirtDom {
       }
       
       if (command === 'add') {
-        ownersStack.push(node)
+        ownersStack.push(node as Node)
       }
       
       return res
@@ -90,20 +108,21 @@ class VirtDom {
   }
 
   _createNode() {
-    return {
-      uid: window.uid(),
-      level: null,
-      owner: null,
-      header: null,
-      tagName: null,
-      content: null,
-      isComponent: false,
-      props: {classes: []},
-      componentLink: null
-    }
+    return Node
+    //{
+    //   uid: window.uid(),
+    //   level: null,
+    //   owner: null,
+    //   header: null,
+    //   tagName: null,
+    //   content: null,
+    //   isComponent: false,
+    //   props: {classes: []},
+    //   componentLink: null
+    // }
   }
 
-  _addNode(header, type, state, props) {
+  _addNode(header: string, type: PARSER_TYPES, state: any, props: any) {
     
     if (type === PARSER_TYPES.BEGIN) {
       
