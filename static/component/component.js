@@ -3,54 +3,69 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const event_bus_js_1 = __importDefault(require("./event-bus.js"));
-const virtDOM_js_1 = __importDefault(require("./virtDOM.js"));
-const parser_js_1 = require("./parser.js");
+const event_bus_1 = __importDefault(require("./event-bus"));
+const parser_1 = require("./parser");
+const virtDOM_1 = require("./virtDOM");
+// import VirtDom from './virtDOM.js'
+// import { parser, PARSER_TYPES } from './parser.js'
+var EVENTS;
+(function (EVENTS) {
+    EVENTS["INIT"] = "init";
+    EVENTS["FLOW_CDM"] = "flow:component-did-mount";
+    EVENTS["FLOW_CDU"] = "flow:component-did-update";
+    EVENTS["FLOW_RENDER"] = "flow:render";
+})(EVENTS || (EVENTS = {}));
 class Component {
     /** JSDoc
-     * @param {string} tagName
-     * @param {Object} props
-     *
-     * @returns {void}
-     */
+    * @param {string} tagName
+    * @param {Object} props
+    *
+    * @returns {void}
+    */
     constructor(props = {}) {
+        //   static EVENTS = {
+        //     INIT: "init",
+        //     FLOW_CDM: "flow:component-did-mount",
+        //     FLOW_CDU: "flow:component-did-update",
+        //     FLOW_RENDER: "flow:render"
+        //   };
         this._root = null;
         //_element = null
         this._virtDOM = null;
         this._props = null;
         this._rootOut = null;
-        const eventBus = new event_bus_js_1.default();
+        console.log('component');
+        const eventBus = new event_bus_1.default();
         this._props = props;
         //this.props = this._makePropsProxy(props)
         this.eventBus = () => eventBus;
-        this._props = props;
         this._registerEvents(eventBus);
-        eventBus.emit(Component.EVENTS.INIT);
+        eventBus.emit(EVENTS.INIT);
     }
     _registerEvents(eventBus) {
-        eventBus.on(Component.EVENTS.INIT, this.init.bind(this));
-        eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
+        eventBus.on(EVENTS.INIT, this.init.bind(this));
+        eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         // PP \\
-        eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+        eventBus.on(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
         // PP //
-        eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));
+        eventBus.on(EVENTS.FLOW_RENDER, this._render.bind(this));
     }
     init() {
         this._compile();
-        this.eventBus().emit(Component.EVENTS.FLOW_CDM);
+        this.eventBus().emit(EVENTS.FLOW_CDM);
     }
     _componentDidMount() {
         this.componentDidMount();
     }
-    componentDidMount(oldProps) { }
-    _componentDidUpdate(oldProps, newProps) {
+    componentDidMount(oldProps = {}) { }
+    _componentDidUpdate(oldProps = null, newProps = null) {
         // const response = this.componentDidUpdate(oldProps, newProps)
         // this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
     }
     componentDidUpdate(oldProps, newProps) {
         return true;
     }
-    components(parsedTemplate) {
+    components() {
         // const importComponents = []
         // for(let i = 0; i < parsedTemplate.length; i++) {
         //   const item = parsedTemplate[i]
@@ -67,7 +82,7 @@ class Component {
     template() { return ''; }
     render(root) {
         this._root = root;
-        this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
+        this.eventBus().emit(EVENTS.FLOW_RENDER);
     }
     // setProps = nextProps => {
     //   if (!nextProps) {
@@ -87,11 +102,11 @@ class Component {
     _compile() {
         const template = this.template();
         const components = this.components();
-        const parsedTemplate = parser_js_1.parser(template);
+        const parsedTemplate = parser_1.parser(template);
         //console.log(parsedTemplate)
         const state = this.state();
         const props = this.getProps();
-        const virtDom = new virtDOM_js_1.default(parsedTemplate, state, props);
+        const virtDom = new virtDOM_1.VirtDom(parsedTemplate, state, props);
         virtDom.getIsComponent().forEach(node => {
             let code = `node.componentLink = new components.${node.tagName}(node.props)`;
             eval(code);
@@ -128,58 +143,21 @@ class Component {
                             element.addEventListener(prop.slice(2).toLowerCase(), node.props[prop]);
                         }
                         else {
-                            element[prop] = node.props[prop];
+                            element.setAttribute(prop, node.props[prop]);
                         }
                     }
                     else {
                         element.setAttribute(prop, node.props[prop]);
                     }
                 });
-                element.setAttribute('uid', node.uid);
-                element.textContent = node.content;
-                root.appendChild(element);
+                element.setAttribute('uid', String(node.uid));
+                element.textContent = node.content(root).appendChild(element);
                 this._rootOut = element;
                 node.root = element;
             }
         });
     }
-    // getContent() {
-    //   return this.element
-    // }
-    _makePropsProxy(props) {
-        // Можно и так передать this
-        // Такой способ больше не применяется с приходом ES6+
-        const self = this;
-        // PP \\
-        //return props;
-        const proxyProps = new Proxy(props, {
-            // get(target, prop){
-            //   return target[prop]
-            // },
-            set(target, prop, value) {
-                const oldProps = Object.assign({}, target);
-                target[prop] = value;
-                //self._propsDidChange = JSON.stringify(oldProps) !== JSON.stringify(target)
-                if (JSON.stringify(oldProps) !== JSON.stringify(target)) {
-                    self._render();
-                }
-                self.eventBus().emit(Component.EVENTS.FLOW_CDU, oldProps, target);
-                return true;
-            },
-            deleteProperty(target, prop) {
-                throw new Error('Нет прав');
-            }
-        });
-        return proxyProps;
-        // PP //
-    }
 }
-Component.EVENTS = {
-    INIT: "init",
-    FLOW_CDM: "flow:component-did-mount",
-    FLOW_CDU: "flow:component-did-update",
-    FLOW_RENDER: "flow:render"
-};
 // PP \\
 exports.default = Component;
 // PP //

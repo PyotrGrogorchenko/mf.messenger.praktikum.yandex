@@ -7,44 +7,44 @@ type Node = {
 
 function parser(str:string): Array<Node> {
 
-  //return parserREGEXP(str) ??? Не получилось найти <tag> с помощью REGEXP, если <tag> в несколтких строках ???
+  //return parserREGEXP(str)
   return parserNoREGEXP(str)
   
 }
 
-function parserREGEXP(str: string): Array<Node> {
+// function parserREGEXP(str: string): Array<Node> {
 
-  const PARSE_REGEXP: RegExp = /\<(.*?)\>/gim
-  const strOrigin: string = str
-  const res: Array<Node> = Array<Node>()
+//   const PARSE_REGEXP: RegExp = /\<(.*?)\>/gim
+//   const strOrigin: string = str
+//   const res: Array<Node> = Array<Node>()
   
-  const addItem = (type: PARSER_TYPES, content: string): void => {
-    res.push({type, content})
-  }  
+//   const addItem = (type: PARSER_TYPES, content: string): void => {
+//     res.push({type, content})
+//   }  
   
-  let key: null | RegExpExecArray = null
-  while ((key = PARSE_REGEXP.exec(strOrigin))) {
+//   let key: null | RegExpExecArray = null
+//   while ((key = PARSE_REGEXP.exec(strOrigin))) {
     
-    //const tagProps = {type: null, content: null}
-    const isEndTag: boolean = key[0].startsWith('</')  
+//     //const tagProps = {type: null, content: null}
+//     const isEndTag: boolean = key[0].startsWith('</')  
 
-    addItem(isEndTag ? PARSER_TYPES.END : PARSER_TYPES.BEGIN, isEndTag ? key[1].slice(1) : key[1])
-    str = str.slice(str.indexOf(key[0]) + key[0].length)
+//     addItem(isEndTag ? PARSER_TYPES.END : PARSER_TYPES.BEGIN, isEndTag ? key[1].slice(1) : key[1])
+//     str = str.slice(str.indexOf(key[0]) + key[0].length)
 
-    if (!isEndTag) {
-      if (str.indexOf('<') >= 0) {
-        const content = str.substring(0, str.indexOf('<')).trim()
-        if (content){
-          addItem(PARSER_TYPES.TEXT, content)
-        }
-      }
-    }
+//     if (!isEndTag) {
+//       if (str.indexOf('<') >= 0) {
+//         const content = str.substring(0, str.indexOf('<')).trim()
+//         if (content){
+//           addItem(PARSER_TYPES.TEXT, content)
+//         }
+//       }
+//     }
 
-  }
+//   }
 
-  return res
+//   return res
 
-}
+// }
 
 function parserNoREGEXP(str: string): Array<Node> {
 

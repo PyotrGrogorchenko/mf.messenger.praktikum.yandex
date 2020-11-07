@@ -1,23 +1,34 @@
-import { type } from 'os'
-import { PARSER_TYPES, Node as PARSER_NODE } from './parser.js'
+import { PARSER_TYPES, Node as PARSER_NODE } from './parser'
+import Component from './component'
 
-type Node {
-  uid: number = window.uid(),
-  level: null | number,
-  owner: null | Node,
-  header: null | string,
-  tagName: null | string,
-  content: null | string,
-  isComponent: boolean = false,
-  props: {classes: []},
-  componentLink: null | VirtDom 
+
+declare const window: any
+
+interface LooseObject {
+  [key: string]: any
+}
+
+class Node {
+  
+  uid: number = 0
+  level: number = 0
+  owner: null | Node = null
+  header: string = ''
+  tagName: string = ''
+  content: any = ''
+  isComponent: boolean = false
+  props: any = {}
+  componentLink: null | Component = null
+  root: null | HTMLElement = null
+
 }
 
 class VirtDom {
   
   _nodes: Array<Node> = Array<Node>()
-  _getOwner: () => Node = this._func_getOwner()
+  _getOwner: (command: string, node: null | Node) => Node | null  = this._func_getOwner()
   _REGEXP_PARAM: RegExp = /\{\{(.*?)\}\}/gi
+  _uid: () => number = this._uidCount()
 
   constructor(parsedTemplate: Array<PARSER_NODE>, state: any, props: any) {
     
@@ -39,7 +50,7 @@ class VirtDom {
       //this._compileItem(item, state, props, parsedTemplate, i)
 
       if (item.type === PARSER_TYPES.CODE) {
-        const iObj = {i}
+        const iObj: {i: number} = {i}
         this._compileCode(item, state, props, parsedTemplate, iObj)
         i = iObj.i
       } else {
@@ -61,6 +72,14 @@ class VirtDom {
     const begin: number =  0
     const end: number =  str.indexOf(' ') === -1 ? str.length : str.indexOf(' ')
     return str.slice(begin, end)
+  }
+
+  _uidCount(): () => number {
+    let uidCount: number = -1
+    return function(): number {
+      uidCount++
+      return uidCount
+    }
   }
 
   _compileItem(item: PARSER_NODE, state: any, props: any) {
@@ -89,7 +108,7 @@ class VirtDom {
   //   }
   // }
 
-  _func_getOwner(): (command: string, node: null | Node) => Node | null {
+  _func_getOwner(): (command: string , node: null | Node) => Node | null {
     const ownersStack: Array<Node> = Array<Node>() 
     return function(command: string = '', node: null | Node = null): Node | null {
       let res: Node | null = null
@@ -107,30 +126,32 @@ class VirtDom {
     }
   }
 
-  _createNode() {
-    return Node
-    //{
-    //   uid: window.uid(),
-    //   level: null,
-    //   owner: null,
-    //   header: null,
-    //   tagName: null,
-    //   content: null,
-    //   isComponent: false,
-    //   props: {classes: []},
-    //   componentLink: null
-    // }
-  }
+  // _createNode() {
+  //   return Node
+  //   //{
+  //   //   uid: window.uid(),
+  //   //   level: null,
+  //   //   owner: null,
+  //   //   header: null,
+  //   //   tagName: null,
+  //   //   content: null,
+  //   //   isComponent: false,
+  //   //   props: {classes: []},
+  //   //   componentLink: null
+  //   // }
+  // }
 
-  _addNode(header: string, type: PARSER_TYPES, state: any, props: any) {
+  _addNode(header: string, type: PARSER_TYPES, state: any, props: any): void {
     
     if (type === PARSER_TYPES.BEGIN) {
       
-      let node = this._createNode()
+      //let node = this._createNode()
+      let node: Node = new Node()
       node.owner = this._getOwner('add', node)
       node.tagName = VirtDom.getTagName(header)
       node.isComponent = this._setSignComponent(node.tagName)
       node.header = header
+      node.uid = this._uid()
       this._setLevel(node)
       this._setHeaderProps(node, state, props)  
       
@@ -138,7 +159,7 @@ class VirtDom {
 
     } else if (type === PARSER_TYPES.TEXT) {
       
-      let owner = this._getOwner()
+      let owner: Node | null = this._getOwner('', null)
       if (owner && !owner.isComponent){
         owner.content = this._setContentProps(header, state, props)
       }  
@@ -147,9 +168,9 @@ class VirtDom {
   
   }
 
-  _compileCode(itemBegin, state, props, parsedTemplate, iObj) {
+  _compileCode(itemBegin: PARSER_NODE, state: any, props: any, parsedTemplate: Array<PARSER_NODE> , iObj: any) {
     
-    let code = itemBegin.content.slice(2, itemBegin.content.indexOf('%}')).trim() 
+    let code: string = itemBegin.content.slice(2, itemBegin.content.indexOf('%}')).trim() 
 
     if (code.startsWith('for') || code.startsWith('while')) {
       this._compileCode__cycle(itemBegin, state, props, parsedTemplate, iObj)
@@ -163,19 +184,19 @@ class VirtDom {
 
   }
 
-  _compileCode__cycle($itemBegin, state, props, $parsedTemplate, $iObj) {
+  _compileCode__cycle($itemBegin: PARSER_NODE, state: any, props: any, $parsedTemplate: Array<PARSER_NODE>, $iObj: any) {
 
-    const $stackItems = []
+    const $stackItems:Array<PARSER_NODE> = []
 
-    let item 
-    let param
-    let regExp
+    let item: PARSER_NODE 
+    let param: any 
+    let regExp: RegExp
 
-    let $code = $itemBegin.content.slice(2, $itemBegin.content.indexOf('%}')).trim() 
+    let $code: string = $itemBegin.content.slice(2, $itemBegin.content.indexOf('%}')).trim() 
 
-    let $i = $iObj.i + 1
+    let $i: number = $iObj.i + 1
     for($i; $i < $parsedTemplate.length; $i++) {
-      const $item = $parsedTemplate[$i]
+      const $item: PARSER_NODE = $parsedTemplate[$i]
       if ($item.type === PARSER_TYPES.CODE) {
         $code = $code + '\n' + $item.content.slice(2, $item.content.indexOf('%}')).trim() 
         break
@@ -204,17 +225,17 @@ class VirtDom {
   
   }
 
-  _compileCode__if($itemBegin, state, props, $parsedTemplate, $iObj) {
+  _compileCode__if($itemBegin: PARSER_NODE, state: any, props: any, $parsedTemplate: Array<PARSER_NODE>, $iObj: any) {
 
-    const $stackItems = []
+    const $stackItems:Array<PARSER_NODE> = []
 
-    let item 
-    let param
-    let regExp
+    let item: PARSER_NODE 
+    let param: any 
+    let regExp: RegExp
 
-    let $code = $itemBegin.content.slice(2, $itemBegin.content.indexOf('%}')).trim() 
+    let $code: string = $itemBegin.content.slice(2, $itemBegin.content.indexOf('%}')).trim() 
 
-    let $i = $iObj.i + 1
+    let $i: number = $iObj.i + 1
     for($i; $i < $parsedTemplate.length; $i++) {
       const $item = $parsedTemplate[$i]
       if ($item.type === PARSER_TYPES.CODE) {
@@ -242,25 +263,25 @@ class VirtDom {
 
   }
   
-  _closeTag(node = null){
-    this._getOwner('remove')
+  _closeTag(): void{
+    this._getOwner('remove', null)
   }
 
-  _setLevel(node) {
-    let level = window.get(node, 'owner.level', -1)
+  _setLevel(node: Node) {
+    let level: number = window.get(node, 'owner.level', -1)
     level++
     
     node.level = level
   }
 
-  _setHeaderProps(node, state, props) {
+  _setHeaderProps(node: Node, state: any, props: any): void {
 
-    let header = node.header;
+    let header: string = node.header;
     
-    const cacheTxt = {}
-    let txt = null
-    const regExp = new RegExp(/[\'\"](.*?)[\'\"]/gi)
-    let count = 1
+    const cacheTxt: LooseObject = {}
+    let txt: RegExpExecArray | null
+    const regExp: RegExp = new RegExp(/[\'\"](.*?)[\'\"]/gi)
+    let count: number = 1
     while ((txt = regExp.exec(header))) {
       if (txt[0]) {
         cacheTxt[`text${count}`] = txt[0]
@@ -274,16 +295,16 @@ class VirtDom {
         return
       }
       
-      const arrKeyValue = keyValue.split('=')
+      const arrKeyValue: Array<string> = keyValue.split('=')
       
       if (cacheTxt[arrKeyValue[1]]) {
         arrKeyValue[1] = cacheTxt[arrKeyValue[1]]
       }  
 
-      const param = new RegExp(this._REGEXP_PARAM).exec(arrKeyValue[1])
+      const param: RegExpExecArray | null = new RegExp(this._REGEXP_PARAM).exec(arrKeyValue[1])
 
       if (arrKeyValue[0] === 'className') {
-        const strClasses = param ? window.get(state, props, param[1], '') : arrKeyValue[1].replace(/"/g, '')
+        const strClasses: string = param ? window.get(state, props, param[1], '') : arrKeyValue[1].replace(/"/g, '')
         node.props.classes = strClasses.split(' ')
       } else if (param) {
         node.props[arrKeyValue[0]] = eval(param[1]) 
@@ -294,14 +315,14 @@ class VirtDom {
 
   }
 
-  _setContentProps(content, state, props) {
+  _setContentProps(content: string, state: any, props: any): string {
 
     if (!content) {
       return content
     }
 
-    let param = null;
-    const regExp = new RegExp(this._REGEXP_PARAM)
+    let param: RegExpExecArray | null
+    const regExp: RegExp = new RegExp(this._REGEXP_PARAM)
     while ((param = regExp.exec(content))) {
       if (param[1]) {
         content = content.replace(param[0], eval(param[1]))
@@ -312,10 +333,10 @@ class VirtDom {
 
   }
 
-  _setSignComponent (tagName){
+  _setSignComponent (tagName: string){
     return window.startsWithUpper(tagName)
   }
 
 }
 
-export default VirtDom
+export { VirtDom, Node}
