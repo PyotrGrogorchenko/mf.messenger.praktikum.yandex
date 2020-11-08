@@ -1,21 +1,16 @@
-import Component from '../../component/component.js'
-import PageColumn from '../page-column.js'
-import UserSettingsBar from '../user-settings/user-settings-bar.js'
-import BarHeader from '../auth-bar/bar__header.js'
-import BarContent from '../auth-bar/bar__content.js'
-import UserSettingsBarInput from '../user-settings/user-settings-bar-input.js'
-import BarFooter from '../auth-bar/bar__footer.js'
-import ButtonMain from '../UI/buttons/button-main.js'
-import ButtonSecondary from '../UI/buttons/button-secondary.js'
-
+import Component from '../../component/component.js';
+import PageColumn from '../page-column.js';
+import UserSettingsBar from '../user-settings/user-settings-bar.js';
+import BarHeader from '../auth-bar/bar__header.js';
+import BarContent from '../auth-bar/bar__content.js';
+import UserSettingsBarInput from '../user-settings/user-settings-bar-input.js';
+import BarFooter from '../auth-bar/bar__footer.js';
+import ButtonMain from '../UI/buttons/button-main.js';
+import ButtonSecondary from '../UI/buttons/button-secondary.js';
 class App extends Component {
-
-  components() {return {PageColumn, UserSettingsBar, BarHeader, BarContent, UserSettingsBarInput, BarFooter, ButtonMain, ButtonSecondary}}
-  
-  template() { 
-
-    return  (
-      `<PageColumn>
+    components() { return { PageColumn, UserSettingsBar, BarHeader, BarContent, UserSettingsBarInput, BarFooter, ButtonMain, ButtonSecondary }; }
+    template() {
+        return (`<PageColumn>
         <UserSettingsBar>
           
           <BarHeader text='User settings'></BarHeader>
@@ -35,19 +30,10 @@ class App extends Component {
           </BarFooter>
         
         </UserSettingsBar>
-      </PageColumn>`
-    )
-
-  }
-
-}  
-
-const root = document.querySelector(".app")
-const app = new App()
-app.render(root)
-
-
-
-
-
-
+      </PageColumn>`);
+    }
+}
+const root = document.querySelector(".app");
+const app = new App();
+app.render(root);
+//# sourceMappingURL=userSettings.js.map

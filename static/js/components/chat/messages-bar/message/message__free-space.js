@@ -1,13 +1,8 @@
-import Component from '../../../../component/component.js'
-
+import Component from '../../../../component/component.js';
 class Message__FreeSpace extends Component {
-
-  template() { 
-    return (
-      `<div className="message__free-space"></div>`
-    )
-  }
-
+    template() {
+        return (`<div className="message__free-space"></div>`);
+    }
 }
-
-export default Message__FreeSpace
+export default Message__FreeSpace;
+//# sourceMappingURL=message__free-space.js.map

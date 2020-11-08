@@ -1,15 +1,10 @@
-import Component from '../../../../component/component.js'
-import Message__Incoming from './message__incoming.js'
-import Message__Outgoing from './message__outgoing.js'
-
+import Component from '../../../../component/component.js';
+import Message__Incoming from './message__incoming.js';
+import Message__Outgoing from './message__outgoing.js';
 class Message extends Component {
-
-  components() {return {Message__Incoming, Message__Outgoing}}
-
-  template() { 
-    
-    return (
-      `<div className="message">
+    components() { return { Message__Incoming, Message__Outgoing }; }
+    template() {
+        return (`<div className="message">
         {% if (props.type === 'in') { %}
           <Message__Incoming
             text={{props.text}}
@@ -21,10 +16,8 @@ class Message extends Component {
             date={{props.date}}
           ></Message__Outgoing>     
         {% } %} 
-      </div>`
-    )
-  }
-
+      </div>`);
+    }
 }
-
-export default Message
+export default Message;
+//# sourceMappingURL=message.js.map

@@ -1,15 +1,11 @@
-import Component from '../../../component/component.js'
+import Component from '../../../component/component.js';
 // import ButtonToGo from '../../UI/buttons/button-to-go.js'
 // import InputGray5 from '../../UI/inputs/input-gray5.js'
 // import UsersBar__UsersList from './users-bar__users-list.js'
-
 class MessagesBar__Header extends Component {
-
-  //components() {return {ButtonToGo, InputGray5, UsersBar__UsersList}}
-
-  template() { 
-    return (
-      `<div className="messages-bar__header">
+    //components() {return {ButtonToGo, InputGray5, UsersBar__UsersList}}
+    template() {
+        return (`<div className="messages-bar__header">
         
         <div className="header__avatar">
           <div className="avatar">
@@ -32,11 +28,8 @@ class MessagesBar__Header extends Component {
           </button>  
         </div>
       
-      </div>`
-      
-    )
-  }
-
+      </div>`);
+    }
 }
-
-export default MessagesBar__Header
+export default MessagesBar__Header;
+//# sourceMappingURL=messages-bar__header.js.map

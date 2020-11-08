@@ -1,13 +1,9 @@
-import Component from '../../../../component/component.js'
-import Message__FreeSpace from './message__free-space.js'
-
+import Component from '../../../../component/component.js';
+import Message__FreeSpace from './message__free-space.js';
 class Message__Outgoing extends Component {
-
-  components() {return {Message__FreeSpace}}
-
-  template() { 
-    return (
-      `<div className="message__free-space">
+    components() { return { Message__FreeSpace }; }
+    template() {
+        return (`<div className="message__free-space">
       </div>
       <div className="message__outgoing">
         <div className="message__decor background-gray5">
@@ -17,10 +13,8 @@ class Message__Outgoing extends Component {
             {{props.date}}
           </span>
         </div>
-      </div>`
-    )
-  }
-
+      </div>`);
+    }
 }
-
-export default Message__Outgoing
+export default Message__Outgoing;
+//# sourceMappingURL=message__outgoing.js.map

@@ -1,9 +1,9 @@
 function startsWithUpper(str) {
-  str = str.trim()
-  if (str.length === 0){
-    return false
-  }
-  return str[0] === str[0].toUpperCase()
+    str = str.trim();
+    if (str.length === 0) {
+        return false;
+    }
+    return str[0] === str[0].toUpperCase();
 }
-
-export default startsWithUpper
+export { startsWithUpper };
+//# sourceMappingURL=startsWithUpper.js.map

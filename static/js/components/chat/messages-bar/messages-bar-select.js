@@ -1,15 +1,10 @@
-import Component from '../../../component/component.js'
-
+import Component from '../../../component/component.js';
 class MessagesBarSelect extends Component {
-
-  template() { 
-    return (
-      `<div class="messages-bar">
+    template() {
+        return (`<div class="messages-bar">
         Please select a chat to start messaging 
-      </div>`
-    )
-  }
-
+      </div>`);
+    }
 }
-
-export default MessagesBarSelect
+export default MessagesBarSelect;
+//# sourceMappingURL=messages-bar-select.js.map

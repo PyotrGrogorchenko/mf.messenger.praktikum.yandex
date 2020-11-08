@@ -1,14 +1,9 @@
-import Component from '../../component/component.js'
-
+import Component from '../../component/component.js';
 class AuthBar extends Component {
-
-  template() { 
-    return (
-      `<form id="form__main" className="auth-bar">
-      </form>`
-    )
-  }
-
+    template() {
+        return (`<form id="form__main" className="auth-bar">
+      </form>`);
+    }
 }
-
-export default AuthBar
+export default AuthBar;
+//# sourceMappingURL=auth-bar.js.map

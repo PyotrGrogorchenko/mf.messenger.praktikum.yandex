@@ -1,13 +1,8 @@
-import Component from '../../component/component.js'
-
+import Component from '../../../component/component.js';
 class BarFooter extends Component {
-
-  template() { 
-    return (
-      `<div className="bar__footer"></div>`
-    )
-  }
-
+    template() {
+        return (`<div className="bar__footer"></div>`);
+    }
 }
-
-export default BarFooter
+export default BarFooter;
+//# sourceMappingURL=bar__footer.js.map

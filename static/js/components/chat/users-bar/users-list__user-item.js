@@ -1,11 +1,7 @@
-import Component from '../../../component/component.js'
-
+import Component from '../../../component/component.js';
 class UsersList__UserItem extends Component {
-
-  template() { 
-    
-    return (
-      `<li className="users-list__user-item">
+    template() {
+        return (`<li className="users-list__user-item">
         <div className="user-item__avatar">
           <div className="avatar">
             <i className="color-gray3 fas fa-camera"></i>
@@ -32,10 +28,8 @@ class UsersList__UserItem extends Component {
             {% } %}
           </div>    
         </div>
-      </li>`
-    )
-  }
-
+      </li>`);
+    }
 }
-
-export default UsersList__UserItem
+export default UsersList__UserItem;
+//# sourceMappingURL=users-list__user-item.js.map

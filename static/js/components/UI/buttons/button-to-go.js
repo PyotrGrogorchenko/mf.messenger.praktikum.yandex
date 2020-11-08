@@ -1,16 +1,11 @@
-import Component from '../../../component/component.js'
-
+import Component from '../../../component/component.js';
 class ButtonToGo extends Component {
-
-  template() { 
-    return (
-      `<a className="button-to-go" id="button-to-profile" rel="stylesheet" href="login.html">
+    template() {
+        return (`<a className="button-to-go" id="button-to-profile" rel="stylesheet" href="login.html">
         Profile
         <i className="button-to-go_icon fas fa-caret-right"></i>
-      </a>`
-    )
-  }
-
+      </a>`);
+    }
 }
-
-export default ButtonToGo
+export default ButtonToGo;
+//# sourceMappingURL=button-to-go.js.map

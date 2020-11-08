@@ -1,14 +1,8 @@
-import Component from '../../component/component.js'
-
+import Component from '../../component/component.js';
 class UserSettingsBar extends Component {
-
-  template() { 
-    return (
-      `<form id="form__main" class="user-settings-bar"></div>`
-      
-    )
-  }
-
+    template() {
+        return (`<form id="form__main" class="user-settings-bar"></div>`);
+    }
 }
-
-export default UserSettingsBar
+export default UserSettingsBar;
+//# sourceMappingURL=user-settings-bar.js.map

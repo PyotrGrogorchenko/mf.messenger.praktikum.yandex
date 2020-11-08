@@ -1,27 +1,20 @@
-import Component from '../../../component/component.js'
-import ButtonToGo from '../../UI/buttons/button-to-go.js'
-import InputGray5 from '../../UI/inputs/input-gray5.js'
-import UsersBar__UsersList from './users-bar__users-list.js'
-
+import Component from '../../../component/component.js';
+import ButtonToGo from '../../UI/buttons/button-to-go.js';
+import InputGray5 from '../../UI/inputs/input-gray5.js';
+import UsersBar__UsersList from './users-bar__users-list.js';
 class UsersBar extends Component {
-
-  components() {return {ButtonToGo, InputGray5, UsersBar__UsersList}}
-
-  template() { 
-    return (
-      `<div className="users-bar">
+    components() { return { ButtonToGo, InputGray5, UsersBar__UsersList }; }
+    template() {
+        return (`<div className="users-bar">
         <form id="form__header" className="users-bar_header">
           <ButtonToGo></ButtonToGo>
           <InputGray5></InputGray5>
         </form>
         <UsersBar__UsersList></UsersBar__UsersList>
-      </div>`
-    )
-  }
-
+      </div>`);
+    }
 }
-
-{/* <div class="users-bar">
+{ /* <div class="users-bar">
   <form id="form__header" class="users-bar_header">
     <a class="button-to-go" id="button-to-profile" rel="stylesheet" href="login.html">
       Profile
@@ -49,7 +42,7 @@ class UsersBar extends Component {
             <div class="user-item__last-message-time">
               <span class="last-message-time__value">22:15</span>
             </div>
-          </div>    
+          </div>
           <div class="user-item__content-bottom">
             <div class="user-item__last-message">
               <b class="hide">You:</b><div class="last-message__value">Для тех, кто любит текст, читайте ниже способ решения этой проблемы.</div>
@@ -57,7 +50,7 @@ class UsersBar extends Component {
             <div class="user-item__count-message">
               <a class="count-message__value">99+</a>
             </div>
-          </div>    
+          </div>
         </div>
       </li>
 
@@ -73,7 +66,7 @@ class UsersBar extends Component {
             <div class="user-item__last-message-time">
               <span class="last-message-time__value">Mon</span>
             </div>
-          </div>    
+          </div>
           <div class="user-item__content-bottom">
             <div class="user-item__last-message">
               <b>You:</b><div class="last-message__value">Для тех, кто любит текст, читайте ниже способ решения этой проблемы.</div>
@@ -81,7 +74,7 @@ class UsersBar extends Component {
             <div class="user-item__count-message hide">
               <a class="count-message__value">99+</a>
             </div>
-          </div>    
+          </div>
         </div>
       </li>
 
@@ -97,7 +90,7 @@ class UsersBar extends Component {
             <div class="user-item__last-message-time">
               <span class="last-message-time__value">12 Apr 2020</span>
             </div>
-          </div>    
+          </div>
           <div class="user-item__content-bottom">
             <div class="user-item__last-message">
               <b class="hide">You:</b><a class="last-message__value">Пока!</a>
@@ -105,7 +98,7 @@ class UsersBar extends Component {
             <div class="user-item__count-message">
               <a class="count-message__value">1</a>
             </div>
-          </div>    
+          </div>
         </div>
       </li>
 
@@ -121,7 +114,7 @@ class UsersBar extends Component {
             <div class="user-item__last-message-time">
               <span class="last-message-time__value">12 Apr 2020</span>
             </div>
-          </div>    
+          </div>
           <div class="user-item__content-bottom">
             <div class="user-item__last-message">
               <b class="hide">You:</b><a class="last-message__value">Пока!</a>
@@ -129,7 +122,7 @@ class UsersBar extends Component {
             <div class="user-item__count-message">
               <a class="count-message__value">1</a>
             </div>
-          </div>    
+          </div>
         </div>
       </li>
 
@@ -145,7 +138,7 @@ class UsersBar extends Component {
             <div class="user-item__last-message-time">
               <span class="last-message-time__value">12 Apr 2020</span>
             </div>
-          </div>    
+          </div>
           <div class="user-item__content-bottom">
             <div class="user-item__last-message">
               <b class="hide">You:</b><a class="last-message__value">Пока!</a>
@@ -153,15 +146,14 @@ class UsersBar extends Component {
             <div class="user-item__count-message">
               <a class="count-message__value">1</a>
             </div>
-          </div>    
+          </div>
         </div>
       </li>
 
 
     </ul>
   </div>
-</div> */}
-
-
-
-export default UsersBar
+</div> */
+}
+export default UsersBar;
+//# sourceMappingURL=users-bar.js.map

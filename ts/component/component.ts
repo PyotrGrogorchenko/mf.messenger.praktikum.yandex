@@ -1,6 +1,6 @@
-import EventBus from './event-bus'
-import { Node as PARSER_NODE, parser} from './parser'
-import { VirtDom, Node as DOM_NODE }  from './virtDOM'
+import EventBus from './event-bus.js'
+import { Node as PARSER_NODE, parser} from './parser.js'
+import { VirtDom, Node as DOM_NODE }  from './virtDOM.js'
 
 // import VirtDom from './virtDOM.js'
 // import { parser, PARSER_TYPES } from './parser.js'
@@ -191,7 +191,7 @@ class Component {
         })
 
         element.setAttribute('uid', String(node.uid))
-        element.textContent = node.content
+        element.textContent = node.content as string
         (root as HTMLElement).appendChild(element)
         this._rootOut = element
         node.root = element

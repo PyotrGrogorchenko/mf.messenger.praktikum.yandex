@@ -1,14 +1,9 @@
-import Component from '../component/component.js'
-
+import Component from '../component/component.js';
 class PageColumn extends Component {
-
-  template() { 
-    return (
-      `<div className="page-column">
-      </div>`
-    )
-  }
-
+    template() {
+        return (`<div className="page-column">
+      </div>`);
+    }
 }
-
-export default PageColumn
+export default PageColumn;
+//# sourceMappingURL=page-column.js.map
