@@ -9,7 +9,7 @@
   const form__footer = document.getElementById('form__footer') 
   if (form__footer) {form__footer.addEventListener('submit', (e) => {submit (e)})} 
     
-  function submit (e) { 
+  function submit (e: any) { 
     e.preventDefault() 
 
     console.log(e.target)

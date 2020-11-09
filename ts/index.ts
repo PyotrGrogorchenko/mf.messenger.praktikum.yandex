@@ -113,8 +113,6 @@ class App extends Component {
 
 }
 
-
-
 const root: HTMLElement | null = document.querySelector(".app")
 const app: App = new App()
 app.render(root)

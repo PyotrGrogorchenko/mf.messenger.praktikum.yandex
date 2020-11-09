@@ -14,6 +14,6 @@ class App extends Component {
 
 }  
 
-const root = document.querySelector(".app")
-const app = new App()
+const root: HTMLElement | null = document.querySelector(".app")
+const app: App = new App()
 app.render(root)
