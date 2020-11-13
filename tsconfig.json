@@ -25,6 +25,7 @@
     /* Source Map Options */
 
     /* Experimental Options */
+    "experimentalDecorators": true,
 
     /* Advanced Options */
     "skipLibCheck": true,                     /* Skip type checking of declaration files. */

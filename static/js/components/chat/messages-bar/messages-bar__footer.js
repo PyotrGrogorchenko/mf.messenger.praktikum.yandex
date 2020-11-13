@@ -6,7 +6,7 @@ class MessagesBar__Footer extends Component {
           <i className="color-gray3 fas fa-paperclip"></i>
         </button>
         <div className="input-gray5">
-          <input className="input-gray5__input" type="search" id="input_send-message" placeholder="Write...">
+          <input className="input-gray5__input" type="text" id="input_send-message" placeholder="Write...">
         </div>
         <button className="button-round background-blue1 margin5px" onClick={{props.func}}>
           <i className="color-white fas fa-long-arrow-alt-right"></i>

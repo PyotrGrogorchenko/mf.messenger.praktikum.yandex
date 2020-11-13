@@ -14,6 +14,7 @@ class Node {
     }
 }
 class VirtDom {
+    // _uid: () => number = this._uidCount()
     constructor(parsedTemplate, state, props) {
         //this._nodes = []
         //this._id = this._func_id()
@@ -21,7 +22,6 @@ class VirtDom {
         this._nodes = Array();
         this._getOwner = this._func_getOwner();
         this._REGEXP_PARAM = /\{\{(.*?)\}\}/gi;
-        this._uid = this._uidCount();
         //this._REGEXP_PARAM = /\{\{(.*?)\}\}/gi
         this.init(parsedTemplate, state, props);
     }
@@ -51,13 +51,13 @@ class VirtDom {
         const end = str.indexOf(' ') === -1 ? str.length : str.indexOf(' ');
         return str.slice(begin, end);
     }
-    _uidCount() {
-        let uidCount = -1;
-        return function () {
-            uidCount++;
-            return uidCount;
-        };
-    }
+    // _uidCount(): () => number {
+    //   let uidCount: number = -1
+    //   return function(): number {
+    //     uidCount++
+    //     return uidCount
+    //   }
+    // }
     _compileItem(item, state, props) {
         switch (item.type) {
             case PARSER_TYPES.END:
@@ -118,7 +118,7 @@ class VirtDom {
             node.tagName = VirtDom.getTagName(header);
             node.isComponent = this._setSignComponent(node.tagName);
             node.header = header;
-            node.uid = this._uid();
+            node.uid = window.uid();
             this._setLevel(node);
             this._setHeaderProps(node, state, props);
             this._nodes.push(node);
@@ -210,6 +210,14 @@ class VirtDom {
         const cacheTxt = {};
         let txt;
         const regExp = new RegExp(/[\'\"](.*?)[\'\"]/gi);
+        // ВНИМАНИЕ ВОПРОС \\
+        // из строки "AuthBarInput text='Second name'  type='chat-name'  id='input_second-name"
+        // находит: 'Second name', ' id=' 
+        // должен найти: 'Second name', 'chat-name', 'input_second-name'
+        // на https://regex101.com/ все правильно находит
+        // не находит из-за буквы 'd': 'Second name', 'Secon named'. 
+        // Если убрать, например: 'Secon name', тогда ок. 'Second nam' - тоже ок
+        // Почему так? Если это ошибка RegExp, как можно её изежать?
         let count = 1;
         while ((txt = regExp.exec(header))) {
             if (txt[0]) {

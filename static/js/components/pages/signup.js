@@ -15,10 +15,10 @@ class App extends Component {
           <BarHeader text='Sign up'></BarHeader>
           
           <BarContent>
-            <AuthBarInput text='First name'   type='text'       id='input_first-name'   ></>                  
-            <AuthBarInput text='Second name'  type='text'       id='input_second-name'  ></>                  
+            <AuthBarInput text='First name'   type='chat-name'  id='input_first-name'   ></>                  
+            <AuthBarInput text='Second name'  type='chat-name'  id='input_second-name'  ></>                  
             <AuthBarInput text='Login'        type='text'       id='input_login'        ></>                  
-            <AuthBarInput text='Email'        type='email'      id='nput_emai'          ></>                  
+            <AuthBarInput text='Email'        type='email'      id='input_email'        ></>                  
             <AuthBarInput text='Password'     type='password'   id='input_password'     ></>                  
             <AuthBarInput text='Phone'        type='tel'        id='input_phone'        ></>                  
           </BarContent>

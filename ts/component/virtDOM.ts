@@ -28,7 +28,7 @@ class VirtDom {
   _nodes: Array<Node> = Array<Node>()
   _getOwner: (command: string, node: null | Node) => Node | null  = this._func_getOwner()
   _REGEXP_PARAM: RegExp = /\{\{(.*?)\}\}/gi
-  _uid: () => number = this._uidCount()
+  // _uid: () => number = this._uidCount()
 
   constructor(parsedTemplate: Array<PARSER_NODE>, state: any, props: any) {
     
@@ -74,13 +74,13 @@ class VirtDom {
     return str.slice(begin, end)
   }
 
-  _uidCount(): () => number {
-    let uidCount: number = -1
-    return function(): number {
-      uidCount++
-      return uidCount
-    }
-  }
+  // _uidCount(): () => number {
+  //   let uidCount: number = -1
+  //   return function(): number {
+  //     uidCount++
+  //     return uidCount
+  //   }
+  // }
 
   _compileItem(item: PARSER_NODE, state: any, props: any) {
   
@@ -151,7 +151,7 @@ class VirtDom {
       node.tagName = VirtDom.getTagName(header)
       node.isComponent = this._setSignComponent(node.tagName)
       node.header = header
-      node.uid = this._uid()
+      node.uid = window.uid()
       this._setLevel(node)
       this._setHeaderProps(node, state, props)  
       
@@ -281,6 +281,16 @@ class VirtDom {
     const cacheTxt: LooseObject = {}
     let txt: RegExpExecArray | null
     const regExp: RegExp = new RegExp(/[\'\"](.*?)[\'\"]/gi)
+    
+    // ВНИМАНИЕ ВОПРОС \\
+    // из строки "AuthBarInput text='Second name'  type='chat-name'  id='input_second-name"
+    // находит: 'Second name', ' id=' 
+    // должен найти: 'Second name', 'chat-name', 'input_second-name'
+    // на https://regex101.com/ все правильно находит
+    // не находит из-за буквы 'd': 'Second name', 'Secon named'. 
+    // Если убрать, например: 'Secon name', тогда ок. 'Second nam' - тоже ок
+    // Почему так? Если это ошибка RegExp, как можно её изежать?
+    
     let count: number = 1
     while ((txt = regExp.exec(header))) {
       if (txt[0]) {
