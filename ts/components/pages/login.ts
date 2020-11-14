@@ -8,7 +8,7 @@ import BarFooter from '../auth-bar/bar__footer.js'
 import ButtonMain from '../UI/buttons/button-main.js'
 import ButtonSecondary from '../UI/buttons/button-secondary.js'
 
-class App extends Component {
+export default class Login extends Component {
 
   components() {return {PageColumn, AuthBar, BarHeader, BarContent, AuthBarInput, BarFooter, ButtonMain, ButtonSecondary}}
   
@@ -44,6 +44,7 @@ class App extends Component {
             <ButtonSecondary 
               text='Sign up'
               id={{state.btnSignUp.id}}
+              href='#{R}signup'
             ></ButtonSecondary>
           </BarFooter>
         </AuthBar>
@@ -54,9 +55,10 @@ class App extends Component {
 
 }  
 
-const root: HTMLElement | null = document.querySelector(".app")
-const app: App = new App()
-app.render(root)
+// const root: HTMLElement | null = document.querySelector(".app")
+// const app: App = new App()
+// app.render(root)
+
 
 
 

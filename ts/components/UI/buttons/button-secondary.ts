@@ -8,7 +8,7 @@ class ButtonSecondary extends Component {
 
   template() { 
     return (
-      `<a className="button-secondary" id={{props.id}} rel="stylesheet" href="signup.html">{{props.text}}</a>`
+      `<a className="button-secondary" id={{props.id}} rel="stylesheet" href={{props.href}} >{{props.text}}</a>`
     )
   }
 

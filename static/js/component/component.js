@@ -1,6 +1,7 @@
 import EventBus from './event-bus.js';
 import { parser } from './parser.js';
 import { VirtDom } from './virtDOM.js';
+import { onRouteClick } from '../router/Router.js';
 // import VirtDom from './virtDOM.js'
 // import { parser, PARSER_TYPES } from './parser.js'
 var EVENTS;
@@ -128,6 +129,7 @@ class Component {
             else {
                 const element = document.createElement(node.tagName);
                 Object.keys(node.props).forEach(prop => {
+                    //console.log(prop, node.props)
                     if (prop === 'classes') {
                         node.props.classes.forEach(nodeClass => {
                             element.classList.add(nodeClass);
@@ -140,6 +142,16 @@ class Component {
                         else {
                             element.setAttribute(prop, node.props[prop]);
                         }
+                    }
+                    else if ((prop === 'href' || prop === 'route')) { // Route
+                        if (!node.props[prop]) {
+                            return;
+                        }
+                        //&& node.props[prop].startsWith('#{R}')
+                        if (node.props[prop].startsWith('#{R}')) {
+                            element.addEventListener('click', onRouteClick);
+                        }
+                        element.setAttribute(prop, node.props[prop]);
                     }
                     else {
                         element.setAttribute(prop, node.props[prop]);

@@ -1,7 +1,7 @@
 import Component from '../../component/component.js'
 import ErrorBar from '../error-bar.js'
 
-class App extends Component {
+export default class App extends Component {
 
   components() {return {ErrorBar}}
   
@@ -14,6 +14,6 @@ class App extends Component {
 
 }  
 
-const root: HTMLElement | null = document.querySelector(".app")
-const app: App = new App()
-app.render(root)
+// const root: HTMLElement | null = document.querySelector(".app")
+// const app: App = new App()
+// app.render(root)

@@ -4,7 +4,7 @@ class ButtonSecondary extends Component {
     //   console.log(props)
     // }
     template() {
-        return (`<a className="button-secondary" id={{props.id}} rel="stylesheet" href="signup.html">{{props.text}}</a>`);
+        return (`<a className="button-secondary" id={{props.id}} rel="stylesheet" href={{props.href}} >{{props.text}}</a>`);
     }
 }
 export default ButtonSecondary;

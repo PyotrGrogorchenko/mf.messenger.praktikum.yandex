@@ -7,7 +7,7 @@ import AuthBarInput from '../auth-bar/auth-bar-input.js';
 import BarFooter from '../auth-bar/bar__footer.js';
 import ButtonMain from '../UI/buttons/button-main.js';
 import ButtonSecondary from '../UI/buttons/button-secondary.js';
-class App extends Component {
+export default class Signup extends Component {
     components() { return { PageColumn, AuthBar, BarHeader, BarContent, AuthBarInput, BarFooter, ButtonMain, ButtonSecondary }; }
     template() {
         return (`<PageColumn>
@@ -25,14 +25,14 @@ class App extends Component {
           
           <BarFooter>
             <ButtonMain text='Sign up'      id='button-sign-up'></ButtonMain>
-            <ButtonSecondary text='Log in'  id='button-to-log-in'></ButtonSecondary>
+            <ButtonSecondary text='Log in'  id='button-to-log-in' href='#{R}login'></ButtonSecondary>
           </BarFooter>
         
         </AuthBar>
       </PageColumn>`);
     }
 }
-const root = document.querySelector(".app");
-const app = new App();
-app.render(root);
+// const root: HTMLElement | null = document.querySelector(".app")
+// const app: App = new App()
+// app.render(root)
 //# sourceMappingURL=signup.js.map

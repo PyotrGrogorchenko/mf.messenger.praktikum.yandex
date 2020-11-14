@@ -1,6 +1,5 @@
 import Component from './component/component.js'
 import PageColumn from './components/page-column.js'
-import FormMain from './components/chat/auth-bar/form__main.js'
 import BarHeader from './components/auth-bar/bar__header.js'
 import BarContent from './components/auth-bar/bar__content.js'
 import AuthBarInput from './components/auth-bar/auth-bar-input.js'
@@ -10,18 +9,18 @@ import ButtonSecondary from './components/UI/buttons/button-secondary.js'
 import Message__Incoming from './components/chat/messages-bar/message/message__incoming.js'
 import Message__Outgoing from './components/chat/messages-bar/message/message__outgoing.js'
 
-class App extends Component {
+export default class Index extends Component {
 
-  components() {return {PageColumn, FormMain, BarHeader, BarContent, AuthBarInput, BarFooter, ButtonMain, ButtonSecondary, 
+  components() {return {PageColumn, BarHeader, BarContent, AuthBarInput, BarFooter, ButtonMain, ButtonSecondary, 
                           Message__Incoming, Message__Outgoing}}
   
-//   // func (e) {
-//   //   { console.log(e) }  
-//   // }
+    func (e:Event) {
+      { console.log(e) }  
+    }
 
-//   // state() {return {
-//   //   func: this.func 
-//   // }}
+    state() {return {
+      func: this.func 
+    }}
 
 //   state() {return {
 //     messages: 
@@ -35,10 +34,19 @@ class App extends Component {
   template() { 
 
     return  (
-      
+
       `<PageColumn>
-        <div>Messanger</div>
+        <nav >
+          <a href="#{R}login" >Чебурашка</a>
+          <a href="#{R}signup">Гена</a>
+          <a href="">Шапокляк</a>
+          <a href="">Лариска</a>
+        </nav>
       </PageColumn>`
+
+      // `<PageColumn>
+      //   <div>Messanger</div>
+      // </PageColumn>`
   
     ) }
 //       // `<div className="messages-bar">
@@ -113,6 +121,12 @@ class App extends Component {
 
 }
 
-const root: HTMLElement | null = document.querySelector(".app")
-const app: App = new App()
-app.render(root)
+// const root: HTMLElement | null = document.querySelector(".app")
+// const app: App = new App()
+// app.render(root)
+
+// const router: Router = new Router('.app')
+
+// router.use('/login', Login)
+
+// console.log(router)

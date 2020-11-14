@@ -16,6 +16,12 @@
   --color-white: #FFFFFF;
 }
 
+nav {
+  background: var(--color-gray5);
+  height: 50px;
+  width: 300px;
+}
+
 .mark {
   background-color: var(--color-gray5);
 }
