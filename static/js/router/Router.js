@@ -1,12 +1,4 @@
 import Route from './Route.js';
-function onRouteClick(e) {
-    e.preventDefault();
-    let attr = e.target.getAttribute('href');
-    attr = attr ? attr : e.target.getAttribute('route');
-    //console.log(attr?.slice(4))
-    const router = new Router();
-    router.go(`/${attr === null || attr === void 0 ? void 0 : attr.slice(4)}`);
-}
 class Router {
     constructor(rootQuery = '') {
         this.routes = [];
@@ -60,5 +52,5 @@ class Router {
         return this.routes.find(route => route.match(pathname));
     }
 }
-export { Router, onRouteClick };
+export { Router };
 //# sourceMappingURL=Router.js.map

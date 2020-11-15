@@ -1,7 +1,8 @@
 import EventBus from './event-bus.js';
 import { parser } from './parser.js';
 import { VirtDom } from './virtDOM.js';
-import { onRouteClick } from '../router/Router.js';
+//import { Router, onRouteClick } from '../router/Router.js'
+import { onRouteClick } from '../router/events.js';
 // import VirtDom from './virtDOM.js'
 // import { parser, PARSER_TYPES } from './parser.js'
 var EVENTS;
@@ -143,7 +144,7 @@ class Component {
                             element.setAttribute(prop, node.props[prop]);
                         }
                     }
-                    else if ((prop === 'href' || prop === 'route')) { // Route
+                    else if ((prop === 'href')) {
                         if (!node.props[prop]) {
                             return;
                         }

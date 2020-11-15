@@ -7,7 +7,7 @@ import UserSettingsBarInput from '../user-settings/user-settings-bar-input.js';
 import BarFooter from '../auth-bar/bar__footer.js';
 import ButtonMain from '../UI/buttons/button-main.js';
 import ButtonSecondary from '../UI/buttons/button-secondary.js';
-class App extends Component {
+export default class UserSettings extends Component {
     components() { return { PageColumn, UserSettingsBar, BarHeader, BarContent, UserSettingsBarInput, BarFooter, ButtonMain, ButtonSecondary }; }
     template() {
         return (`<PageColumn>
@@ -33,7 +33,4 @@ class App extends Component {
       </PageColumn>`);
     }
 }
-const root = document.querySelector(".app");
-const app = new App();
-app.render(root);
 //# sourceMappingURL=userSettings.js.map

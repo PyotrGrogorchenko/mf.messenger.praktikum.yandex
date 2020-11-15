@@ -4,7 +4,7 @@ class ButtonToGo extends Component {
 
   template() { 
     return (
-      `<a className="button-to-go" id="button-to-profile" rel="stylesheet" href="login.html">
+      `<a className="button-to-go" id="button-to-profile" rel="stylesheet" href='#{R}userSettings'>
         Profile
         <i className="button-to-go_icon fas fa-caret-right"></i>
       </a>`

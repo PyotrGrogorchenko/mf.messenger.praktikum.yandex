@@ -159,8 +159,8 @@ class VirtDom {
             $code = $code + '\n' +
                 ` item = {...$stackItems[${$stackItems.length - 1}]}
         param = null
-        regExp = new RegExp(this._REGEXP_PARAM)
-        while ((param = regExp.exec(item.content))) {
+        //regExp = new RegExp(this._REGEXP_PARAM)
+        while ((param = new RegExp(this._REGEXP_PARAM).exec(item.content))) {
           if (param[1] && !param[1].startsWith('state') && !param[1].startsWith('props')) {
             item.content = item.content.replace(param[0], '"' + eval(param[1]) + '"')
           }
@@ -209,17 +209,9 @@ class VirtDom {
         let header = node.header;
         const cacheTxt = {};
         let txt;
-        const regExp = new RegExp(/[\'\"](.*?)[\'\"]/gi);
-        // ВНИМАНИЕ ВОПРОС \\
-        // из строки "AuthBarInput text='Second name'  type='chat-name'  id='input_second-name"
-        // находит: 'Second name', ' id=' 
-        // должен найти: 'Second name', 'chat-name', 'input_second-name'
-        // на https://regex101.com/ все правильно находит
-        // не находит из-за буквы 'd': 'Second name', 'Secon named'. 
-        // Если убрать, например: 'Secon name', тогда ок. 'Second nam' - тоже ок
-        // Почему так? Если это ошибка RegExp, как можно её изежать?
+        //const regExp: RegExp = new RegExp(/[\'\"](.*?)[\'\"]/gi)
         let count = 1;
-        while ((txt = regExp.exec(header))) {
+        while ((txt = new RegExp(/[\'\"](.*?)[\'\"]/gi).exec(header))) {
             if (txt[0]) {
                 cacheTxt[`text${count}`] = txt[0];
                 header = header.replace(txt[0], `text${count}`);
@@ -252,8 +244,8 @@ class VirtDom {
             return content;
         }
         let param;
-        const regExp = new RegExp(this._REGEXP_PARAM);
-        while ((param = regExp.exec(content))) {
+        //const regExp: RegExp = new RegExp(this._REGEXP_PARAM)
+        while ((param = new RegExp(this._REGEXP_PARAM).exec(content))) {
             if (param[1]) {
                 content = content.replace(param[0], eval(param[1]));
             }

@@ -1,17 +1,5 @@
 import Route from './Route.js'
 
-function onRouteClick(e:Event) {
-  e.preventDefault()
-  let attr : string | null = (e.target as HTMLElement).getAttribute('href')
-  attr = attr ? attr : (e.target as HTMLElement).getAttribute('route')
-
-  //console.log(attr?.slice(4))
-  const router: Router = new Router()
-  router.go(`/${attr?.slice(4)}`)
-
-}
-
-
 class Router {
 
   static __instance: Router
@@ -88,4 +76,4 @@ class Router {
     }
 }
 
-export { Router, onRouteClick }
+export { Router }

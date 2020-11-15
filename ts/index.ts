@@ -37,10 +37,13 @@ export default class Index extends Component {
 
       `<PageColumn>
         <nav >
-          <a href="#{R}login" >Чебурашка</a>
-          <a href="#{R}signup">Гена</a>
-          <a href="">Шапокляк</a>
-          <a href="">Лариска</a>
+          <a className="main-nav-a" href="#{R}login" >Login  </a>
+          <a className="main-nav-a" href="#{R}signup">Signup</a>
+          <a className="main-nav-a" href="#{R}selectChat">selectChat</a>
+          <a className="main-nav-a" href="#{R}chat">chat</a>
+          <a className="main-nav-a" href="#{R}error404">error404</a>
+          <a className="main-nav-a" href="#{R}error500">error500</a>
+          <a className="main-nav-a" href="#{R}userSettings">userSettings</a>
         </nav>
       </PageColumn>`
 

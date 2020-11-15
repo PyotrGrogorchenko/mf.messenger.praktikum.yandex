@@ -2,7 +2,7 @@ import Component from '../../component/component.js'
 import UsersBar from '../chat/users-bar/users-bar.js'
 import MessagesBar from '../chat/messages-bar/messages-bar.js'
 
-class App extends Component {
+export default class Chat extends Component {
 
   components() {return {UsersBar, MessagesBar}}
   
@@ -24,8 +24,4 @@ class App extends Component {
     )
   }
 
-}  
-
-const root: HTMLElement | null = document.querySelector(".app")
-const app: App = new App()
-app.render(root)
+}

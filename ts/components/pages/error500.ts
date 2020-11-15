@@ -1,19 +1,19 @@
 import Component from '../../component/component.js'
 import ErrorBar from '../error-bar.js'
 
-class App extends Component {
+export default class Error500 extends Component {
 
   components() {return {ErrorBar}}
   
   template() { 
 
     return  (
-      `<ErrorBar errCode='500' message='Sorry, something is wrong'></>`
+      `<ErrorBar
+        errCode='500'
+        message='Sorry, something is wrong'
+        href='#{R}selectChat'
+      ></>`
     )
   }
 
-}  
-
-const root: HTMLElement | null = document.querySelector(".app")
-const app: App = new App()
-app.render(root)
+}

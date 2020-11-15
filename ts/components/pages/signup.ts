@@ -29,7 +29,7 @@ export default class Signup extends Component {
           </BarContent>
           
           <BarFooter>
-            <ButtonMain text='Sign up'      id='button-sign-up'></ButtonMain>
+            <ButtonMain text='Sign up'      id='button-sign-up' href='#{R}selectChat'></ButtonMain>
             <ButtonSecondary text='Log in'  id='button-to-log-in' href='#{R}login'></ButtonSecondary>
           </BarFooter>
         
@@ -39,14 +39,4 @@ export default class Signup extends Component {
 
   }
 
-}  
-
-// const root: HTMLElement | null = document.querySelector(".app")
-// const app: App = new App()
-// app.render(root)
-
-
-
-
-
-
+}

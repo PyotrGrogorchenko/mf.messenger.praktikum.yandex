@@ -8,7 +8,7 @@ import BarFooter from '../auth-bar/bar__footer.js'
 import ButtonMain from '../UI/buttons/button-main.js'
 import ButtonSecondary from '../UI/buttons/button-secondary.js'
 
-class App extends Component {
+export default class UserSettings extends Component {
 
   components() {return {PageColumn, UserSettingsBar, BarHeader, BarContent, UserSettingsBarInput, BarFooter, ButtonMain, ButtonSecondary}}
   
@@ -40,13 +40,4 @@ class App extends Component {
 
   }
 
-}  
-
-const root: HTMLElement | null = document.querySelector(".app")
-const app: App = new App()
-app.render(root)
-
-
-
-
-
+} 

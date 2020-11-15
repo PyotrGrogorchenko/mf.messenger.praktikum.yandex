@@ -1,7 +1,7 @@
 import Component from '../../component/component.js';
 import UsersBar from '../chat/users-bar/users-bar.js';
 import MessagesBar from '../chat/messages-bar/messages-bar.js';
-class App extends Component {
+export default class Chat extends Component {
     components() { return { UsersBar, MessagesBar }; }
     func(e) {
         {
@@ -20,7 +20,4 @@ class App extends Component {
       </div>`);
     }
 }
-const root = document.querySelector(".app");
-const app = new App();
-app.render(root);
 //# sourceMappingURL=chat.js.map

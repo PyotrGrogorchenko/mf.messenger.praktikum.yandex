@@ -40,6 +40,7 @@ export default class Login extends Component {
             <ButtonMain
               text='Log in'
               id={{state.btnLogIn.id}}
+              href='#{R}selectChat'
             ></ButtonMain>
             <ButtonSecondary 
               text='Sign up'
@@ -53,15 +54,4 @@ export default class Login extends Component {
 
   }
 
-}  
-
-// const root: HTMLElement | null = document.querySelector(".app")
-// const app: App = new App()
-// app.render(root)
-
-
-
-
-
-
-
+}

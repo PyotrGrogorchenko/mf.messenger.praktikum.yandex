@@ -17,10 +17,27 @@
 }
 
 nav {
-  background: var(--color-gray5);
-  height: 50px;
-  width: 300px;
+  /* background: var(--color-gray5); */
+  /* height: 50px; */
+  /* width: 300px; */
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;  
+
+  /* margin-right: 10px !important; */
 }
+
+.main-nav-a {
+  margin: 10px !important;
+  text-decoration: none;
+  color: var(--color-blue1);
+}
+
+.main-nav-a:hover {
+  color: var(--color-gray1);
+ }
 
 .mark {
   background-color: var(--color-gray5);
@@ -324,6 +341,9 @@ nav {
   padding-left: 0;  
   
   border-top: 1px solid var(--color-gray5);
+
+  cursor: pointer;
+
 }
 
 .user-item__avatar {

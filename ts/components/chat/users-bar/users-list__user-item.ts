@@ -1,11 +1,17 @@
 import Component from '../../../component/component.js'
+import { onRouteClick } from '../../../router/events.js'
 
 class UsersList__UserItem extends Component {
 
+  state() {return {
+    onRouteClick: onRouteClick
+  }}
+
+
   template() { 
-    
+   
     return (
-      `<li className="users-list__user-item">
+      `<li className="users-list__user-item" href='#{R}chat'>
         <div className="user-item__avatar">
           <div className="avatar">
             <i className="color-gray3 fas fa-camera"></i>
