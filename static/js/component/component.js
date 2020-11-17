@@ -155,7 +155,13 @@ class Component {
                         element.setAttribute(prop, node.props[prop]);
                     }
                     else {
-                        element.setAttribute(prop, node.props[prop]);
+                        if (node.props[prop] === '#noValue') {
+                            //(element as any)[prop] = true
+                        }
+                        else {
+                            //console.log(prop, node.props[prop])
+                            element.setAttribute(prop, node.props[prop]);
+                        }
                     }
                 });
                 element.setAttribute('uid', String(node.uid));

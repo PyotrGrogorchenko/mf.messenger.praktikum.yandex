@@ -1,4 +1,8 @@
 import { PARSER_TYPES } from './parser.js';
+//declare const window: any
+// interface LooseObject {
+//   [key: string]: any
+// }
 class Node {
     constructor() {
         this.uid = 0;
@@ -223,13 +227,16 @@ class VirtDom {
                 return;
             }
             const arrKeyValue = keyValue.split('=');
-            if (cacheTxt[arrKeyValue[1]]) {
+            if (cacheTxt[arrKeyValue[1]] && arrKeyValue.length > 1) {
                 arrKeyValue[1] = cacheTxt[arrKeyValue[1]];
             }
             const param = new RegExp(this._REGEXP_PARAM).exec(arrKeyValue[1]);
             if (arrKeyValue[0] === 'className') {
                 const strClasses = param ? window.get(state, props, param[1], '') : arrKeyValue[1].replace(/"/g, '');
                 node.props.classes = strClasses.split(' ');
+            }
+            else if (arrKeyValue.length === 1) {
+                node.props[arrKeyValue[0]] = '#noValue';
             }
             else if (param) {
                 node.props[arrKeyValue[0]] = eval(param[1]);

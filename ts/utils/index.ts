@@ -1,23 +1,20 @@
-import { startsWithUpper } from './startsWithUpper.js'
-import { get } from './get.js'
-import { uid } from './uid.js'
-
-// const startsWithUpper = require('startsWithUpper')
-// const get = require('get')
-
-//import uid from './uid.js'
-//import validate from './validate.js'
+import { get, isEqual, startsWithUpper, uid } from './functions/index.js'
+import { getFormData, createValidateEvents } from './validate/index.js'
 
 declare global {
   interface Window { 
     get: any 
     startsWithUpper: any
     uid: any 
+    getFormData: any
+    createValidateEvents: any
+    isEqual: any
   }
 }
 
 window.startsWithUpper = startsWithUpper
 window.get = get
 window.uid = uid
-
-//validate()
+window.getFormData = getFormData
+window.createValidateEvents = createValidateEvents
+window.isEqual = isEqual

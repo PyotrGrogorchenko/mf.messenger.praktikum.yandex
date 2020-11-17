@@ -181,6 +181,7 @@ class Component {
             (node.props.classes as Array<string>).forEach(nodeClass => {
               element.classList.add(nodeClass)
             })
+          
           } else if (typeof node.props[prop] === "function") {
             if (prop.startsWith('on')) {
               element.addEventListener(prop.slice(2).toLowerCase(), node.props[prop])
@@ -197,7 +198,13 @@ class Component {
             }  
             element.setAttribute(prop, node.props[prop])
           } else {
-            element.setAttribute(prop, node.props[prop])
+            if (node.props[prop] === '#noValue'){
+              //(element as any)[prop] = true
+            } else {
+              //console.log(prop, node.props[prop])
+              element.setAttribute(prop, node.props[prop])
+            }
+            
           }
 
         })

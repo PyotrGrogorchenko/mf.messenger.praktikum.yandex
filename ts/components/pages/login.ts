@@ -28,6 +28,7 @@ export default class Login extends Component {
             <BarContent>
             <AuthBarInput 
               text={{state.inputLogin.text}}
+              type={{state.inputLogin.type}}
               id={{state.inputLogin.id}}
             ></AuthBarInput>                  
             <AuthBarInput

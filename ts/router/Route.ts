@@ -38,6 +38,7 @@ class Route {
     const root: HTMLElement = document.querySelector(this._props.rootQuery)
     const app = new this._blockClass()
     app.render(root)
+    window.createValidateEvents()
 
   }
 }

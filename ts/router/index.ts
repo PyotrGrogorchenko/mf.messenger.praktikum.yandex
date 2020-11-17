@@ -2,7 +2,7 @@ import { Router } from './Router.js'
 
 import Login from '../components/pages/login.js'
 import Signup from '../components/pages/signup.js'
-import Index from '../index.js'
+import Index from '../components/pages/index.js'
 import SelectChat from '../components/pages/selectChat.js'
 import Chat from '../components/pages/chat.js'
 import UserSettings from '../components/pages/userSettings.js'
