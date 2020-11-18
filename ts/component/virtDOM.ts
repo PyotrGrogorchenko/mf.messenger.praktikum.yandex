@@ -1,5 +1,5 @@
-import { PARSER_TYPES, Node as PARSER_NODE } from './parser.js'
-import Component from './component.js'
+import { PARSER_TYPES, Node as PARSER_NODE } from './parser'
+import Component from './component'
 
 
 //declare const window: any

@@ -1,7 +1,7 @@
-import Component from '../../../component/component.js'
-// import ButtonToGo from '../../UI/buttons/button-to-go.js'
-// import InputGray5 from '../../UI/inputs/input-gray5.js'
-// import UsersBar__UsersList from './users-bar__users-list.js'
+import Component from '../../../component/component'
+// import ButtonToGo from '../../UI/buttons/button-to-go'
+// import InputGray5 from '../../UI/inputs/input-gray5'
+// import UsersBar__UsersList from './users-bar__users-list'
 
 class MessagesBar__Header extends Component {
 

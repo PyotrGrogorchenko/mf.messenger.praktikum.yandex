@@ -1,5 +1,5 @@
-import Component from '../../../component/component.js'
-import { onRouteClick } from '../../../router/events.js'
+import Component from '../../../component/component'
+import { onRouteClick } from '../../../router/events'
 
 class UsersList__UserItem extends Component {
 

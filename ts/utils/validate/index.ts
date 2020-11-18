@@ -1,4 +1,4 @@
-import { getFormData } from './data.js'
-import { createValidateEvents } from './events.js'
+import { getFormData } from './data'
+import { createValidateEvents } from './events'
 
 export { getFormData, createValidateEvents }

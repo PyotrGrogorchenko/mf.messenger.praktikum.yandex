@@ -1,5 +1,5 @@
-import Component from '../component/component.js'
-import PageColumn from './page-column.js'
+import Component from '../component/component'
+import PageColumn from './page-column'
 
 class ErrorBar extends Component {
 

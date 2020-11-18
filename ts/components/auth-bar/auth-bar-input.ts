@@ -1,11 +1,11 @@
-import Component from '../../component/component.js'
+import Component from '../../component/component'
 
 class AuthBarInput extends Component {
 
   template() { 
     return (
       `<div className="auth-bar-input">
-        <label className="auth-bar-input__label" for="auth-bar-input__input">{{props.text}}</label>
+        <label className="auth-bar-input__label" for={{props.id}}>{{props.text}}</label>
         <input className="auth-bar-input__input" type={{props.type}} id={{props.id}}></input>
       </div>`
     )

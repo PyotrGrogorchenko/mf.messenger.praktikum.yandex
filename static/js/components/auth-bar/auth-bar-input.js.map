@@ -1,1 +1,1 @@
-{"version":3,"file":"auth-bar-input.js","sourceRoot":"","sources":["../../../../ts/components/auth-bar/auth-bar-input.ts"],"names":[],"mappings":"AAAA,OAAO,SAAS,MAAM,8BAA8B,CAAA;AAEpD,MAAM,YAAa,SAAQ,SAAS;IAElC,QAAQ;QACN,OAAO,CACL;;;aAGO,CACR,CAAA;IACH,CAAC;CAEF;AAED,eAAe,YAAY,CAAA"}
+{"version":3,"file":"auth-bar-input.js","sourceRoot":"","sources":["../../../../ts/components/auth-bar/auth-bar-input.ts"],"names":[],"mappings":"AAAA,OAAO,SAAS,MAAM,2BAA2B,CAAA;AAEjD,MAAM,YAAa,SAAQ,SAAS;IAElC,QAAQ;QACN,OAAO,CACL;;;aAGO,CACR,CAAA;IACH,CAAC;CAEF;AAED,eAAe,YAAY,CAAA"}

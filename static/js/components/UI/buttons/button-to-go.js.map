@@ -1,1 +1,1 @@
-{"version":3,"file":"button-to-go.js","sourceRoot":"","sources":["../../../../../ts/components/UI/buttons/button-to-go.ts"],"names":[],"mappings":"AAAA,OAAO,SAAS,MAAM,iCAAiC,CAAA;AAEvD,MAAM,UAAW,SAAQ,SAAS;IAEhC,QAAQ;QACN,OAAO,CACL;;;WAGK,CACN,CAAA;IACH,CAAC;CAEF;AAED,eAAe,UAAU,CAAA"}
+{"version":3,"file":"button-to-go.js","sourceRoot":"","sources":["../../../../../ts/components/UI/buttons/button-to-go.ts"],"names":[],"mappings":"AAAA,OAAO,SAAS,MAAM,8BAA8B,CAAA;AAEpD,MAAM,UAAW,SAAQ,SAAS;IAEhC,QAAQ;QACN,OAAO,CACL;;;WAGK,CACN,CAAA;IACH,CAAC;CAEF;AAED,eAAe,UAAU,CAAA"}

@@ -1,4 +1,4 @@
-import { startsWithUpper } from '../../../ts/utils/functions/startsWithUpper'
+import { startsWithUpper } from '../../../utils/functions/startsWithUpper'
 
 describe('utils => functions: startsWithUpper', () => {
   

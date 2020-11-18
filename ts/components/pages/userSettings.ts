@@ -1,21 +1,23 @@
-import Component from '../../component/component.js'
-import PageColumn from '../page-column.js'
-import UserSettingsBar from '../user-settings/user-settings-bar.js'
-import BarHeader from '../auth-bar/bar__header.js'
-import BarContent from '../auth-bar/bar__content.js'
-import UserSettingsBarInput from '../user-settings/user-settings-bar-input.js'
-import BarFooter from '../auth-bar/bar__footer.js'
-import ButtonMain from '../UI/buttons/button-main.js'
-import ButtonSecondary from '../UI/buttons/button-secondary.js'
+import Component from '../../component/component'
+import PageColumn from '../page-column'
+import UserSettingsBar from '../user-settings/user-settings-bar'
+import BarHeader from '../auth-bar/bar__header'
+import BarContent from '../auth-bar/bar__content'
+import UserSettingsBarInput from '../user-settings/user-settings-bar-input'
+import BarFooter from '../auth-bar/bar__footer'
+import ButtonMain from '../UI/buttons/button-main'
+import ButtonSecondary from '../UI/buttons/button-secondary'
+import PageId from '../pageId'
 
 export default class UserSettings extends Component {
 
-  components() {return {PageColumn, UserSettingsBar, BarHeader, BarContent, UserSettingsBarInput, BarFooter, ButtonMain, ButtonSecondary}}
+  components() {return {PageColumn, UserSettingsBar, BarHeader, BarContent, UserSettingsBarInput, BarFooter, ButtonMain, ButtonSecondary, PageId}}
   
   template() { 
 
     return  (
-      `<PageColumn>
+      `<PageId pageId='user-settings'></PageId>
+      <PageColumn>
         <UserSettingsBar>
           
           <BarHeader text='User settings'></BarHeader>

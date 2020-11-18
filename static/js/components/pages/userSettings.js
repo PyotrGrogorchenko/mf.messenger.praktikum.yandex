@@ -7,10 +7,12 @@ import UserSettingsBarInput from '../user-settings/user-settings-bar-input.js';
 import BarFooter from '../auth-bar/bar__footer.js';
 import ButtonMain from '../UI/buttons/button-main.js';
 import ButtonSecondary from '../UI/buttons/button-secondary.js';
+import PageId from '../pageId.js';
 export default class UserSettings extends Component {
-    components() { return { PageColumn, UserSettingsBar, BarHeader, BarContent, UserSettingsBarInput, BarFooter, ButtonMain, ButtonSecondary }; }
+    components() { return { PageColumn, UserSettingsBar, BarHeader, BarContent, UserSettingsBarInput, BarFooter, ButtonMain, ButtonSecondary, PageId }; }
     template() {
-        return (`<PageColumn>
+        return (`<PageId pageId='user-settings'></PageId>
+      <PageColumn>
         <UserSettingsBar>
           
           <BarHeader text='User settings'></BarHeader>

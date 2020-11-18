@@ -1,18 +1,19 @@
-import Component from '../../component/component.js'
-import PageColumn from '../page-column.js'
-import AuthBar from '../auth-bar/auth-bar.js'
-import BarHeader from '../auth-bar/bar__header.js'
-import BarContent from '../auth-bar/bar__content.js'
-import AuthBarInput from '../auth-bar/auth-bar-input.js'
-import BarFooter from '../auth-bar/bar__footer.js'
-import ButtonMain from '../UI/buttons/button-main.js'
-import ButtonSecondary from '../UI/buttons/button-secondary.js'
-import { DB } from '../../constants/index.js'
-import { HTTPTransport } from '../../request/fetch.js'
+import Component from '../../component/component'
+import PageColumn from '../page-column'
+import AuthBar from '../auth-bar/auth-bar'
+import BarHeader from '../auth-bar/bar__header'
+import BarContent from '../auth-bar/bar__content'
+import AuthBarInput from '../auth-bar/auth-bar-input'
+import BarFooter from '../auth-bar/bar__footer'
+import ButtonMain from '../UI/buttons/button-main'
+import ButtonSecondary from '../UI/buttons/button-secondary'
+import { DB } from '../../constants/index'
+import { HTTPTransport } from '../../request/fetch'
+import PageId from '../pageId'
 
 export default class Signup extends Component {
 
-  components() {return {PageColumn, AuthBar, BarHeader, BarContent, AuthBarInput, BarFooter, ButtonMain, ButtonSecondary}}
+  components() {return {PageColumn, AuthBar, BarHeader, BarContent, AuthBarInput, BarFooter, ButtonMain, ButtonSecondary, PageId}}
   
   signUpOnClick (e:Event) {
     e.preventDefault()
@@ -47,7 +48,8 @@ export default class Signup extends Component {
   template() { 
 
     return  (
-      `<PageColumn>
+      `<PageId pageId='signup'></PageId>
+      <PageColumn>
         <AuthBar>
           <BarHeader text='Sign up'></BarHeader>
           

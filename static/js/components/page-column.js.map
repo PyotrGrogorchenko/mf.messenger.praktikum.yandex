@@ -1,1 +1,1 @@
-{"version":3,"file":"page-column.js","sourceRoot":"","sources":["../../../ts/components/page-column.ts"],"names":[],"mappings":"AAAA,OAAO,SAAS,MAAM,2BAA2B,CAAA;AAEjD,MAAM,UAAW,SAAQ,SAAS;IAEhC,QAAQ;QACN,OAAO,CACL;aACO,CACR,CAAA;IACH,CAAC;CAEF;AAED,eAAe,UAAU,CAAA"}
+{"version":3,"file":"page-column.js","sourceRoot":"","sources":["../../../ts/components/page-column.ts"],"names":[],"mappings":"AAAA,OAAO,SAAS,MAAM,wBAAwB,CAAA;AAE9C,MAAM,UAAW,SAAQ,SAAS;IAEhC,QAAQ;QACN,OAAO,CACL;aACO,CACR,CAAA;IACH,CAAC;CAEF;AAED,eAAe,UAAU,CAAA"}

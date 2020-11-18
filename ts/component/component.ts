@@ -1,11 +1,11 @@
-import EventBus from './event-bus.js'
-import { Node as PARSER_NODE, parser} from './parser.js'
-import { VirtDom, Node as DOM_NODE }  from './virtDOM.js'
-//import { Router, onRouteClick } from '../router/Router.js'
-import { onRouteClick } from '../router/events.js'
+import EventBus from './event-bus'
+import { Node as PARSER_NODE, parser} from './parser'
+import { VirtDom, Node as DOM_NODE }  from './virtDOM'
+//import { Router, onRouteClick } from '../router/Router'
+import { onRouteClick } from '../router/events'
 
-// import VirtDom from './virtDOM.js'
-// import { parser, PARSER_TYPES } from './parser.js'
+// import VirtDom from './virtDOM'
+// import { parser, PARSER_TYPES } from './parser'
 
 enum EVENTS {
     INIT = "init", 
@@ -40,6 +40,8 @@ class Component {
   constructor(props: any = {}) {
     
     //console.log('component')
+
+    this._root = null
 
     const eventBus: EventBus = new EventBus()
     this._props = props

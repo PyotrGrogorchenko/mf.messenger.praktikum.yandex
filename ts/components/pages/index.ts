@@ -1,15 +1,18 @@
-import Component from '../../component/component.js'
-import PagesMenu from '../pagesMenu.js'
+import Component from '../../component/component'
+import PagesMenu from '../pagesMenu'
+import PageId from '../pageId'
 
 export default class Index extends Component {
 
-  components() {return {PagesMenu}}
+  components() {return {PagesMenu, PageId}}
   
   template() { 
 
     return  (
 
-      `<PagesMenu></PagesMenu>`
+      `<PageId pageId='index'></PageId>
+      <div id="error404"></div>
+      <PagesMenu></PagesMenu>`
 
     ) 
   }

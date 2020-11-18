@@ -32,6 +32,7 @@ class Component {
         this._virtDOM = null;
         this._props = null;
         this._rootOut = null;
+        this._root = null;
         const eventBus = new EventBus();
         this._props = props;
         //this.props = this._makePropsProxy(props)

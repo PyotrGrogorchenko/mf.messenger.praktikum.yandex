@@ -9,8 +9,9 @@ import ButtonMain from '../UI/buttons/button-main.js';
 import ButtonSecondary from '../UI/buttons/button-secondary.js';
 import { DB } from '../../constants/index.js';
 import { HTTPTransport } from '../../request/fetch.js';
+import PageId from '../pageId.js';
 export default class Signup extends Component {
-    components() { return { PageColumn, AuthBar, BarHeader, BarContent, AuthBarInput, BarFooter, ButtonMain, ButtonSecondary }; }
+    components() { return { PageColumn, AuthBar, BarHeader, BarContent, AuthBarInput, BarFooter, ButtonMain, ButtonSecondary, PageId }; }
     signUpOnClick(e) {
         e.preventDefault();
         const formdata = window.getFormData();
@@ -34,7 +35,8 @@ export default class Signup extends Component {
         };
     }
     template() {
-        return (`<PageColumn>
+        return (`<PageId pageId='signup'></PageId>
+      <PageColumn>
         <AuthBar>
           <BarHeader text='Sign up'></BarHeader>
           

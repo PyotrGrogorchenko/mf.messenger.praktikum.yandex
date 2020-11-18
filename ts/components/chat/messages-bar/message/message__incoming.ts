@@ -1,5 +1,5 @@
-import Component from '../../../../component/component.js'
-import Message__FreeSpace from './message__free-space.js'
+import Component from '../../../../component/component'
+import Message__FreeSpace from './message__free-space'
 
 class Message__Incoming extends Component {
 

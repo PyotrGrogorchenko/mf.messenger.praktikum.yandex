@@ -7,15 +7,18 @@ import Chat from '../components/pages/chat.js';
 import UserSettings from '../components/pages/userSettings.js';
 import Error404 from '../components/pages/error404.js';
 import Error500 from '../components/pages/error500.js';
-const router = new Router('.app');
-router
-    .use('/', Index)
-    .use('/login', Login)
-    .use('/signup', Signup)
-    .use('/selectChat', SelectChat)
-    .use('/chat', Chat)
-    .use('/error404', Error404)
-    .use('/error500', Error500)
-    .use('/userSettings', UserSettings)
-    .start();
+function startRouter() {
+    const router = new Router('.app');
+    router
+        .use('/', Index)
+        .use('/login', Login)
+        .use('/signup', Signup)
+        .use('/selectChat', SelectChat)
+        .use('/chat', Chat)
+        .use('/error404', Error404)
+        .use('/error500', Error500)
+        .use('/userSettings', UserSettings)
+        .start();
+}
+export { startRouter };
 //# sourceMappingURL=index.js.map

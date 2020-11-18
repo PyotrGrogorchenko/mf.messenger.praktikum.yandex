@@ -7,8 +7,9 @@ import AuthBarInput from '../auth-bar/auth-bar-input.js';
 import BarFooter from '../auth-bar/bar__footer.js';
 import ButtonMain from '../UI/buttons/button-main.js';
 import ButtonSecondary from '../UI/buttons/button-secondary.js';
+import PageId from '../pageId.js';
 export default class Login extends Component {
-    components() { return { PageColumn, AuthBar, BarHeader, BarContent, AuthBarInput, BarFooter, ButtonMain, ButtonSecondary }; }
+    components() { return { PageColumn, AuthBar, BarHeader, BarContent, AuthBarInput, BarFooter, ButtonMain, ButtonSecondary, PageId }; }
     state() {
         return {
             btnLogIn: { id: 'button_log-in' },
@@ -18,7 +19,8 @@ export default class Login extends Component {
         };
     }
     template() {
-        return (`<PageColumn>
+        return (`<PageId pageId='login'></PageId>
+      <PageColumn>
         <AuthBar>
           <BarHeader text='Log in'></BarHeader>
             <BarContent>

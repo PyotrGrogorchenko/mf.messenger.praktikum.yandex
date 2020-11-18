@@ -1,4 +1,4 @@
-import { valueIsValid } from '../../../ts/utils/validate/methods'
+import { valueIsValid } from '../../../utils/validate/methods'
 
 describe('utils => validate: valueIsValid', () => {
   

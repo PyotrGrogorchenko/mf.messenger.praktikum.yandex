@@ -1,6 +1,6 @@
-import { get } from './get.js'
-import { isEqual } from './isEqual.js'
-import { startsWithUpper } from './startsWithUpper.js'
-import { uid } from './uid.js'
+import { get } from './get'
+import { isEqual } from './isEqual'
+import { startsWithUpper } from './startsWithUpper'
+import { uid } from './uid'
 
 export { get, isEqual, startsWithUpper, uid }

@@ -1,8 +1,8 @@
-import Component from '../../../component/component.js'
-import MessagesBar__Header from './messages-bar__header.js'
-import Messages__Date from './messages__date.js'
-import Message from './message/message.js'
-import MessagesBar__Footer from './messages-bar__footer.js'
+import Component from '../../../component/component'
+import MessagesBar__Header from './messages-bar__header'
+import Messages__Date from './messages__date'
+import Message from './message/message'
+import MessagesBar__Footer from './messages-bar__footer'
 
 class MessagesBar extends Component {
 
