@@ -1,30 +1,25 @@
-function inputIsValid(input: HTMLInputElement): boolean{
+function valueIsValid(type: string, val: string): boolean{
 
   let res: boolean = true
 
-  switch (input.getAttribute('type')) {
+  switch (type) {
     case 'text':
-      res = validateText(input.value)
+      res = validateText(val)
       break
     case 'login':
-      res = validateText(input.value)
-      //res = validateLogin(input.value)
+      res = validateLogin(val)
       break
     case 'name':
-      res = validateText(input.value)
-      //res = validateName(input.value)
+      res = validateName(val)
       break
     case 'mail':
-      res = validateText(input.value)
-      //res = validateEmail(input.value)
+      res = validateEmail(val)
       break
     case 'phone':
-      res = validateText(input.value)
-      //res = validatePhone(input.value)
+      res = validatePhone(val)
       break
     case 'password':
-      res = validateText(input.value)
-      //res = validatePassword(input.value)
+      res = validatePassword(val)
       break
     default:
       break
@@ -55,7 +50,7 @@ function validatePhone(val: string) {
 }
 
 function validatePassword(val: string) {
-  return /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/.test(val)
+  return /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{4,}$/.test(val)
 }
 
-export { inputIsValid }
+export { valueIsValid }

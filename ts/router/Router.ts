@@ -9,7 +9,6 @@ class Router {
   _currentRoute: Route | null = null
   _rootQuery: string = ''
 
-
   constructor(rootQuery: string = '') {
         if (Router.__instance) {
             return Router.__instance

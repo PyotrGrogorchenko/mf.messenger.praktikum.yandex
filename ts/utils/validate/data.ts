@@ -1,4 +1,4 @@
-import { inputIsValid } from './methods.js'
+import { valueIsValid } from './methods.js'
 
 // type Indexed<T = number | string | boolean | undefined> = {
 //   [key in string]: T | Indexed;
@@ -13,10 +13,11 @@ function getFormData(): object {
   for (let form of document.forms) {
     for (let input of form.getElementsByTagName('input')) {
       
-      const currInputIsValid:boolean = inputIsValid(input)
+      const type: string = input.getAttribute('type') as string
+
+      const currInputIsValid:boolean = valueIsValid(type, input.value)
       valid = valid && currInputIsValid
 
-      const type: string = input.getAttribute('type') as string
 
       data.push({ name: getInputName(input.id),
                   type,
