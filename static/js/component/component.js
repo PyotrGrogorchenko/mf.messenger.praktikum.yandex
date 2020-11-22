@@ -55,12 +55,12 @@ class Component {
     _componentDidMount() {
         this.componentDidMount();
     }
-    componentDidMount(oldProps = {}) { }
-    _componentDidUpdate(oldProps = null, newProps = null) {
+    componentDidMount(_oldProps = {}) { }
+    _componentDidUpdate(_oldProps = null, _newProps = null) {
         // const response = this.componentDidUpdate(oldProps, newProps)
         // this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
     }
-    componentDidUpdate(oldProps, newProps) {
+    componentDidUpdate(_oldProps, _newProps) {
         return true;
     }
     components() {

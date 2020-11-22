@@ -1,11 +1,9 @@
 import Component from '../../component/component.js';
 import ErrorBar from '../error-bar.js';
-import PageId from '../pageId.js';
 export default class Error500 extends Component {
-    components() { return { ErrorBar, PageId }; }
+    components() { return { ErrorBar }; }
     template() {
-        return (`<PageId pageId='500'></PageId>
-      <ErrorBar
+        return (`<ErrorBar
         errCode='500'
         message='Sorry, something is wrong'
         href='#{R}selectChat'

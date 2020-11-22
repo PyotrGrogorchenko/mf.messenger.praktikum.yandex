@@ -1,5 +1,7 @@
 function valueIsValid(type: string, val: string): boolean{
 
+  return validateText(val)
+
   let res: boolean = true
 
   switch (type) {

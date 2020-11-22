@@ -2,13 +2,17 @@ import Component from '../../../component/component'
 
 class ButtonSecondary extends Component {
 
-  // constructor(props){
-  //   console.log(props)
-  // }
-
   template() { 
     return (
-      `<a className="button-secondary" id={{props.id}} rel="stylesheet" href={{props.href}} >{{props.text}}</a>`
+      `<button 
+        type="submit"
+        className="button-secondary"
+        id={{props.id}}
+        onClick={{props.onClick}}
+        href={{props.href}}
+      >
+        {{props.text}}
+      </button>`
     )
   }
 

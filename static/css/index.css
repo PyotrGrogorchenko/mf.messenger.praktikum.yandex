@@ -138,10 +138,26 @@ nav {
   font-size: 12px;
 
   color: var(--color-white);
-
 }
 
 .button-secondary {
+  width: 70%;
+  /* background-color: var(--color-blue1); */
+  background: none;
+  height: 20px;
+  border-radius: 5px;
+  border: none;
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+
+  color: var(--color-blue1);
+
+}
+
+
+.anchor-main {
   font-style: normal;
   font-weight: normal;
   font-size: 12px;  
@@ -306,7 +322,7 @@ nav {
 
 }
 
-.button-to-go {
+.anchor-to-go {
   font-style: normal;
   font-weight: normal;
   font-size: 12px;  
@@ -320,7 +336,7 @@ nav {
 
 }
 
-.button-to-go_icon {
+.anchor-to-go_icon {
   color: var(--color-gray3);
   font-size: 10px;
 }

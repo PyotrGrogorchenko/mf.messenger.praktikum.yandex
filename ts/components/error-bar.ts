@@ -1,9 +1,10 @@
 import Component from '../component/component'
 import PageColumn from './page-column'
+import AnchorMain from './UI/anchors/anchor-main'
 
 class ErrorBar extends Component {
 
-  components() {return {PageColumn}}
+  components() {return {PageColumn, AnchorMain}}
 
   template() { 
     return (
@@ -11,19 +12,17 @@ class ErrorBar extends Component {
         <div class="error-bar">
           <h1>{{props.errCode}}</h1>
           <div>{{props.message}}</div>
-          <a 
-            className="button-secondary"
-            id="button_back-to-chats"
-            rel="stylesheet"
+          <AnchorMain 
+            text='Back to chats'  
+            id='button_back-to-chats'
             href={{props.href}}
-          >
-            Back to chats
-          </a>
+          </AnchorMain>
         </div>
       </PageColumn>`
       
     )
   }
+
 
 }
 

@@ -7,6 +7,7 @@ import Chat from '../components/pages/chat.js';
 import UserSettings from '../components/pages/userSettings.js';
 import Error404 from '../components/pages/error404.js';
 import Error500 from '../components/pages/error500.js';
+import Test from '../components/pages/test.js';
 function startRouter() {
     const router = new Router('.app');
     router
@@ -18,7 +19,9 @@ function startRouter() {
         .use('/error404', Error404)
         .use('/error500', Error500)
         .use('/userSettings', UserSettings)
-        .start();
+        .use('/test', Test)
+        .start()
+        .defaultPage();
 }
 export { startRouter };
 //# sourceMappingURL=index.js.map

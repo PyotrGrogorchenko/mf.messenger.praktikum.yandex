@@ -1,7 +1,7 @@
 
-import '@testing-library/jest-dom/extend-expect'
-import Signup from '../../../../components/pages/signup'
-import { setUtils } from '../../../../utils/index'
+//import '../../router/node_modules/@testing-library/jest-dom/extend-expect'
+import Signup from '../../components/pages/signup'
+import { setUtils } from '../../utils/index'
 
 function render() {
   

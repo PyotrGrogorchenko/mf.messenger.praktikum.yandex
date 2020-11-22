@@ -1,12 +1,14 @@
 import Component from '../../component/component.js';
-import PagesMenu from '../pagesMenu.js';
-import PageId from '../pageId.js';
+import PageColumn from '../page-column.js';
 export default class Index extends Component {
-    components() { return { PagesMenu, PageId }; }
+    components() { return { PageColumn }; }
+    state() {
+        return {};
+    }
     template() {
-        return (`<PageId pageId='index'></PageId>
-      <div id="error404"></div>
-      <PagesMenu></PagesMenu>`);
+        return (`<PageColumn>
+        <h1>Messanger</h1>
+      </PageColumn>`);
     }
 }
 //# sourceMappingURL=index.js.map

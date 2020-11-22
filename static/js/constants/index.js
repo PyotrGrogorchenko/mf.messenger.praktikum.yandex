@@ -1,5 +1,5 @@
-const DB = {
+const env = {
     requestURL: 'https://ya-praktikum.tech/api/v2'
 };
-export { DB };
+export { env };
 //# sourceMappingURL=index.js.map

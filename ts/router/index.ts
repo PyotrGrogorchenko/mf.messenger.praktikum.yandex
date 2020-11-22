@@ -8,6 +8,7 @@ import Chat from '../components/pages/chat'
 import UserSettings from '../components/pages/userSettings'
 import Error404 from '../components/pages/error404'
 import Error500 from '../components/pages/error500'
+import Test from '../components/pages/test'
 
 function startRouter():void {
 
@@ -22,7 +23,9 @@ function startRouter():void {
     .use('/error404', Error404)
     .use('/error500', Error500)
     .use('/userSettings', UserSettings)
+    .use('/test', Test)
     .start()
+    .defaultPage()
 
 }
 

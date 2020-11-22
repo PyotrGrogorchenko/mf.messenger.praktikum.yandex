@@ -6,50 +6,75 @@ import BarContent from '../auth-bar/bar__content'
 import AuthBarInput from '../auth-bar/auth-bar-input'
 import BarFooter from '../auth-bar/bar__footer'
 import ButtonMain from '../UI/buttons/button-main'
-import ButtonSecondary from '../UI/buttons/button-secondary'
-import PageId from '../pageId'
+import AnchorMain from '../UI/anchors/anchor-main'
+import { HTTPTransport } from '../../xhr/HTTPTransport'
+import { env } from '../../const/index'
+import { Router } from '../../router/Router'
 
 export default class Login extends Component {
 
-  components() {return {PageColumn, AuthBar, BarHeader, BarContent, AuthBarInput, BarFooter, ButtonMain, ButtonSecondary, PageId}}
+  components() {return {PageColumn, AuthBar, BarHeader, BarContent, AuthBarInput, BarFooter, ButtonMain, AnchorMain}}
+  
+  async loginOnClick (e:Event) {
+    e.preventDefault()
+    
+    const formdata = window.getFormData()
+
+    console.log(formdata)
+
+    const body: LooseObject = {}
+    for (const key in formdata.data){
+      body[formdata.data[key].name] = formdata.data[key].value
+    }
+    
+    //console.log(body)
+
+    let req: XMLHttpRequest | null
+
+    try {
+      const httpTransport = new HTTPTransport()
+      req = await httpTransport.post(`${env.URL_REQUEST}/auth/signin`, {data:body, withCredentials: true ,headers: {'content-type': 'application/json'}}) as XMLHttpRequest
+    } catch (error) {
+      req = null
+      console.log('err', error)  
+    }
+
+    if (req) {
+      
+      if (req.status === 200) {
+        const router = new Router()
+        router.defaultPage()
+      } else if (req.status >= 400){
+        alert(`Failed to execute sign in. reason ${req.response.reason}`)
+      } else {
+        alert(`Failed to execute sign in.`)
+      }  
+      
+    }
+  }
   
   state() {return {
-    btnLogIn: {id: 'button_log-in'},  
-    btnSignUp: {id: 'button_to-sign-up'},  
-    inputLogin: {text: 'login', type: 'text', id: 'input_login'},
-    inputPassword: {text: 'password', type: 'password', id: 'input_password'}  
+  
+    loginOnClick: this.loginOnClick,
+
+    login: !localStorage.getItem('login') ? '' : localStorage.getItem('login'),
+    password: ''
+  
   }}
 
   template() { 
 
     return  (
-      `<PageId pageId='login'></PageId>
-      <PageColumn>
+      `<PageColumn>
         <AuthBar>
           <BarHeader text='Log in'></BarHeader>
-            <BarContent>
-            <AuthBarInput 
-              text={{state.inputLogin.text}}
-              type={{state.inputLogin.type}}
-              id={{state.inputLogin.id}}
-            ></AuthBarInput>                  
-            <AuthBarInput
-              text={{state.inputPassword.text}}
-              type={{state.inputPassword.type}}
-              id={{state.inputPassword.id}}
-            ></AuthBarInput>                  
+          <BarContent>
+            <AuthBarInput text='login'    type='text'     id='input_login'    value={{state.login}}></AuthBarInput>                  
+            <AuthBarInput text='password' type='password' id='input_password' value={{state.password}}></AuthBarInput>                  
           </BarContent>
           <BarFooter>
-            <ButtonMain
-              text='Log in'
-              id={{state.btnLogIn.id}}
-              href='#{R}selectChat'
-            ></ButtonMain>
-            <ButtonSecondary 
-              text='Sign up'
-              id={{state.btnSignUp.id}}
-              href='#{R}signup'
-            ></ButtonSecondary>
+            <ButtonMain text='Log in' id='button_log-in' onClick={{state.loginOnClick}}></ButtonMain>
+            <AnchorMain text='Sign up' id='button_to-sign-up' href='#{R}signup'></AnchorMain>
           </BarFooter>
         </AuthBar>
       </PageColumn>`

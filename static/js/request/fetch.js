@@ -60,6 +60,7 @@ class HTTPTransport {
                 xhr.open(method, url);
                 xhr.responseType = 'json';
                 xhr.onload = function () {
+                    console.log(xhr);
                     if (xhr.status >= 400) {
                         throw Error(`Не удалось выполнить запрос, статус ${xhr.status}`);
                     }

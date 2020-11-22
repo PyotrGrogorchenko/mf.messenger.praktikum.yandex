@@ -72,14 +72,14 @@ class Component {
   _componentDidMount(): void {
     this.componentDidMount()
   }
-  componentDidMount(oldProps: any = {}): void {}
+  componentDidMount(_oldProps: any = {}): void { }
 
-  _componentDidUpdate(oldProps: any = null, newProps: any = null): void {
+  _componentDidUpdate(_oldProps: any = null, _newProps: any = null): void {
     // const response = this.componentDidUpdate(oldProps, newProps)
     // this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
   }
 
-  componentDidUpdate(oldProps: any, newProps: any): boolean {
+  componentDidUpdate(_oldProps: any, _newProps: any): boolean {
     return true
   }
 

@@ -62,8 +62,9 @@ class HTTPTransport {
   // options:
   // headers — obj
   // data — obj
+  // withCredentials — boolean
   request = (url: string, options: Indexed, timeout: number = 5000) => {
-    const {method, data, headers} = options
+    const {method, data, headers, withCredentials} = options
 
     url += method === METHODS.GET ? queryStringify(data as Indexed) : ''
 
@@ -73,9 +74,10 @@ class HTTPTransport {
       xhr.responseType = 'json'
       
       xhr.onload = function() {
-        if (xhr.status >= 400){
-          throw Error (`Не удалось выполнить запрос, статус ${xhr.status}`)
-        }
+        //console.log(xhr)
+        // if (xhr.status >= 400){
+        //   throw Error (`Не удалось выполнить запрос, статус ${xhr.status}`)
+        // }
         resolve(xhr)
       }
       
@@ -92,6 +94,10 @@ class HTTPTransport {
         xhr.setRequestHeader('content-type', 'application/json')  
       }
 
+      if (withCredentials){
+        xhr.withCredentials = withCredentials as boolean
+      }
+
       if (method === METHODS.GET || !data) {
         xhr.send()
       } else {
@@ -102,26 +108,26 @@ class HTTPTransport {
   }
 }
 
-function fetchWithRetry(url: string, options: Indexed) {
+// function fetchWithRetry(url: string, options: Indexed) {
   
-  if (!url || !options) {
-    throw Error (`Не удалось выполнить запрос!`)  
-  }
+//   if (!url || !options) {
+//     throw Error (`Не удалось выполнить запрос!`)  
+//   }
     
-  const retries: number = options.retries as number
+//   const retries: number = options.retries as number
 
-  for (let i = 0; i < retries; i++){
-    const xhr = new XMLHttpRequest()
-    xhr.open('get', url, false)
-    xhr.send()
-    if (xhr.status < 400) {
-      return xhr.response
-    }
-  }
+//   for (let i = 0; i < retries; i++){
+//     const xhr = new XMLHttpRequest()
+//     xhr.open('get', url, false)
+//     xhr.send()
+//     if (xhr.status < 400) {
+//       return xhr.response
+//     }
+//   }
     
-  throw Error (`Не удалось выполнить запрос!`)
+//   throw Error (`Не удалось выполнить запрос!`)
   
-}
+// }
 
 export { HTTPTransport }
 

@@ -4,8 +4,6 @@ const FileHound = require('filehound');
 const fs = require('fs');
 const path = require('path');
 
-console.log('imorter')
-
 const files = FileHound.create()
   .paths(__dirname + '/static/js')
   .discard('node_modules')
@@ -30,9 +28,10 @@ files.then((filePaths) => {
         if (err) {
           throw err;
         }
-        console.log('complete');
+        console.log(`${filepath} complete`);
       });
     })
 
   })
+
 });
