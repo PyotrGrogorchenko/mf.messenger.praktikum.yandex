@@ -1,10 +1,29 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import Component from '../../../component/component.js';
+import { HTTPTransport } from '../../../xhr/HTTPTransport.js';
 import UsersList__UserItem from './users-list__user-item.js';
 //import InputGray5 from '../UI/inputs/input-gray5.js'
+import { env } from '../../../const/index.js';
 class UsersBar__UsersList extends Component {
     components() { return { UsersList__UserItem }; }
+    getChats() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const httpTransport = new HTTPTransport();
+            const req = yield httpTransport.get(`${env.URL_REQUEST}/chats`, { withCredentials: true, headers: { 'content-type': 'application/json' } });
+            console.log(req);
+        });
+    }
     state() {
         return {
+            users1: this.getChats(),
             users: [
                 { name: 'Sasha', counUread: 10, lastMessage: { type: 'in', date: '13:15', text: 'Putting the page number in the middle of the wording is a bad idea' } },
                 { name: 'Timur', counUread: 500, lastMessage: { type: 'in', date: '22:14', text: 'It was snapped off at the handle, and the blade was splintered, like somebody used it to hit something hard.' } },

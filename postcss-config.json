@@ -1,0 +1,5 @@
+{
+  "use": [],
+  "input": "ts/**/*.css",
+  "output": "static/css/index.css"
+}

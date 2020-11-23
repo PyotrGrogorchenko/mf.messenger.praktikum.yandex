@@ -1,8 +1,0 @@
-No tests found, exiting with code 1
-Run with `--passWithNoTests` to exit with code 0
-In /home/pyotr/Documents/prg/mf.messenger.praktikum.yandex
-  124 files checked.
-  testMatch: **/__tests__/**/*.[jt]s?(x), **/?(*.)+(spec|test).[tj]s?(x) - 4 matches
-  testPathIgnorePatterns: /node_modules/ - 124 matches
-  testRegex:  - 0 matches
-Pattern: = - 0 matches

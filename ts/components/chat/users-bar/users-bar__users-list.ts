@@ -1,12 +1,21 @@
 import Component from '../../../component/component'
+import { HTTPTransport } from '../../../xhr/HTTPTransport'
 import UsersList__UserItem from './users-list__user-item'
 //import InputGray5 from '../UI/inputs/input-gray5'
+import { env } from '../../../const/index'
 
 class UsersBar__UsersList extends Component {
 
   components() {return {UsersList__UserItem}}
 
+  async getChats() {
+    const httpTransport = new HTTPTransport()
+    const req = await httpTransport.get(`${env.URL_REQUEST}/chats`, { withCredentials: true ,headers: {'content-type': 'application/json'}}) as XMLHttpRequest
+    console.log(req)
+  }
+
   state() {return {
+    users1: this.getChats(),
     users: 
     [
       {name: 'Sasha', counUread: 10, lastMessage: {type: 'in',  date: '13:15', text: 'Putting the page number in the middle of the wording is a bad idea'}},
