@@ -1,5 +1,5 @@
-import Component from '../../component/component.js';
-import ErrorBar from '../error-bar.js';
+import Component from '../../component/component.js.js.js.js.js';
+import ErrorBar from '../error-bar.js.js.js.js.js';
 export default class Error404 extends Component {
     components() { return { ErrorBar }; }
     template() {

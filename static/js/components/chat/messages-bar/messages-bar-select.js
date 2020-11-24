@@ -1,4 +1,4 @@
-import Component from '../../../component/component.js';
+import Component from '../../../component/component.js.js.js.js.js';
 class MessagesBarSelect extends Component {
     template() {
         return (`<div class="messages-bar">

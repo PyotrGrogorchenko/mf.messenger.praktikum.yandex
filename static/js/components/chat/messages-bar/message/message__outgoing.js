@@ -1,5 +1,5 @@
-import Component from '../../../../component/component.js';
-import Message__FreeSpace from './message__free-space.js';
+import Component from '../../../../component/component.js.js.js.js.js';
+import Message__FreeSpace from './message__free-space.js.js.js.js.js';
 class Message__Outgoing extends Component {
     components() { return { Message__FreeSpace }; }
     template() {

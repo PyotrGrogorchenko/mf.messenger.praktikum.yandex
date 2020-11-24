@@ -1,4 +1,4 @@
-import { Router } from './Router.js';
+import { Router } from './Router.js.js.js.js.js';
 function onRouteClick(e) {
     e.preventDefault();
     let href = e.target.getAttribute('href');

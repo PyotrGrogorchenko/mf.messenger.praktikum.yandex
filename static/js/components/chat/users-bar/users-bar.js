@@ -1,7 +1,7 @@
-import Component from '../../../component/component.js';
-import AnchorToGo from '../../UI/anchors/anchor-to-go.js';
-import InputGray5 from '../../UI/inputs/input-gray5.js';
-import UsersBar__UsersList from './users-bar__users-list.js';
+import Component from '../../../component/component.js.js.js.js.js';
+import AnchorToGo from '../../UI/anchors/anchor-to-go.js.js.js.js.js';
+import InputGray5 from '../../UI/inputs/input-gray5.js.js.js.js.js';
+import UsersBar__UsersList from './users-bar__users-list.js.js.js.js.js';
 class UsersBar extends Component {
     components() { return { AnchorToGo, InputGray5, UsersBar__UsersList }; }
     template() {

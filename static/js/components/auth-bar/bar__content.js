@@ -1,4 +1,4 @@
-import Component from '../../component/component.js';
+import Component from '../../component/component.js.js.js.js.js.js.js.js';
 class BarContent extends Component {
     template() {
         return (`<div className="bar__content"></div>`);

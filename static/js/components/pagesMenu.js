@@ -1,5 +1,5 @@
-import Component from '../component/component.js';
-import PageColumn from './page-column.js';
+import Component from '../component/component.js.js.js.js.js';
+import PageColumn from './page-column.js.js.js.js.js';
 export default class PagesMenu extends Component {
     components() { return { PageColumn }; }
     // func (e:Event) {

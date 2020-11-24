@@ -2,14 +2,14 @@
 
 const FileHound = require('filehound');
 const fs = require('fs');
-const path = require('path');
+
+var appRoot = require('app-root-path');
 
 const files = FileHound.create()
-  .paths(__dirname + '/static/js')
+  .paths(appRoot.path + '/static/js')
   .discard('node_modules')
   .ext('js')
   .find();
-
 
 files.then((filePaths) => {
 

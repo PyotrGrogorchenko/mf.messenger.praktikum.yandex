@@ -1,6 +1,6 @@
-import Component from '../../../../component/component.js';
-import Message__Incoming from './message__incoming.js';
-import Message__Outgoing from './message__outgoing.js';
+import Component from '../../../../component/component.js.js.js.js.js';
+import Message__Incoming from './message__incoming.js.js.js.js.js';
+import Message__Outgoing from './message__outgoing.js.js.js.js.js';
 class Message extends Component {
     components() { return { Message__Incoming, Message__Outgoing }; }
     template() {

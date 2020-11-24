@@ -1,8 +1,8 @@
-import Component from '../../../component/component.js';
-import MessagesBar__Header from './messages-bar__header.js';
-import Messages__Date from './messages__date.js';
-import Message from './message/message.js';
-import MessagesBar__Footer from './messages-bar__footer.js';
+import Component from '../../../component/component.js.js.js.js.js';
+import MessagesBar__Header from './messages-bar__header.js.js.js.js.js';
+import Messages__Date from './messages__date.js.js.js.js.js';
+import Message from './message/message.js.js.js.js.js';
+import MessagesBar__Footer from './messages-bar__footer.js.js.js.js.js';
 class MessagesBar extends Component {
     components() { return { MessagesBar__Header, Messages__Date, Message, MessagesBar__Footer }; }
     state() {

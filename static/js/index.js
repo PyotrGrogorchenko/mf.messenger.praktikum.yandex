@@ -1,6 +1,6 @@
-import { startRouter } from "./router/index.js";
-import { setUtils } from "./utils/index.js";
-//import { HTTPTransport } from "./xhr/HTTPTransport.js"
+import { startRouter } from "./router/index.js.js.js.js.js";
+import { setUtils } from "./utils/index.js.js.js.js.js";
+//import { HTTPTransport } from "./xhr/HTTPTransport.js.js.js.js.js"
 setUtils();
 startRouter();
 //let req: XMLHttpRequest | null

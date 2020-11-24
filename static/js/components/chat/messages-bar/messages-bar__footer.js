@@ -1,4 +1,4 @@
-import Component from '../../../component/component.js';
+import Component from '../../../component/component.js.js.js.js.js';
 class MessagesBar__Footer extends Component {
     template() {
         return (`<form id="form__footer" className="messages-bar__footer">
