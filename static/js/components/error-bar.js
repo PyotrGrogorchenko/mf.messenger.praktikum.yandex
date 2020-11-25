@@ -1,6 +1,6 @@
-import Component from '../component/component.js.js.js.js.js';
-import PageColumn from './page-column.js.js.js.js.js';
-import AnchorMain from './UI/anchors/anchor-main.js.js.js.js.js';
+import Component from '../component/component.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import PageColumn from './page-column.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import AnchorMain from './UI/anchors/anchor-main.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
 class ErrorBar extends Component {
     components() { return { PageColumn, AnchorMain }; }
     template() {

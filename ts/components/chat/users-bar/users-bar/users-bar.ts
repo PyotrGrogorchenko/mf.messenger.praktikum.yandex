@@ -1,7 +1,7 @@
 import Component from '../../../component/component'
 import AnchorToGo from '../../UI/anchors/anchor-to-go'
 import InputGray5 from '../../UI/inputs/input-gray5'
-import UsersBar__UsersList from './users-bar__users-list'
+import UsersBar__UsersList from '../users-bar__users-list/users-bar__users-list'
 
 class UsersBar extends Component {
 

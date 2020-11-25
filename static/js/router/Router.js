@@ -7,9 +7,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { HTTPTransport } from '../xhr/HTTPTransport.js.js.js.js.js';
-import { env } from '../const/index.js.js.js.js.js';
-import Route from './Route.js.js.js.js.js';
+import { HTTPTransport } from '../xhr/HTTPTransport.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import { env } from '../const/index.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import Route from './Route.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
 class Router {
     constructor(rootQuery = '') {
         this.routes = [];

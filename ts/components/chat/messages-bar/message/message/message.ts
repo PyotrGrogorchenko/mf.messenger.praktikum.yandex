@@ -1,4 +1,4 @@
-import Component from '../../../../component/component'
+import Component from '../../../../../component/component'
 import Message__Incoming from './message__incoming'
 import Message__Outgoing from './message__outgoing'
 

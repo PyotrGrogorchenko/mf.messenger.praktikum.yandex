@@ -1,5 +1,5 @@
-import Component from '../../../component/component.js.js.js.js.js';
-import { onRouteClick } from '../../../router/events.js.js.js.js.js';
+import Component from '../../../component/component.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import { onRouteClick } from '../../../router/events.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
 class UsersList__UserItem extends Component {
     state() {
         return {

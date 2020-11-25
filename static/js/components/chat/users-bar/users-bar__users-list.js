@@ -7,11 +7,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import Component from '../../../component/component.js.js.js.js.js';
-import { HTTPTransport } from '../../../xhr/HTTPTransport.js.js.js.js.js';
-import UsersList__UserItem from './users-list__user-item.js.js.js.js.js';
-//import InputGray5 from '../UI/inputs/input-gray5.js.js.js.js.js'
-import { env } from '../../../const/index.js.js.js.js.js';
+import Component from '../../../component/component.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import { HTTPTransport } from '../../../xhr/HTTPTransport.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import UsersList__UserItem from './users-list__user-item.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+//import InputGray5 from '../UI/inputs/input-gray5.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js'
+import { env } from '../../../const/index.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
 class UsersBar__UsersList extends Component {
     components() { return { UsersList__UserItem }; }
     getChats() {

@@ -1,24 +1,36 @@
 "use strict";
 
-const FileHound = require('filehound');
-const fs = require('fs');
-const path = require('path');
+(async () => {
+  await execute()
+  console.log('makeDir done')
+})()
 
-var appRoot = require('app-root-path');
+async function execute() {
 
-const filesTS = FileHound.create()
-  .paths(appRoot.path + '/ts/components')
-  .ext('ts')
-  .find();
+  const cliProgress = require('cli-progress')
+  const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic)
+  
+  const FileHound = require('filehound')
+  const fs = require('fs')
+  const path = require('path')
+  
+  var appRoot = require('app-root-path')
+  
+  const filePathsTS = await FileHound.create()
+                  .paths(appRoot.path + '/ts/components')
+                  .ext('ts')
+                  .find()
+  
+  progressBar.start(filePathsTS.length - 1, 0)
 
-filesTS.then((filePathsTS) => {
-  filePathsTS.forEach((filePathTS) => {
-    
+  for (let i = 0; i < filePathsTS.length; i++){
+    const filePathTS = filePathsTS[i]
+
     const pathParseTS = path.parse(filePathTS)
-    
+      
     const arrDir = pathParseTS.dir.split('/')
     const dir = arrDir.length ? arrDir[arrDir.length - 1] : ''
-
+  
     if (dir !== pathParseTS.name) {
       const newDir = `${pathParseTS.dir}/${pathParseTS.name}`
       try {
@@ -34,5 +46,12 @@ filesTS.then((filePathsTS) => {
         }
       }      
     }  
-  })
-})
+    
+    progressBar.update(i)
+  
+  }
+
+  progressBar.stop()
+
+}  
+

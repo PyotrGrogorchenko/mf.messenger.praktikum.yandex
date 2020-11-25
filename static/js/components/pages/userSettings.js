@@ -7,18 +7,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import Component from '../../component/component.js.js.js.js.js';
-import PageColumn from '../page-column.js.js.js.js.js';
-import UserSettingsBar from '../user-settings/user-settings-bar.js.js.js.js.js';
-import BarHeader from '../auth-bar/bar__header/bar__header.js.js.js.js.js';
-import BarContent from '../auth-bar/bar__content/bar__content.js.js.js.js.js';
-import UserSettingsBarInput from '../user-settings/user-settings-bar-input.js.js.js.js.js';
-import BarFooter from '../auth-bar/bar__footer/bar__footer.js.js.js.js.js';
-import ButtonMain from '../UI/buttons/button-main.js.js.js.js.js';
-import ButtonSecondary from '../UI/buttons/button-secondary.js.js.js.js.js';
-import { HTTPTransport } from '../../xhr/HTTPTransport.js.js.js.js.js';
-import { env } from '../../const/index.js.js.js.js.js';
-import { Router } from '../../router/Router.js.js.js.js.js';
+import Component from '../../component/component.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import PageColumn from '../page-column.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import UserSettingsBar from '../user-settings/user-settings-bar.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import BarHeader from '../auth-bar/bar__header/bar__header.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import BarContent from '../auth-bar/bar__content/bar__content.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import UserSettingsBarInput from '../user-settings/user-settings-bar-input.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import BarFooter from '../auth-bar/bar__footer/bar__footer.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import ButtonMain from '../UI/buttons/button-main.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import ButtonSecondary from '../UI/buttons/button-secondary.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import { HTTPTransport } from '../../xhr/HTTPTransport.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import { env } from '../../const/index.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import { Router } from '../../router/Router.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
 export default class UserSettings extends Component {
     components() { return { PageColumn, UserSettingsBar, BarHeader, BarContent, UserSettingsBarInput, BarFooter, ButtonMain, ButtonSecondary }; }
     // componentDidMount() {

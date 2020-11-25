@@ -1,4 +1,4 @@
-import Component from '../../../../component/component.js.js.js.js.js';
+import Component from '../../../../component/component.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
 class Message__FreeSpace extends Component {
     template() {
         return (`<div className="message__free-space"></div>`);
