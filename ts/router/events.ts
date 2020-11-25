@@ -1,4 +1,4 @@
-import { Router } from './Router.js'
+import { Router } from './Router'
 
 function onRouteClick(e:Event) {
   e.preventDefault()

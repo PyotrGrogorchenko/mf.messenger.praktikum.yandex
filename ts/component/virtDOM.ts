@@ -1,12 +1,12 @@
-import { PARSER_TYPES, Node as PARSER_NODE } from './parser.js'
-import Component from './component.js'
+import { PARSER_TYPES, Node as PARSER_NODE } from './parser'
+import Component from './component'
 
 
-declare const window: any
+//declare const window: any
 
-interface LooseObject {
-  [key: string]: any
-}
+// interface LooseObject {
+//   [key: string]: any
+// }
 
 class Node {
   
@@ -298,7 +298,7 @@ class VirtDom {
       
       const arrKeyValue: Array<string> = keyValue.split('=')
       
-      if (cacheTxt[arrKeyValue[1]]) {
+      if (cacheTxt[arrKeyValue[1]] && arrKeyValue.length > 1) {
         arrKeyValue[1] = cacheTxt[arrKeyValue[1]]
       }  
 
@@ -307,6 +307,8 @@ class VirtDom {
       if (arrKeyValue[0] === 'className') {
         const strClasses: string = param ? window.get(state, props, param[1], '') : arrKeyValue[1].replace(/"/g, '')
         node.props.classes = strClasses.split(' ')
+      } else if (arrKeyValue.length === 1) {
+        node.props[arrKeyValue[0]] = '#noValue'
       } else if (param) {
         node.props[arrKeyValue[0]] = eval(param[1]) 
       } else{

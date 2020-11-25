@@ -1,0 +1,12 @@
+.users-bar__users-list {
+  flex: 9;
+  display: flex;
+  flex-direction: column;
+}
+
+.users-list__list {
+  flex: 1;
+}
+
+
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3RzL2NvbXBvbmVudHMvY2hhdC91c2Vycy1iYXIvdXNlcnMtYmFyX191c2Vycy1saXN0L3VzZXJzLWJhcl9fdXNlcnMtbGlzdC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxPQUFPO0VBQ1AsYUFBYTtFQUNiLHNCQUFzQjtBQUN4Qjs7QUFFQTtFQUNFLE9BQU87QUFDVCIsImZpbGUiOiJ1c2Vycy1iYXJfX3VzZXJzLWxpc3QuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnVzZXJzLWJhcl9fdXNlcnMtbGlzdCB7XG4gIGZsZXg6IDk7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG59XG5cbi51c2Vycy1saXN0X19saXN0IHtcbiAgZmxleDogMTtcbn1cblxuIl19 */

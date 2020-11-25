@@ -1,0 +1,12 @@
+.auth-bar-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  border: 3px solid var(--color-gray5);
+  box-sizing: border-box;
+  border-radius: 20px;  
+  width: 350px;
+  height: 550px;
+}

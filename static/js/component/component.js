@@ -32,6 +32,7 @@ class Component {
         this._virtDOM = null;
         this._props = null;
         this._rootOut = null;
+        this._root = null;
         const eventBus = new EventBus();
         this._props = props;
         //this.props = this._makePropsProxy(props)
@@ -54,12 +55,12 @@ class Component {
     _componentDidMount() {
         this.componentDidMount();
     }
-    componentDidMount(oldProps = {}) { }
-    _componentDidUpdate(oldProps = null, newProps = null) {
+    componentDidMount(_oldProps = {}) { }
+    _componentDidUpdate(_oldProps = null, _newProps = null) {
         // const response = this.componentDidUpdate(oldProps, newProps)
         // this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
     }
-    componentDidUpdate(oldProps, newProps) {
+    componentDidUpdate(_oldProps, _newProps) {
         return true;
     }
     components() {
@@ -155,7 +156,13 @@ class Component {
                         element.setAttribute(prop, node.props[prop]);
                     }
                     else {
-                        element.setAttribute(prop, node.props[prop]);
+                        if (node.props[prop] === '#noValue') {
+                            //(element as any)[prop] = true
+                        }
+                        else {
+                            //console.log(prop, node.props[prop])
+                            element.setAttribute(prop, node.props[prop]);
+                        }
                     }
                 });
                 element.setAttribute('uid', String(node.uid));

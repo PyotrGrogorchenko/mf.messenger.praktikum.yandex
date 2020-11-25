@@ -1,0 +1,11 @@
+.messages__date {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+
+  margin: 5px;
+
+  color: var(--color-gray2);
+}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3RzL2NvbXBvbmVudHMvY2hhdC9tZXNzYWdlcy1iYXIvbWVzc2FnZXNfX2RhdGUvbWVzc2FnZXNfX2RhdGUuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztFQUVFLGFBQWE7RUFDYix1QkFBdUI7RUFDdkIsbUJBQW1COztFQUVuQixXQUFXOztFQUVYLHlCQUF5QjtBQUMzQiIsImZpbGUiOiJtZXNzYWdlc19fZGF0ZS5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIubWVzc2FnZXNfX2RhdGUge1xuXG4gIGRpc3BsYXk6IGZsZXg7XG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICBhbGlnbi1pdGVtczogY2VudGVyOyAgXG5cbiAgbWFyZ2luOiA1cHg7XG5cbiAgY29sb3I6IHZhcigtLWNvbG9yLWdyYXkyKTtcbn0iXX0= */

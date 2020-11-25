@@ -1,11 +1,11 @@
-import EventBus from './event-bus.js'
-import { Node as PARSER_NODE, parser} from './parser.js'
-import { VirtDom, Node as DOM_NODE }  from './virtDOM.js'
-//import { Router, onRouteClick } from '../router/Router.js'
-import { onRouteClick } from '../router/events.js'
+import EventBus from './event-bus'
+import { Node as PARSER_NODE, parser} from './parser'
+import { VirtDom, Node as DOM_NODE }  from './virtDOM'
+//import { Router, onRouteClick } from '../router/Router'
+import { onRouteClick } from '../router/events'
 
-// import VirtDom from './virtDOM.js'
-// import { parser, PARSER_TYPES } from './parser.js'
+// import VirtDom from './virtDOM'
+// import { parser, PARSER_TYPES } from './parser'
 
 enum EVENTS {
     INIT = "init", 
@@ -41,6 +41,8 @@ class Component {
     
     //console.log('component')
 
+    this._root = null
+
     const eventBus: EventBus = new EventBus()
     this._props = props
    //this.props = this._makePropsProxy(props)
@@ -70,14 +72,14 @@ class Component {
   _componentDidMount(): void {
     this.componentDidMount()
   }
-  componentDidMount(oldProps: any = {}): void {}
+  componentDidMount(_oldProps: any = {}): void { }
 
-  _componentDidUpdate(oldProps: any = null, newProps: any = null): void {
+  _componentDidUpdate(_oldProps: any = null, _newProps: any = null): void {
     // const response = this.componentDidUpdate(oldProps, newProps)
     // this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
   }
 
-  componentDidUpdate(oldProps: any, newProps: any): boolean {
+  componentDidUpdate(_oldProps: any, _newProps: any): boolean {
     return true
   }
 
@@ -181,6 +183,7 @@ class Component {
             (node.props.classes as Array<string>).forEach(nodeClass => {
               element.classList.add(nodeClass)
             })
+          
           } else if (typeof node.props[prop] === "function") {
             if (prop.startsWith('on')) {
               element.addEventListener(prop.slice(2).toLowerCase(), node.props[prop])
@@ -197,7 +200,13 @@ class Component {
             }  
             element.setAttribute(prop, node.props[prop])
           } else {
-            element.setAttribute(prop, node.props[prop])
+            if (node.props[prop] === '#noValue'){
+              //(element as any)[prop] = true
+            } else {
+              //console.log(prop, node.props[prop])
+              element.setAttribute(prop, node.props[prop])
+            }
+            
           }
 
         })

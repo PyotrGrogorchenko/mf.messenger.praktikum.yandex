@@ -1,0 +1,16 @@
+nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;  
+}
+
+.main-nav-a {
+  margin: 10px !important;
+  text-decoration: none;
+  color: var(--color-blue1);
+}
+
+.main-nav-a:hover {
+  color: var(--color-gray1);
+}

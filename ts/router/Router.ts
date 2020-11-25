@@ -1,4 +1,6 @@
-import Route from './Route.js'
+import { HTTPTransport } from '../xhr/HTTPTransport'
+import { env } from '../const/index'
+import Route from './Route'
 
 class Router {
 
@@ -8,7 +10,6 @@ class Router {
   history: History = window.history
   _currentRoute: Route | null = null
   _rootQuery: string = ''
-
 
   constructor(rootQuery: string = '') {
         if (Router.__instance) {
@@ -33,11 +34,32 @@ class Router {
 
     start() {
       // На смену роута вызываем перерисовку
-      window.onpopstate = ((event: any) => {
+      window.addEventListener('popstate', ((event: any) => {
         this._onRoute(event.currentTarget.location.pathname)
-      }).bind(this)
+      }).bind(this))
 
-      this._onRoute(window.location.pathname)
+      return this 
+
+    }
+
+    async defaultPage() {
+     
+      //let req: XMLHttpRequest | null
+
+      const httpTransport = new HTTPTransport()
+      const req = await httpTransport.get(`${env.URL_REQUEST}/auth/user`, {withCredentials: true ,headers: {'content-type': 'application/json'}}) as XMLHttpRequest
+
+      if (req.status >= 400){
+        this.go('/login')
+      } else {
+        localStorage.setItem('first_name',    req.response.first_name)
+        localStorage.setItem('second_name',   req.response.second_name)
+        localStorage.setItem('login',         req.response.login)
+        localStorage.setItem('email',         req.response.email)
+        localStorage.setItem('phone',         req.response.phone)
+        this.go('/selectChat')
+      }
+
     }
 
     _onRoute(pathname: string) {

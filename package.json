@@ -4,19 +4,56 @@
   "description": "[![Deploy](https://img.shields.io/badge/Deploy-passing-green)](https://cranky-mcnulty-59af15.netlify.app/) [![Fligma](https://img.shields.io/badge/Fligma-v1-yellow)](https://www.figma.com/file/G8Nrm7vN2ijZqRR2zBlyUc/messanger?node-id=0%3A1)",
   "main": "index.js",
   "dependencies": {
+    "app-root-path": "^3.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express-async-errors": "^3.1.1",
+    "express-jwt": "^6.0.0",
+    "loglevel": "^1.7.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
     "pug": "^3.0.0",
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
-    "@types/express": "^4.17.8",
-    "@types/node": "^14.14.6",
+    "@babel/cli": "^7.12.8",
+    "@babel/core": "^7.12.8",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-typescript": "^7.12.7",
+    "@babel/register": "^7.12.1",
+    "@testing-library/dom": "^7.28.1",
+    "@testing-library/jest-dom": "^5.11.6",
+    "@types/express": "^4.17.9",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^14.14.9",
+    "autoprefixer": "^10.0.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "cli-progress": "^3.8.2",
+    "express": "^4.17.1",
+    "faker": "^5.1.0",
+    "filehound": "^1.17.4",
+    "jest": "^26.6.3",
+    "jest-in-case": "^1.0.2",
+    "postcss": "^8.1.10",
+    "postcss-cli": "^8.3.0",
+    "postcss-load-config": "^3.0.0",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.5",
-    "express": "^4.17.1"
+    "typescript": "^4.1.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node app.ts"
+    "build": "npm run build:putJS && npm run build:postCSS && npm run build:componentsCSS && npm run build:importComponentsJS",
+
+    "build:tsc": "rm -rf static/build && tsc",
+    "build:putJS": "node helper/putJS.js",
+    "build:postCSS": "rm -rf static/css/components && postcss ts/**/*.css --dir static/css/components",
+    "build:componentsCSS": "node helper/importComponentsCSS.js",
+    "build:importComponentsJS": "node helper/importComponentsJS.js",
+    
+    "test": "jest",
+    "dev": "ts-node app.ts",
+    
+    "helper:makeCSS": "node helper/makeCSS.js",
+    "helper:makeDir": "node helper/makeDir.js"
   },
   "repository": {
     "type": "git",

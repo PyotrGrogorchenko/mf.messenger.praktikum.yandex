@@ -1,0 +1,11 @@
+.user-settings-bar {
+ 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  
+  align-items: center;
+  
+  width: 400px;
+  height: 600px;
+
+}
