@@ -1,0 +1,10 @@
+.message__outgoing{
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;  
+  align-items: flex-start;   
+  
+  flex: 2;
+  border-radius: 5px;
+}

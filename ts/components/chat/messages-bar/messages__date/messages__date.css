@@ -1,0 +1,10 @@
+.messages__date {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+
+  margin: 5px;
+
+  color: var(--color-gray2);
+}

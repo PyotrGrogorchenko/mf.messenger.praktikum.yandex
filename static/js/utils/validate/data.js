@@ -1,4 +1,4 @@
-import { valueIsValid } from './methods.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import { valueIsValid } from './methods.js';
 // type Indexed<T = number | string | boolean | undefined> = {
 //   [key in string]: T | Indexed;
 // }

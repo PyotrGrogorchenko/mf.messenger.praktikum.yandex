@@ -1,18 +1,6 @@
-import Component from '../../component/component'
-import PageColumn from '../page-column'
+import Component from '../../../component/component'
 
 export default class Index extends Component {
-
-  components() {return {PageColumn}}
-  
-  state() {return {
-  
-    
-
-  
-  
-  }}
-
 
   template() { 
     return  (

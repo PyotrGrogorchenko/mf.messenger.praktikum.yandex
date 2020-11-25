@@ -1,10 +1,10 @@
-import EventBus from './event-bus.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
-import { parser } from './parser.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
-import { VirtDom } from './virtDOM.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
-//import { Router, onRouteClick } from '../router/Router.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js'
-import { onRouteClick } from '../router/events.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
-// import VirtDom from './virtDOM.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js'
-// import { parser, PARSER_TYPES } from './parser.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js'
+import EventBus from './event-bus.js';
+import { parser } from './parser.js';
+import { VirtDom } from './virtDOM.js';
+//import { Router, onRouteClick } from '../router/Router.js'
+import { onRouteClick } from '../router/events.js';
+// import VirtDom from './virtDOM.js'
+// import { parser, PARSER_TYPES } from './parser.js'
 var EVENTS;
 (function (EVENTS) {
     EVENTS["INIT"] = "init";

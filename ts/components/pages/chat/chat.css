@@ -1,0 +1,4 @@
+.page-chat {
+  display: flex;
+  flex-direction: row;
+}

@@ -1,11 +1,6 @@
-import Component from '../../../component/component'
-// import ButtonToGo from '../../UI/buttons/button-to-go'
-// import InputGray5 from '../../UI/inputs/input-gray5'
-// import UsersBar__UsersList from './users-bar__users-list'
+import Component from '../../../../component/component'
 
 class MessagesBar__Header extends Component {
-
-  //components() {return {ButtonToGo, InputGray5, UsersBar__UsersList}}
 
   template() { 
     return (

@@ -1,10 +1,7 @@
-import Component from '../../component/component'
-import ErrorBar from '../error-bar'
+import Component from '../../../component/component'
 
 export default class Error500 extends Component {
 
-  components() {return {ErrorBar}}
-  
   template() { 
 
     return  (

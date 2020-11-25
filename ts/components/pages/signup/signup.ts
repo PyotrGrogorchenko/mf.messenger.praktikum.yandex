@@ -1,15 +1,7 @@
-import Component from '../../component/component'
-import PageColumn from '../page-column'
-import AuthBarForm from '../auth-bar/auth-bar-form'
-import Bar__Header from '../auth-bar/bar__header/bar__header'
-import Bar__Content from '../auth-bar/bar__content/bar__content'
-import AuthBarInput from '../auth-bar/auth-bar-input/auth-bar-input'
-import Bar__Footer from '../auth-bar/bar__footer/bar__footer'
-import ButtonMain from '../UI/buttons/button-main'
-import AnchorMain from '../UI/anchors/anchor-main'
-import { env } from '../../const/index'
-import { HTTPTransport } from '../../xhr/HTTPTransport'
-import { Router } from '../../router/Router'
+import Component from '../../../component/component'
+import { env } from '../../../const/index'
+import { HTTPTransport } from '../../../xhr/HTTPTransport'
+import { Router } from '../../../router/Router'
 
 //import { config as dotenv } from 'dotenv/config'
 //import * as dotenv from "dotenv"
@@ -20,8 +12,6 @@ import { Router } from '../../router/Router'
 
 export default class Signup extends Component {
 
-  components() {return {PageColumn, AuthBarForm, Bar__Header, Bar__Content, AuthBarInput, Bar__Footer, ButtonMain, AnchorMain}}
-  
   async signUpOnClick (e:Event) {
     e.preventDefault()
     

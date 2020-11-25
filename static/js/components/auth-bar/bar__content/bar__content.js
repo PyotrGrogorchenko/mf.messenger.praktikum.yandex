@@ -1,8 +1,8 @@
-import Component from '../../../component/component.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
-class BarContent extends Component {
+import Component from '../../../component/component.js';
+class Bar__Content extends Component {
     template() {
         return (`<div className="bar__content"></div>`);
     }
 }
-export default BarContent;
+export default Bar__Content;
 //# sourceMappingURL=bar__content.js.map

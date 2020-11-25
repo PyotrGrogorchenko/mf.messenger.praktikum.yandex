@@ -1,0 +1,11 @@
+.anchor-main {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;  
+
+  text-decoration: none;  
+  margin-top: 10px;
+  
+  color: var(--color-blue1);
+
+}

@@ -1,4 +1,4 @@
-import { PARSER_TYPES } from './parser.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import { PARSER_TYPES } from './parser.js';
 //declare const window: any
 // interface LooseObject {
 //   [key: string]: any

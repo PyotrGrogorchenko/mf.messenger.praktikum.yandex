@@ -1,10 +1,6 @@
-import Component from '../component/component'
-import PageColumn from './page-column'
-import AnchorMain from './UI/anchors/anchor-main'
+import Component from '../../component/component'
 
 class ErrorBar extends Component {
-
-  components() {return {PageColumn, AnchorMain}}
 
   template() { 
     return (

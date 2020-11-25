@@ -1,8 +1,6 @@
-import Component from '../../../component/component'
+import Component from '../../../../component/component'
 
 class Messages__Date extends Component {
-
-  //components() {return {MessagesBar__Header}}
 
   template() { 
     return (

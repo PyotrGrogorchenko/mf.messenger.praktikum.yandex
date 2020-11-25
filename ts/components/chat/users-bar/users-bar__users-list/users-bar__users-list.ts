@@ -1,12 +1,8 @@
-import Component from '../../../component/component'
-import { HTTPTransport } from '../../../xhr/HTTPTransport'
-import UsersList__UserItem from './users-list__user-item'
-//import InputGray5 from '../UI/inputs/input-gray5'
-import { env } from '../../../const/index'
+import Component from '../../../../component/component'
+import { HTTPTransport } from '../../../../xhr/HTTPTransport'
+import { env } from '../../../../const/index'
 
 class UsersBar__UsersList extends Component {
-
-  components() {return {UsersList__UserItem}}
 
   async getChats() {
     const httpTransport = new HTTPTransport()

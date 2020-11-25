@@ -1,9 +1,6 @@
-import Component from '../../../../component/component'
-import Message__FreeSpace from './message__free-space'
+import Component from '../../../../../component/component'
 
 class Message__Incoming extends Component {
-
-  components() {return {Message__FreeSpace}}
 
   template() { 
     return (

@@ -1,11 +1,7 @@
-import Component from '../../component/component'
-import UsersBar from '../chat/users-bar/users-bar'
-import MessagesBar from '../chat/messages-bar/messages-bar'
+import Component from '../../../component/component'
 
 export default class Chat extends Component {
 
-  components() {return {UsersBar, MessagesBar}}
-  
   func (e: any) {
     { console.log(e) }  
   }
@@ -18,7 +14,7 @@ export default class Chat extends Component {
 
     return  (
 
-      `<div className="page-chat">
+      `<div className='page-chat'>
         <UsersBar></UsersBar>
         <MessagesBar func={{state.func}}></MessagesBar>
       </div>`

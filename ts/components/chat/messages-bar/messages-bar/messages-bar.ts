@@ -1,12 +1,6 @@
 import Component from '../../../../component/component'
-import MessagesBar__Header from './messages-bar__header'
-import Messages__Date from './messages__date'
-import Message from '../message/message/message'
-import MessagesBar__Footer from './messages-bar__footer'
 
 class MessagesBar extends Component {
-
-  components() {return {MessagesBar__Header, Messages__Date, Message, MessagesBar__Footer}}
 
   state() {return {
     user: { name: 'Serafima', lastSeen: 'last seen 1 minute ago'},

@@ -1,5 +1,5 @@
-import Component from '../../../component/component'
-import { onRouteClick } from '../../../router/events'
+import Component from '../../../../component/component'
+import { onRouteClick } from '../../../../router/events'
 
 class UsersList__UserItem extends Component {
 
@@ -7,9 +7,7 @@ class UsersList__UserItem extends Component {
     onRouteClick: onRouteClick
   }}
 
-
   template() { 
-   
     return (
       `<li className="users-list__user-item" href='#{R}chat'>
         <div className="user-item__avatar">
