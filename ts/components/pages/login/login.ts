@@ -1,10 +1,10 @@
 import Component from '../../component/component'
 import PageColumn from '../page-column'
-import AuthBar from '../auth-bar/auth-bar-form'
-import BarHeader from '../auth-bar/bar__header/bar__header'
-import BarContent from '../auth-bar/bar__content/bar__content'
+import AuthBarForm from '../auth-bar/auth-bar-form'
+import Bar__Header from '../auth-bar/bar__header/bar__header'
+import Bar__Content from '../auth-bar/bar__content/bar__content'
 import AuthBarInput from '../auth-bar/auth-bar-input/auth-bar-input'
-import BarFooter from '../auth-bar/bar__footer/bar__footer'
+import Bar__Footer from '../auth-bar/bar__footer/bar__footer'
 import ButtonMain from '../UI/buttons/button-main'
 import AnchorMain from '../UI/anchors/anchor-main'
 import { HTTPTransport } from '../../xhr/HTTPTransport'
@@ -13,7 +13,7 @@ import { Router } from '../../router/Router'
 
 export default class Login extends Component {
 
-  components() {return {PageColumn, AuthBar, BarHeader, BarContent, AuthBarInput, BarFooter, ButtonMain, AnchorMain}}
+  components() {return {PageColumn, AuthBarForm, Bar__Header, Bar__Content, AuthBarInput, Bar__Footer, ButtonMain, AnchorMain}}
   
   async loginOnClick (e:Event) {
     e.preventDefault()
@@ -66,17 +66,17 @@ export default class Login extends Component {
 
     return  (
       `<PageColumn>
-        <AuthBar>
-          <BarHeader text='Log in'></BarHeader>
-          <BarContent>
+        <AuthBarForm>
+          <Bar__Header text='Log in'></Bar__Header>
+          <Bar__Content>
             <AuthBarInput text='login'    type='text'     id='input_login'    value={{state.login}}></AuthBarInput>                  
             <AuthBarInput text='password' type='password' id='input_password' value={{state.password}}></AuthBarInput>                  
-          </BarContent>
-          <BarFooter>
+          </Bar__Content>
+          <Bar__Footer>
             <ButtonMain text='Log in' id='button_log-in' onClick={{state.loginOnClick}}></ButtonMain>
             <AnchorMain text='Sign up' id='button_to-sign-up' href='#{R}signup'></AnchorMain>
-          </BarFooter>
-        </AuthBar>
+          </Bar__Footer>
+        </AuthBarForm>
       </PageColumn>`
     )
 

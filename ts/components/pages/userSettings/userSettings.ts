@@ -1,10 +1,10 @@
 import Component from '../../component/component'
 import PageColumn from '../page-column'
 import UserSettingsBar from '../user-settings/user-settings-bar'
-import BarHeader from '../auth-bar/bar__header/bar__header'
-import BarContent from '../auth-bar/bar__content/bar__content'
+import Bar__Header from '../auth-bar/bar__header/bar__header'
+import Bar__Content from '../auth-bar/bar__content/bar__content'
 import UserSettingsBarInput from '../user-settings/user-settings-bar-input'
-import BarFooter from '../auth-bar/bar__footer/bar__footer'
+import Bar__Footer from '../auth-bar/bar__footer/bar__footer'
 import ButtonMain from '../UI/buttons/button-main'
 import ButtonSecondary from '../UI/buttons/button-secondary'
 import { HTTPTransport } from '../../xhr/HTTPTransport'
@@ -13,7 +13,7 @@ import { Router } from '../../router/Router'
 
 export default class UserSettings extends Component {
 
-  components() {return {PageColumn, UserSettingsBar, BarHeader, BarContent, UserSettingsBarInput, BarFooter, ButtonMain, ButtonSecondary}}
+  components() {return {PageColumn, UserSettingsBar, Bar__Header, Bar__Content, UserSettingsBarInput, Bar__Footer, ButtonMain, ButtonSecondary}}
 
   // componentDidMount() {
   //   console.
@@ -61,9 +61,9 @@ export default class UserSettings extends Component {
       `<PageColumn>
         <UserSettingsBar>
           
-          <BarHeader text='User settings'></BarHeader>
+          <Bar__Header text='User settings'></Bar__Header>
           
-          <BarContent>
+          <Bar__Content>
             <UserSettingsBarInput text='First name'       type='text'       id='input_first-name'   value={{state.first_name}} ></>                  
             <UserSettingsBarInput text='Second name'      type='text'       id='input_second-name'  value={{state.second_name}}  ></>                  
             <UserSettingsBarInput text='Login'            type='text'       id='input_login'        value={{state.login}}  ></>                  
@@ -71,12 +71,12 @@ export default class UserSettings extends Component {
             <UserSettingsBarInput text='Phone'            type='tel'        id='input_phone'        value={{state.phone}}  ></>                  
             <UserSettingsBarInput text='Old password'     type='password'   id='input_old-password' value={{state.oldPassword}}  ></>                  
             <UserSettingsBarInput text='New password'     type='password'   id='input_new-password' value={{state.newPassword}}  ></>                  
-          </BarContent>
+          </Bar__Content>
           
-          <BarFooter>
+          <Bar__Footer>
             <ButtonMain text='Save' id='button_save'></ButtonMain>
             <ButtonSecondary text='Log out' id='button_log-out' onClick={{state.logoutOnClick}}></ButtonSecondary>
-          </BarFooter>
+          </Bar__Footer>
         
         </UserSettingsBar>
       </PageColumn>`

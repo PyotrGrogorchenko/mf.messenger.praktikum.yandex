@@ -1,6 +1,6 @@
 import Component from '../../../component/component'
 
-class BarContent extends Component {
+class Bar__Content extends Component {
 
   template() { 
     return (
@@ -10,4 +10,4 @@ class BarContent extends Component {
 
 }
 
-export default BarContent
+export default Bar__Content

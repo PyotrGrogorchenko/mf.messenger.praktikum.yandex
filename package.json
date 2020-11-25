@@ -45,7 +45,7 @@
     "build:tsc": "rm -rf static/build && tsc",
     "build:js": "cd helper && node importer.js",
     "build:postcss": "postcss ts/**/*.css --dir static/css/",
-    "temp": "cd helper && node postcssAddDirFiles.js"
+    "temp": "cd helper && node makeCSS.js"
   },
   "repository": {
     "type": "git",
