@@ -7,44 +7,9 @@ type Node = {
 
 function parser(str:string): Array<Node> {
 
-  //return parserREGEXP(str)
   return parserNoREGEXP(str)
   
 }
-
-// function parserREGEXP(str: string): Array<Node> {
-
-//   const PARSE_REGEXP: RegExp = /\<(.*?)\>/gim
-//   const strOrigin: string = str
-//   const res: Array<Node> = Array<Node>()
-  
-//   const addItem = (type: PARSER_TYPES, content: string): void => {
-//     res.push({type, content})
-//   }  
-  
-//   let key: null | RegExpExecArray = null
-//   while ((key = PARSE_REGEXP.exec(strOrigin))) {
-    
-//     //const tagProps = {type: null, content: null}
-//     const isEndTag: boolean = key[0].startsWith('</')  
-
-//     addItem(isEndTag ? PARSER_TYPES.END : PARSER_TYPES.BEGIN, isEndTag ? key[1].slice(1) : key[1])
-//     str = str.slice(str.indexOf(key[0]) + key[0].length)
-
-//     if (!isEndTag) {
-//       if (str.indexOf('<') >= 0) {
-//         const content = str.substring(0, str.indexOf('<')).trim()
-//         if (content){
-//           addItem(PARSER_TYPES.TEXT, content)
-//         }
-//       }
-//     }
-
-//   }
-
-//   return res
-
-// }
 
 function parserNoREGEXP(str: string): Array<Node> {
 
@@ -79,16 +44,14 @@ function parserNoREGEXP(str: string): Array<Node> {
     str = str.slice(endTagPos + 1).trim()
 
 
-    //if (!isEndTag) {
-      if (str.indexOf('<') >= 0) {
-        const content = str.substring(0, str.indexOf('<')).trim()
-        if (content){
-          addItem(PARSER_TYPES.TEXT, content)
-        }
-        str = str.slice(str.indexOf('<')).trim()
+    if (str.indexOf('<') >= 0) {
+      const content = str.substring(0, str.indexOf('<')).trim()
+      if (content){
+        addItem(PARSER_TYPES.TEXT, content)
       }
-    //}
-
+      str = str.slice(str.indexOf('<')).trim()
+    }
+    
   }
 
   return res

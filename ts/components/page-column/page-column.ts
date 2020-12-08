@@ -4,7 +4,7 @@ class PageColumn extends Component {
 
   template() { 
     return (
-      `<div className="page-column">
+      `<div className='page-column'>
       </div>`
     )
   }

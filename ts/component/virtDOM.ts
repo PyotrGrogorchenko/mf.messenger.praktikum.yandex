@@ -1,13 +1,6 @@
 import { PARSER_TYPES, Node as PARSER_NODE } from './parser'
 import Component from './component'
 
-
-//declare const window: any
-
-// interface LooseObject {
-//   [key: string]: any
-// }
-
 class Node {
   
   uid: number = 0
@@ -28,31 +21,19 @@ class VirtDom {
   _nodes: Array<Node> = Array<Node>()
   _getOwner: (command: string, node: null | Node) => Node | null  = this._func_getOwner()
   _REGEXP_PARAM: RegExp = /\{\{(.*?)\}\}/gi
-  // _uid: () => number = this._uidCount()
 
   constructor(parsedTemplate: Array<PARSER_NODE>, state: any, props: any) {
     
-    //this._nodes = []
-    //this._id = this._func_id()
-    //this._getOwner = this._func_getOwner() 
-    
-    //this._REGEXP_PARAM = /\{\{(.*?)\}\}/gi
-  
     this.init(parsedTemplate, state, props)
   }
 
   init(parsedTemplate: Array<PARSER_NODE>, state: any, props: any): void {
   
-    //parsedTemplate.forEach(item => {
-    
     for(let i: number = 0; i < parsedTemplate.length; i++) {
       const item: PARSER_NODE = parsedTemplate[i]
-      //this._compileItem(item, state, props, parsedTemplate, i)
 
       if (item.type === PARSER_TYPES.CODE) {
-        const iObj: {i: number} = {i}
-        this._compileCode(item, state, props, parsedTemplate, iObj)
-        i = iObj.i
+        i = this._compileCode(item, state, props, parsedTemplate, i)
       } else {
         this._compileItem(item, state, props)
       }
@@ -74,14 +55,6 @@ class VirtDom {
     return str.slice(begin, end)
   }
 
-  // _uidCount(): () => number {
-  //   let uidCount: number = -1
-  //   return function(): number {
-  //     uidCount++
-  //     return uidCount
-  //   }
-  // }
-
   _compileItem(item: PARSER_NODE, state: any, props: any) {
   
     switch (item.type) {
@@ -100,14 +73,6 @@ class VirtDom {
     
   }
   
-  // _func_id() {
-  //   let id = -1
-  //   return function() {
-  //     id++
-  //   return id
-  //   }
-  // }
-
   _func_getOwner(): (command: string , node: null | Node) => Node | null {
     const ownersStack: Array<Node> = Array<Node>() 
     return function(command: string = '', node: null | Node = null): Node | null {
@@ -125,21 +90,6 @@ class VirtDom {
       return res
     }
   }
-
-  // _createNode() {
-  //   return Node
-  //   //{
-  //   //   uid: window.uid(),
-  //   //   level: null,
-  //   //   owner: null,
-  //   //   header: null,
-  //   //   tagName: null,
-  //   //   content: null,
-  //   //   isComponent: false,
-  //   //   props: {classes: []},
-  //   //   componentLink: null
-  //   // }
-  // }
 
   _addNode(header: string, type: PARSER_TYPES, state: any, props: any): void {
     
@@ -168,23 +118,22 @@ class VirtDom {
   
   }
 
-  _compileCode(itemBegin: PARSER_NODE, state: any, props: any, parsedTemplate: Array<PARSER_NODE> , iObj: any) {
+  _compileCode(itemBegin: PARSER_NODE, state: any, props: any, parsedTemplate: Array<PARSER_NODE> , i: any): number {
     
     let code: string = itemBegin.content.slice(2, itemBegin.content.indexOf('%}')).trim() 
 
     if (code.startsWith('for') || code.startsWith('while')) {
-      this._compileCode__cycle(itemBegin, state, props, parsedTemplate, iObj)
-      return
+      return this._compileCode__cycle(itemBegin, state, props, parsedTemplate, i)
     } else if (code.startsWith('if')) {
-      this._compileCode__if(itemBegin, state, props, parsedTemplate, iObj) 
-      return
+      return this._compileCode__if(itemBegin, state, props, parsedTemplate, i) 
     } 
 
     eval(code)
+    return i
 
   }
 
-  _compileCode__cycle($itemBegin: PARSER_NODE, state: any, props: any, $parsedTemplate: Array<PARSER_NODE>, $iObj: any) {
+  _compileCode__cycle($itemBegin: PARSER_NODE, state: any, props: any, $parsedTemplate: Array<PARSER_NODE>, $i: number): number {
 
     const $stackItems:Array<PARSER_NODE> = []
 
@@ -194,7 +143,7 @@ class VirtDom {
 
     let $code: string = $itemBegin.content.slice(2, $itemBegin.content.indexOf('%}')).trim() 
 
-    let $i: number = $iObj.i + 1
+    $i++
     for($i; $i < $parsedTemplate.length; $i++) {
       const $item: PARSER_NODE = $parsedTemplate[$i]
       if ($item.type === PARSER_TYPES.CODE) {
@@ -206,26 +155,25 @@ class VirtDom {
 
       $code = $code + '\n' + 
       ` item = {...$stackItems[${$stackItems.length - 1}]}
-        param = null
-        //regExp = new RegExp(this._REGEXP_PARAM)
-        while ((param = new RegExp(this._REGEXP_PARAM).exec(item.content))) {
+        
+        window.regexpMatchAll(item.content, this._REGEXP_PARAM).forEach(function(param) {
           if (param[1] && !param[1].startsWith('state') && !param[1].startsWith('props')) {
-            item.content = item.content.replace(param[0], '"' + eval(param[1]) + '"')
+            const quote = item.type === PARSER_TYPES.TEXT ? '' : '"'
+            item.content = item.content.replace(param[0], quote + eval(param[1]) + quote)
           }
-        }`
+        })`
       
       $code = $code + '\n' + `  this._compileItem(item, state, props)`
     
     }
 
-    //console.log($code)
     eval($code)
 
-    $iObj.i = $i
+    return $i
   
   }
 
-  _compileCode__if($itemBegin: PARSER_NODE, state: any, props: any, $parsedTemplate: Array<PARSER_NODE>, $iObj: any) {
+  _compileCode__if($itemBegin: PARSER_NODE, state: any, props: any, $parsedTemplate: Array<PARSER_NODE>, $i: number): number {
 
     const $stackItems:Array<PARSER_NODE> = []
 
@@ -235,7 +183,7 @@ class VirtDom {
 
     let $code: string = $itemBegin.content.slice(2, $itemBegin.content.indexOf('%}')).trim() 
 
-    let $i: number = $iObj.i + 1
+    $i++
     for($i; $i < $parsedTemplate.length; $i++) {
       const $item = $parsedTemplate[$i]
       if ($item.type === PARSER_TYPES.CODE) {
@@ -258,7 +206,7 @@ class VirtDom {
     //console.log($code)
     eval($code)
 
-    $iObj.i = $i
+    return $i
   
 
   }
@@ -279,17 +227,14 @@ class VirtDom {
     let header: string = node.header;
     
     const cacheTxt: LooseObject = {}
-    let txt: RegExpExecArray | null
-    //const regExp: RegExp = new RegExp(/[\'\"](.*?)[\'\"]/gi)
-    
     let count: number = 1
-    while ((txt = new RegExp(/[\'\"](.*?)[\'\"]/gi).exec(header))) {
+    window.regexpMatchAll(header, /[\'\"](.*?)[\'\"]/gi).forEach(function(txt: RegExpExecArray) {
       if (txt[0]) {
         cacheTxt[`text${count}`] = txt[0]
         header = header.replace(txt[0], `text${count}`)
         count++
       }
-    }
+    })
 
     header.split(' ').forEach(keyValue => {
       if (!keyValue || keyValue === node.tagName){
@@ -305,7 +250,7 @@ class VirtDom {
       const param: RegExpExecArray | null = new RegExp(this._REGEXP_PARAM).exec(arrKeyValue[1])
 
       if (arrKeyValue[0] === 'className') {
-        const strClasses: string = param ? window.get(state, props, param[1], '') : arrKeyValue[1].replace(/"/g, '')
+        const strClasses: string = param ? window.get(state, props, param[1], '') : arrKeyValue[1].replace(/[\'\"]/g, '')
         node.props.classes = strClasses.split(' ')
       } else if (arrKeyValue.length === 1) {
         node.props[arrKeyValue[0]] = '#noValue'
@@ -324,13 +269,11 @@ class VirtDom {
       return content
     }
 
-    let param: RegExpExecArray | null
-    //const regExp: RegExp = new RegExp(this._REGEXP_PARAM)
-    while ((param = new RegExp(this._REGEXP_PARAM).exec(content))) {
+    window.regexpMatchAll(content, this._REGEXP_PARAM).forEach(function(param: RegExpExecArray) {
       if (param[1]) {
         content = content.replace(param[0], eval(param[1]))
       }
-    }    
+    })
 
     return content
 

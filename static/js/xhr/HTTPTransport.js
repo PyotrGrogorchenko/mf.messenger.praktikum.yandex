@@ -1,12 +1,3 @@
-// const METHODS = {
-//   GET: 'GET',
-//   POST: 'POST',
-//   PUT: 'PUT',
-//   DELETE: 'DELETE'
-// }
-// type Indexed<T = number | string | undefined> = {
-//   [key in string]: T | Indexed;
-// }
 var METHODS;
 (function (METHODS) {
     METHODS["GET"] = "GET";
@@ -14,27 +5,6 @@ var METHODS;
     METHODS["PUT"] = "PUT";
     METHODS["DELETE"] = "DELETE";
 })(METHODS || (METHODS = {}));
-// String.prototype.replaceAt = function(index, replacement) {
-//   return this.substr(0, index) + replacement + this.substr(index + replacement.length);
-// }
-/**
-* Функцию реализовывать здесь необязательно, но может помочь не плодить логику у GET-метода
-* На входе: объект. Пример: {a: 1, b: 2, c: {d: 123}, k: [1, 2, 3]}
-* На выходе: строка. Пример: ?a=1&b=2&c=[object Object]&k=1,2,3
-*/
-function queryStringify(data) {
-    if (!data) {
-        return '';
-    }
-    let res = '';
-    for (let [key, value] of Object.entries(data)) {
-        res += `&${key}=${value}`;
-    }
-    if (res) {
-        res = '?' + res.substr(1);
-    }
-    return res;
-}
 class HTTPTransport {
     constructor() {
         this.get = (url, options = {}) => {
@@ -55,7 +25,7 @@ class HTTPTransport {
         // withCredentials — boolean
         this.request = (url, options, timeout = 5000) => {
             const { method, data, headers, withCredentials } = options;
-            url += method === METHODS.GET ? queryStringify(data) : '';
+            url += method === METHODS.GET ? window.queryStringify(data) : '';
             return new Promise((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
                 xhr.open(method, url);
@@ -92,43 +62,5 @@ class HTTPTransport {
         };
     }
 }
-// function fetchWithRetry(url: string, options: Indexed) {
-//   if (!url || !options) {
-//     throw Error (`Не удалось выполнить запрос!`)  
-//   }
-//   const retries: number = options.retries as number
-//   for (let i = 0; i < retries; i++){
-//     const xhr = new XMLHttpRequest()
-//     xhr.open('get', url, false)
-//     xhr.send()
-//     if (xhr.status < 400) {
-//       return xhr.response
-//     }
-//   }
-//   throw Error (`Не удалось выполнить запрос!`)
-// }
 export { HTTPTransport };
-// async function fetchWithRetry1(url: string, options: Indexed) {
-//   const arrPromises = []
-//   const retries: number = options.retries as number
-//   for (let i = 1; i <= retries; i++) {
-//     const httpTransport = new HTTPTransport()
-//     arrPromises.push(httpTransport.get(url))
-//   }
-//   const res = await Promise.race(arrPromises).then(firstResult => {
-//     return firstResult
-//   })
-//   return res
-// }
-//const requestURL = 'https://jsonplaceholder.typicode.com/users'
-// const httpTransport = new HTTPTransport()
-// httpTransport.get(requestURL, {data:{a: 1, b: 2}, headers: {'content-type': 'application/json'}})
-//   .then(data => console.log('get', data))
-//   .catch(err => console.log(err))
-// httpTransport.post(requestURL, {data: {name:'Pyotr'}})
-//   .then(data => console.log('post', data.response))
-//   .catch(err => console.log(err))
-//console.log(fetchWithRetry('', {retries: 5}))
-// .then(data => console.log('get', data))
-// .catch(err => console.log('err', err))
 //# sourceMappingURL=HTTPTransport.js.map

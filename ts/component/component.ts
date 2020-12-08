@@ -1,11 +1,7 @@
 import EventBus from './event-bus'
 import { Node as PARSER_NODE, parser} from './parser'
 import { VirtDom, Node as DOM_NODE }  from './virtDOM'
-//import { Router, onRouteClick } from '../router/Router'
 import { onRouteClick } from '../router/events'
-
-// import VirtDom from './virtDOM'
-// import { parser, PARSER_TYPES } from './parser'
 
 enum EVENTS {
     INIT = "init", 
@@ -16,15 +12,8 @@ enum EVENTS {
 
 
 class Component {
-//   static EVENTS = {
-//     INIT: "init",
-//     FLOW_CDM: "flow:component-did-mount",
-//     FLOW_CDU: "flow:component-did-update",
-//     FLOW_RENDER: "flow:render"
-//   };
-
+  
   _root: HTMLElement | null = null
-  //_element = null
   _virtDOM: VirtDom | null = null
   _props: any = null
   _rootOut: HTMLElement | null = null
@@ -39,8 +28,6 @@ class Component {
   */
   constructor(props: any = {}) {
     
-    //console.log('component')
-
     this._root = null
 
     const eventBus: EventBus = new EventBus()
@@ -57,26 +44,22 @@ class Component {
   _registerEvents(eventBus: EventBus): void {
     eventBus.on(EVENTS.INIT, this.init.bind(this))
     eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
-    // PP \\
     eventBus.on(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this))
-    // PP //
     eventBus.on(EVENTS.FLOW_RENDER, this._render.bind(this))
   }
 
   init(): void {
     this._compile()
-    this.eventBus().emit(EVENTS.FLOW_CDM)
+    //this.eventBus().emit(EVENTS.FLOW_CDM)
   }
 
 
   _componentDidMount(): void {
     this.componentDidMount()
   }
-  componentDidMount(_oldProps: any = {}): void { }
+  componentDidMount(): void { }
 
-  _componentDidUpdate(_oldProps: any = null, _newProps: any = null): void {
-    // const response = this.componentDidUpdate(oldProps, newProps)
-    // this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
+  _componentDidUpdate(oldProps: any = null, newProps: any = null): void {
   }
 
   componentDidUpdate(_oldProps: any, _newProps: any): boolean {
@@ -84,19 +67,6 @@ class Component {
   }
 
   components(): any{
-   
-    // const importComponents = []
-    // for(let i = 0; i < parsedTemplate.length; i++) {
-    //   const item = parsedTemplate[i]
-    //   if (item.type === PARSER_TYPES.BEGIN && window.startsWithUpper(item.content)) { 
-    //     importComponents.push(VirtDom.getTagName(item.content))
-    //   }   
-    // }
-
-    // const importComponentsStr = '{' + String(importComponents) + '}'
-    // let res
-    // eval(`res = {${String(importComponents) }}`)
-
     return {}
   }
 
@@ -135,8 +105,6 @@ class Component {
 
     const parsedTemplate: Array<PARSER_NODE> = parser(template)
     
-    //console.log(parsedTemplate)
-
     const state: any = this.state()
     const props: any = this.getProps()
     
@@ -148,24 +116,10 @@ class Component {
       eval(code)
     })
 
-    // virtDom.getNodes().forEach(node => {
-    //   if (node.isComponent){
-    //     let code = `node.componentLink = new components.${node.tagName}(node.props)`
-    //     eval(code)
-    //   } else {
-    //     node.componentLink = this   
-    //   }
-    // })
-
-
     this._virtDOM = virtDom
-
-    //console.log(virtDom)
-
   }
   
   _render() { 
-    
     const nodes: Array<DOM_NODE> = (this._virtDOM as VirtDom).getNodes()
 
     nodes.forEach(node => {
@@ -178,7 +132,6 @@ class Component {
         const element: HTMLElement = document.createElement(node.tagName)
         
         Object.keys(node.props).forEach(prop => {
-          //console.log(prop, node.props)
           if (prop === 'classes') {
             (node.props.classes as Array<string>).forEach(nodeClass => {
               element.classList.add(nodeClass)
@@ -220,11 +173,9 @@ class Component {
 
     })
 
-  }
+    this.eventBus().emit(EVENTS.FLOW_CDM)
 
-//   // getContent() {
-//   //   return this.element
-//   // }
+  }
 
 //   _makePropsProxy(props) {
 //     // Можно и так передать this
@@ -261,20 +212,6 @@ class Component {
   
 //   }
 
-//   // _createDocumentElement(tagName) {
-//   //   // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
-//   //   return document.createElement(tagName)
-//   // }
-
-//   // show() {
-//   //   this._element.style.display = 'block'
-//   // }
-
-//   // hide() {
-//   //   this._element.style.display = 'none'
-//   // }
 }
 
-// PP \\
 export default Component
-// PP //

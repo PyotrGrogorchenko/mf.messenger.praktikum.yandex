@@ -4,7 +4,7 @@ class AuthBarForm extends Component {
 
   template() { 
     return (
-      `<form id="form__main" className="auth-bar-form">
+      `<form id='form__main' className='auth-bar-form'>
       </form>`
     )
   }

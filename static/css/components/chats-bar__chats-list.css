@@ -1,0 +1,12 @@
+.chats-bar__users-list {
+  flex: 9;
+  display: flex;
+  flex-direction: column;
+}
+
+.chats-list__list {
+  flex: 1;
+}
+
+
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3RzL2NvbXBvbmVudHMvY2hhdC9jaGF0cy1iYXIvY2hhdHMtYmFyX19jaGF0cy1saXN0L2NoYXRzLWJhcl9fY2hhdHMtbGlzdC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxPQUFPO0VBQ1AsYUFBYTtFQUNiLHNCQUFzQjtBQUN4Qjs7QUFFQTtFQUNFLE9BQU87QUFDVCIsImZpbGUiOiJjaGF0cy1iYXJfX2NoYXRzLWxpc3QuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNoYXRzLWJhcl9fdXNlcnMtbGlzdCB7XG4gIGZsZXg6IDk7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG59XG5cbi5jaGF0cy1saXN0X19saXN0IHtcbiAgZmxleDogMTtcbn1cblxuIl19 */

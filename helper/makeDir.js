@@ -14,7 +14,7 @@ async function execute() {
   const fs = require('fs')
   const path = require('path')
   
-  var appRoot = require('app-root-path')
+  const appRoot = require('app-root-path')
   
   const filePathsTS = await FileHound.create()
                   .paths(appRoot.path + '/ts/components')

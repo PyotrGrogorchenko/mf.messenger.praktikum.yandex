@@ -1,8 +1,4 @@
 import { PARSER_TYPES } from './parser.js';
-//declare const window: any
-// interface LooseObject {
-//   [key: string]: any
-// }
 class Node {
     constructor() {
         this.uid = 0;
@@ -18,26 +14,17 @@ class Node {
     }
 }
 class VirtDom {
-    // _uid: () => number = this._uidCount()
     constructor(parsedTemplate, state, props) {
-        //this._nodes = []
-        //this._id = this._func_id()
-        //this._getOwner = this._func_getOwner() 
         this._nodes = Array();
         this._getOwner = this._func_getOwner();
         this._REGEXP_PARAM = /\{\{(.*?)\}\}/gi;
-        //this._REGEXP_PARAM = /\{\{(.*?)\}\}/gi
         this.init(parsedTemplate, state, props);
     }
     init(parsedTemplate, state, props) {
-        //parsedTemplate.forEach(item => {
         for (let i = 0; i < parsedTemplate.length; i++) {
             const item = parsedTemplate[i];
-            //this._compileItem(item, state, props, parsedTemplate, i)
             if (item.type === PARSER_TYPES.CODE) {
-                const iObj = { i };
-                this._compileCode(item, state, props, parsedTemplate, iObj);
-                i = iObj.i;
+                i = this._compileCode(item, state, props, parsedTemplate, i);
             }
             else {
                 this._compileItem(item, state, props);
@@ -55,13 +42,6 @@ class VirtDom {
         const end = str.indexOf(' ') === -1 ? str.length : str.indexOf(' ');
         return str.slice(begin, end);
     }
-    // _uidCount(): () => number {
-    //   let uidCount: number = -1
-    //   return function(): number {
-    //     uidCount++
-    //     return uidCount
-    //   }
-    // }
     _compileItem(item, state, props) {
         switch (item.type) {
             case PARSER_TYPES.END:
@@ -77,13 +57,6 @@ class VirtDom {
                 throw new Error(`Tree: ошибка при инициализвции дерева для: ${item.type} ${item.content}`);
         }
     }
-    // _func_id() {
-    //   let id = -1
-    //   return function() {
-    //     id++
-    //   return id
-    //   }
-    // }
     _func_getOwner() {
         const ownersStack = Array();
         return function (command = '', node = null) {
@@ -100,20 +73,6 @@ class VirtDom {
             return res;
         };
     }
-    // _createNode() {
-    //   return Node
-    //   //{
-    //   //   uid: window.uid(),
-    //   //   level: null,
-    //   //   owner: null,
-    //   //   header: null,
-    //   //   tagName: null,
-    //   //   content: null,
-    //   //   isComponent: false,
-    //   //   props: {classes: []},
-    //   //   componentLink: null
-    //   // }
-    // }
     _addNode(header, type, state, props) {
         if (type === PARSER_TYPES.BEGIN) {
             //let node = this._createNode()
@@ -134,25 +93,24 @@ class VirtDom {
             }
         }
     }
-    _compileCode(itemBegin, state, props, parsedTemplate, iObj) {
+    _compileCode(itemBegin, state, props, parsedTemplate, i) {
         let code = itemBegin.content.slice(2, itemBegin.content.indexOf('%}')).trim();
         if (code.startsWith('for') || code.startsWith('while')) {
-            this._compileCode__cycle(itemBegin, state, props, parsedTemplate, iObj);
-            return;
+            return this._compileCode__cycle(itemBegin, state, props, parsedTemplate, i);
         }
         else if (code.startsWith('if')) {
-            this._compileCode__if(itemBegin, state, props, parsedTemplate, iObj);
-            return;
+            return this._compileCode__if(itemBegin, state, props, parsedTemplate, i);
         }
         eval(code);
+        return i;
     }
-    _compileCode__cycle($itemBegin, state, props, $parsedTemplate, $iObj) {
+    _compileCode__cycle($itemBegin, state, props, $parsedTemplate, $i) {
         const $stackItems = [];
         let item;
         let param;
         let regExp;
         let $code = $itemBegin.content.slice(2, $itemBegin.content.indexOf('%}')).trim();
-        let $i = $iObj.i + 1;
+        $i++;
         for ($i; $i < $parsedTemplate.length; $i++) {
             const $item = $parsedTemplate[$i];
             if ($item.type === PARSER_TYPES.CODE) {
@@ -162,26 +120,25 @@ class VirtDom {
             $stackItems.push($item);
             $code = $code + '\n' +
                 ` item = {...$stackItems[${$stackItems.length - 1}]}
-        param = null
-        //regExp = new RegExp(this._REGEXP_PARAM)
-        while ((param = new RegExp(this._REGEXP_PARAM).exec(item.content))) {
+        
+        window.regexpMatchAll(item.content, this._REGEXP_PARAM).forEach(function(param) {
           if (param[1] && !param[1].startsWith('state') && !param[1].startsWith('props')) {
-            item.content = item.content.replace(param[0], '"' + eval(param[1]) + '"')
+            const quote = item.type === PARSER_TYPES.TEXT ? '' : '"'
+            item.content = item.content.replace(param[0], quote + eval(param[1]) + quote)
           }
-        }`;
+        })`;
             $code = $code + '\n' + `  this._compileItem(item, state, props)`;
         }
-        //console.log($code)
         eval($code);
-        $iObj.i = $i;
+        return $i;
     }
-    _compileCode__if($itemBegin, state, props, $parsedTemplate, $iObj) {
+    _compileCode__if($itemBegin, state, props, $parsedTemplate, $i) {
         const $stackItems = [];
         let item;
         let param;
         let regExp;
         let $code = $itemBegin.content.slice(2, $itemBegin.content.indexOf('%}')).trim();
-        let $i = $iObj.i + 1;
+        $i++;
         for ($i; $i < $parsedTemplate.length; $i++) {
             const $item = $parsedTemplate[$i];
             if ($item.type === PARSER_TYPES.CODE) {
@@ -199,7 +156,7 @@ class VirtDom {
         }
         //console.log($code)
         eval($code);
-        $iObj.i = $i;
+        return $i;
     }
     _closeTag() {
         this._getOwner('remove', null);
@@ -212,16 +169,14 @@ class VirtDom {
     _setHeaderProps(node, state, props) {
         let header = node.header;
         const cacheTxt = {};
-        let txt;
-        //const regExp: RegExp = new RegExp(/[\'\"](.*?)[\'\"]/gi)
         let count = 1;
-        while ((txt = new RegExp(/[\'\"](.*?)[\'\"]/gi).exec(header))) {
+        window.regexpMatchAll(header, /[\'\"](.*?)[\'\"]/gi).forEach(function (txt) {
             if (txt[0]) {
                 cacheTxt[`text${count}`] = txt[0];
                 header = header.replace(txt[0], `text${count}`);
                 count++;
             }
-        }
+        });
         header.split(' ').forEach(keyValue => {
             if (!keyValue || keyValue === node.tagName) {
                 return;
@@ -232,7 +187,7 @@ class VirtDom {
             }
             const param = new RegExp(this._REGEXP_PARAM).exec(arrKeyValue[1]);
             if (arrKeyValue[0] === 'className') {
-                const strClasses = param ? window.get(state, props, param[1], '') : arrKeyValue[1].replace(/"/g, '');
+                const strClasses = param ? window.get(state, props, param[1], '') : arrKeyValue[1].replace(/[\'\"]/g, '');
                 node.props.classes = strClasses.split(' ');
             }
             else if (arrKeyValue.length === 1) {
@@ -250,13 +205,11 @@ class VirtDom {
         if (!content) {
             return content;
         }
-        let param;
-        //const regExp: RegExp = new RegExp(this._REGEXP_PARAM)
-        while ((param = new RegExp(this._REGEXP_PARAM).exec(content))) {
+        window.regexpMatchAll(content, this._REGEXP_PARAM).forEach(function (param) {
             if (param[1]) {
                 content = content.replace(param[0], eval(param[1]));
             }
-        }
+        });
         return content;
     }
     _setSignComponent(tagName) {

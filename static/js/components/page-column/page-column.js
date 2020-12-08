@@ -1,7 +1,7 @@
 import Component from '../../component/component.js';
 class PageColumn extends Component {
     template() {
-        return (`<div className="page-column">
+        return (`<div className='page-column'>
       </div>`);
     }
 }

@@ -9,34 +9,6 @@
   display: flex;
 }
 
-.color-gray3 {
-  color: var(--color-gray3);
-}
-
-.color-white {
-  color: var(--color-white);
-}
-
-.background-gray5 {
-  background: var(--color-gray5);
-}
-
-.background-gray4 {
-  background: var(--color-gray4);
-}
-
-.background-gray3 {
-  background: var(--color-gray3);
-}
-
-.background-white {
-  background: var(--color-white);
-}
-
-.background-blue1 {
-  background: var(--color-blue1);
-}
-
 .button-round {
   width: 30px;
   height: 30px;

@@ -1,10 +1,7 @@
 import EventBus from './event-bus.js';
 import { parser } from './parser.js';
 import { VirtDom } from './virtDOM.js';
-//import { Router, onRouteClick } from '../router/Router.js'
 import { onRouteClick } from '../router/events.js';
-// import VirtDom from './virtDOM.js'
-// import { parser, PARSER_TYPES } from './parser.js'
 var EVENTS;
 (function (EVENTS) {
     EVENTS["INIT"] = "init";
@@ -20,15 +17,7 @@ class Component {
     * @returns {void}
     */
     constructor(props = {}) {
-        //console.log('component')
-        //   static EVENTS = {
-        //     INIT: "init",
-        //     FLOW_CDM: "flow:component-did-mount",
-        //     FLOW_CDU: "flow:component-did-update",
-        //     FLOW_RENDER: "flow:render"
-        //   };
         this._root = null;
-        //_element = null
         this._virtDOM = null;
         this._props = null;
         this._rootOut = null;
@@ -43,37 +32,23 @@ class Component {
     _registerEvents(eventBus) {
         eventBus.on(EVENTS.INIT, this.init.bind(this));
         eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-        // PP \\
         eventBus.on(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
-        // PP //
         eventBus.on(EVENTS.FLOW_RENDER, this._render.bind(this));
     }
     init() {
         this._compile();
-        this.eventBus().emit(EVENTS.FLOW_CDM);
+        //this.eventBus().emit(EVENTS.FLOW_CDM)
     }
     _componentDidMount() {
         this.componentDidMount();
     }
-    componentDidMount(_oldProps = {}) { }
-    _componentDidUpdate(_oldProps = null, _newProps = null) {
-        // const response = this.componentDidUpdate(oldProps, newProps)
-        // this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
+    componentDidMount() { }
+    _componentDidUpdate(oldProps = null, newProps = null) {
     }
     componentDidUpdate(_oldProps, _newProps) {
         return true;
     }
     components() {
-        // const importComponents = []
-        // for(let i = 0; i < parsedTemplate.length; i++) {
-        //   const item = parsedTemplate[i]
-        //   if (item.type === PARSER_TYPES.BEGIN && window.startsWithUpper(item.content)) { 
-        //     importComponents.push(VirtDom.getTagName(item.content))
-        //   }   
-        // }
-        // const importComponentsStr = '{' + String(importComponents) + '}'
-        // let res
-        // eval(`res = {${String(importComponents) }}`)
         return {};
     }
     state() { return {}; }
@@ -101,7 +76,6 @@ class Component {
         const template = this.template();
         const components = this.components();
         const parsedTemplate = parser(template);
-        //console.log(parsedTemplate)
         const state = this.state();
         const props = this.getProps();
         const virtDom = new VirtDom(parsedTemplate, state, props);
@@ -109,16 +83,7 @@ class Component {
             let code = `node.componentLink = new components.${node.tagName}(node.props)`;
             eval(code);
         });
-        // virtDom.getNodes().forEach(node => {
-        //   if (node.isComponent){
-        //     let code = `node.componentLink = new components.${node.tagName}(node.props)`
-        //     eval(code)
-        //   } else {
-        //     node.componentLink = this   
-        //   }
-        // })
         this._virtDOM = virtDom;
-        //console.log(virtDom)
     }
     _render() {
         const nodes = this._virtDOM.getNodes();
@@ -131,7 +96,6 @@ class Component {
             else {
                 const element = document.createElement(node.tagName);
                 Object.keys(node.props).forEach(prop => {
-                    //console.log(prop, node.props)
                     if (prop === 'classes') {
                         node.props.classes.forEach(nodeClass => {
                             element.classList.add(nodeClass);
@@ -172,9 +136,8 @@ class Component {
                 node.root = element;
             }
         });
+        this.eventBus().emit(EVENTS.FLOW_CDM);
     }
 }
-// PP \\
 export default Component;
-// PP //
 //# sourceMappingURL=component.js.map

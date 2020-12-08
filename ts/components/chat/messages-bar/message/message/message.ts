@@ -5,7 +5,7 @@ class Message extends Component {
   template() { 
     
     return (
-      `<div className="message">
+      `<div className='message'>
         {% if (props.type === 'in') { %}
           <Message__Incoming
             text={{props.text}}

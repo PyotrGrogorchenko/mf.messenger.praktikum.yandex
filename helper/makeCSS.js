@@ -28,7 +28,6 @@ async function execute() {
 
     const pathParseTS = path.parse(filePathTS)
     const arrDirTS = pathParseTS.dir.split('/')
-    const dirTS = arrDirTS.length ? arrDirTS[arrDirTS.length - 1] : ''
   
     const filePathsCSS = await FileHound.create()
                           .paths(pathParseTS.dir)

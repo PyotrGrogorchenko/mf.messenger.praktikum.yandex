@@ -1,4 +1,4 @@
-import { get, isEqual, startsWithUpper, uid } from './functions/index'
+import { get, isEqual, startsWithUpper, uid, regexpMatchAll, queryStringify } from './functions/index'
 import { getFormData, createValidateEvents } from './validate/index'
 
 declare global {
@@ -9,8 +9,15 @@ declare global {
     getFormData: any
     createValidateEvents: any
     isEqual: any
+    regexpMatchAll: any
+    queryStringify: any
+  }
+
+  interface MouseEvent {
+    path: Array<HTMLElement>
   }
 }
+
 
 function setUtils(): void{
 
@@ -20,6 +27,8 @@ function setUtils(): void{
   window.getFormData = getFormData
   window.createValidateEvents = createValidateEvents
   window.isEqual = isEqual
+  window.regexpMatchAll = regexpMatchAll
+  window.queryStringify = queryStringify
 
 }
 

@@ -44,7 +44,8 @@ class Router {
 
     async defaultPage() {
      
-      //let req: XMLHttpRequest | null
+      //this.go('/testPage')
+      //this.go('/signup')
 
       const httpTransport = new HTTPTransport()
       const req = await httpTransport.get(`${env.URL_REQUEST}/auth/user`, {withCredentials: true ,headers: {'content-type': 'application/json'}}) as XMLHttpRequest
@@ -57,7 +58,7 @@ class Router {
         localStorage.setItem('login',         req.response.login)
         localStorage.setItem('email',         req.response.email)
         localStorage.setItem('phone',         req.response.phone)
-        this.go('/selectChat')
+        this.go('/chat')
       }
 
     }

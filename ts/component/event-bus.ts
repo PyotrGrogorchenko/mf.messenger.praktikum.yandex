@@ -35,6 +35,4 @@ class EventBus {
   }
 }
 
-// PP \\
-export default EventBus;
-// PP //
+export default EventBus

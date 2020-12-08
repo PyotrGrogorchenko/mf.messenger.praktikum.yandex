@@ -8,7 +8,7 @@ class Message extends Component {
 components() {return {Message__Incoming,Message__Outgoing}}
 //#Components
 template() {
-        return (`<div className="message">
+        return (`<div className='message'>
         {% if (props.type === 'in') { %}
           <Message__Incoming
             text={{props.text}}

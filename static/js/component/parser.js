@@ -6,33 +6,8 @@ var PARSER_TYPES;
     PARSER_TYPES[PARSER_TYPES["CODE"] = 3] = "CODE";
 })(PARSER_TYPES || (PARSER_TYPES = {}));
 function parser(str) {
-    //return parserREGEXP(str)
     return parserNoREGEXP(str);
 }
-// function parserREGEXP(str: string): Array<Node> {
-//   const PARSE_REGEXP: RegExp = /\<(.*?)\>/gim
-//   const strOrigin: string = str
-//   const res: Array<Node> = Array<Node>()
-//   const addItem = (type: PARSER_TYPES, content: string): void => {
-//     res.push({type, content})
-//   }  
-//   let key: null | RegExpExecArray = null
-//   while ((key = PARSE_REGEXP.exec(strOrigin))) {
-//     //const tagProps = {type: null, content: null}
-//     const isEndTag: boolean = key[0].startsWith('</')  
-//     addItem(isEndTag ? PARSER_TYPES.END : PARSER_TYPES.BEGIN, isEndTag ? key[1].slice(1) : key[1])
-//     str = str.slice(str.indexOf(key[0]) + key[0].length)
-//     if (!isEndTag) {
-//       if (str.indexOf('<') >= 0) {
-//         const content = str.substring(0, str.indexOf('<')).trim()
-//         if (content){
-//           addItem(PARSER_TYPES.TEXT, content)
-//         }
-//       }
-//     }
-//   }
-//   return res
-// }
 function parserNoREGEXP(str) {
     const res = Array();
     str = str.replace(/{%/g, '<{%');
@@ -55,7 +30,6 @@ function parserNoREGEXP(str) {
             addItem(isEndTag ? PARSER_TYPES.END : PARSER_TYPES.BEGIN, isEndTag ? tagContent.slice(1) : tagContent);
         }
         str = str.slice(endTagPos + 1).trim();
-        //if (!isEndTag) {
         if (str.indexOf('<') >= 0) {
             const content = str.substring(0, str.indexOf('<')).trim();
             if (content) {
@@ -63,7 +37,6 @@ function parserNoREGEXP(str) {
             }
             str = str.slice(str.indexOf('<')).trim();
         }
-        //}
     }
     return res;
 }

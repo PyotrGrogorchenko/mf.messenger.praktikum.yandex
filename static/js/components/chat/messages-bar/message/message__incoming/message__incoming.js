@@ -7,11 +7,11 @@ class Message__Incoming extends Component {
 components() {return {Message__FreeSpace}}
 //#Components
 template() {
-        return (`<div className="message__incoming">
-        <div className="message__decor background-gray4">
+        return (`<div className='message__incoming'>
+        <div className='message__decor bg-gy4'>
           {{props.text}} 
-        <span className="message__info">
-          <i className="hide color-gray2 fas fa-check-double"></i>
+        <span className='message__info'>
+          <i className='hide color-gray2 fas fa-check-double'></i>
           {{props.date}} 
         </span>
         </div>
