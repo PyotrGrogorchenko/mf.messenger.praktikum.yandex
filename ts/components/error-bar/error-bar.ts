@@ -5,7 +5,7 @@ class ErrorBar extends Component {
   template() { 
     return (
       `<PageColumn>
-        <div class="error-bar">
+        <div class='error-bar'>
           <h1>{{props.errCode}}</h1>
           <div>{{props.message}}</div>
           <AnchorMain 

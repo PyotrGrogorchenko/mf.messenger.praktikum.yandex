@@ -4,7 +4,7 @@ class Message__FreeSpace extends Component {
 
   template() { 
     return (
-      `<div className="message__free-space"></div>`
+      `<div className='message__free-space'></div>`
     )
   }
 

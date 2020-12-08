@@ -26,7 +26,5 @@ class EventBus {
         });
     }
 }
-// PP \\
 export default EventBus;
-// PP //
 //# sourceMappingURL=event-bus.js.map

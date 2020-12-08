@@ -22,11 +22,11 @@ class MessagesBar extends Component {
 components() {return {MessagesBar__Header,Messages__Date,Message,MessagesBar__Footer}}
 //#Components
 template() {
-        return (`<div className="messages-bar">
+        return (`<div className='messages-bar'>
         
         <MessagesBar__Header name={{state.user.name}} lastSeen={{state.user.lastSeen}}></MessagesBar__Header>
         
-        <div className="messages-bar__messages">
+        <div className='messages-bar__messages'>
           <Messages__Date></Messages__Date>
           {% for (let i = 0; i < state.messages.length; i++) { 
             const message = state.messages[i];

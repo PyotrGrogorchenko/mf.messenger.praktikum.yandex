@@ -1,0 +1,37 @@
+/* cm=context-menu */
+.cm {
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  list-style: none;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray5);
+  border-radius: 1px;
+  display: none;
+}
+
+.cm_active {
+  display: block;
+}
+
+.cm__cm-element {
+  width: 100%;
+  padding: 5px 5px; 
+  box-sizing: border-box;
+  cursor: pointer;
+  /* font-size: 20px; */
+}
+
+.cm__cm-element:hover {
+  background: var(--color-gray5);
+}
+
+.cm-icon {
+  visibility: visible;
+  width: 20px;
+  padding: 5px;
+}
+
+.cm-icon_hide {
+  visibility: hidden;  
+}

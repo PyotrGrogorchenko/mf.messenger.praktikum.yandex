@@ -1,7 +1,7 @@
 import Component from '../../../../component/component.js';
 class Messages__Date extends Component {
     template() {
-        return (`<div className="messages__date">
+        return (`<div className='messages__date'>
         October 9
       </div>`);
     }

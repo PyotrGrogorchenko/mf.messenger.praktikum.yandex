@@ -2,8 +2,8 @@ import Component from '../../../../component/component.js';
 class ButtonSecondary extends Component {
     template() {
         return (`<button 
-        type="submit"
-        className="button-secondary"
+        type='submit'
+        className='button-secondary'
         id={{props.id}}
         onClick={{props.onClick}}
         href={{props.href}}

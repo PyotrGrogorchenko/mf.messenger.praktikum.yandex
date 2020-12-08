@@ -4,7 +4,7 @@ class Messages__Date extends Component {
 
   template() { 
     return (
-      `<div className="messages__date">
+      `<div className='messages__date'>
         October 9
       </div>`
     )
