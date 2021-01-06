@@ -1,11 +1,6 @@
 import { valueIsValid } from './methods'
 
-// type Indexed<T = number | string | boolean | undefined> = {
-//   [key in string]: T | Indexed;
-// }
-
-
-function getFormData(): object {
+export const getFormData = (): object => {
   
   let valid = true
   let data: Array<Indexed> = []
@@ -35,5 +30,3 @@ function getFormData(): object {
 function getInputName (id: string): string{
   return id.slice(6).replace('-', '_')
 }
-
-export { getFormData }

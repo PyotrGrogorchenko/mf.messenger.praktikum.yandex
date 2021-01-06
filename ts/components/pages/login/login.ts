@@ -43,14 +43,14 @@ export default class Login extends Component {
     }
   }
   
-  state() {return {
+  state = {
   
     loginOnClick: this.loginOnClick,
 
     login: !localStorage.getItem('login') ? '' : localStorage.getItem('login'),
     password: ''
   
-  }}
+  }
 
   template() { 
 

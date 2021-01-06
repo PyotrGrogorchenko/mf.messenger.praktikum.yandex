@@ -2,7 +2,7 @@ import Component from '../../../../component/component'
 
 class MessagesBar extends Component {
 
-  state() {return {
+  state = {
     user: { name: 'Serafima', lastSeen: 'last seen 1 minute ago'},
     messages: 
     [
@@ -12,8 +12,7 @@ class MessagesBar extends Component {
       {type: 'out', date: '17:14', text: 'The Swiss Guard chopper churned in neutral as Langdon and Vittoria approached.'},
       {type: 'in',  date: '20:19', text: 'Putting the page number in the middle of the wording is a bad idea,'}
     ]
-  }}
-
+  }
 
   template() { 
     return (

@@ -32,7 +32,7 @@ export default class UserSettings extends Component {
 
   }
   
-  state() {return {
+  state = {
     logoutOnClick: this.logoutOnClick,
 
     first_name: !localStorage.getItem('first_name') ? '' : localStorage.getItem('first_name'),
@@ -43,7 +43,7 @@ export default class UserSettings extends Component {
     oldPassword: '',
     newPassword: ''
   
-  }}
+  }
 
   template() { 
 

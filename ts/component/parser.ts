@@ -30,8 +30,9 @@ function parserNoREGEXP(str: string): Array<Node> {
     const isCode: boolean = str.startsWith('<{%')  
     endTagPos = isCode ? str.indexOf('%}>') + 2 : endTagPos
 
-    let tagContent: string = str.slice(beginTagPos + 1, endTagPos).trim()
-    tagContent = tagContent.replace(/[\r\n]+/g, '')
+    let tagContent: string = str.slice(beginTagPos + 1, endTagPos)
+                                .trim()
+                                .replace(/[\r\n]+/g, '')
 
     const isEndTag: boolean = tagContent.startsWith('/')  
 

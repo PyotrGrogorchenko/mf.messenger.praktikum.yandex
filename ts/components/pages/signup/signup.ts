@@ -44,7 +44,7 @@ export default class Signup extends Component {
     }
   }
 
-  state() {return {
+  state = {
     
     signUpOnClick: this.signUpOnClick,
   
@@ -55,7 +55,7 @@ export default class Signup extends Component {
     phone: !localStorage.getItem('phone') ? '' : localStorage.getItem('phone'),
     password: ''
     
-  }}
+  }
 
 
 

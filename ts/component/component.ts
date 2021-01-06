@@ -17,8 +17,10 @@ class Component {
   _virtDOM: VirtDom | null = null
   _props: any = null
   _rootOut: HTMLElement | null = null
-  eventBus: () => EventBus
+  
+  state: any = {}
 
+  eventBus: () => EventBus
 
   /** JSDoc
   * @param {string} tagName
@@ -37,22 +39,27 @@ class Component {
     this.eventBus = () => eventBus
 
     this._registerEvents(eventBus)
-    eventBus.emit(EVENTS.INIT)
+    //eventBus.emit(EVENTS.INIT)
 
   }
 
   _registerEvents(eventBus: EventBus): void {
-    eventBus.on(EVENTS.INIT, this.init.bind(this))
+    eventBus.on(EVENTS.INIT, this._init.bind(this))
     eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
     eventBus.on(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this))
     eventBus.on(EVENTS.FLOW_RENDER, this._render.bind(this))
   }
 
-  init(): void {
-    this._compile()
-    //this.eventBus().emit(EVENTS.FLOW_CDM)
+  init(root: HTMLElement | null): void {
+    this._root = root
+    this.eventBus().emit(EVENTS.INIT)
   }
-
+  _init(): void {
+    this._compile()
+    //this.eventBus().emit(EVENTS.INIT)
+    //this.eventBus().emit(EVENTS.FLOW_CDM)
+    this.render()
+  }
 
   _componentDidMount(): void {
     this.componentDidMount()
@@ -70,11 +77,11 @@ class Component {
     return {}
   }
 
-  state(): any {return {}}
+  //state(): any {return {}}
+  
   template(): string {return ''}
 
-  render(root: HTMLElement | null): void {
-    this._root = root
+  render(): void {
     this.eventBus().emit(EVENTS.FLOW_RENDER)
   }
 
@@ -105,28 +112,32 @@ class Component {
 
     const parsedTemplate: Array<PARSER_NODE> = parser(template)
     
-    const state: any = this.state()
+    const state: any = this.state
     const props: any = this.getProps()
     
-
     const virtDom: VirtDom = new VirtDom(parsedTemplate, state, props)
 
     virtDom.getIsComponent().forEach(node => {
-      let code: string = `node.componentLink = new components.${node.tagName}(node.props)`
-      eval(code)
+      const componentLink = new components[node.tagName](node.props)
+      node.componentLink = componentLink
     })
 
     this._virtDOM = virtDom
   }
   
   _render() { 
+    this._executeRender()
+    this.eventBus().emit(EVENTS.FLOW_CDM)
+  }
+
+  _executeRender() { 
     const nodes: Array<DOM_NODE> = (this._virtDOM as VirtDom).getNodes()
 
     nodes.forEach(node => {
       
       const root: HTMLElement | null = node.owner && node.owner.root ? node.owner.root : this._root
       if (node.isComponent) {
-        (node.componentLink as Component).render(root)
+        (node.componentLink as Component).init(root)
         node.root = (node.componentLink as Component).rootOut
       } else {
         const element: HTMLElement = document.createElement(node.tagName)
@@ -166,6 +177,7 @@ class Component {
 
         element.setAttribute('uid', String(node.uid))
         element.textContent = node.content as string
+        
         (root as HTMLElement).appendChild(element)
         this._rootOut = element
         node.root = element
@@ -173,8 +185,10 @@ class Component {
 
     })
 
-    this.eventBus().emit(EVENTS.FLOW_CDM)
+  }
 
+  setState(newState: LooseObject) {
+    console.log('newState', newState)
   }
 
 //   _makePropsProxy(props) {

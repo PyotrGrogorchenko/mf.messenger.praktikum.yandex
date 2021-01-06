@@ -1,4 +1,4 @@
-function isEqual(a: object, b: object): boolean {
+export const isEqual = (a: object, b: object): boolean => {
   
   if (Object.keys(a).length !== Object.keys(b).length) {
     return false
@@ -21,5 +21,3 @@ function isEqual(a: object, b: object): boolean {
   return res
 
 }
-
-export { isEqual }

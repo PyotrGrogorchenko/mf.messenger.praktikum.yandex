@@ -3,13 +3,13 @@ import { onRouteClick } from '../../../../router/events'
 
 class ChatsList__ChatItem extends Component {
 
-  state() {return {
+  state = {
     onRouteClick: onRouteClick
-  }}
+  }
 
   template() { 
     return (
-      `<li className='chats-list__chat-item' chatid={{props.chatid}}>
+      `<li className='chats-list__chat-item' chatid={{props.chatid}} key={{props.chatid}}>
         <div className='chat-item__avatar'>
           <div className='avatar'>
             <i className='c-gy3 fas fa-camera'></i>

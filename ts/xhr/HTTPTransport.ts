@@ -5,7 +5,7 @@ enum METHODS {
   DELETE = 'DELETE'
 }
 
-class HTTPTransport {
+export class HTTPTransport {
   
   get = (url: string, options: Indexed = {}) => {
     return this.request(url, {...options, method: METHODS.GET}, options.timeout as number);
@@ -71,5 +71,3 @@ class HTTPTransport {
 
   }
 }
-
-export { HTTPTransport }

@@ -21,23 +21,30 @@ class Component {
         this._virtDOM = null;
         this._props = null;
         this._rootOut = null;
+        this.state = {};
         this._root = null;
         const eventBus = new EventBus();
         this._props = props;
         //this.props = this._makePropsProxy(props)
         this.eventBus = () => eventBus;
         this._registerEvents(eventBus);
-        eventBus.emit(EVENTS.INIT);
+        //eventBus.emit(EVENTS.INIT)
     }
     _registerEvents(eventBus) {
-        eventBus.on(EVENTS.INIT, this.init.bind(this));
+        eventBus.on(EVENTS.INIT, this._init.bind(this));
         eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         eventBus.on(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
         eventBus.on(EVENTS.FLOW_RENDER, this._render.bind(this));
     }
-    init() {
+    init(root) {
+        this._root = root;
+        this.eventBus().emit(EVENTS.INIT);
+    }
+    _init() {
         this._compile();
+        //this.eventBus().emit(EVENTS.INIT)
         //this.eventBus().emit(EVENTS.FLOW_CDM)
+        this.render();
     }
     _componentDidMount() {
         this.componentDidMount();
@@ -51,10 +58,9 @@ class Component {
     components() {
         return {};
     }
-    state() { return {}; }
+    //state(): any {return {}}
     template() { return ''; }
-    render(root) {
-        this._root = root;
+    render() {
         this.eventBus().emit(EVENTS.FLOW_RENDER);
     }
     // setProps = nextProps => {
@@ -76,21 +82,25 @@ class Component {
         const template = this.template();
         const components = this.components();
         const parsedTemplate = parser(template);
-        const state = this.state();
+        const state = this.state;
         const props = this.getProps();
         const virtDom = new VirtDom(parsedTemplate, state, props);
         virtDom.getIsComponent().forEach(node => {
-            let code = `node.componentLink = new components.${node.tagName}(node.props)`;
-            eval(code);
+            const componentLink = new components[node.tagName](node.props);
+            node.componentLink = componentLink;
         });
         this._virtDOM = virtDom;
     }
     _render() {
+        this._executeRender();
+        this.eventBus().emit(EVENTS.FLOW_CDM);
+    }
+    _executeRender() {
         const nodes = this._virtDOM.getNodes();
         nodes.forEach(node => {
             const root = node.owner && node.owner.root ? node.owner.root : this._root;
             if (node.isComponent) {
-                node.componentLink.render(root);
+                node.componentLink.init(root);
                 node.root = node.componentLink.rootOut;
             }
             else {
@@ -136,7 +146,9 @@ class Component {
                 node.root = element;
             }
         });
-        this.eventBus().emit(EVENTS.FLOW_CDM);
+    }
+    setState(newState) {
+        console.log('newState', newState);
     }
 }
 export default Component;

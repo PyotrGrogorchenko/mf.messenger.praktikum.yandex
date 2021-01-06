@@ -1,10 +1,10 @@
 import { startRouter } from "./router/index.js";
 import { setUtils } from "./utils/index.js";
-import { makeDomEvents } from "./DOMevents/index.js";
+import { initDomEvents } from "./DOMevents/index.js";
 //import { HTTPTransport } from "./xhr/HTTPTransport.js"
 setUtils();
 startRouter();
-makeDomEvents();
+initDomEvents();
 //let req: XMLHttpRequest | null
 // try {
 //   const httpTransport = new HTTPTransport()

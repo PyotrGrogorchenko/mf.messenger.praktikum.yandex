@@ -6,7 +6,4 @@ function uidCount(): () => number {
   }
 }
 
-
-const uid = uidCount()
-
-export { uid }
+export const uid = uidCount()

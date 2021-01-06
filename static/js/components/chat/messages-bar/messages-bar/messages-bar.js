@@ -6,8 +6,9 @@ import MessagesBar__Header from '../../../../components/chat/messages-bar/messag
 //#Import
 import Component from '../../../../component/component.js';
 class MessagesBar extends Component {
-    state() {
-        return {
+    constructor() {
+        super(...arguments);
+        this.state = {
             user: { name: 'Serafima', lastSeen: 'last seen 1 minute ago' },
             messages: [
                 { type: 'in', date: '13:15', text: 'Putting the page number in the middle of the wording is a bad idea' },

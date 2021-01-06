@@ -1,5 +1,5 @@
 type Indexed<T = number | string | boolean | undefined> = {
-  [key in string]: T | Indexed;
+  [key: string]: T | Indexed;
 }
 
 interface LooseObject {

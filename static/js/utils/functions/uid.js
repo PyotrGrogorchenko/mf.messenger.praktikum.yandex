@@ -5,6 +5,5 @@ function uidCount() {
         return uidCount;
     };
 }
-const uid = uidCount();
-export { uid };
+export const uid = uidCount();
 //# sourceMappingURL=uid.js.map

@@ -1,8 +1,5 @@
 import { valueIsValid } from './methods.js';
-// type Indexed<T = number | string | boolean | undefined> = {
-//   [key in string]: T | Indexed;
-// }
-function getFormData() {
+export const getFormData = () => {
     let valid = true;
     let data = [];
     for (let form of document.forms) {
@@ -18,9 +15,8 @@ function getFormData() {
         }
     }
     return { valid, data };
-}
+};
 function getInputName(id) {
     return id.slice(6).replace('-', '_');
 }
-export { getFormData };
 //# sourceMappingURL=data.js.map

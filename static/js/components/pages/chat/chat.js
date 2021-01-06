@@ -5,18 +5,19 @@ import ChatsBar from '../../../components/chat/chats-bar/chats-bar/chats-bar.js'
 //#Import
 import Component from '../../../component/component.js';
 export default class Chat extends Component {
-    // componentDidMount() {
-    //   console.log(localStorage.getItem('currentChat'))
-    // }
+    constructor() {
+        // componentDidMount() {
+        //   console.log(localStorage.getItem('currentChat'))
+        // }
+        super(...arguments);
+        this.state = {
+            func: this.func
+        };
+    }
     func(e) {
         {
             console.log(e);
         }
-    }
-    state() {
-        return {
-            func: this.func
-        };
     }
     //#Components
 components() {return {ChatsBar,MessagesBarSelect,MessagesBar}}

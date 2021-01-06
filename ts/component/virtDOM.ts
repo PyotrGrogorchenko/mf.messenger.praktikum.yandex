@@ -29,7 +29,7 @@ class VirtDom {
 
   init(parsedTemplate: Array<PARSER_NODE>, state: any, props: any): void {
   
-    for(let i: number = 0; i < parsedTemplate.length; i++) {
+    for(let i = 0; i < parsedTemplate.length; i++) {
       const item: PARSER_NODE = parsedTemplate[i]
 
       if (item.type === PARSER_TYPES.CODE) {

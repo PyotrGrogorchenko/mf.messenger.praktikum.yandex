@@ -26,6 +26,18 @@ import { Router } from '../../../router/Router.js';
 //require('dotenv')
 //dotenv()
 export default class Signup extends Component {
+    constructor() {
+        super(...arguments);
+        this.state = {
+            signUpOnClick: this.signUpOnClick,
+            first_name: !localStorage.getItem('first_name') ? '' : localStorage.getItem('first_name'),
+            second_name: !localStorage.getItem('second_name') ? '' : localStorage.getItem('second_name'),
+            login: !localStorage.getItem('login') ? '' : localStorage.getItem('login'),
+            email: !localStorage.getItem('email') ? '' : localStorage.getItem('email'),
+            phone: !localStorage.getItem('phone') ? '' : localStorage.getItem('phone'),
+            password: ''
+        };
+    }
     signUpOnClick(e) {
         return __awaiter(this, void 0, void 0, function* () {
             e.preventDefault();
@@ -54,17 +66,6 @@ export default class Signup extends Component {
                 alert(`Failed to execute sign up.`);
             }
         });
-    }
-    state() {
-        return {
-            signUpOnClick: this.signUpOnClick,
-            first_name: !localStorage.getItem('first_name') ? '' : localStorage.getItem('first_name'),
-            second_name: !localStorage.getItem('second_name') ? '' : localStorage.getItem('second_name'),
-            login: !localStorage.getItem('login') ? '' : localStorage.getItem('login'),
-            email: !localStorage.getItem('email') ? '' : localStorage.getItem('email'),
-            phone: !localStorage.getItem('phone') ? '' : localStorage.getItem('phone'),
-            password: ''
-        };
     }
     //#Components
 components() {return {PageColumn,AuthBarForm,Bar__Header,Bar__Content,AuthBarInput,Bar__Footer,ButtonMain,AnchorMain}}

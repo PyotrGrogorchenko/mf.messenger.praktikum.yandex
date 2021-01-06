@@ -22,9 +22,22 @@ import { HTTPTransport } from '../../../xhr/HTTPTransport.js';
 import { env } from '../../../const/index.js';
 import { Router } from '../../../router/Router.js';
 export default class UserSettings extends Component {
-    // componentDidMount() {
-    //   console.
-    // }
+    constructor() {
+        // componentDidMount() {
+        //   console.
+        // }
+        super(...arguments);
+        this.state = {
+            logoutOnClick: this.logoutOnClick,
+            first_name: !localStorage.getItem('first_name') ? '' : localStorage.getItem('first_name'),
+            second_name: !localStorage.getItem('second_name') ? '' : localStorage.getItem('second_name'),
+            login: !localStorage.getItem('login') ? '' : localStorage.getItem('login'),
+            email: !localStorage.getItem('email') ? '' : localStorage.getItem('email'),
+            phone: !localStorage.getItem('phone') ? '' : localStorage.getItem('phone'),
+            oldPassword: '',
+            newPassword: ''
+        };
+    }
     logoutOnClick(e) {
         return __awaiter(this, void 0, void 0, function* () {
             e.preventDefault();
@@ -46,18 +59,6 @@ export default class UserSettings extends Component {
                 alert(`Failed to execute log out`);
             }
         });
-    }
-    state() {
-        return {
-            logoutOnClick: this.logoutOnClick,
-            first_name: !localStorage.getItem('first_name') ? '' : localStorage.getItem('first_name'),
-            second_name: !localStorage.getItem('second_name') ? '' : localStorage.getItem('second_name'),
-            login: !localStorage.getItem('login') ? '' : localStorage.getItem('login'),
-            email: !localStorage.getItem('email') ? '' : localStorage.getItem('email'),
-            phone: !localStorage.getItem('phone') ? '' : localStorage.getItem('phone'),
-            oldPassword: '',
-            newPassword: ''
-        };
     }
     //#Components
 components() {return {PageColumn,UserSettingsBar,Bar__Header,Bar__Content,UserSettingsBarInput,Bar__Footer,ButtonMain,ButtonSecondary}}

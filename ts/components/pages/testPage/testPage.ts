@@ -8,12 +8,12 @@ export default class TestPage extends Component {
     console.log(e)
   }
 
-  state() {return {
+  state = {
     CM_OwnerId: 'CM_OwnerId', 
     CM_MenuId: 'CM_MenuId', 
     CM_OnClick: this.CM_OnClick
 
-  }}    
+  }
 
   template() { 
 

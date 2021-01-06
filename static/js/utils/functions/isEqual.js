@@ -1,4 +1,4 @@
-function isEqual(a, b) {
+export const isEqual = (a, b) => {
     if (Object.keys(a).length !== Object.keys(b).length) {
         return false;
     }
@@ -15,6 +15,5 @@ function isEqual(a, b) {
     //   }
     // }
     return res;
-}
-export { isEqual };
+};
 //# sourceMappingURL=isEqual.js.map

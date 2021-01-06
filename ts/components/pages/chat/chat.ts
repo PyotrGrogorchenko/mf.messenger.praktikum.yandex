@@ -10,9 +10,9 @@ export default class Chat extends Component {
     { console.log(e) }  
   }
 
-  state() {return {
+  state = {
     func: this.func 
-  }}
+  }
 
   template() { 
 
@@ -29,5 +29,8 @@ export default class Chat extends Component {
   }
 
 }
+
+
+
 // <ChatsBar></ChatsBar>
 // <MessagesBarSelect></MessagesBarSelect>      

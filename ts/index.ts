@@ -1,12 +1,12 @@
 import { startRouter } from "./router/index"
 import { setUtils } from "./utils/index"
-import { makeDomEvents } from "./DOMevents/index"
+import { initDomEvents } from "./DOMevents/index"
 
 //import { HTTPTransport } from "./xhr/HTTPTransport"
 
 setUtils()
 startRouter()
-makeDomEvents()
+initDomEvents()
 
 //let req: XMLHttpRequest | null
 

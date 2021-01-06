@@ -22,6 +22,14 @@ import { HTTPTransport } from '../../../xhr/HTTPTransport.js';
 import { env } from '../../../const/index.js';
 import { Router } from '../../../router/Router.js';
 export default class Login extends Component {
+    constructor() {
+        super(...arguments);
+        this.state = {
+            loginOnClick: this.loginOnClick,
+            login: !localStorage.getItem('login') ? '' : localStorage.getItem('login'),
+            password: ''
+        };
+    }
     loginOnClick(e) {
         return __awaiter(this, void 0, void 0, function* () {
             e.preventDefault();
@@ -54,13 +62,6 @@ export default class Login extends Component {
                 }
             }
         });
-    }
-    state() {
-        return {
-            loginOnClick: this.loginOnClick,
-            login: !localStorage.getItem('login') ? '' : localStorage.getItem('login'),
-            password: ''
-        };
     }
     //#Components
 components() {return {PageColumn,AuthBarForm,Bar__Header,Bar__Content,AuthBarInput,Bar__Footer,ButtonMain,AnchorMain}}
