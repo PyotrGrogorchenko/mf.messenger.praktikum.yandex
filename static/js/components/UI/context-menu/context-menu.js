@@ -64,13 +64,13 @@ class ContextMenu extends Component {
     }
     template() {
         return (`<menu className='cm' id={{props.menuId}}>
-        {% for (let i = 0; i < state.buttons.length; i++) { 
+        {% for (let    i   =    0; i < state.buttons.length; i++) { 
           const button = state.buttons[i];
-          //const onClick = props.onClick[i];
         %}
           <li 
-          className='cm__cm-element'
+            className='cm__cm-element'
             id={{button.id}}
+            key={{button.id}}
             onClick={{state.onClick}}
           >
             <i className={{button.icon}}></i>

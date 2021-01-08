@@ -21,6 +21,7 @@ class Component {
         this._virtDOM = null;
         this._props = null;
         this._rootOut = null;
+        this._parsedTemplate = null;
         this.state = {};
         this._root = null;
         const eventBus = new EventBus();
@@ -41,7 +42,7 @@ class Component {
         this.eventBus().emit(EVENTS.INIT);
     }
     _init() {
-        this._compile();
+        //this._compile()
         //this.eventBus().emit(EVENTS.INIT)
         //this.eventBus().emit(EVENTS.FLOW_CDM)
         this.render();
@@ -75,29 +76,60 @@ class Component {
     get rootOut() {
         return this._rootOut;
     }
+    get parsedTemplate() { return this._parsedTemplate; }
+    set parsedTemplate(value) { this._parsedTemplate = value; }
     getProps() {
         return this._props;
     }
-    _compile() {
-        const template = this.template();
+    _compile(changedState = null) {
+        let state = Object.assign({}, this.state);
+        if (changedState) {
+            Object.assign(state, changedState);
+            if (window.isEqual(this.state, state)) {
+                return false;
+            }
+        }
+        let parsedTemplate = this.parsedTemplate;
+        if (!parsedTemplate) {
+            parsedTemplate = parser(this.template());
+            this.parsedTemplate = parsedTemplate;
+            //console.log(parsedTemplate)
+        }
+        //console.log('parsedTemplate', parsedTemplate)
         const components = this.components();
-        const parsedTemplate = parser(template);
-        const state = this.state;
         const props = this.getProps();
-        const virtDom = new VirtDom(parsedTemplate, state, props);
-        virtDom.getIsComponent().forEach(node => {
-            const componentLink = new components[node.tagName](node.props);
-            node.componentLink = componentLink;
+        //const virtDom: VirtDom = this._virtDOM ? this._virtDOM : new VirtDom()
+        //let virtDom: VirtDom 
+        if (this._virtDOM) {
+            //console.log('old', this)
+            //virtDom = this._virtDOM  
+        }
+        else {
+            //console.log('new', this)
+            this._virtDOM = new VirtDom();
+        }
+        //this._virtDOM = virtDom
+        this._virtDOM.compile(parsedTemplate, state, props);
+        this._virtDOM.getIsComponent().forEach(node => {
+            if (!node.componentLink) {
+                node.componentLink = new components[node.tagName](node.props);
+            }
         });
-        this._virtDOM = virtDom;
+        //console.log(this._virtDOM)
+        return true;
     }
-    _render() {
-        this._executeRender();
-        this.eventBus().emit(EVENTS.FLOW_CDM);
+    _render(changedState = null) {
+        if (this._compile(changedState)) {
+            this._executeRender();
+            this.eventBus().emit(EVENTS.FLOW_CDM);
+        }
     }
     _executeRender() {
         const nodes = this._virtDOM.getNodes();
         nodes.forEach(node => {
+            //if (node.action === NODE_ACTION.NO_ACTION){
+            //  return  
+            //}
             const root = node.owner && node.owner.root ? node.owner.root : this._root;
             if (node.isComponent) {
                 node.componentLink.init(root);
@@ -147,8 +179,9 @@ class Component {
             }
         });
     }
-    setState(newState) {
-        console.log('newState', newState);
+    setState(changedState) {
+        //console.log('newState', newState)
+        this._render(changedState);
     }
 }
 export default Component;

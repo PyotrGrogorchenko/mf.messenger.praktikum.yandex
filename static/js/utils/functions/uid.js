@@ -1,5 +1,5 @@
 function uidCount() {
-    let uidCount = -1;
+    let uidCount = 0;
     return function () {
         uidCount++;
         return uidCount;

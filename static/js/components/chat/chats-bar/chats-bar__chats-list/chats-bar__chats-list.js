@@ -85,6 +85,7 @@ template() {
           %}
             <ChatsList__ChatItem 
               chatid={{chat.id}}
+              key={{chat.id}}
               name={{chat.name}}
               lastMessageType={{chat.lastMessage.type}}
               lastMessageDate={{chat.lastMessage.date}}

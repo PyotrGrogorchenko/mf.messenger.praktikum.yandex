@@ -65,7 +65,7 @@ class ChatsBar__ChatsList extends Component {
     CM_onClick: this.CM_onClick,
     chats: 
     [
-      {id: '1',  name: 'Sasha', countUnread: 10, lastMessage: {type: 'in',  date: '13:15', text: 'Putting the page number in the middle of the wording is a bad idea'}},
+      {id: '1', name: 'Sasha', countUnread: 10, lastMessage: {type: 'in',  date: '13:15', text: 'Putting the page number in the middle of the wording is a bad idea'}},
       {id: '2', name: 'Timur', countUnread: 500, lastMessage: {type: 'in',  date: '22:14', text: 'It was snapped off at the handle, and the blade was splintered, like somebody used it to hit something hard.'}},
       {id: '3', name: 'Lena',  countUnread: 12, lastMessage: {type: 'out', date: '02:14', text: 'Barbie saw one of the rotors break off.'}},
       {id: '4', name: 'Vika',  countUnread: 0, lastMessage: {type: 'out', date: '17:14', text: 'The Swiss Guard chopper churned in neutral as Langdon and Vittoria approached.'}},
@@ -84,6 +84,7 @@ class ChatsBar__ChatsList extends Component {
           %}
             <ChatsList__ChatItem 
               chatid={{chat.id}}
+              key={{chat.id}}
               name={{chat.name}}
               lastMessageType={{chat.lastMessage.type}}
               lastMessageDate={{chat.lastMessage.date}}

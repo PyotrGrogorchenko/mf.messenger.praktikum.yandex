@@ -7,8 +7,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { HTTPTransport } from '../xhr/HTTPTransport.js';
-import { env } from '../const/index.js';
 import Route from './Route.js';
 class Router {
     constructor(rootQuery = '') {
@@ -39,21 +37,20 @@ class Router {
     }
     defaultPage() {
         return __awaiter(this, void 0, void 0, function* () {
-            //this.go('/testPage')
-            //this.go('/signup')
-            const httpTransport = new HTTPTransport();
-            const req = yield httpTransport.get(`${env.URL_REQUEST}/auth/user`, { withCredentials: true, headers: { 'content-type': 'application/json' } });
-            if (req.status >= 400) {
-                this.go('/login');
-            }
-            else {
-                localStorage.setItem('first_name', req.response.first_name);
-                localStorage.setItem('second_name', req.response.second_name);
-                localStorage.setItem('login', req.response.login);
-                localStorage.setItem('email', req.response.email);
-                localStorage.setItem('phone', req.response.phone);
-                this.go('/chat');
-            }
+            this.go('/testPage');
+            // //this.go('/signup')
+            // const httpTransport = new HTTPTransport()
+            // const req = await httpTransport.get(`${env.URL_REQUEST}/auth/user`, {withCredentials: true ,headers: {'content-type': 'application/json'}}) as XMLHttpRequest
+            // if (req.status >= 400){
+            //   this.go('/login')
+            // } else {
+            //   localStorage.setItem('first_name',    req.response.first_name)
+            //   localStorage.setItem('second_name',   req.response.second_name)
+            //   localStorage.setItem('login',         req.response.login)
+            //   localStorage.setItem('email',         req.response.email)
+            //   localStorage.setItem('phone',         req.response.phone)
+            //   this.go('/chat')
+            // }
         });
     }
     _onRoute(pathname) {

@@ -9,7 +9,7 @@ class ChatsList__ChatItem extends Component {
 
   template() { 
     return (
-      `<li className='chats-list__chat-item' chatid={{props.chatid}} key={{props.chatid}}>
+      `<li className='chats-list__chat-item' chatid={{props.chatid}} key={{props.key}}>
         <div className='chat-item__avatar'>
           <div className='avatar'>
             <i className='c-gy3 fas fa-camera'></i>

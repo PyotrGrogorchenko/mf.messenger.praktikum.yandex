@@ -44,22 +44,22 @@ class Router {
 
     async defaultPage() {
      
-      //this.go('/testPage')
-      //this.go('/signup')
+      this.go('/testPage')
+      // //this.go('/signup')
 
-      const httpTransport = new HTTPTransport()
-      const req = await httpTransport.get(`${env.URL_REQUEST}/auth/user`, {withCredentials: true ,headers: {'content-type': 'application/json'}}) as XMLHttpRequest
+      // const httpTransport = new HTTPTransport()
+      // const req = await httpTransport.get(`${env.URL_REQUEST}/auth/user`, {withCredentials: true ,headers: {'content-type': 'application/json'}}) as XMLHttpRequest
 
-      if (req.status >= 400){
-        this.go('/login')
-      } else {
-        localStorage.setItem('first_name',    req.response.first_name)
-        localStorage.setItem('second_name',   req.response.second_name)
-        localStorage.setItem('login',         req.response.login)
-        localStorage.setItem('email',         req.response.email)
-        localStorage.setItem('phone',         req.response.phone)
-        this.go('/chat')
-      }
+      // if (req.status >= 400){
+      //   this.go('/login')
+      // } else {
+      //   localStorage.setItem('first_name',    req.response.first_name)
+      //   localStorage.setItem('second_name',   req.response.second_name)
+      //   localStorage.setItem('login',         req.response.login)
+      //   localStorage.setItem('email',         req.response.email)
+      //   localStorage.setItem('phone',         req.response.phone)
+      //   this.go('/chat')
+      // }
 
     }
 
