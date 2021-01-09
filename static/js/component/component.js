@@ -1,6 +1,6 @@
 import EventBus from './event-bus.js';
 import { parser } from './parser.js';
-import { VirtDom } from './virtDOM.js';
+import { VirtDom, NODE_ACTION } from './virtDOM.js';
 import { onRouteClick } from '../router/events.js';
 var EVENTS;
 (function (EVENTS) {
@@ -93,29 +93,16 @@ class Component {
         if (!parsedTemplate) {
             parsedTemplate = parser(this.template());
             this.parsedTemplate = parsedTemplate;
-            //console.log(parsedTemplate)
         }
-        //console.log('parsedTemplate', parsedTemplate)
         const components = this.components();
         const props = this.getProps();
-        //const virtDom: VirtDom = this._virtDOM ? this._virtDOM : new VirtDom()
-        //let virtDom: VirtDom 
-        if (this._virtDOM) {
-            //console.log('old', this)
-            //virtDom = this._virtDOM  
-        }
-        else {
-            //console.log('new', this)
-            this._virtDOM = new VirtDom();
-        }
-        //this._virtDOM = virtDom
+        this._virtDOM = !this._virtDOM ? new VirtDom() : this._virtDOM;
         this._virtDOM.compile(parsedTemplate, state, props);
         this._virtDOM.getIsComponent().forEach(node => {
             if (!node.componentLink) {
                 node.componentLink = new components[node.tagName](node.props);
             }
         });
-        //console.log(this._virtDOM)
         return true;
     }
     _render(changedState = null) {
@@ -127,16 +114,31 @@ class Component {
     _executeRender() {
         const nodes = this._virtDOM.getNodes();
         nodes.forEach(node => {
-            //if (node.action === NODE_ACTION.NO_ACTION){
-            //  return  
-            //}
+            if (node.action === NODE_ACTION.NO_ACTION) {
+                return;
+            }
             const root = node.owner && node.owner.root ? node.owner.root : this._root;
             if (node.isComponent) {
                 node.componentLink.init(root);
                 node.root = node.componentLink.rootOut;
             }
             else {
-                const element = document.createElement(node.tagName);
+                let element;
+                if (node.action === NODE_ACTION.UPDATE) {
+                    // const querySelector = `[uid="${node.uid}"` + !node.key ? '' : `,key="${node.key}"]`
+                    //element = document.querySelectorAll(querySelector)
+                    // element = document.querySelectorAll(querySelector)
+                    // if (node.key){
+                    //   const elements = document.querySelectorAll(`[uid="${node.uid}"`)
+                    //   console.log(elements)
+                    // } else {
+                    //   element = document.querySelector(`[uid="${node.uid}"`) as HTMLElement
+                    // }
+                    element = document.querySelector(`[uid="${node.uid}"`);
+                }
+                else {
+                    element = document.createElement(node.tagName);
+                }
                 Object.keys(node.props).forEach(prop => {
                     if (prop === 'classes') {
                         node.props.classes.forEach(nodeClass => {
@@ -166,16 +168,20 @@ class Component {
                             //(element as any)[prop] = true
                         }
                         else {
-                            //console.log(prop, node.props[prop])
                             element.setAttribute(prop, node.props[prop]);
                         }
                     }
                 });
-                element.setAttribute('uid', String(node.uid));
-                element.textContent = node.content;
-                root.appendChild(element);
-                this._rootOut = element;
-                node.root = element;
+                if (node.action === NODE_ACTION.NEW) {
+                    element.setAttribute('uid', String(node.uid));
+                    // ВНИМАНИЕ ВОПРОС!!! \\
+                    // Как обновить?
+                    element.textContent = node.content;
+                    // ВНИМАНИЕ ВОПРОС!!! //
+                    root.appendChild(element);
+                    this._rootOut = element;
+                    node.root = element;
+                }
             }
         });
     }

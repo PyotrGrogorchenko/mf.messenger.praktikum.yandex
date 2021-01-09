@@ -8,6 +8,7 @@ class ContextMenu extends Component {
     const props = this.getProps()  
     const menuArea = document.getElementById(props.ownerId)
     const menu = document.getElementById(props.menuId)
+    
     if (!menuArea && !menu){
       return
     }

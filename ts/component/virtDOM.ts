@@ -1,13 +1,12 @@
 import { PARSER_TYPES, Node as PARSER_NODE } from './parser'
 import Component from './component'
-import { strict } from 'assert'
-import { stringify } from 'querystring'
 
 enum NODE_ACTION {NEW, UPDATE, NO_ACTION}
 
 class Node {
   
-  uid: number = 0
+  uid: string = ''
+  uidNum: number = 0
   key: string = ''
 
   level: number = 0
@@ -73,14 +72,10 @@ class VirtDom {
     return this._nodes
   }
 
-  getNodeByUidKey(uid: Number, key: string): Node | null {
-    //console.log('key', key, 'uid', uid)
-    
+  getNodeByUidKey(uidNum: Number, key: string): Node | null {
     for (let i = 0; i < this._nodes.length; i++) { 
       let node: Node = this._nodes[i]
-      if //((!key && node.uid === uid) || (key && node.key === key && node.uid === uid))
-      (node.uid === uid)
-        {
+      if ((!key && node.uidNum === uidNum) || (key && node.key === key && node.uidNum === uidNum)) {
         return node
         break 
       }
@@ -109,8 +104,6 @@ class VirtDom {
       default:
         throw new Error(`Tree: error initializing the tree for: ${item.type} ${item.content}`)
     }
-    
-    //console.log(this._nodes)
 
   }
   
@@ -134,51 +127,33 @@ class VirtDom {
 
   _addNode(item: PARSER_NODE, state: any, props: any): void {
     
-    //item.content, item.type
-
     if (item.type === PARSER_TYPES.BEGIN) {
 
-      ////const key = this._getKey(item, props)
-      //console.log('item', item.content, 'props', props, 'state', state)
-      
       const node_tagName = VirtDom.getTagName(item.content)
-      const node_props = this._getHeaderProps(item.content, node_tagName, state, props)  
+      const node_props = this._getHeaderProps({header:item.content, tagNme: node_tagName, state, props})  
       
-
-      
-
       let node: Node | null = this.getNodeByUidKey(item.uid, node_props.key)
-      //console.log('foundNode', {...node}, 'item', item, item.uid, node_props.key)
+      
       if (node){
-        node.action = NODE_ACTION.NO_ACTION
+        node.action = NODE_ACTION.UPDATE
       }else {
         node = new Node()  
         this._nodes.push(node)
       }
 
-      //let node: Node = new Node()
       node.owner = this._getOwner('add', node)
       node.tagName = node_tagName
       node.isComponent = this._setSignComponent(node.tagName)
       node.header = item.content
-      this._setLevel(node)
+      node.level = this._getLevel(node)
       node.props = node_props
-      //this._setHeaderProps(node, state, props)  
       
-      node.uid = item.uid
-      
-      this._setKey(node)
-
-      // node.key = node.props.key
-      // if (!node.key && node.owner) {
-      //   node.key = node.owner.props.key
-      // }
-
-      
-
-      //console.log(node, 'node_props', node_props)
-
-      
+      node.uidNum = item.uid 
+      node.key = node_props.key ? node_props.key : ''
+      node.uid = node.uidNum.toString()
+      if (node.key) {
+        node.uid = node.uid + `_${node.key}`
+      }
 
     } else if (item.type === PARSER_TYPES.TEXT) {
       
@@ -191,164 +166,109 @@ class VirtDom {
   
   }
 
-  // _setNodesAction(node: Node, action: NODE_ACTION){
-    
-  // }
-
-  // _getKey(item: PARSER_NODE, props: any): string{
-  //   let content = item.content
-  //   console.log('item.content', content, props)
-  //   let res: string = ''
-  //   if (props.key){
-  //     res = props.key
-  //   }
-
-  //   return res
-  // }
-
   _compileCode(itemBegin: PARSER_NODE, state: any, props: any, parsedTemplate: Array<PARSER_NODE> , i: any): number {
     
     let code: string = itemBegin.content.slice(2, itemBegin.content.indexOf('%}')).trim() 
 
     if (code.startsWith('for')) {
-      return this._compileCode__cycle_for(itemBegin, state, props, parsedTemplate, i)
+      return this._compileCode__cycle_for({itemBegin, state, props, parsedTemplate, i})
     } else if (code.startsWith('if')) {
       return this._compileCode__if(itemBegin, state, props, parsedTemplate, i) 
     } 
 
-    eval(code)
+    //eval(code)
     return i
 
   }
 
-  _compileCode__cycle_for(itemBegin: PARSER_NODE, state: any, props: any, _parsedTemplate: Array<PARSER_NODE>, i_general: number): number {
-
-    //const $stackItems: StackItems = new StackItems()
-    //const $stackItems:Array<PARSER_NODE> = []
-
-
-
-
-    // let items: Array<PARSER_NODE>
-    // let param: any 
-    // let regExp: RegExp
+  _compileCode__cycle_for(data: LooseObject) {
+    
+    let codeBegin: string = data.itemBegin.content.slice(2, data.itemBegin.content.indexOf('%}')).trim() 
 
     const cycleData: LooseObject = {ctx: {}, cycle: {}}
     const ctx = cycleData.ctx
     const cycle = cycleData.cycle
 
-    ctx.state = state
-    ctx.props = props
+    ctx.state = data.state
+    ctx.props = data.props
 
-    let code: string = itemBegin.content.slice(2, itemBegin.content.indexOf('%}')).trim() 
-
-    // cycle \\
-    cycle.code = code.substring(code.indexOf('(') + 1, code.indexOf(')')).trim().split(';')
+    // cycle-head \\
+    // cycle-head_condition \\
+    cycle.codeHead = codeBegin.substring(codeBegin.indexOf('(') + 1, codeBegin.indexOf(')')).trim().split(';')
     
-    const begin:Array<string> = cycle.code[0].trim().split(' ').filter((item:string) => item)
-    ctx.param_i  = Number(begin[3])
+    const begin:Array<string> = cycle.codeHead[0].trim().split(' ').filter((item:string) => item)
+    cycle.i_name  = begin[1]
+    ctx[cycle.i_name] = Number(begin[3])
 
-    const condition:Array<string> = cycle.code[1].trim().split(' ').filter((item:string) => item)
+    const condition:Array<string> = cycle.codeHead[1].trim().split(' ').filter((item:string) => item)
     cycle.sign  = condition[1]
     cycle.right = window.get(ctx, condition[2], 0)
     
-    let step:string = cycle.code[2].trim()
+    let step:string = cycle.codeHead[2].trim()
     step = step.replace(begin[1], '')
-    cycle.step       = step
-    // cycle //
+    cycle.step = step
+    // cycle-head_condition //
+    // cycle-head_tail \\
+    cycle.codeTail = codeBegin.substring(codeBegin.indexOf('{') + 1).trim().split(';').filter((item:string) => item)
+    cycle.vars = []
+    cycle.codeTail.forEach(function(item: string) {
+      if (item.startsWith('let') || item.startsWith('const')){
+        cycle.vars.push(item.substring(item.indexOf(' ')).replace(/ /ig, '').split('='))
+      } 
+    })
+    // cycle-head_tail //
+    // cycle-head //
     
-    for ( ctx.param_i ; this._compare(ctx.param_i, cycle.sign, cycle.right); ctx.param_i = ctx.param_i + this._inc(cycle.step) ){
-      console.log(ctx.param_i)
+    data.i_start = data.i
+    for ( ctx[cycle.i_name]; this._compare(ctx[cycle.i_name], cycle.sign, cycle.right); ctx[cycle.i_name] = ctx[cycle.i_name] + this._inc(cycle.step) ){
+      
+      //console.log('#' + ctx[cycle.i_name])
+      
+      // cycle-vars \\
+      cycle.vars.forEach(function(variable: Array<string>) {
+        const param_i: RegExpExecArray = /\[(.)\]/gm.exec(variable[1]) as RegExpExecArray
+        ctx[variable[0]] = window.get(ctx, variable[1].substring(0, param_i?.index))[ctx[param_i[1]]]
+      })
+      // cycle-vars //
+
+      data.i = data.i_start
+      data.i++
+      let key = null
+      for(data.i; data.i < data.parsedTemplate.length; data.i++) {
+        
+        const itemTmpl = {...data.parsedTemplate[data.i]}
+        if (itemTmpl.type === PARSER_TYPES.CODE) {
+          break
+        } 
+        
+        window.regexpMatchAll(itemTmpl.content, this._REGEXP_PARAM).forEach(function(param: any) {
+          cycle.vars.forEach(function(variable: Array<string>) {
+            if (param[1] && param[1].startsWith(variable[0])) {
+              ctx.state[variable[0]] = ctx[variable[0]]  
+              itemTmpl.content = itemTmpl.content.replace(param[0], '{{state.' + param[1] + '}}')
+            }
+          })
+        })
+
+        // key \\
+        const keyIndex = itemTmpl.content.indexOf('key')
+        if (itemTmpl.type === PARSER_TYPES.BEGIN){
+          if (keyIndex > 0) {
+            const paramKey = new RegExp(this._REGEXP_PARAM).exec(itemTmpl.content.substring(keyIndex)) as RegExpExecArray
+            key = window.get(ctx, paramKey[1], paramKey[1])  
+            itemTmpl.content = itemTmpl.content.replace(new RegExp(paramKey[0], 'g'), key)
+          } else {
+            itemTmpl.content += ' key=' + key
+          }
+        }
+        // key //
+
+        this._compileItem(itemTmpl, ctx.state, ctx.props)
+      
+      }
     }
 
-
-
-    console.log(cycleData)
-
-    i_general++
-    // for($i; $i < $parsedTemplate.length; $i++) {
-    //   const $item: PARSER_NODE = $parsedTemplate[$i]
-    //   if ($item.type === PARSER_TYPES.CODE) {
-    //     $code = $code + '\n' + $item.content.slice(2, $item.content.indexOf('%}')).trim() 
-    //     break
-    //   } 
-      
-    //   $stackItems.add($item)
-    //   //$stackItems.push($item)
-
-    //   $code = $code + '\n' + 
-    //   ` 
-    //     //item = {...$stackItems[${$stackItems.length - 1}]}
-    //     item = {...$stackItems.getItemByIndex(${$stackItems.length - 1})}
-      
-    //     //if (item.type === PARSER_TYPES.BEGIN) {
-    //       console.log('item', {...item}, '$stackItems', {...$stackItems})
-    //     //}
-
-    //     window.regexpMatchAll(item.content, this._REGEXP_PARAM).forEach(function(param) {
-    //       if (param[1] && !param[1].startsWith('state') && !param[1].startsWith('props')) {
-    //         const quote = item.type === PARSER_TYPES.TEXT ? '' : '"'
-    //         item.content = item.content.replace(param[0], quote + eval(param[1]) + quote)
-    //       }
-    //     })`
-      
-    //   $code = $code + '\n' + `  this._compileItem(item, state, props)`
-    
-    // }
-
-    // eval($code)
-
-    return i_general
-
-    
-
-
-    // const $stackItems: StackItems = new StackItems()
-    // //const $stackItems:Array<PARSER_NODE> = []
-
-
-    // let item: PARSER_NODE 
-    // let param: any 
-    // let regExp: RegExp
-
-    // let $code: string = $itemBegin.content.slice(2, $itemBegin.content.indexOf('%}')).trim() 
-
-    // $i++
-    // for($i; $i < $parsedTemplate.length; $i++) {
-    //   const $item: PARSER_NODE = $parsedTemplate[$i]
-    //   if ($item.type === PARSER_TYPES.CODE) {
-    //     $code = $code + '\n' + $item.content.slice(2, $item.content.indexOf('%}')).trim() 
-    //     break
-    //   } 
-      
-    //   $stackItems.add($item)
-    //   //$stackItems.push($item)
-
-    //   $code = $code + '\n' + 
-    //   ` 
-    //     //item = {...$stackItems[${$stackItems.length - 1}]}
-    //     item = {...$stackItems.getItemByIndex(${$stackItems.length - 1})}
-      
-    //     //if (item.type === PARSER_TYPES.BEGIN) {
-    //       console.log('item', {...item}, '$stackItems', {...$stackItems})
-    //     //}
-
-    //     window.regexpMatchAll(item.content, this._REGEXP_PARAM).forEach(function(param) {
-    //       if (param[1] && !param[1].startsWith('state') && !param[1].startsWith('props')) {
-    //         const quote = item.type === PARSER_TYPES.TEXT ? '' : '"'
-    //         item.content = item.content.replace(param[0], quote + eval(param[1]) + quote)
-    //       }
-    //     })`
-      
-    //   $code = $code + '\n' + `  this._compileItem(item, state, props)`
-    
-    // }
-
-    // eval($code)
-
-    // return $i
-
-
+    return data.i
 
   }
 
@@ -419,16 +339,15 @@ class VirtDom {
     this._getOwner('remove', null)
   }
 
-  _setLevel(node: Node) {
+  _getLevel(node: Node) {
     let level: number = window.get(node, 'owner.level', -1)
     level++
-    
-    node.level = level
+    return level
   }
 
-  _getHeaderProps(header: string, tagName: string, state: any, props: any): any {
+  _getHeaderProps(data: LooseObject): any {
 
-    //let header: string = node.header;
+    let { header, tagName, state, props } = data
     const node_props: any = {}
 
     const cacheTxt: LooseObject = {}
@@ -441,7 +360,7 @@ class VirtDom {
       }
     })
 
-    header.split(' ').forEach(keyValue => {
+    header.split(' ').forEach((keyValue: string) => {
 
       if (!keyValue || keyValue === tagName){
         return
@@ -456,12 +375,12 @@ class VirtDom {
       const param: RegExpExecArray | null = new RegExp(this._REGEXP_PARAM).exec(arrKeyValue[1])
 
       if (arrKeyValue[0] === 'className') {
-        const strClasses: string = param ? window.get(state, props, param[1], '') : arrKeyValue[1].replace(/[\'\"]/g, '')
+        const strClasses: string = param ? window.get(data, param[1], '') : arrKeyValue[1].replace(/[\'\"]/g, '')
         node_props.classes = strClasses.split(' ')
       } else if (arrKeyValue.length === 1) {
         node_props[arrKeyValue[0]] = '#noValue'
       } else if (param) {
-        node_props[arrKeyValue[0]] = eval(param[1]) 
+        node_props[arrKeyValue[0]] = window.get(data, param[1], param[1])  
       } else{
         node_props[arrKeyValue[0]] = arrKeyValue[1].replace(/[\'\"]/g, '')
       }
@@ -491,16 +410,16 @@ class VirtDom {
     return window.startsWithUpper(tagName)
   }
 
-  _setKey(node: Node): void {
-    node.key = node.props.key
-    if (!node.key && node.owner) {
-      node.key = node.owner.props.key
-      if (node.content.indexOf('key=') < 0 ){
-        node.header += ' key="' + node.key + '"'
-        node.props.key = node.key
-      }
-    }
-  }
+  // _setKey(node: Node): void {
+  //   node.key = node.props.key
+  //   if (!node.key && node.owner) {
+  //     node.key = node.owner.props.key
+  //     if (node.content.indexOf('key=') < 0 ){
+  //       node.header += ' key="' + node.key + '"'
+  //       node.props.key = node.key
+  //     }
+  //   }
+  // }
 
 }
 

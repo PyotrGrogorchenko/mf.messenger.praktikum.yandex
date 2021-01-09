@@ -124,38 +124,18 @@ class Component {
     if (!parsedTemplate){
       parsedTemplate = parser(this.template())
       this.parsedTemplate = parsedTemplate
-      //console.log(parsedTemplate)
     }
     
-    //console.log('parsedTemplate', parsedTemplate)
-
     const components: any = this.components()
     const props: any = this.getProps()
     
-    //const virtDom: VirtDom = this._virtDOM ? this._virtDOM : new VirtDom()
-    
-    //let virtDom: VirtDom 
-    if (this._virtDOM) {
-      //console.log('old', this)
-      //virtDom = this._virtDOM  
-    } else {
-      //console.log('new', this)
-      this._virtDOM = new VirtDom()
-    }
-    
-    //this._virtDOM = virtDom
-
+    this._virtDOM = !this._virtDOM ? new VirtDom() : this._virtDOM
     this._virtDOM.compile(parsedTemplate as Array<PARSER_NODE>, state, props)
-
     this._virtDOM.getIsComponent().forEach(node => {
       if (!node.componentLink) {
         node.componentLink = new components[node.tagName](node.props)
       }
     })
-
-    
-
-    //console.log(this._virtDOM)
 
     return true
   }
@@ -172,23 +152,41 @@ class Component {
 
     nodes.forEach(node => {
       
-      //if (node.action === NODE_ACTION.NO_ACTION){
-      //  return  
-      //}
+      if (node.action === NODE_ACTION.NO_ACTION){
+        return  
+      }
 
       const root: HTMLElement | null = node.owner && node.owner.root ? node.owner.root : this._root
       if (node.isComponent) {
         (node.componentLink as Component).init(root)
         node.root = (node.componentLink as Component).rootOut
       } else {
-        const element: HTMLElement = document.createElement(node.tagName)
+        
+        let element: HTMLElement
+        if (node.action === NODE_ACTION.UPDATE){
+          // const querySelector = `[uid="${node.uid}"` + !node.key ? '' : `,key="${node.key}"]`
+          //element = document.querySelectorAll(querySelector)
+
+          // element = document.querySelectorAll(querySelector)
+
+          // if (node.key){
+          //   const elements = document.querySelectorAll(`[uid="${node.uid}"`)
+          //   console.log(elements)
+          // } else {
+          //   element = document.querySelector(`[uid="${node.uid}"`) as HTMLElement
+          // }
+
+          element = document.querySelector(`[uid="${node.uid}"`) as HTMLElement
+
+        } else {
+          element = document.createElement(node.tagName)
+        }
         
         Object.keys(node.props).forEach(prop => {
           if (prop === 'classes') {
             (node.props.classes as Array<string>).forEach(nodeClass => {
               element.classList.add(nodeClass)
             })
-          
           } else if (typeof node.props[prop] === "function") {
             if (prop.startsWith('on')) {
               element.addEventListener(prop.slice(2).toLowerCase(), node.props[prop])
@@ -208,20 +206,24 @@ class Component {
             if (node.props[prop] === '#noValue'){
               //(element as any)[prop] = true
             } else {
-              //console.log(prop, node.props[prop])
               element.setAttribute(prop, node.props[prop])
             }
-            
+
           }
 
         })
-
-        element.setAttribute('uid', String(node.uid))
-        element.textContent = node.content as string
         
-        (root as HTMLElement).appendChild(element)
-        this._rootOut = element
-        node.root = element
+        if (node.action === NODE_ACTION.NEW){
+          element.setAttribute('uid', String(node.uid))
+          // ВНИМАНИЕ ВОПРОС!!! \\
+          // Как обновить?
+          element.textContent = node.content as string
+          // ВНИМАНИЕ ВОПРОС!!! //
+          (root as HTMLElement).appendChild(element)
+          this._rootOut = element
+          node.root = element
+        }
+
       }
 
     })
