@@ -1,14 +1,22 @@
-import Component from '../../../component/component'
+import Component from '../../../component/Component'
 
 export default class TestPage extends Component {
 
   CM_onClick = (data: LooseObject) => {
-    this.setState({test: '1'})
+    this.setState({btnTestUpdate_text: 'Success!', btnTestUpdate_id: 'newId'})
   }
+
+  btnTestUpdate_onClick = () => {
+    this.setState({btnTestUpdate_text: 'Success!', condition: false })
+  }
+
 
   state = {
     CM_onClick: this.CM_onClick,
-    test: ''
+    btnTestUpdate_onClick: this.btnTestUpdate_onClick,
+    btnTestUpdate_id: 'button_log-in',
+    btnTestUpdate_text: 'Test update',
+    condition: true
   }
 
   template() { 
@@ -16,8 +24,16 @@ export default class TestPage extends Component {
     return  (
       `<div className='right-click-area' id='CM_OwnerId' >
         
-        <ButtonMain text='Log in' id='button_log-in' ></ButtonMain>
-        
+        <ButtonMain text={{state.btnTestUpdate_text}} id={{state.btnTestUpdate_id}} onClick={{state.btnTestUpdate_onClick}} ></ButtonMain>
+        <ButtonMain text={{state.btnTestUpdate_text}} id={{state.btnTestUpdate_id}} onClick={{state.btnTestUpdate_onClick}} ></ButtonMain>
+      
+        {% if({{state.condition}}) { %}
+          <AuthBarInput text='login'    type='text'     id='input_login'    value='Test if'></AuthBarInput> 
+        {% } else { %}
+          <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}signup'></AnchorMain>
+        {% } %}
+                        
+
         <ContextMenu 
           buttons='add:add|remove:Remove chat'
           onClick={{state.CM_onClick}}
@@ -30,6 +46,16 @@ export default class TestPage extends Component {
     ) 
   }
 }
+
+
+// {% if({{state.condition}}) { %}
+// <AuthBarInput text='login'    type='text'     id='input_login'    value='Test if'></AuthBarInput> 
+// {% } %}
+
+
+// {% } else { %}
+// <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}signup'></AnchorMain>
+
 
 // <ContextMenu 
 // buttons='add:Add chat|remove:Remove chat'

@@ -17,7 +17,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import Component from '../../../component/component.js';
+import Component from '../../../component/Component.js';
 import { env } from '../../../const/index.js';
 import { HTTPTransport } from '../../../xhr/HTTPTransport.js';
 import { Router } from '../../../router/Router.js';

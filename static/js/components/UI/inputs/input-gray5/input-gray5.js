@@ -1,4 +1,4 @@
-import Component from '../../../../component/component.js';
+import Component from '../../../../component/Component.js';
 class InputGray5 extends Component {
     template() {
         return (`<div className='input-gray5'>

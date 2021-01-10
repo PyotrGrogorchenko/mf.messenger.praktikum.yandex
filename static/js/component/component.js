@@ -1,7 +1,7 @@
-import EventBus from './event-bus.js';
-import { parser } from './parser.js';
-import { VirtDom, NODE_ACTION } from './virtDOM.js';
-import { onRouteClick } from '../router/events.js';
+import EventBus from './event-bus.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import { parser } from './parser.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import { VirtDom } from './virtDom/virtDOM.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+import { onRouteClick } from '../router/events.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
 var EVENTS;
 (function (EVENTS) {
     EVENTS["INIT"] = "init";
@@ -81,6 +81,9 @@ class Component {
     getProps() {
         return this._props;
     }
+    setProps(value) {
+        this._props = value;
+    }
     _compile(changedState = null) {
         let state = Object.assign({}, this.state);
         if (changedState) {
@@ -89,6 +92,7 @@ class Component {
                 return false;
             }
         }
+        this.state = state;
         let parsedTemplate = this.parsedTemplate;
         if (!parsedTemplate) {
             parsedTemplate = parser(this.template());
@@ -97,9 +101,12 @@ class Component {
         const components = this.components();
         const props = this.getProps();
         this._virtDOM = !this._virtDOM ? new VirtDom() : this._virtDOM;
-        this._virtDOM.compile(parsedTemplate, state, props);
+        this._virtDOM.compile(parsedTemplate, this.state, props);
         this._virtDOM.getIsComponent().forEach(node => {
-            if (!node.componentLink) {
+            if (node.componentLink) {
+                node.componentLink.setProps(node.props);
+            }
+            else {
                 node.componentLink = new components[node.tagName](node.props);
             }
         });
@@ -114,32 +121,20 @@ class Component {
     _executeRender() {
         const nodes = this._virtDOM.getNodes();
         nodes.forEach(node => {
-            if (node.action === NODE_ACTION.NO_ACTION) {
-                return;
-            }
+            // if (node.action === ACTION.NO){
+            //   return  
+            // }
             const root = node.owner && node.owner.root ? node.owner.root : this._root;
             if (node.isComponent) {
                 node.componentLink.init(root);
                 node.root = node.componentLink.rootOut;
             }
             else {
-                let element;
-                if (node.action === NODE_ACTION.UPDATE) {
-                    // const querySelector = `[uid="${node.uid}"` + !node.key ? '' : `,key="${node.key}"]`
-                    //element = document.querySelectorAll(querySelector)
-                    // element = document.querySelectorAll(querySelector)
-                    // if (node.key){
-                    //   const elements = document.querySelectorAll(`[uid="${node.uid}"`)
-                    //   console.log(elements)
-                    // } else {
-                    //   element = document.querySelector(`[uid="${node.uid}"`) as HTMLElement
-                    // }
-                    element = document.querySelector(`[uid="${node.uid}"`);
+                if (!node.element) {
+                    node.element = document.createElement(node.tagName);
                 }
-                else {
-                    element = document.createElement(node.tagName);
-                }
-                Object.keys(node.props).forEach(prop => {
+                const element = node.element;
+                node.changedProps.forEach(prop => {
                     if (prop === 'classes') {
                         node.props.classes.forEach(nodeClass => {
                             element.classList.add(nodeClass);
@@ -157,7 +152,6 @@ class Component {
                         if (!node.props[prop]) {
                             return;
                         }
-                        //&& node.props[prop].startsWith('#{R}')
                         if (node.props[prop].startsWith('#{R}')) {
                             element.addEventListener('click', onRouteClick);
                         }
@@ -165,28 +159,28 @@ class Component {
                     }
                     else {
                         if (node.props[prop] === '#noValue') {
-                            //(element as any)[prop] = true
                         }
                         else {
                             element.setAttribute(prop, node.props[prop]);
                         }
                     }
                 });
-                if (node.action === NODE_ACTION.NEW) {
-                    element.setAttribute('uid', String(node.uid));
-                    // ВНИМАНИЕ ВОПРОС!!! \\
-                    // Как обновить?
-                    element.textContent = node.content;
-                    // ВНИМАНИЕ ВОПРОС!!! //
+                node.changedProps = [];
+                if (node.textContentIsChanged) {
+                    element.textContent = node.textContent;
+                    node.textContentIsChanged = false;
+                }
+                if (node.isNew) {
                     root.appendChild(element);
                     this._rootOut = element;
                     node.root = element;
+                    element.setAttribute('uid', String(node.uid));
+                    node.isNew = false;
                 }
             }
         });
     }
     setState(changedState) {
-        //console.log('newState', newState)
         this._render(changedState);
     }
 }

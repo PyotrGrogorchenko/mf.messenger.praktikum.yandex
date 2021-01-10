@@ -1,4 +1,4 @@
-import Component from '../../../../component/component'
+import Component from '../../../../component/Component'
 import { onRouteClick } from '../../../../router/events'
 
 class ChatsList__ChatItem extends Component {

@@ -1,4 +1,4 @@
-import Component from '../../../../component/component.js';
+import Component from '../../../../component/Component.js';
 import { onRouteClick } from '../../../../router/events.js';
 class ChatsList__ChatItem extends Component {
     constructor() {

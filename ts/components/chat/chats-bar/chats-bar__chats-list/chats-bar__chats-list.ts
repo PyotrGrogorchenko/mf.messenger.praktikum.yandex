@@ -1,4 +1,4 @@
-import Component from '../../../../component/component'
+import Component from '../../../../component/Component'
 import { HTTPTransport } from '../../../../xhr/HTTPTransport'
 import { env } from '../../../../const/index'
 import { WSA_E_NO_MORE } from 'constants'

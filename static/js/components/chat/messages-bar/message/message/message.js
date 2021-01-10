@@ -2,7 +2,7 @@
 import Message__Outgoing from '../../../../../components/chat/messages-bar/message/message__outgoing/message__outgoing.js'
 import Message__Incoming from '../../../../../components/chat/messages-bar/message/message__incoming/message__incoming.js'
 //#Import
-import Component from '../../../../../component/component.js';
+import Component from '../../../../../component/Component.js';
 class Message extends Component {
     //#Components
 components() {return {Message__Incoming,Message__Outgoing}}

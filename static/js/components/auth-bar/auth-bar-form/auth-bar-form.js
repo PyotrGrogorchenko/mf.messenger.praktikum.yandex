@@ -1,4 +1,4 @@
-import Component from '../../../component/component.js';
+import Component from '../../../component/Component.js';
 class AuthBarForm extends Component {
     template() {
         return (`<form id='form__main' className='auth-bar-form'>

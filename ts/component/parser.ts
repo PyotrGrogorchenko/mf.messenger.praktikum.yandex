@@ -4,7 +4,7 @@ type Node = {
   type: PARSER_TYPES,
   content: string,
   uid: number
-
+  delete: boolean
 }
 
 function parser(str:string): Array<Node> {
@@ -22,7 +22,7 @@ function parserNoREGEXP(str: string): Array<Node> {
 
   const addItem = (type: PARSER_TYPES, content: string): void => {
     const uid = type === PARSER_TYPES.BEGIN ? window.uid() : 0
-    res.push({type, content, uid: uid})
+    res.push({type, content, uid: uid, delete: false})
   }  
   
   while (str) {

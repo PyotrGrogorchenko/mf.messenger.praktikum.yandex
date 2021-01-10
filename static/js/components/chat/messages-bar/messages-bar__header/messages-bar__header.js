@@ -1,4 +1,4 @@
-import Component from '../../../../component/component.js';
+import Component from '../../../../component/Component.js';
 class MessagesBar__Header extends Component {
     template() {
         return (`<div className='messages-bar__header'>

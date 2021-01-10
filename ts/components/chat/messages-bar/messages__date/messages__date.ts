@@ -1,4 +1,4 @@
-import Component from '../../../../component/component'
+import Component from '../../../../component/Component'
 
 class Messages__Date extends Component {
 

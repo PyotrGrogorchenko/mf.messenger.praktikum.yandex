@@ -3,7 +3,7 @@ import ChatsBar__ChatsList from '../../../../components/chat/chats-bar/chats-bar
 import InputGray5 from '../../../../components/UI/inputs/input-gray5/input-gray5.js'
 import AnchorToGo from '../../../../components/UI/anchors/anchor-to-go/anchor-to-go.js'
 //#Import
-import Component from '../../../../component/component.js';
+import Component from '../../../../component/Component.js';
 class ChatsBar extends Component {
     //#Components
 components() {return {AnchorToGo,InputGray5,ChatsBar__ChatsList}}

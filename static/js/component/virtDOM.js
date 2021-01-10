@@ -1,10 +1,11 @@
-import { PARSER_TYPES } from './parser.js';
-var NODE_ACTION;
-(function (NODE_ACTION) {
-    NODE_ACTION[NODE_ACTION["NEW"] = 0] = "NEW";
-    NODE_ACTION[NODE_ACTION["UPDATE"] = 1] = "UPDATE";
-    NODE_ACTION[NODE_ACTION["NO_ACTION"] = 2] = "NO_ACTION";
-})(NODE_ACTION || (NODE_ACTION = {}));
+import { PARSER_TYPES } from './parser.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js.js';
+var ACTION;
+(function (ACTION) {
+    ACTION[ACTION["NEW"] = 0] = "NEW";
+    ACTION[ACTION["UPDATE"] = 1] = "UPDATE";
+    ACTION[ACTION["DELETE"] = 2] = "DELETE";
+    ACTION[ACTION["NO"] = 3] = "NO";
+})(ACTION || (ACTION = {}));
 class Node {
     constructor() {
         this.uid = '';
@@ -14,12 +15,16 @@ class Node {
         this.owner = null;
         this.header = '';
         this.tagName = '';
-        this.content = '';
+        this.textContent = '';
         this.isComponent = false;
         this.props = {};
         this.componentLink = null;
         this.root = null;
-        this.action = NODE_ACTION.NEW;
+        //action: ACTION = ACTION.NEW 
+        this.changedProps = [];
+        this.textContentIsChanged = false;
+        this.isNew = true;
+        this.element = null;
     }
 }
 class StackItems {
@@ -38,7 +43,6 @@ class VirtDom {
     constructor() {
         this._nodes = Array();
         this._getOwner = this._func_getOwner();
-        //_isUpdate: () => boolean = !this._nodes
         this._currentUid = 0;
         this._REGEXP_PARAM = /\{\{(.*?)\}\}/gi;
         // _setKey(node: Node): void {
@@ -117,33 +121,39 @@ class VirtDom {
     }
     _addNode(item, state, props) {
         if (item.type === PARSER_TYPES.BEGIN) {
-            const node_tagName = VirtDom.getTagName(item.content);
-            const node_props = this._getHeaderProps({ header: item.content, tagNme: node_tagName, state, props });
-            let node = this.getNodeByUidKey(item.uid, node_props.key);
+            const tagName = VirtDom.getTagName(item.content);
+            const newProps = this._getHeaderProps({ header: item.content, tagNme: tagName, state, props });
+            let node = this.getNodeByUidKey(item.uid, newProps.key);
             if (node) {
-                node.action = NODE_ACTION.UPDATE;
+                node.changedProps = this._getChangedProps(newProps, node.props);
+                node.tagName = tagName;
+                node.props = newProps;
+                //node.action = ACTION.UPDATE
             }
             else {
                 node = new Node();
                 this._nodes.push(node);
+                node.tagName = tagName;
+                node.props = newProps;
+                node.isComponent = this._setSignComponent(node.tagName);
+                node.header = item.content;
+                node.level = this._getLevel(node);
+                node.uidNum = item.uid;
+                node.key = newProps.key ? newProps.key : '';
+                node.uid = node.uidNum.toString();
+                if (node.key) {
+                    node.uid = node.uid + `_${node.key}`;
+                }
+                node.changedProps = this._getChangedProps(node.props);
             }
             node.owner = this._getOwner('add', node);
-            node.tagName = node_tagName;
-            node.isComponent = this._setSignComponent(node.tagName);
-            node.header = item.content;
-            node.level = this._getLevel(node);
-            node.props = node_props;
-            node.uidNum = item.uid;
-            node.key = node_props.key ? node_props.key : '';
-            node.uid = node.uidNum.toString();
-            if (node.key) {
-                node.uid = node.uid + `_${node.key}`;
-            }
         }
         else if (item.type === PARSER_TYPES.TEXT) {
             let owner = this._getOwner('', null);
             if (owner && !owner.isComponent) {
-                owner.content = this._setContentProps(item.content, state, props);
+                const oldTextConent = owner.textContent;
+                owner.textContent = this._setContentProps(item.content, state, props);
+                owner.textContentIsChanged = oldTextConent !== owner.textContent;
             }
         }
     }
@@ -155,7 +165,6 @@ class VirtDom {
         else if (code.startsWith('if')) {
             return this._compileCode__if(itemBegin, state, props, parsedTemplate, i);
         }
-        //eval(code)
         return i;
     }
     _compileCode__cycle_for(data) {
@@ -190,7 +199,6 @@ class VirtDom {
         // cycle-head //
         data.i_start = data.i;
         for (ctx[cycle.i_name]; this._compare(ctx[cycle.i_name], cycle.sign, cycle.right); ctx[cycle.i_name] = ctx[cycle.i_name] + this._inc(cycle.step)) {
-            //console.log('#' + ctx[cycle.i_name])
             // cycle-vars \\
             cycle.vars.forEach(function (variable) {
                 const param_i = /\[(.)\]/gm.exec(variable[1]);
@@ -253,7 +261,6 @@ class VirtDom {
                 ` item = $stackItems[${$stackItems.length - 1}]`;
             $code = $code + '\n' + `  this._compileItem(item, state, props)`;
         }
-        //console.log($code)
         eval($code);
         return $i;
     }
@@ -284,7 +291,7 @@ class VirtDom {
         return level;
     }
     _getHeaderProps(data) {
-        let { header, tagName, state, props } = data;
+        let { header, tagName } = data;
         const node_props = {};
         const cacheTxt = {};
         let count = 1;
@@ -334,6 +341,22 @@ class VirtDom {
     _setSignComponent(tagName) {
         return window.startsWithUpper(tagName);
     }
+    _getChangedProps(newProps, oldProps = null) {
+        const res = [];
+        if (oldProps) {
+            for (const key in newProps) {
+                if (!window.isEqual(oldProps[key], newProps[key])) {
+                    res.push(key);
+                }
+            }
+        }
+        else {
+            for (const key in newProps) {
+                res.push(key);
+            }
+        }
+        return res;
+    }
 }
-export { VirtDom, Node, NODE_ACTION };
+export { VirtDom, Node, ACTION };
 //# sourceMappingURL=virtDOM.js.map

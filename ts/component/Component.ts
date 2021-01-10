@@ -1,6 +1,7 @@
-import EventBus from './event-bus'
+import EventBus from './EventBus'
 import { Node as PARSER_NODE, parser} from './parser'
-import { VirtDom, Node as DOM_NODE, NODE_ACTION }  from './virtDOM'
+import { VirtDom}  from './VirtDom/VirtDOM'
+import { Node as DOM_NODE}  from './VirtDom/Node'
 import { onRouteClick } from '../router/events'
 
 enum EVENTS {
@@ -108,17 +109,20 @@ class Component {
   getProps(): any {
     return this._props
   }
+  setProps(value: any) {
+    this._props = value
+  }
 
   _compile(changedState: LooseObject | null = null): boolean {
 
     let state: any = {...this.state}
-     
     if (changedState) {
       Object.assign(state, changedState)
       if (window.isEqual(this.state, state)){
         return false
       }
     }
+    this.state = state
 
     let parsedTemplate = this.parsedTemplate
     if (!parsedTemplate){
@@ -130,9 +134,12 @@ class Component {
     const props: any = this.getProps()
     
     this._virtDOM = !this._virtDOM ? new VirtDom() : this._virtDOM
-    this._virtDOM.compile(parsedTemplate as Array<PARSER_NODE>, state, props)
+    this._virtDOM.compile(parsedTemplate as Array<PARSER_NODE>, this.state, props)
+    
     this._virtDOM.getIsComponent().forEach(node => {
-      if (!node.componentLink) {
+      if (node.componentLink) {
+        node.componentLink.setProps(node.props)
+      } else {
         node.componentLink = new components[node.tagName](node.props)
       }
     })
@@ -152,9 +159,9 @@ class Component {
 
     nodes.forEach(node => {
       
-      if (node.action === NODE_ACTION.NO_ACTION){
-        return  
-      }
+      // if (node.action === ACTION.NO){
+      //   return  
+      // }
 
       const root: HTMLElement | null = node.owner && node.owner.root ? node.owner.root : this._root
       if (node.isComponent) {
@@ -162,27 +169,12 @@ class Component {
         node.root = (node.componentLink as Component).rootOut
       } else {
         
-        let element: HTMLElement
-        if (node.action === NODE_ACTION.UPDATE){
-          // const querySelector = `[uid="${node.uid}"` + !node.key ? '' : `,key="${node.key}"]`
-          //element = document.querySelectorAll(querySelector)
-
-          // element = document.querySelectorAll(querySelector)
-
-          // if (node.key){
-          //   const elements = document.querySelectorAll(`[uid="${node.uid}"`)
-          //   console.log(elements)
-          // } else {
-          //   element = document.querySelector(`[uid="${node.uid}"`) as HTMLElement
-          // }
-
-          element = document.querySelector(`[uid="${node.uid}"`) as HTMLElement
-
-        } else {
-          element = document.createElement(node.tagName)
+        if (!node.element) {
+          node.element = document.createElement(node.tagName) as HTMLElement
         }
+        const element: HTMLElement = node.element as HTMLElement
         
-        Object.keys(node.props).forEach(prop => {
+        node.changedProps.forEach(prop => {
           if (prop === 'classes') {
             (node.props.classes as Array<string>).forEach(nodeClass => {
               element.classList.add(nodeClass)
@@ -197,41 +189,37 @@ class Component {
             if (!node.props[prop]){
               return
             }
-            //&& node.props[prop].startsWith('#{R}')
             if (node.props[prop].startsWith('#{R}')){
               element.addEventListener('click', onRouteClick)
             }  
             element.setAttribute(prop, node.props[prop])
           } else {
             if (node.props[prop] === '#noValue'){
-              //(element as any)[prop] = true
             } else {
               element.setAttribute(prop, node.props[prop])
             }
-
           }
-
         })
-        
-        if (node.action === NODE_ACTION.NEW){
-          element.setAttribute('uid', String(node.uid))
-          // ВНИМАНИЕ ВОПРОС!!! \\
-          // Как обновить?
-          element.textContent = node.content as string
-          // ВНИМАНИЕ ВОПРОС!!! //
+        node.changedProps = []
+
+        if (node.textContentIsChanged) {
+          element.textContent = node.textContent
+          node.textContentIsChanged = false
+        }  
+
+        if (node.isNew){
           (root as HTMLElement).appendChild(element)
           this._rootOut = element
           node.root = element
+          element.setAttribute('uid', String(node.uid))
+          node.isNew = false
         }
-
       }
-
     })
 
   }
 
   setState(changedState: LooseObject) {
-    //console.log('newState', newState)
     this._render(changedState)
   }
 

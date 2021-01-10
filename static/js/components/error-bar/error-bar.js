@@ -2,7 +2,7 @@
 import AnchorMain from '../../components/UI/anchors/anchor-main/anchor-main.js'
 import PageColumn from '../../components/page-column/page-column.js'
 //#Import
-import Component from '../../component/component.js';
+import Component from '../../component/Component.js';
 class ErrorBar extends Component {
     //#Components
 components() {return {PageColumn,AnchorMain}}

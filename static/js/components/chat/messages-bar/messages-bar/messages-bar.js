@@ -4,7 +4,7 @@ import Message from '../../../../components/chat/messages-bar/message/message/me
 import Messages__Date from '../../../../components/chat/messages-bar/messages__date/messages__date.js'
 import MessagesBar__Header from '../../../../components/chat/messages-bar/messages-bar__header/messages-bar__header.js'
 //#Import
-import Component from '../../../../component/component.js';
+import Component from '../../../../component/Component.js';
 class MessagesBar extends Component {
     constructor() {
         super(...arguments);

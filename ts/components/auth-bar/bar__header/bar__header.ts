@@ -1,4 +1,4 @@
-import Component from '../../../component/component'
+import Component from '../../../component/Component'
 
 class Bar__Header extends Component {
 

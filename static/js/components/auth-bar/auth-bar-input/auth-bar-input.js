@@ -1,4 +1,4 @@
-import Component from '../../../component/component.js';
+import Component from '../../../component/Component.js';
 class AuthBarInput extends Component {
     template() {
         return (`<div className='auth-bar-input'>

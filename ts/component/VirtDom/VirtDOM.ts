@@ -1,52 +1,26 @@
-import { PARSER_TYPES, Node as PARSER_NODE } from './parser'
-import Component from './component'
+import { PARSER_TYPES, Node as PARSER_NODE } from '../parser'
+import { Node } from './Node'
 
-enum NODE_ACTION {NEW, UPDATE, NO_ACTION}
+// class StackItems {
 
-class Node {
-  
-  uid: string = ''
-  uidNum: number = 0
-  key: string = ''
+//   _stack:Array<PARSER_NODE> = []
 
-  level: number = 0
-  owner: null | Node = null
-  header: string = ''
-  tagName: string = ''
-  content: any = ''
-  isComponent: boolean = false
-  props: any = {}
-  componentLink: null | Component = null
-  root: null | HTMLElement = null
-  action: NODE_ACTION = NODE_ACTION.NEW 
+//   add(item: PARSER_NODE) {
+//     this._stack.push(item)
+//   }
 
-}
+//   get length() { return this._stack.length }
 
-class StackItems {
+//   getItemByIndex(index: number) {
+//     return this._stack[index]
+//   }
 
-  _stack:Array<PARSER_NODE> = []
-
-  add(item: PARSER_NODE) {
-    this._stack.push(item)
-  }
-
-  get length() { return this._stack.length }
-
-  getItemByIndex(index: number) {
-    return this._stack[index]
-  }
-
-
-
-}
-
-
+// }
 
 class VirtDom {
   
   _nodes: Array<Node> = Array<Node>()
-  _getOwner: (command: string, node: null | Node) => Node | null  = this._func_getOwner()
-  //_isUpdate: () => boolean = !this._nodes
+  _owner: (command: string, node: null | Node) => Node | null  = this._func_owner()
   _currentUid: number = 0
   _REGEXP_PARAM: RegExp = /\{\{(.*?)\}\}/gi
 
@@ -56,12 +30,15 @@ class VirtDom {
       const item: PARSER_NODE = parsedTemplate[i]
 
       if (item.type === PARSER_TYPES.CODE) {
-        i = this._compileCode(item, state, props, parsedTemplate, i)
+        const data = {item, state, props, parsedTemplate, i}
+        this._compileCode(data)
+        i = data.i
       } else {
         this._compileItem(item, state, props)
       }
       
     }
+    
   }
 
   getIsComponent(): Array<Node> {
@@ -83,7 +60,7 @@ class VirtDom {
     return null
   }
 
-  static getTagName(str: string): string {
+  _getTagName(str: string): string {
     const begin: number =  0
     const end: number =  str.indexOf(' ') === -1 ? str.length : str.indexOf(' ')
     return str.slice(begin, end)
@@ -107,7 +84,7 @@ class VirtDom {
 
   }
   
-  _func_getOwner(): (command: string , node: null | Node) => Node | null {
+  _func_owner(): (command: string , node: null | Node) => Node | null {
     const ownersStack: Array<Node> = Array<Node>() 
     return function(command: string = '', node: null | Node = null): Node | null {
       let res: Node | null = null
@@ -129,103 +106,101 @@ class VirtDom {
     
     if (item.type === PARSER_TYPES.BEGIN) {
 
-      const node_tagName = VirtDom.getTagName(item.content)
-      const node_props = this._getHeaderProps({header:item.content, tagNme: node_tagName, state, props})  
+      const tagName = this._getTagName(item.content)
+      const newProps = this._getHeaderProps({header:item.content, tagNme: tagName, state, props})  
       
-      let node: Node | null = this.getNodeByUidKey(item.uid, node_props.key)
+      let node: Node | null = this.getNodeByUidKey(item.uid, newProps.key) as Node
       
       if (node){
-        node.action = NODE_ACTION.UPDATE
+        
+        node.setChangedProps(newProps, node.props)
+
+        node.tagName = tagName
+        node.props = newProps
+        
       }else {
+
         node = new Node()  
         this._nodes.push(node)
+        
+        node.tagName = tagName
+        node.props = newProps
+  
+        node.header = item.content
+        node.uidNum = item.uid 
+        node.key = newProps.key ? newProps.key : ''
+        
+        node.setLevel()
+        node.setSignComponent()
+        node.setUid()
+        node.setChangedProps(node.props)
+        
       }
 
-      node.owner = this._getOwner('add', node)
-      node.tagName = node_tagName
-      node.isComponent = this._setSignComponent(node.tagName)
-      node.header = item.content
-      node.level = this._getLevel(node)
-      node.props = node_props
-      
-      node.uidNum = item.uid 
-      node.key = node_props.key ? node_props.key : ''
-      node.uid = node.uidNum.toString()
-      if (node.key) {
-        node.uid = node.uid + `_${node.key}`
-      }
+      node.owner = this._owner('add', node)
 
     } else if (item.type === PARSER_TYPES.TEXT) {
       
-      let owner: Node | null = this._getOwner('', null)
+      let owner: Node | null = this._owner('', null)
       if (owner && !owner.isComponent){
-        owner.content = this._setContentProps(item.content, state, props)
+        owner.setContentProps({content:item.content, state, props})
       }  
     
     }
   
   }
 
-  _compileCode(itemBegin: PARSER_NODE, state: any, props: any, parsedTemplate: Array<PARSER_NODE> , i: any): number {
+  _compileCode(data: LooseObject) {
     
-    let code: string = itemBegin.content.slice(2, itemBegin.content.indexOf('%}')).trim() 
-
-    if (code.startsWith('for')) {
-      return this._compileCode__cycle_for({itemBegin, state, props, parsedTemplate, i})
-    } else if (code.startsWith('if')) {
-      return this._compileCode__if(itemBegin, state, props, parsedTemplate, i) 
-    } 
-
-    //eval(code)
-    return i
+    this._compileCode__cycle_for(data)
+    this._compileCode__if(data) 
 
   }
 
   _compileCode__cycle_for(data: LooseObject) {
     
-    let codeBegin: string = data.itemBegin.content.slice(2, data.itemBegin.content.indexOf('%}')).trim() 
+    let code: string = data.item.content.slice(2, data.item.content.indexOf('%}')).trim() 
+    if (!code.startsWith('for')) return
 
-    const cycleData: LooseObject = {ctx: {}, cycle: {}}
-    const ctx = cycleData.ctx
-    const cycle = cycleData.cycle
+    const localData: LooseObject = {ctx: {}, cache: {}}
+    const ctx = localData.ctx
+    const cache = localData.cache
 
     ctx.state = data.state
     ctx.props = data.props
 
     // cycle-head \\
     // cycle-head_condition \\
-    cycle.codeHead = codeBegin.substring(codeBegin.indexOf('(') + 1, codeBegin.indexOf(')')).trim().split(';')
+    cache.codeHead = code.substring(code.indexOf('(') + 1, code.indexOf(')')).trim().split(';')
     
-    const begin:Array<string> = cycle.codeHead[0].trim().split(' ').filter((item:string) => item)
-    cycle.i_name  = begin[1]
-    ctx[cycle.i_name] = Number(begin[3])
+    const begin:Array<string> = cache.codeHead[0].trim().split(' ').filter((item:string) => item)
+    cache.i_name  = begin[1]
+    ctx[cache.i_name] = Number(begin[3])
 
-    const condition:Array<string> = cycle.codeHead[1].trim().split(' ').filter((item:string) => item)
-    cycle.sign  = condition[1]
-    cycle.right = window.get(ctx, condition[2], 0)
+    const condition:Array<string> = cache.codeHead[1].trim().split(' ').filter((item:string) => item)
+    cache.sign  = condition[1]
+    cache.right = window.get(ctx, condition[2], 0)
     
-    let step:string = cycle.codeHead[2].trim()
+    let step:string = cache.codeHead[2].trim()
     step = step.replace(begin[1], '')
-    cycle.step = step
+    cache.step = step
     // cycle-head_condition //
     // cycle-head_tail \\
-    cycle.codeTail = codeBegin.substring(codeBegin.indexOf('{') + 1).trim().split(';').filter((item:string) => item)
-    cycle.vars = []
-    cycle.codeTail.forEach(function(item: string) {
+    cache.codeTail = code.substring(code.indexOf('{') + 1).trim().split(';').filter((item:string) => item).map((item:string) => item.trim())
+    cache.vars = []
+    cache.codeTail.forEach(function(item: string) {
       if (item.startsWith('let') || item.startsWith('const')){
-        cycle.vars.push(item.substring(item.indexOf(' ')).replace(/ /ig, '').split('='))
+        cache.vars.push(item.substring(item.indexOf(' ')).replace(/ /ig, '').split('='))
       } 
     })
     // cycle-head_tail //
     // cycle-head //
     
     data.i_start = data.i
-    for ( ctx[cycle.i_name]; this._compare(ctx[cycle.i_name], cycle.sign, cycle.right); ctx[cycle.i_name] = ctx[cycle.i_name] + this._inc(cycle.step) ){
-      
-      //console.log('#' + ctx[cycle.i_name])
+    for ( ctx[cache.i_name]; this._compare(ctx[cache.i_name], cache.sign, cache.right); ctx[cache.i_name] = ctx[cache.i_name] + this._inc(cache.step) ){
       
       // cycle-vars \\
-      cycle.vars.forEach(function(variable: Array<string>) {
+      cache.vars.forEach(function(variable: Array<string>) {
         const param_i: RegExpExecArray = /\[(.)\]/gm.exec(variable[1]) as RegExpExecArray
         ctx[variable[0]] = window.get(ctx, variable[1].substring(0, param_i?.index))[ctx[param_i[1]]]
       })
@@ -242,7 +217,7 @@ class VirtDom {
         } 
         
         window.regexpMatchAll(itemTmpl.content, this._REGEXP_PARAM).forEach(function(param: any) {
-          cycle.vars.forEach(function(variable: Array<string>) {
+          cache.vars.forEach(function(variable: Array<string>) {
             if (param[1] && param[1].startsWith(variable[0])) {
               ctx.state[variable[0]] = ctx[variable[0]]  
               itemTmpl.content = itemTmpl.content.replace(param[0], '{{state.' + param[1] + '}}')
@@ -268,46 +243,40 @@ class VirtDom {
       }
     }
 
-    return data.i
-
   }
 
-  _compileCode__if($itemBegin: PARSER_NODE, state: any, props: any, $parsedTemplate: Array<PARSER_NODE>, $i: number): number {
+  _compileCode__if(data: LooseObject) {
 
-    const $stackItems:Array<PARSER_NODE> = []
+    let code: string = data.item.content.slice(2, data.item.content.indexOf('%}')).trim() 
+    if (!code.startsWith('if')) return
 
-    let item: PARSER_NODE 
-    let param: any 
-    let regExp: RegExp
-
-    let $code: string = $itemBegin.content.slice(2, $itemBegin.content.indexOf('%}')).trim() 
-
-    $i++
-    for($i; $i < $parsedTemplate.length; $i++) {
-      const $item = $parsedTemplate[$i]
-      if ($item.type === PARSER_TYPES.CODE) {
-        const $middleCode = $item.content.slice(2, $item.content.indexOf('%}')).trim() 
-        $code = $code + '\n' + $middleCode 
-        if ($middleCode.indexOf('else') > 0){
-          continue
-        }
-        break
-      } 
-      
-      $stackItems.push($item)
-
-      $code = $code + '\n' + 
-      ` item = $stackItems[${$stackItems.length - 1}]`
-      $code = $code + '\n' + `  this._compileItem(item, state, props)`
-    
+    const codeParam = code.substring(code.indexOf('(') + 1, code.indexOf(')')).trim()
+    const rgParam: RegExpExecArray | null = new RegExp(this._REGEXP_PARAM).exec(codeParam)
+    let param = true
+    if (rgParam) {
+      param = window.get(data, rgParam[1], rgParam[1])    
     }
 
-    //console.log($code)
-    eval($code)
+    data.i++
+    let compile = param
 
-    return $i
-  
-
+    for(data.i; data.i < data.parsedTemplate.length; data.i++) {
+      const itemTmpl = data.parsedTemplate[data.i]
+      if (itemTmpl.type === PARSER_TYPES.CODE) {
+        if (itemTmpl.content.indexOf('else') > 0){
+          compile = !compile
+          continue
+        } else {
+          break
+        }
+      } 
+      if (compile){
+        this._compileItem(itemTmpl, data.state, data.props)
+      } else {
+        itemTmpl.delete = true  
+      }
+    }
+    
   }
   
   _compare(left: number, sign: string, right: number): boolean {
@@ -336,18 +305,12 @@ class VirtDom {
 
 
   _closeTag(): void{
-    this._getOwner('remove', null)
-  }
-
-  _getLevel(node: Node) {
-    let level: number = window.get(node, 'owner.level', -1)
-    level++
-    return level
+    this._owner('remove', null)
   }
 
   _getHeaderProps(data: LooseObject): any {
 
-    let { header, tagName, state, props } = data
+    let { header, tagName} = data
     const node_props: any = {}
 
     const cacheTxt: LooseObject = {}
@@ -390,37 +353,6 @@ class VirtDom {
 
   }
 
-  _setContentProps(content: string, state: any, props: any): string {
-
-    if (!content) {
-      return content
-    }
-
-    window.regexpMatchAll(content, this._REGEXP_PARAM).forEach(function(param: RegExpExecArray) {
-      if (param[1]) {
-        content = content.replace(param[0], eval(param[1]))
-      }
-    })
-
-    return content
-
-  }
-
-  _setSignComponent (tagName: string){
-    return window.startsWithUpper(tagName)
-  }
-
-  // _setKey(node: Node): void {
-  //   node.key = node.props.key
-  //   if (!node.key && node.owner) {
-  //     node.key = node.owner.props.key
-  //     if (node.content.indexOf('key=') < 0 ){
-  //       node.header += ' key="' + node.key + '"'
-  //       node.props.key = node.key
-  //     }
-  //   }
-  // }
-
 }
 
-export { VirtDom, Node, NODE_ACTION}
+export { VirtDom }

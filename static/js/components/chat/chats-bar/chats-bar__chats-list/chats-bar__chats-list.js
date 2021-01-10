@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import Component from '../../../../component/component.js';
+import Component from '../../../../component/Component.js';
 import { HTTPTransport } from '../../../../xhr/HTTPTransport.js';
 import { env } from '../../../../const/index.js';
 class ChatsBar__ChatsList extends Component {
