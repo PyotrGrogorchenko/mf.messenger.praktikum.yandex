@@ -14,8 +14,15 @@ function parserNoREGEXP(str) {
     str = str.replace(/%}/g, '%}>');
     const addItem = (type, content) => {
         const uid = type === PARSER_TYPES.BEGIN ? window.uid() : 0;
-        res.push({ type, content, uid: uid });
+        res.push({ type, content, uid: uid, deleteMark: false });
     };
+    str = str.split(/\n/g).reduce(function (result, current) {
+        const currentClean = current.replace(/\s/g, '');
+        if (currentClean.startsWith('//<') || currentClean.startsWith('//<%')) {
+            return result;
+        }
+        return result + '\n' + current;
+    }, '');
     while (str) {
         const beginTagPos = str.indexOf('<');
         let endTagPos = str.indexOf('>');

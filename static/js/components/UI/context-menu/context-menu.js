@@ -63,8 +63,8 @@ class ContextMenu extends Component {
         return className + ' ' + 'cm-icon';
     }
     template() {
-        return (`<menu className='cm' id={{props.menuId}}>
-        {% for (let    i   =    0; i < state.buttons.length; i++) { 
+        return (`<ul className='cm' id={{props.menuId}}>
+        {% for (let i = 0; i < state.buttons.length; i++) { 
           const button = state.buttons[i];
         %}
           <li 
@@ -77,7 +77,7 @@ class ContextMenu extends Component {
             <span>{{button.text}}</span>  
           </li> 
         {% } %}
-      </div>`);
+      </ul>`);
     }
 }
 export default ContextMenu;

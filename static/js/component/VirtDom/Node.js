@@ -2,22 +2,29 @@ const _REGEXP_PARAM = /\{\{(.*?)\}\}/gi;
 class Node {
     constructor() {
         this._isNew = true;
+        this._changedProps = [];
+        this._deleteMark = false;
         this.uid = '';
         this.uidNum = 0;
         this.key = '';
         this.textContent = '';
         this.textContentIsChanged = false;
         this.level = 0;
-        this.owner = null;
+        this.parent = null;
         this.header = '';
         this.tagName = '';
         this.isComponent = false;
         this.props = {};
         this.componentLink = null;
         this.root = null;
-        this.changedProps = [];
         this.element = null;
     }
+    get isNew() { return this._isNew; }
+    set isNew(value) { this._isNew = value; }
+    get changedProps() { return this._changedProps; }
+    set changedProps(value) { this._changedProps = value; }
+    get deleteMark() { return this._deleteMark; }
+    set deleteMark(value) { this._deleteMark = value; }
     setContentProps(data) {
         const oldTextConent = this.textContent;
         let { content } = data;
@@ -63,8 +70,6 @@ class Node {
             this.uid = this.uid + `_${this.key}`;
         }
     }
-    get isNew() { return this._isNew; }
-    set isNew(value) { this._isNew = value; }
 }
 export { Node };
 //# sourceMappingURL=Node.js.map

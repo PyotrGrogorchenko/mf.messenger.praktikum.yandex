@@ -4,8 +4,9 @@ const _REGEXP_PARAM: RegExp = /\{\{(.*?)\}\}/gi
 
 class Node {
   
-  _isNew: boolean = true
-
+  private _isNew: boolean = true
+  private _changedProps: Array<string> = []
+  private _deleteMark: boolean = false
 
   uid: string = ''
   uidNum: number = 0
@@ -15,17 +16,25 @@ class Node {
   textContentIsChanged: boolean = false
 
   level: number = 0
-  owner: null | Node = null
+  parent: null | Node = null
   header: string = ''
   tagName: string = ''
   isComponent: boolean = false
   props: any = {}
   componentLink: null | Component = null
   root: null | HTMLElement = null
-  changedProps: Array<string> = []
 
   element: HTMLElement | null = null
 
+  get isNew() { return this._isNew }
+  set isNew(value) { this._isNew = value }
+  
+  get changedProps() { return this._changedProps }
+  set changedProps(value) { this._changedProps = value }
+
+  get deleteMark() { return this._deleteMark }
+  set deleteMark(value) { this._deleteMark = value }
+  
   setContentProps(data: LooseObject): void {
     const oldTextConent =  this.textContent
     let { content } = data
@@ -75,9 +84,6 @@ class Node {
     }
   }
  
-  get isNew() { return this._isNew }
-  set isNew(value) { this._isNew = value }
-
 }
 
 export { Node }

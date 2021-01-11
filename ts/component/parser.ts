@@ -1,10 +1,12 @@
+import { BinaryLike } from "crypto"
+
 enum PARSER_TYPES {BEGIN, END, TEXT, CODE}
 
 type Node = {
   type: PARSER_TYPES,
   content: string,
-  uid: number
-  delete: boolean
+  uid: number,
+  deleteMark: boolean
 }
 
 function parser(str:string): Array<Node> {
@@ -22,9 +24,17 @@ function parserNoREGEXP(str: string): Array<Node> {
 
   const addItem = (type: PARSER_TYPES, content: string): void => {
     const uid = type === PARSER_TYPES.BEGIN ? window.uid() : 0
-    res.push({type, content, uid: uid, delete: false})
+    res.push({type, content, uid: uid, deleteMark: false})
   }  
   
+  str = str.split(/\n/g).reduce(function(result, current) {
+    const currentClean = current.replace(/\s/g, '')
+    if (currentClean.startsWith('//<') || currentClean.startsWith('//<%')) {
+      return result
+    }
+    return result + '\n' + current
+  }, '')
+
   while (str) {
   
     const beginTagPos: number = str.indexOf('<')

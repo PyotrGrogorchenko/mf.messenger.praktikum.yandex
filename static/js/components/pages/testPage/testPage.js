@@ -2,6 +2,7 @@
 import ContextMenu from '../../../components/UI/context-menu/context-menu.js'
 import AnchorMain from '../../../components/UI/anchors/anchor-main/anchor-main.js'
 import AuthBarInput from '../../../components/auth-bar/auth-bar-input/auth-bar-input.js'
+import PageColumn from '../../../components/page-column/page-column.js'
 import ButtonMain from '../../../components/UI/buttons/button-main/button-main.js'
 //#Import
 import Component from '../../../component/Component.js';
@@ -10,32 +11,67 @@ export default class TestPage extends Component {
         super(...arguments);
         this.CM_onClick = (data) => {
             this.setState({ btnTestUpdate_text: 'Success!', btnTestUpdate_id: 'newId' });
+            const list = this.state.list;
+            if (data.btnId === 'add') {
+                list.push({ a: 7, b: '8' });
+            }
+            else {
+                list.pop();
+            }
+            this.setState({ btnTestUpdate_text: 'Success!', btnTestUpdate_id: 'newId', list });
         };
         this.btnTestUpdate_onClick = () => {
-            this.setState({ btnTestUpdate_text: 'Success!', condition: false });
+            this.setState({ btnTestUpdate_text: 'Success!' });
+        };
+        this.btnTestIf_onClick = () => {
+            this.setState({ condition: !this.state.condition });
         };
         this.state = {
             CM_onClick: this.CM_onClick,
             btnTestUpdate_onClick: this.btnTestUpdate_onClick,
             btnTestUpdate_id: 'button_log-in',
             btnTestUpdate_text: 'Test update',
-            condition: true
+            condition: true,
+            btnTestIf_onClick: this.btnTestIf_onClick,
+            list: [{ a: 1, b: '2' }, { a: 3, b: '4' }, { a: 5, b: '6' }]
         };
     }
     //#Components
-components() {return {ButtonMain,AuthBarInput,AnchorMain,ContextMenu}}
+components() {return {ButtonMain,PageColumn,AuthBarInput,AnchorMain,ContextMenu}}
 //#Components
 template() {
         return (`<div className='right-click-area' id='CM_OwnerId' >
         
+        <ButtonMain text='test if' id='test-if' onClick={{state.btnTestIf_onClick}} ></ButtonMain>
+
+          {% if({{state.condition}}) { %}
+          //<PageColumn>
+            <AuthBarInput text='true'    type='text'     id='true'    value='true'></AuthBarInput> 
+            <a>99+</a> 
+            //</PageColumn>
+          {% } else { %}
+          //<PageColumn>
+            <AuthBarInput text='false'    type='text'     id='input_login'    value='false'></AuthBarInput> 
+            <a>000</a> 
+            <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}signup'></AnchorMain>
+          //</PageColumn>
+          {% } %}
+
         <ButtonMain text={{state.btnTestUpdate_text}} id={{state.btnTestUpdate_id}} onClick={{state.btnTestUpdate_onClick}} ></ButtonMain>
-      
-        {% if({{state.condition}}) { %}
-          <AuthBarInput text='login'    type='text'     id='input_login'    value='Test if'></AuthBarInput> 
-        {% } else { %}
-          <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}signup'></AnchorMain>
-        {% } %}
-                        
+        
+        <ul className='list-test'>
+          {% for (let    i   =    0; i < state.list.length; i++) { 
+            const listEl = state.list[i];
+          %}
+
+            //<PageColumn key={{listEl.a}}>
+              <AuthBarInput key={{listEl.a}} id={{listEl.a}} text='true'    type='text'     value='true'></AuthBarInput> 
+              <a key={{listEl.a}} id={{listEl.a}}>99+</a> 
+              <AnchorMain key={{listEl.a}} id={{listEl.a}} text='Test if' href='#{R}signup'></AnchorMain>
+            //</PageColumn>
+
+          {% } %}
+        </ul>
 
         <ContextMenu 
           buttons='add:add|remove:Remove chat'
@@ -44,9 +80,16 @@ template() {
           menuId='CM_MenuId'
         ></ContextMenu>
       
+
+
       </div>`);
     }
 }
+// {% if({{state.condition}}) { %}
+// <AuthBarInput text='login'    type='text'     id='input_login'    value='Test if'></AuthBarInput> 
+// {% } else { %}
+// <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}signup'></AnchorMain>
+// {% } %}
 // {% if({{state.condition}}) { %}
 // <AuthBarInput text='login'    type='text'     id='input_login'    value='Test if'></AuthBarInput> 
 // {% } %}
