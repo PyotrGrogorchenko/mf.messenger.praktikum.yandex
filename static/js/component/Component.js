@@ -143,21 +143,9 @@ class Component {
         });
     }
     _compile(changedState = null) {
-        let state = window.copyObj(this.state);
-        Object.assign(state, changedState);
-        // if (changedState) {
-        //   console.log('before', this.state.list ? this.state.list.length : '', changedState.list ? changedState.list.length : '', state.list ? state.list.length : '')
-        //   //let atate1: any = window.copyObj(this.state)
-        //   //console.log('before assign', state.list.length, this.state.list.length)
-        //   Object.assign(state, changedState)
-        //   //console.log('post assign', state.list.length, this.state.list.length)
-        //   if (window.isEqual(this.state, state)){
-        //     //console.log('window.isEqual', state.list.length, this.state.list.length)
-        //     return false
-        //   }
-        //   console.log('window.NO_isEqual', this.state.list ? this.state.list.length : '', changedState.list ? changedState.list.length : '', state.list ? state.list.length : '')
-        // }
-        this.state = state;
+        //let state: any = window.copyObj(this.state)
+        Object.assign(this.state, changedState);
+        //this.state = state
         //console.log(this.state.list ? this.state.list.length : '')
         let parsedTemplate = this.parsedTemplate;
         if (!parsedTemplate) {
