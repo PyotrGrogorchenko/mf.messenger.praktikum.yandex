@@ -15,194 +15,195 @@ class VirtDom {
         this._compileTemplate(parsedTemplate, state, props);
     }
     _compileTemplate(parsedTemplate, state, props) {
-        for (let i = 0; i < parsedTemplate.length; i++) {
-            const item = parsedTemplate[i];
-            if (item.type === PARSER_TYPES.CODE) {
-                const data = { item, state, props, parsedTemplate, i };
-                this._compileCode(data);
-                i = data.i;
+        const context = { state, props };
+        const template = { list: parsedTemplate, record: null, i: 0 };
+        for (template.i = 0; template.i < template.list.length; template.i++) {
+            template.record = template.list[template.i];
+            if (template.record.type === PARSER_TYPES.CODE) {
+                this._compileCode(context, template);
             }
             else {
-                this._compileItem(item, state, props);
+                this._compileItem(context, template);
             }
         }
     }
-    _compileItem(item, state, props) {
-        switch (item.type) {
+    _compileItem(context, template) {
+        switch (template.record.type) {
             case PARSER_TYPES.END:
                 this._closeTag();
                 break;
             case PARSER_TYPES.TEXT:
-                this._compileItem_process(item, state, props);
+                this._compileItem_process(context, template);
                 break;
             case PARSER_TYPES.BEGIN:
-                this._compileItem_process(item, state, props);
+                this._compileItem_process(context, template);
                 break;
             default:
-                throw new Error(`Tree: error initializing the tree for: ${item.type} ${item.content}`);
+                throw new Error(`Tree: error initializing the tree for: ${template.record.type} ${template.record.content}`);
         }
     }
-    _compileItem_process(item, state, props) {
-        if (item.type === PARSER_TYPES.BEGIN) {
-            const tagName = this._getTagName(item.content);
-            const newProps = this._getHeaderProps({ header: item.content, tagNme: tagName, state, props });
-            let node = this.getNodeByUidKey(item.uid, newProps.key);
+    _compileItem_process(context, template) {
+        const { record } = template;
+        if (record.type === PARSER_TYPES.BEGIN) {
+            const tagName = this._getTagName(record.content);
+            const newProps = this._getHeaderProps(context, template, tagName);
+            let node = this.getNodeByUidKey(record.uid, newProps.key);
             if (node) {
                 node.setChangedProps(newProps, node.props);
                 node.tagName = tagName;
                 node.props = newProps;
-                node.deleteMark = this.deleteMark || item.deleteMark;
+                node.deleteMark = this.deleteMark || record.deleteMark;
             }
             else {
-                if (this.deleteMark || item.deleteMark) {
+                if (this.deleteMark || record.deleteMark) {
                     return;
                 }
                 node = new Node();
                 this._nodes.push(node);
                 node.tagName = tagName;
                 node.props = newProps;
-                node.header = item.content;
-                node.uidNum = item.uid;
+                node.header = record.content;
+                node.uid = record.uid;
                 node.key = newProps.key ? newProps.key : '';
                 node.setLevel();
                 node.setSignComponent();
-                node.setUid();
                 node.setChangedProps(node.props);
             }
             node.parent = this._parent('add', node);
         }
-        else if (item.type === PARSER_TYPES.TEXT) {
+        else if (record.type === PARSER_TYPES.TEXT) {
             let owner = this._parent('', null);
             if (owner && !owner.isComponent) {
-                owner.setContentProps({ content: item.content, state, props });
+                owner.setContentProps(context, template);
             }
         }
     }
-    _compileCode(data) {
-        this._compileCode__cycle_for(data);
-        this._compileCode__if(data);
+    _compileCode(context, template) {
+        this._compileCode__cycle_for(context, template);
+        this._compileCode__if(context, template);
     }
-    _compileCode__cycle_for(data) {
-        let code = data.item.content.slice(2, data.item.content.indexOf('%}')).trim();
+    _compileCode__cycle_for(context, template) {
+        let code = template.record.content.slice(2, template.record.content.indexOf('%}')).trim();
         if (!code.startsWith('for'))
             return;
-        const localData = { ctx: {}, cache: {} };
-        const ctx = localData.ctx;
-        const cache = localData.cache;
-        ctx.state = data.state;
-        ctx.props = data.props;
-        // cycle-head \\
-        // cycle-head_condition \\
-        cache.codeHead = code.substring(code.indexOf('(') + 1, code.indexOf(')')).trim().split(';');
-        const begin = cache.codeHead[0].trim().split(' ').filter((item) => item);
-        cache.i_name = begin[1];
-        ctx[cache.i_name] = Number(begin[3]);
-        const condition = cache.codeHead[1].trim().split(' ').filter((item) => item);
-        cache.sign = condition[1];
-        cache.right = window.get(ctx, condition[2], 0);
-        let step = cache.codeHead[2].trim();
-        step = step.replace(begin[1], '');
-        cache.step = step;
-        // cycle-head_condition //
-        // cycle-head_tail \\
-        cache.codeTail = code.substring(code.indexOf('{') + 1).trim().split(';').filter((item) => item).map((item) => item.trim());
-        cache.vars = [];
-        cache.codeTail.forEach(function (item) {
+        const codeHead = code.substring(code.indexOf('(') + 1, code.indexOf(')')).trim().split(';');
+        const begin = codeHead[0].trim().split(' ').filter((item) => item);
+        const iName = begin[1];
+        context[iName] = Number(begin[3]);
+        const condition = codeHead[1].trim().split(' ').filter((item) => item);
+        const sign = condition[1];
+        const right = window.get(context, condition[2], 0);
+        let step = codeHead[2].trim().replace(begin[1], '');
+        const codeTail = code.substring(code.indexOf('{') + 1).trim().split(';').filter((item) => item).map((item) => item.trim());
+        const vars = [];
+        codeTail.forEach(function (item) {
             if (item.startsWith('let') || item.startsWith('const')) {
-                cache.vars.push(item.substring(item.indexOf(' ')).replace(/ /ig, '').split('='));
+                vars.push(item.substring(item.indexOf(' ')).replace(/ /ig, '').split('='));
             }
         });
-        // cycle-head_tail //
-        // cycle-head //
-        //console.log('//////////////////////////////', ctx.state.list ? ctx.state.list.length : '')
-        data.i_start = data.i;
-        for (ctx[cache.i_name]; this._compare(ctx[cache.i_name], cache.sign, cache.right); ctx[cache.i_name] = ctx[cache.i_name] + this._inc(cache.step)) {
-            //console.log('//////////////')
-            // cycle-vars \\
-            cache.vars.forEach(function (variable) {
+        const iStart = template.i;
+        for (context[iName]; this._compare(context[iName], sign, right); context[iName] = context[iName] + this._inc(step)) {
+            vars.forEach(function (variable) {
                 const param_i = /\[(.)\]/gm.exec(variable[1]);
-                ctx[variable[0]] = window.get(ctx, variable[1].substring(0, param_i === null || param_i === void 0 ? void 0 : param_i.index))[ctx[param_i[1]]];
+                context[variable[0]] = window.get(context, variable[1].substring(0, param_i === null || param_i === void 0 ? void 0 : param_i.index))[context[param_i[1]]];
             });
-            // cycle-vars //
-            data.i = data.i_start;
-            data.i++;
+            template.i = iStart;
+            template.i++;
             let key = null;
-            for (data.i; data.i < data.parsedTemplate.length; data.i++) {
-                const itemTmpl = Object.assign({}, data.parsedTemplate[data.i]);
-                if (itemTmpl.type === PARSER_TYPES.CODE) {
-                    break;
+            for (template.i; template.i < template.list.length; template.i++) {
+                const record = Object.assign({}, template.list[template.i]);
+                template.record = record;
+                if (record.type === PARSER_TYPES.CODE) {
+                    if (this._code__isCloseBracket(template)) {
+                        template.i++;
+                        template.record = Object.assign({}, template.list[template.i]);
+                        break;
+                    }
+                    this._compileCode(context, template);
                 }
-                //console.log(itemTmpl)
-                window.regexpMatchAll(itemTmpl.content, this._REGEXP_PARAM).forEach(function (param) {
-                    cache.vars.forEach(function (variable) {
+                window.regexpMatchAll(record.content, this._REGEXP_PARAM).forEach(function (param) {
+                    vars.forEach(function (variable) {
                         if (param[1] && param[1].startsWith(variable[0])) {
-                            ctx.state[variable[0]] = ctx[variable[0]];
-                            itemTmpl.content = itemTmpl.content.replace(param[0], '{{state.' + param[1] + '}}');
+                            context.state[variable[0]] = context[variable[0]];
+                            record.content = record.content.replace(param[0], '{{state.' + param[1] + '}}');
                         }
                     });
                 });
                 // key \\
-                const keyIndex = itemTmpl.content.indexOf('key');
-                if (itemTmpl.type === PARSER_TYPES.BEGIN) {
+                if (record.type === PARSER_TYPES.BEGIN) {
+                    const keyIndex = record.content.indexOf('key');
                     if (keyIndex > 0) {
-                        const paramKey = new RegExp(this._REGEXP_PARAM).exec(itemTmpl.content.substring(keyIndex));
-                        key = window.get(ctx, paramKey[1], paramKey[1]);
-                        itemTmpl.content = itemTmpl.content.replace(new RegExp(paramKey[0], 'g'), key);
+                        const paramKey = new RegExp(this._REGEXP_PARAM).exec(record.content.substring(keyIndex));
+                        key = window.get(context, paramKey[1], paramKey[1]);
+                        record.content = record.content.replace(new RegExp(paramKey[0], 'g'), key);
                     }
                     else {
-                        itemTmpl.content += ' key=' + key;
+                        record.content += ' key=' + key;
                     }
                 }
                 // key //
-                this._compileItem(itemTmpl, ctx.state, ctx.props);
+                this._compileItem(context, template);
             }
-            //console.log('//////////////')
         }
     }
-    _compileCode__if(data) {
-        let code = data.item.content.slice(2, data.item.content.indexOf('%}')).trim();
+    _compileCode__if(context, template) {
+        let code = template.record.content.slice(2, template.record.content.indexOf('%}')).trim();
         if (!code.startsWith('if'))
             return;
+        const isElse = () => {
+            return template.record.content.replace(/ /ig, '') === '{%}else{%}';
+        };
         const codeParam = code.substring(code.indexOf('(') + 1, code.indexOf(')')).trim();
         const rgParam = new RegExp(this._REGEXP_PARAM).exec(codeParam);
         let param = true;
         if (rgParam) {
-            param = window.get(data, rgParam[1], rgParam[1]);
+            param = window.get(context, rgParam[1], rgParam[1]);
         }
-        data.i++;
-        //let deleteMark = param
-        for (data.i; data.i < data.parsedTemplate.length; data.i++) {
-            const itemTmpl = data.parsedTemplate[data.i];
-            if (itemTmpl.type === PARSER_TYPES.CODE) {
-                if (itemTmpl.content.indexOf('else') > 0) {
+        template.i++;
+        for (template.i; template.i < template.list.length; template.i++) {
+            const record = template.list[template.i];
+            template.record = record;
+            if (record.type === PARSER_TYPES.CODE) {
+                if (isElse()) {
                     param = !param;
                     continue;
                 }
-                else {
+                else if (this._code__isCloseBracket(template)) {
                     break;
                 }
+                else {
+                    if (param) {
+                        this._compileCode(context, template);
+                    }
+                    else {
+                        while (!this._code__isCloseBracket(template) && template.i < template.list.length) {
+                            template.i++;
+                            template.record = template.list[template.i];
+                        }
+                        continue;
+                    }
+                }
             }
-            //if (compile){
-            itemTmpl.deleteMark = !param;
-            this._compileItem(itemTmpl, data.state, data.props);
-            //} else {
-            //  itemTmpl.delete = true  
-            //}
+            record.deleteMark = !param;
+            this._compileItem(context, template);
         }
     }
-    _getHeaderProps(data) {
-        let { header, tagName } = data;
+    _code__isCloseBracket(template) {
+        return template.record.content.replace(/ /ig, '') === '{%}%}';
+    }
+    _getHeaderProps(context, template, tagName) {
+        let { content } = template.record;
         const node_props = {};
         const cacheTxt = {};
         let count = 1;
-        window.regexpMatchAll(header, /[\'\"](.*?)[\'\"]/gi).forEach(function (txt) {
+        window.regexpMatchAll(content, /[\'\"](.*?)[\'\"]/gi).forEach(function (txt) {
             if (txt[0]) {
                 cacheTxt[`text${count}`] = txt[0];
-                header = header.replace(txt[0], `text${count}`);
+                content = content.replace(txt[0], `text${count}`);
                 count++;
             }
         });
-        header.split(' ').forEach((keyValue) => {
+        content.split(' ').forEach((keyValue) => {
             if (!keyValue || keyValue === tagName) {
                 return;
             }
@@ -212,14 +213,14 @@ class VirtDom {
             }
             const param = new RegExp(this._REGEXP_PARAM).exec(arrKeyValue[1]);
             if (arrKeyValue[0] === 'className') {
-                const strClasses = param ? window.get(data, param[1], '') : arrKeyValue[1].replace(/[\'\"]/g, '');
+                const strClasses = param ? window.get(context, param[1], '') : arrKeyValue[1].replace(/[\'\"]/g, '');
                 node_props.classes = strClasses.split(' ');
             }
             else if (arrKeyValue.length === 1) {
                 node_props[arrKeyValue[0]] = '#noValue';
             }
             else if (param) {
-                node_props[arrKeyValue[0]] = window.get(data, param[1], param[1]);
+                node_props[arrKeyValue[0]] = window.get(context, param[1], param[1]);
             }
             else {
                 node_props[arrKeyValue[0]] = arrKeyValue[1].replace(/[\'\"]/g, '');
@@ -280,10 +281,10 @@ class VirtDom {
     getNodes() {
         return this._nodes;
     }
-    getNodeByUidKey(uidNum, key) {
+    getNodeByUidKey(uid, key) {
         for (let i = 0; i < this._nodes.length; i++) {
             let node = this._nodes[i];
-            if ((!key && node.uidNum === uidNum) || (key && node.key === key && node.uidNum === uidNum)) {
+            if ((!key && node.uid === uid) || (key && node.key === key && node.uid === uid)) {
                 return node;
                 break;
             }
@@ -291,25 +292,15 @@ class VirtDom {
         return null;
     }
     deleteMarkedNodes() {
-        //let deleteIndexes: Array<number> = []
         this._nodes.forEach((node) => {
             var _a;
             if (node.deleteMark) {
                 if (node.isComponent && node.componentLink) {
                     (_a = node.componentLink.virtDOM) === null || _a === void 0 ? void 0 : _a.deleteMarkedNodes();
                 }
-                //deleteIndexes.push(i)
                 this._nodes = this._nodes.filter((node) => !node.deleteMark);
             }
         });
-        // for(let i = deleteIndexes.length-1; i >= 0; i--) {
-        //   //this._nodes = this._nodes.slice(deleteIndexes[i],deleteIndexes[i])
-        //   this._nodes = this._nodes.filter((node:Node) => item)
-        //   slice(deleteIndexes[i],deleteIndexes[i])
-        //   //console.log(this._nodes)
-        //   delete this._nodes[deleteIndexes[i]]
-        //   //console.log(this._nodes[deleteIndexes[i]].uid, this._nodes[deleteIndexes[i]].header)
-        // }
     }
     printNodes() {
         console.log('////////////////////////////////////////////////');

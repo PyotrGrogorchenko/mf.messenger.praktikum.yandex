@@ -4,8 +4,7 @@ class Node {
         this._isNew = true;
         this._changedProps = [];
         this._deleteMark = false;
-        this.uid = '';
-        this.uidNum = 0;
+        this.uid = 0;
         this.key = '';
         this.textContent = '';
         this.textContentIsChanged = false;
@@ -25,16 +24,16 @@ class Node {
     set changedProps(value) { this._changedProps = value; }
     get deleteMark() { return this._deleteMark; }
     set deleteMark(value) { this._deleteMark = value; }
-    setContentProps(data) {
+    setContentProps(context, template) {
         const oldTextConent = this.textContent;
-        let { content } = data;
+        let { content } = template.record;
         if (!content) {
             this.textContent = content;
             this.textContentIsChanged = false;
         }
         window.regexpMatchAll(content, _REGEXP_PARAM).forEach(function (param) {
             if (param[1]) {
-                content = content.replace(param[0], window.get(data, param[1], ''));
+                content = content.replace(param[0], window.get(context, param[1], ''));
             }
         });
         this.textContent = content;
@@ -63,12 +62,6 @@ class Node {
         let level = window.get(this, 'owner.level', -1);
         level++;
         this.level;
-    }
-    setUid() {
-        this.uid = this.uidNum.toString();
-        if (this.key) {
-            this.uid = this.uid + `_${this.key}`;
-        }
     }
 }
 export { Node };

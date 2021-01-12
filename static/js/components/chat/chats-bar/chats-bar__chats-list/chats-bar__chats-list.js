@@ -1,5 +1,6 @@
 //#Import
 import ContextMenu from '../../../../components/UI/context-menu/context-menu.js'
+import ModalWindow from '../../../../components/UI/modal-window/modal-window.js'
 import ChatsList__ChatItem from '../../../../components/chat/chats-bar/chats-list__chat-item/chats-list__chat-item.js'
 //#Import
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -23,7 +24,6 @@ class ChatsBar__ChatsList extends Component {
             else if (data.btnId === 'remove') {
                 this.removeUser(data);
             }
-            //chats-list__chat-item
         };
         this.removeUser = (data) => {
             let chatid = '';
@@ -37,19 +37,13 @@ class ChatsBar__ChatsList extends Component {
             if (!chatid) {
                 return;
             }
-            // let chats: Array<LooseObject> = this.state.chats.filter(function(item: LooseObject) {
-            //   return item.id !== chatid
-            // })
             let chats = this.state.chats.filter((item) => item.id !== chatid);
             this.setState({ chats });
-            //   return item.id !== chatid
-            // })
-            //console.log(chats)
-            //const chats = this.state.chats.filter
         };
         this.state = {
             chats1: this.getChats(),
             CM_onClick: this.CM_onClick,
+            chatsOnClick: this.chatsOnClick,
             chats: [
                 { id: '1', name: 'Sasha', countUnread: 10, lastMessage: { type: 'in', date: '13:15', text: 'Putting the page number in the middle of the wording is a bad idea' } },
                 { id: '2', name: 'Timur', countUnread: 500, lastMessage: { type: 'in', date: '22:14', text: 'It was snapped off at the handle, and the blade was splintered, like somebody used it to hit something hard.' } },
@@ -63,18 +57,19 @@ class ChatsBar__ChatsList extends Component {
         return __awaiter(this, void 0, void 0, function* () {
             const httpTransport = new HTTPTransport();
             const req = yield httpTransport.get(`${env.URL_REQUEST}/chats`, { withCredentials: true, headers: { 'content-type': 'application/json' } });
-            //console.log('getChats', req)
+            console.log('getChats', req);
         });
     }
     chatsOnClick(e) {
         e.preventDefault();
-        let li = e.path.filter((el) => el.nodeName === 'LI');
-        if (!li) {
-            return;
-        }
+        //let li: Array<HTMLElement> = e.path.filter((el: HTMLElement) => el.nodeName === 'LI')
+        console.log('chatsOnClick');
+        // if (!li) {
+        //   return
+        // }
     }
     //#Components
-components() {return {ChatsList__ChatItem,ContextMenu}}
+components() {return {ChatsList__ChatItem,ModalWindow,ContextMenu}}
 //#Components
 template() {
         return (`<div className='chats-bar__chats-list' onClick={{state.chatsOnClick}} id='chats-list'>
@@ -94,6 +89,8 @@ template() {
             ></ChatsList__ChatItem>
           {% } %}
         </ul>
+
+        <ModalWindow></ModalWindow>
 
         <ContextMenu 
           buttons='add:Add chat|remove:Remove chat'

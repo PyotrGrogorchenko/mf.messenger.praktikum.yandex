@@ -11,25 +11,63 @@ export default class TestPage extends Component {
       list.pop()
     }
     
-    this.setState({ btnTestUpdate_text: 'Success!', btnTestUpdate_id: 'newId', list })
+    this.setState({ btnTestUpdate_text: 'ContextMwnu', list })
   }
 
   btnTestUpdate_onClick = () => {
-    this.setState({ btnTestUpdate_text: 'Success!' })
+    if (this.state.btnTestUpdate_text === 'Success' ){
+      this.setState({ btnTestUpdate_text: 'TestUpdate' })  
+    } else {
+      this.setState({ btnTestUpdate_text: 'Success' })
+    }
   }
+
+  btnTestCycle_onClick = () => {
+    if (this.state.list.length === 3) {
+      this.state.list.push({a:11, b:'12'})  
+    } else {
+      this.state.list.pop()
+    }
+
+    this.setState({ list : this.state.list })
+
+  }
+
+  btnTestCycleItemUpdate_onClick = () => {
+    const el = this.state.list[1]
+    if (el.b === '4'){
+      this.state.list[1] = {a:3, b:'444444'}  
+      //console.log('2', this.state.list)
+    } else  {
+      //console.log('22',this.state.list)
+      this.state.list[1] = {a:3, b:'4'}  
+    }
+  
+    this.setState({ list : this.state.list })
+  
+  }  
 
   btnTestIf_onClick = () => {
     this.setState({ condition: !this.state.condition })
+    //this.virtDOM?.printNodes()
   }
 
   state = {
     CM_onClick: this.CM_onClick,
+    
     btnTestUpdate_onClick: this.btnTestUpdate_onClick,
     btnTestUpdate_id: 'button_log-in',
-    btnTestUpdate_text: 'Test update',
+    btnTestUpdate_text: 'TestUpdate',
+    
     condition: true,
+    
     btnTestIf_onClick: this.btnTestIf_onClick,
-    list: [{a:1, b:'2'}, {a:3, b:'4'}, {a:5, b:'6'}]
+    
+    btnTestCycle_onClick: this.btnTestCycle_onClick,
+    list: [{a:1, b:'2'}, {a:3, b:'4'}, {a:5, b:'6'}],
+  
+    btnTestCycleItemUpdate_onClick: this.btnTestCycleItemUpdate_onClick
+
   }
 
   template() { 
@@ -37,36 +75,41 @@ export default class TestPage extends Component {
     return  (
       `<div className='right-click-area' id='CM_OwnerId' >
         
-        <ButtonMain text='test if' id='test-if' onClick={{state.btnTestIf_onClick}} ></ButtonMain>
-
-          {% if({{state.condition}}) { %}
-          //<PageColumn>
-            <AuthBarInput text='true'    type='text'     id='true'    value='true'></AuthBarInput> 
-            <a>99+</a> 
-            //</PageColumn>
-          {% } else { %}
-          //<PageColumn>
-            <AuthBarInput text='false'    type='text'     id='input_login'    value='false'></AuthBarInput> 
-            <a>000</a> 
-            <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}signup'></AnchorMain>
-          //</PageColumn>
-          {% } %}
-
-        <ButtonMain text={{state.btnTestUpdate_text}} id={{state.btnTestUpdate_id}} onClick={{state.btnTestUpdate_onClick}} ></ButtonMain>
-        
-        <ul className='list-test'>
+      <ButtonMain text={{state.btnTestUpdate_text}} id={{state.btnTestUpdate_id}} onClick={{state.btnTestUpdate_onClick}} ></ButtonMain>
+      <ButtonMain text='test if' id='test-if' onClick={{state.btnTestIf_onClick}} ></ButtonMain>
+      <ButtonMain text='test cycle' id='test-cycle' onClick={{state.btnTestCycle_onClick}} ></ButtonMain>
+      <ButtonMain text='test cycle item update' id='test-cycle_item_update' onClick={{state.btnTestCycleItemUpdate_onClick}} ></ButtonMain>
+      
+      {% if({{state.condition}}) { %}
+        <PageColumn>
+      
+          <ul className='list-test'>
           {% for (let    i   =    0; i < state.list.length; i++) { 
             const listEl = state.list[i];
           %}
-
-            //<PageColumn key={{listEl.a}}>
-              <AuthBarInput key={{listEl.a}} id={{listEl.a}} text='true'    type='text'     value='true'></AuthBarInput> 
-              <a key={{listEl.a}} id={{listEl.a}}>99+</a> 
-              <AnchorMain key={{listEl.a}} id={{listEl.a}} text='Test if' href='#{R}signup'></AnchorMain>
-            //</PageColumn>
-
+        
+            <li key={{listEl.a}}>
+              <AuthBarInput key={{listEl.a}} id={{listEl.a}} text={{listEl.b}}    type='text'     value='{{listEl.b}}></AuthBarInput> 
+              <a key={{listEl.a}} id={{listEl.a}}>{{listEl.b}}</a> 
+              <AnchorMain key={{listEl.a}} id={{listEl.a}} text={{listEl.b}} href='#{R}signup'></AnchorMain>
+            </li>
+        
           {% } %}
-        </ul>
+          </ul>
+      
+      
+          <AuthBarInput text='true'    type='text'     id='true'    value='true'></AuthBarInput> 
+          <a>99+</a> 
+        </PageColumn>
+      
+      {% } else { %}
+        <PageColumn>
+          <AuthBarInput text='false'    type='text'     id='input_login'    value='false'></AuthBarInput> 
+          <a>000</a> 
+          <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}signup'></AnchorMain>
+        </PageColumn>
+      {% } %}
+      
 
         <ContextMenu 
           buttons='add:add|remove:Remove chat'
@@ -74,8 +117,7 @@ export default class TestPage extends Component {
           ownerId='CM_OwnerId'
           menuId='CM_MenuId'
         ></ContextMenu>
-      
-
+              
 
       </div>`
 
@@ -83,6 +125,68 @@ export default class TestPage extends Component {
   }
 }
 
+
+
+
+        
+
+
+//   //<ButtonMain text={{state.btnTestUpdate_text}} id={{state.btnTestUpdate_id}} onClick={{state.btnTestUpdate_onClick}} ></ButtonMain>
+
+
+
+// {% if({{state.condition}}) { %}
+// <PageColumn>
+//  <AuthBarInput text='true'    type='text'     id='true'    value='true'></AuthBarInput> 
+//  <a>99+</a> 
+//   </PageColumn>
+// {% } else { %}
+// <PageColumn>
+//  <AuthBarInput text='false'    type='text'     id='input_login'    value='false'></AuthBarInput> 
+//  <a>000</a> 
+//  <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}signup'></AnchorMain>
+// </PageColumn>
+// {% } %}
+
+
+
+// <ul className='list-test'>
+// {% for (let    i   =    0; i < state.list.length; i++) { 
+//   const listEl = state.list[i];
+// %}
+
+//   <div key={{listEl.a}}>
+//     <AuthBarInput key={{listEl.a}} id={{listEl.a}} text={{listEl.a}}    type='text'     value='{{listEl.b}}></AuthBarInput> 
+//     <a key={{listEl.a}} id={{listEl.a}}>{{listEl.a}}</a> 
+//     <AnchorMain key={{listEl.a}} id={{listEl.a}} text={{listEl.a}} href='#{R}signup'></AnchorMain>
+//   </div>
+
+// {% } %}
+// </ul>
+
+
+// <ul className='list-test'>
+// {% for (let    i   =    0; i < state.list.length; i++) { 
+//   const listEl = state.list[i];
+// %}
+
+//   //<PageColumn key={{listEl.a}}>
+//     <AuthBarInput key={{listEl.a}} id={{listEl.a}} text='true'    type='text'     value='true'></AuthBarInput> 
+//     <a key={{listEl.a}} id={{listEl.a}}>99+</a> 
+//     <AnchorMain key={{listEl.a}} id={{listEl.a}} text='Test if' href='#{R}signup'></AnchorMain>
+//   //</PageColumn>
+
+// {% } %}
+// </ul>
+
+
+
+// <ContextMenu 
+// buttons='add:add|remove:Remove chat'
+// onClick={{state.CM_onClick}}
+// ownerId='CM_OwnerId'
+// menuId='CM_MenuId'
+// ></ContextMenu>
 
 
 

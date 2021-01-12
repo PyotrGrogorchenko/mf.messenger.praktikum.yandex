@@ -21,16 +21,10 @@ class Component {
   private _parsedTemplate:Array<PARSER_NODE> | null = null
   private _deleteMark: boolean = false
 
-  state: any = {}
-
   eventBus: () => EventBus
 
-  /** JSDoc
-  * @param {string} tagName
-  * @param {Object} props
-  *
-  * @returns {void}
-  */
+  state: any = {}
+
   constructor(props: any = {}) {
     
     this._root = null
@@ -89,7 +83,6 @@ class Component {
     
     if (changedState) {
       this.virtDOM?.deleteMarkedNodes()
-      //console.log(changedState)
     }
 
 
@@ -107,9 +100,6 @@ class Component {
         node.root = (node.componentLink as Component).rootOut
       } else {
  
-        //console.log(node.deleteMark, node.header, node.element)
-        
-
         if (node.element) {
           if (node.deleteMark){
             node.element.remove()
@@ -121,10 +111,6 @@ class Component {
           }
           node.element = document.createElement(node.tagName) as HTMLElement
         }
-        
-        // if (!node.element) {
-        //   node.element = document.createElement(node.tagName) as HTMLElement
-        // }
         
         const element: HTMLElement = node.element as HTMLElement
         
@@ -178,12 +164,7 @@ class Component {
 
   _compile(changedState: LooseObject | null = null): boolean {
 
-    //let state: any = window.copyObj(this.state)
     Object.assign(this.state, changedState)
-
-    //this.state = state
-
-    //console.log(this.state.list ? this.state.list.length : '')
 
     let parsedTemplate = this.parsedTemplate
     if (!parsedTemplate){
@@ -208,55 +189,6 @@ class Component {
 
     return true
   }
-
-
-
-//   _makePropsProxy(props) {
-//     // Можно и так передать this
-//     // Такой способ больше не применяется с приходом ES6+
-//     const self = this;
-    
-//     // PP \\
-//     //return props;
-//     const proxyProps = new Proxy(props, {
-  
-//       // get(target, prop){
-//       //   return target[prop]
-//       // },
-  
-//       set(target, prop, value) {
-//         const oldProps = {...target}
-//         target[prop] = value
-//         //self._propsDidChange = JSON.stringify(oldProps) !== JSON.stringify(target)
-//         if (JSON.stringify(oldProps) !== JSON.stringify(target)) {
-//           self._render()  
-//         }
-//         self.eventBus().emit(Component.EVENTS.FLOW_CDU, oldProps, target)
-//         return true
-//       },
-      
-//       deleteProperty(target, prop) {
-//         throw new Error('Нет прав')
-//       }
-    
-//     });    
-    
-//     return proxyProps
-//     // PP //
-  
-//   }
-
-  // setProps = nextProps => {
-  //   if (!nextProps) {
-  //     return
-  //   }
-  //   Object.assign(this.props, nextProps)
-  // }
-
-  // get element() {
-  //   return this._element
-  // }
-
 
 }
 

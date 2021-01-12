@@ -1,34 +1,34 @@
 import Component from '../../../../component/Component'
 import { HTTPTransport } from '../../../../xhr/HTTPTransport'
 import { env } from '../../../../const/index'
-import { WSA_E_NO_MORE } from 'constants'
 
 class ChatsBar__ChatsList extends Component {
 
   async getChats() {
     const httpTransport = new HTTPTransport()
     const req = await httpTransport.get(`${env.URL_REQUEST}/chats`, { withCredentials: true ,headers: {'content-type': 'application/json'}}) as XMLHttpRequest
-    //console.log('getChats', req)
+    console.log('getChats', req)
   }
 
   chatsOnClick (e:MouseEvent) {
     e.preventDefault()
-    let li: Array<HTMLElement> = e.path.filter((el: HTMLElement) => el.nodeName === 'LI')
+    //let li: Array<HTMLElement> = e.path.filter((el: HTMLElement) => el.nodeName === 'LI')
    
-    if (!li) {
-      return
-    }
+    console.log('chatsOnClick')
+
+    // if (!li) {
+    //   return
+    // }
     
   }
 
   CM_onClick = (data: LooseObject) => {
     if (data.btnId === 'add') {
-
+      
     } else if (data.btnId === 'remove') {
       this.removeUser(data)
     }
     
-    //chats-list__chat-item
   }
 
   removeUser = (data: LooseObject) => {
@@ -46,23 +46,15 @@ class ChatsBar__ChatsList extends Component {
       return
     }
 
-    // let chats: Array<LooseObject> = this.state.chats.filter(function(item: LooseObject) {
-    //   return item.id !== chatid
-    // })
     let chats: Array<LooseObject> = this.state.chats.filter((item: LooseObject) => item.id !== chatid)
     this.setState({chats})
     
-    //   return item.id !== chatid
-    // })
-
-    //console.log(chats)
-
-    //const chats = this.state.chats.filter
   }
 
   state = {
     chats1: this.getChats(),
     CM_onClick: this.CM_onClick,
+    chatsOnClick: this.chatsOnClick,
     chats: 
     [
       {id: '1', name: 'Sasha', countUnread: 10, lastMessage: {type: 'in',  date: '13:15', text: 'Putting the page number in the middle of the wording is a bad idea'}},
@@ -93,6 +85,8 @@ class ChatsBar__ChatsList extends Component {
             ></ChatsList__ChatItem>
           {% } %}
         </ul>
+
+        <ModalWindow></ModalWindow>
 
         <ContextMenu 
           buttons='add:Add chat|remove:Remove chat'

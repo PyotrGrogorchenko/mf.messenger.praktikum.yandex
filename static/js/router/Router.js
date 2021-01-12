@@ -39,8 +39,8 @@ class Router {
     }
     defaultPage() {
         return __awaiter(this, void 0, void 0, function* () {
-            this.go('/testPage');
-            return;
+            // this.go('/testPage')
+            // return
             // //this.go('/signup')
             const httpTransport = new HTTPTransport();
             const req = yield httpTransport.get(`${env.URL_REQUEST}/auth/user`, { withCredentials: true, headers: { 'content-type': 'application/json' } });

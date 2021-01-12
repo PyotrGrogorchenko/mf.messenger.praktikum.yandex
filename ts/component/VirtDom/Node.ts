@@ -8,8 +8,7 @@ class Node {
   private _changedProps: Array<string> = []
   private _deleteMark: boolean = false
 
-  uid: string = ''
-  uidNum: number = 0
+  uid: number = 0
   key: string = ''
 
   textContent: string = ''
@@ -35,16 +34,16 @@ class Node {
   get deleteMark() { return this._deleteMark }
   set deleteMark(value) { this._deleteMark = value }
   
-  setContentProps(data: LooseObject): void {
+  setContentProps(context: LooseObject, template: LooseObject): void {
     const oldTextConent =  this.textContent
-    let { content } = data
+    let { content } = template.record
     if (!content) {
       this.textContent = content
       this.textContentIsChanged = false
     }
     window.regexpMatchAll(content, _REGEXP_PARAM).forEach(function(param: RegExpExecArray) {
       if (param[1]) {
-        content = content.replace(param[0], window.get(data, param[1], ''))
+        content = content.replace(param[0], window.get(context, param[1], ''))
       }
     })
     this.textContent = content
@@ -77,13 +76,6 @@ class Node {
     this.level
   }
 
-  setUid() {
-    this.uid = this.uidNum.toString()
-    if (this.key) {
-      this.uid = this.uid + `_${this.key}`
-    }
-  }
- 
 }
 
 export { Node }

@@ -10,12 +10,6 @@ var EVENTS;
     EVENTS["FLOW_RENDER"] = "flow:render";
 })(EVENTS || (EVENTS = {}));
 class Component {
-    /** JSDoc
-    * @param {string} tagName
-    * @param {Object} props
-    *
-    * @returns {void}
-    */
     constructor(props = {}) {
         this._root = null;
         this._virtDOM = null;
@@ -66,7 +60,6 @@ class Component {
         }
         if (changedState) {
             (_a = this.virtDOM) === null || _a === void 0 ? void 0 : _a.deleteMarkedNodes();
-            //console.log(changedState)
         }
     }
     render() { this.eventBus().emit(EVENTS.FLOW_RENDER); }
@@ -79,7 +72,6 @@ class Component {
                 node.root = node.componentLink.rootOut;
             }
             else {
-                //console.log(node.deleteMark, node.header, node.element)
                 if (node.element) {
                     if (node.deleteMark) {
                         node.element.remove();
@@ -92,9 +84,6 @@ class Component {
                     }
                     node.element = document.createElement(node.tagName);
                 }
-                // if (!node.element) {
-                //   node.element = document.createElement(node.tagName) as HTMLElement
-                // }
                 const element = node.element;
                 node.changedProps.forEach(prop => {
                     if (prop === 'classes') {
@@ -143,10 +132,7 @@ class Component {
         });
     }
     _compile(changedState = null) {
-        //let state: any = window.copyObj(this.state)
         Object.assign(this.state, changedState);
-        //this.state = state
-        //console.log(this.state.list ? this.state.list.length : '')
         let parsedTemplate = this.parsedTemplate;
         if (!parsedTemplate) {
             parsedTemplate = parser(this.template());

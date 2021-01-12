@@ -28,6 +28,7 @@
 @import '../components/messages-bar__footer.css';
 @import '../components/messages-bar__header.css';
 @import '../components/messages__date.css';
+@import '../components/modal-window.css';
 @import '../components/page-column.css';
 @import '../components/pagesMenu.css';
 @import '../components/selectChat.css';

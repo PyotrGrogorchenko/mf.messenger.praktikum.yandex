@@ -44,8 +44,8 @@ class Router {
 
     async defaultPage() {
      
-      this.go('/testPage')
-      return
+      // this.go('/testPage')
+      // return
       // //this.go('/signup')
 
       const httpTransport = new HTTPTransport()
