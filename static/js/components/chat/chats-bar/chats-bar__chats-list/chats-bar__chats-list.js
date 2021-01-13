@@ -1,7 +1,7 @@
 //#Import
 import ContextMenu from '../../../../components/UI/context-menu/context-menu.js'
-import ModalWindow from '../../../../components/UI/modal-window/modal-window.js'
 import ChatsList__ChatItem from '../../../../components/chat/chats-bar/chats-list__chat-item/chats-list__chat-item.js'
+import ModalWindow from '../../../../components/UI/modal-window/modal-window.js'
 //#Import
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -20,6 +20,7 @@ class ChatsBar__ChatsList extends Component {
         super(...arguments);
         this.CM_onClick = (data) => {
             if (data.btnId === 'add') {
+                this.addUser();
             }
             else if (data.btnId === 'remove') {
                 this.removeUser(data);
@@ -40,10 +41,18 @@ class ChatsBar__ChatsList extends Component {
             let chats = this.state.chats.filter((item) => item.id !== chatid);
             this.setState({ chats });
         };
+        this.addUser = () => {
+            this.setState({ showUsers: true });
+        };
+        this.addUser_Callback = (val) => {
+            this.setState({ showUsers: false });
+        };
         this.state = {
             chats1: this.getChats(),
             CM_onClick: this.CM_onClick,
             chatsOnClick: this.chatsOnClick,
+            addUser_Callback: this.addUser_Callback,
+            showUsers: false,
             chats: [
                 { id: '1', name: 'Sasha', countUnread: 10, lastMessage: { type: 'in', date: '13:15', text: 'Putting the page number in the middle of the wording is a bad idea' } },
                 { id: '2', name: 'Timur', countUnread: 500, lastMessage: { type: 'in', date: '22:14', text: 'It was snapped off at the handle, and the blade was splintered, like somebody used it to hit something hard.' } },
@@ -69,15 +78,34 @@ class ChatsBar__ChatsList extends Component {
         // }
     }
     //#Components
-components() {return {ChatsList__ChatItem,ModalWindow,ContextMenu}}
+components() {return {ModalWindow,ChatsList__ChatItem,ContextMenu}}
 //#Components
 template() {
-        return (`<div className='chats-bar__chats-list' onClick={{state.chatsOnClick}} id='chats-list'>
+        return (`
+      {% if({{state.showUsers}}) { %}
+        <ModalWindow title='Users' callback={{state.addUser_Callback}}>
+          <ChatsList__ChatItem></ChatsList__ChatItem> 
+          <ChatsList__ChatItem></ChatsList__ChatItem> 
+          <ChatsList__ChatItem></ChatsList__ChatItem> 
+          <ChatsList__ChatItem></ChatsList__ChatItem> 
+        </ModalWindow>
+      {% } %} 
+
+
+      <div className='chats-bar__chats-list' onClick={{state.chatsOnClick}} id='chats-list'>
+
+
+
+        <ContextMenu 
+          buttons='add:Add chat|remove:Remove chat'
+          onClick={{state.CM_onClick}}
+          ownerId='chats-list'
+          menuId='chats-list-context-menu'
+        ></ContextMenu>
+
         <ul className='chats-list__list'>
           
-          {% for (let i = 0; i < state.chats.length; i++) { 
-            const chat = state.chats[i];
-          %}
+          {% for (let i = 0; i < state.chats.length; i++) { const chat = state.chats[i]; %}
             <ChatsList__ChatItem 
               chatid={{chat.id}}
               key={{chat.id}}
@@ -89,16 +117,6 @@ template() {
             ></ChatsList__ChatItem>
           {% } %}
         </ul>
-
-        <ModalWindow></ModalWindow>
-
-        <ContextMenu 
-          buttons='add:Add chat|remove:Remove chat'
-          onClick={{state.CM_onClick}}
-          ownerId='chats-list'
-          menuId='chats-list-context-menu'
-        ></ContextMenu>
-
 
       </div>`);
     }

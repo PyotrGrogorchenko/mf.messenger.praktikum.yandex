@@ -29,11 +29,11 @@ function parserNoREGEXP(str: string): Array<Node> {
   
   str = str.split(/\n/g).reduce(function(result, current) {
     const currentClean = current.replace(/\s/g, '')
-    if (currentClean.startsWith('//<') || currentClean.startsWith('//<%')) {
+    if (currentClean.startsWith('//') || currentClean.startsWith('//<%')) {
       return result
     }
     return result + '\n' + current
-  }, '')
+  }, '').trim()
 
   while (str) {
   
@@ -43,9 +43,7 @@ function parserNoREGEXP(str: string): Array<Node> {
     const isCode: boolean = str.startsWith('<{%')  
     endTagPos = isCode ? str.indexOf('%}>') + 2 : endTagPos
 
-    let tagContent: string = str.slice(beginTagPos + 1, endTagPos)
-                                .trim()
-                                .replace(/[\r\n]+/g, '')
+    let tagContent: string = str.slice(beginTagPos + 1, endTagPos).trim().replace(/[\r\n]+/g, '')
 
     const isEndTag: boolean = tagContent.startsWith('/')  
 

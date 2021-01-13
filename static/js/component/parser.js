@@ -18,19 +18,17 @@ function parserNoREGEXP(str) {
     };
     str = str.split(/\n/g).reduce(function (result, current) {
         const currentClean = current.replace(/\s/g, '');
-        if (currentClean.startsWith('//<') || currentClean.startsWith('//<%')) {
+        if (currentClean.startsWith('//') || currentClean.startsWith('//<%')) {
             return result;
         }
         return result + '\n' + current;
-    }, '');
+    }, '').trim();
     while (str) {
         const beginTagPos = str.indexOf('<');
         let endTagPos = str.indexOf('>');
         const isCode = str.startsWith('<{%');
         endTagPos = isCode ? str.indexOf('%}>') + 2 : endTagPos;
-        let tagContent = str.slice(beginTagPos + 1, endTagPos)
-            .trim()
-            .replace(/[\r\n]+/g, '');
+        let tagContent = str.slice(beginTagPos + 1, endTagPos).trim().replace(/[\r\n]+/g, '');
         const isEndTag = tagContent.startsWith('/');
         if (isCode) {
             addItem(PARSER_TYPES.CODE, tagContent);

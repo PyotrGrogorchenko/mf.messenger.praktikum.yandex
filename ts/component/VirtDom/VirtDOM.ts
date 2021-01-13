@@ -23,8 +23,6 @@ class VirtDom {
 
   _compileTemplate(parsedTemplate: Array<PARSER_NODE>, state: any, props: any): void {
     
-    
-
     const context: LooseObject = {state, props}
     const template: LooseObject = {list: parsedTemplate, record: null, i: 0}
 
@@ -243,7 +241,9 @@ class VirtDom {
       } 
       
       record.deleteMark = !param  
-      this._compileItem(context, template)
+      if (param) {
+        this._compileItem(context, template)
+      }  
 
     }
     

@@ -3,16 +3,4 @@
 @import 'components.css';
 @import 'base.css';
 @import 'colors.css';
-
-
-/* // auth-bar \\ */
-/* @import '../auth-bar.css';
-@import '../auth-bar-input.css';
-@import '../bar__content.css';
-@import '../bar__footer.css';
-@import '../bar__header.css'; */
-/* \\ auth-bar // */
-
-/* @import '../button-main.css'; */
-
-
+@import 'properties.css';

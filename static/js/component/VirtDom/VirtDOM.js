@@ -185,7 +185,9 @@ class VirtDom {
                 }
             }
             record.deleteMark = !param;
-            this._compileItem(context, template);
+            if (param) {
+                this._compileItem(context, template);
+            }
         }
     }
     _code__isCloseBracket(template) {

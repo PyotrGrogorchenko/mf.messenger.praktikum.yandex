@@ -24,7 +24,7 @@ class ChatsBar__ChatsList extends Component {
 
   CM_onClick = (data: LooseObject) => {
     if (data.btnId === 'add') {
-      
+      this.addUser()  
     } else if (data.btnId === 'remove') {
       this.removeUser(data)
     }
@@ -51,10 +51,20 @@ class ChatsBar__ChatsList extends Component {
     
   }
 
+  addUser = () => {
+    this.setState({showUsers: true})
+  }
+
+  addUser_Callback = (val: any) => {
+    this.setState({showUsers: false})
+  }
+
   state = {
     chats1: this.getChats(),
     CM_onClick: this.CM_onClick,
     chatsOnClick: this.chatsOnClick,
+    addUser_Callback: this.addUser_Callback,
+    showUsers: false,
     chats: 
     [
       {id: '1', name: 'Sasha', countUnread: 10, lastMessage: {type: 'in',  date: '13:15', text: 'Putting the page number in the middle of the wording is a bad idea'}},
@@ -65,15 +75,33 @@ class ChatsBar__ChatsList extends Component {
     ]
   }
 
-
   template() { 
     return (
-      `<div className='chats-bar__chats-list' onClick={{state.chatsOnClick}} id='chats-list'>
+      `
+      {% if({{state.showUsers}}) { %}
+        <ModalWindow title='Users' callback={{state.addUser_Callback}}>
+          <ChatsList__ChatItem></ChatsList__ChatItem> 
+          <ChatsList__ChatItem></ChatsList__ChatItem> 
+          <ChatsList__ChatItem></ChatsList__ChatItem> 
+          <ChatsList__ChatItem></ChatsList__ChatItem> 
+        </ModalWindow>
+      {% } %} 
+
+
+      <div className='chats-bar__chats-list' onClick={{state.chatsOnClick}} id='chats-list'>
+
+
+
+        <ContextMenu 
+          buttons='add:Add chat|remove:Remove chat'
+          onClick={{state.CM_onClick}}
+          ownerId='chats-list'
+          menuId='chats-list-context-menu'
+        ></ContextMenu>
+
         <ul className='chats-list__list'>
           
-          {% for (let i = 0; i < state.chats.length; i++) { 
-            const chat = state.chats[i];
-          %}
+          {% for (let i = 0; i < state.chats.length; i++) { const chat = state.chats[i]; %}
             <ChatsList__ChatItem 
               chatid={{chat.id}}
               key={{chat.id}}
@@ -85,16 +113,6 @@ class ChatsBar__ChatsList extends Component {
             ></ChatsList__ChatItem>
           {% } %}
         </ul>
-
-        <ModalWindow></ModalWindow>
-
-        <ContextMenu 
-          buttons='add:Add chat|remove:Remove chat'
-          onClick={{state.CM_onClick}}
-          ownerId='chats-list'
-          menuId='chats-list-context-menu'
-        ></ContextMenu>
-
 
       </div>`
     )
