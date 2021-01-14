@@ -39,12 +39,25 @@ class ContextMenu extends Component {
         }, false);
     }
     getButtons() {
+        const blockButtons = this.getProps().blockButtons.split('|');
         const res = [];
         const getIcon = this.getIcon;
         this.getProps().buttons.split('|').forEach(function (buttonStr) {
             const button = buttonStr.split(':');
-            res.push({ id: button[0], text: button[1], icon: getIcon(button[0]) });
+            const block = blockButtons.includes(button[0]);
+            // const className = 'cm__cm-element'
+            //  + block ? ' test' : ''
+            //console.log(className)
+            res.push({
+                id: button[0],
+                type: button[1],
+                text: button[2],
+                icon: getIcon(button[1]),
+                block: blockButtons.includes(button[0]),
+                className: 'cm__cm-element'.concat(+block ? ' cm-block' : '')
+            });
         });
+        console.log(res);
         return res;
     }
     getIcon(type) {
@@ -68,13 +81,13 @@ class ContextMenu extends Component {
           const button = state.buttons[i];
         %}
           <li 
-            className='cm__cm-element'
+            className={{button.className}}
             id={{button.id}}
             key={{button.id}}
             onClick={{state.onClick}}
           >
             <i className={{button.icon}}></i>
-            <span>{{button.text}}</span>  
+            <p>{{button.text}}</p>  
           </li> 
         {% } %}
       </ul>`);

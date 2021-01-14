@@ -3,6 +3,7 @@
 @import '../components/anchor-to-go.css';
 @import '../components/auth-bar-form.css';
 @import '../components/auth-bar-input.css';
+@import '../components/avatar.css';
 @import '../components/bar__content.css';
 @import '../components/bar__footer.css';
 @import '../components/bar__header.css';
@@ -13,6 +14,7 @@
 @import '../components/chats-bar.css';
 @import '../components/chats-bar__chats-list.css';
 @import '../components/chats-list__chat-item.css';
+@import '../components/chats-list__search-window.css';
 @import '../components/context-menu.css';
 @import '../components/error-bar.css';
 @import '../components/error404.css';
@@ -32,6 +34,7 @@
 @import '../components/modal-window.css';
 @import '../components/page-column.css';
 @import '../components/pagesMenu.css';
+@import '../components/search-window__search-item.css';
 @import '../components/selectChat.css';
 @import '../components/signup.css';
 @import '../components/testPage.css';

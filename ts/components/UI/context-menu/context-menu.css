@@ -35,3 +35,7 @@
 .cm-icon_hide {
   visibility: hidden;  
 }
+
+.cm-block {
+  color: var(--color-gray3) !important;
+}

@@ -2,7 +2,7 @@ import Component from '../../../component/Component.js';
 class ModalWindow extends Component {
     constructor() {
         super(...arguments);
-        this.btnClose_onClick = ((e) => {
+        this.onClose = ((e) => {
             e.preventDefault();
             e.stopPropagation();
             //document.getElementsByTagName('html')[0].classList.remove('ov-fl_hide')
@@ -12,14 +12,10 @@ class ModalWindow extends Component {
                 return;
             }
             props.callback();
-            //window.classList
         });
         this.state = {
-            btnClose_onClick: this.btnClose_onClick
+            onClose: this.onClose,
         };
-    }
-    componentDidMount() {
-        //document.getElementsByTagName('html')[0].classList.add('ov-fl_hide')
     }
     template() {
         return (`<div id='mw' className='mw'>
@@ -27,10 +23,10 @@ class ModalWindow extends Component {
           <div className='mw-content'>
             <div className='mw-header'>
               <p className='mw-title'>{{props.title}}</p>
-              <p className='mw_btn-close' onClick={{state.btnClose_onClick}}>×</p>
+              <p className='mw_btn-close' onClick={{state.onClose}}>×</p>
             </div>
             <div className='mw-body'>    
-             
+           
             </div>
           </div>
         </div>

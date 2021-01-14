@@ -101,6 +101,16 @@ class VirtDom {
                 vars.push(item.substring(item.indexOf(' ')).replace(/ /ig, '').split('='));
             }
         });
+        if (!this._compare(context[iName], sign, right)) {
+            while (!this._code__isCloseBracket(template) && template.i < template.list.length) {
+                template.i++;
+                template.record = template.list[template.i];
+            }
+            template.i++;
+            template.record = template.list[template.i];
+            this._compileItem(context, template);
+            return;
+        }
         const iStart = template.i;
         for (context[iName]; this._compare(context[iName], sign, right); context[iName] = context[iName] + this._inc(step)) {
             vars.forEach(function (variable) {
@@ -153,11 +163,16 @@ class VirtDom {
         const isElse = () => {
             return template.record.content.replace(/ /ig, '') === '{%}else{%}';
         };
-        const codeParam = code.substring(code.indexOf('(') + 1, code.indexOf(')')).trim();
-        const rgParam = new RegExp(this._REGEXP_PARAM).exec(codeParam);
-        let param = true;
-        if (rgParam) {
-            param = window.get(context, rgParam[1], rgParam[1]);
+        // ifParam
+        let ifParam = true;
+        const ifParamCode = code.substring(code.indexOf('(') + 1, code.indexOf(')')).trim().split(' ').filter((item) => item);
+        const ifParamL = this._code__calculateValue(context, ifParamCode[0]);
+        if (ifParamCode[2]) {
+            const ifParamR = this._code__calculateValue(context, ifParamCode[2]);
+            ifParam = this._compare(ifParamL, ifParamCode[1], ifParamR);
+        }
+        else {
+            ifParam = ifParamL;
         }
         template.i++;
         for (template.i; template.i < template.list.length; template.i++) {
@@ -165,14 +180,14 @@ class VirtDom {
             template.record = record;
             if (record.type === PARSER_TYPES.CODE) {
                 if (isElse()) {
-                    param = !param;
+                    ifParam = !ifParam;
                     continue;
                 }
                 else if (this._code__isCloseBracket(template)) {
                     break;
                 }
                 else {
-                    if (param) {
+                    if (ifParam) {
                         this._compileCode(context, template);
                     }
                     else {
@@ -184,14 +199,28 @@ class VirtDom {
                     }
                 }
             }
-            record.deleteMark = !param;
-            if (param) {
+            record.deleteMark = !ifParam;
+            if (ifParam) {
                 this._compileItem(context, template);
             }
         }
     }
     _code__isCloseBracket(template) {
         return template.record.content.replace(/ /ig, '') === '{%}%}';
+    }
+    _code__calculateValue(context, code) {
+        if (code === 'null') {
+            return null;
+        }
+        let value;
+        const rg = new RegExp(this._REGEXP_PARAM).exec(code);
+        if (rg) {
+            value = window.get(context, rg[1], rg[1]);
+        }
+        else {
+            value = code;
+        }
+        return value;
     }
     _getHeaderProps(context, template, tagName) {
         let { content } = template.record;
@@ -236,6 +265,8 @@ class VirtDom {
             case '<=': return left <= right;
             case '>': return left > right;
             case '>=': return left >= right;
+            case '===': return left === right;
+            case '!==': return left !== right;
             default:
                 throw new Error(`Compare error`);
         }
@@ -296,12 +327,12 @@ class VirtDom {
     deleteMarkedNodes() {
         this._nodes.forEach((node) => {
             var _a;
-            if (node.deleteMark) {
-                if (node.isComponent && node.componentLink) {
-                    (_a = node.componentLink.virtDOM) === null || _a === void 0 ? void 0 : _a.deleteMarkedNodes();
-                }
-                this._nodes = this._nodes.filter((node) => !node.deleteMark);
+            //if (node.deleteMark) {
+            if (node.isComponent && node.componentLink) {
+                (_a = node.componentLink.virtDOM) === null || _a === void 0 ? void 0 : _a.deleteMarkedNodes();
             }
+            this._nodes = this._nodes.filter((node) => !node.deleteMark);
+            //}
         });
     }
     printNodes() {

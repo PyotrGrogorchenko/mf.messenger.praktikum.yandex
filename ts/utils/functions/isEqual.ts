@@ -1,5 +1,13 @@
 export const isEqual = (a: LooseObject, b: LooseObject): boolean => {
+
+  if (a === null) {
+    if (b !== null){
+      return false
+    }
+    return true
+  }
   
+
   if (Object.keys(a).length !== Object.keys(b).length) {
     return false
   }

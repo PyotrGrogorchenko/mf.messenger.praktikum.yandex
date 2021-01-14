@@ -15,7 +15,7 @@
   position:relative;
   width:auto;
   margin:10px;
-  max-width:460px;
+  max-width:300px;
   margin:30px auto;
 }
 
@@ -33,7 +33,7 @@
 
 .mw-header{
   display:block;
-  padding:14px 14px 4px;
+  padding:10px 10px 0px 10px;
 }
 
 .mw-title{
@@ -72,6 +72,6 @@
 .mw-body{
   position:relative;
   flex:1 1 auto;
-  padding:15px;
+  padding:0px 15px 15px 15px;
   overflow:auto;
 }

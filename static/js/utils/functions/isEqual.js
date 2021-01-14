@@ -1,4 +1,10 @@
 export const isEqual = (a, b) => {
+    if (a === null) {
+        if (b !== null) {
+            return false;
+        }
+        return true;
+    }
     if (Object.keys(a).length !== Object.keys(b).length) {
         return false;
     }

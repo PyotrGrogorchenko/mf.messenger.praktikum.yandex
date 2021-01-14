@@ -18,7 +18,7 @@ function parserNoREGEXP(str) {
     };
     str = str.split(/\n/g).reduce(function (result, current) {
         const currentClean = current.replace(/\s/g, '');
-        if (currentClean.startsWith('//') || currentClean.startsWith('//<%')) {
+        if (currentClean.startsWith('//')) {
             return result;
         }
         return result + '\n' + current;
@@ -38,7 +38,7 @@ function parserNoREGEXP(str) {
         }
         str = str.slice(endTagPos + 1).trim();
         if (str.indexOf('<') >= 0) {
-            const content = str.substring(0, str.indexOf('<')).trim();
+            const content = str.substring(0, str.indexOf('<'));
             if (content) {
                 addItem(PARSER_TYPES.TEXT, content);
             }

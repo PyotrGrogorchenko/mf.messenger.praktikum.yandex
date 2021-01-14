@@ -50,7 +50,11 @@ export default class TestPage extends Component {
             this.setState({ list: this.state.list });
         };
         this.btnTestIf_onClick = () => {
-            this.setState({ condition: !this.state.condition });
+            if (this.state.condition === null) {
+                this.setState({ condition: true });
+                return;
+            }
+            this.setState({ condition: null });
             //this.virtDOM?.printNodes()
         };
         this.state = {
@@ -59,6 +63,7 @@ export default class TestPage extends Component {
             btnTestUpdate_id: 'button_log-in',
             btnTestUpdate_text: 'TestUpdate',
             condition: true,
+            conditionR: null,
             btnTestIf_onClick: this.btnTestIf_onClick,
             btnTestCycle_onClick: this.btnTestCycle_onClick,
             list: [{ a: 1, b: '2' }, { a: 3, b: '4' }, { a: 5, b: '6' }],
@@ -71,12 +76,12 @@ components() {return {ButtonMain,PageColumn,AuthBarInput,AnchorMain,ContextMenu}
 template() {
         return (`<div className='right-click-area' id='CM_OwnerId' >
         
-      <ButtonMain text={{state.btnTestUpdate_text}} id={{state.btnTestUpdate_id}} onClick={{state.btnTestUpdate_onClick}} ></ButtonMain>
+      // <ButtonMain text={{state.btnTestUpdate_text}} id={{state.btnTestUpdate_id}} onClick={{state.btnTestUpdate_onClick}} ></ButtonMain>
       <ButtonMain text='test if' id='test-if' onClick={{state.btnTestIf_onClick}} ></ButtonMain>
-      <ButtonMain text='test cycle' id='test-cycle' onClick={{state.btnTestCycle_onClick}} ></ButtonMain>
-      <ButtonMain text='test cycle item update' id='test-cycle_item_update' onClick={{state.btnTestCycleItemUpdate_onClick}} ></ButtonMain>
+      // <ButtonMain text='test cycle' id='test-cycle' onClick={{state.btnTestCycle_onClick}} ></ButtonMain>
+      // <ButtonMain text='test cycle item update' id='test-cycle_item_update' onClick={{state.btnTestCycleItemUpdate_onClick}} ></ButtonMain>
       
-      {% if({{state.condition}}) { %}
+      {% if({{state.condition}} === null ) { %}
         <PageColumn>
       
           <ul className='list-test'>
@@ -107,12 +112,12 @@ template() {
       {% } %}
       
 
-        <ContextMenu 
-          buttons='add:add|remove:Remove chat'
-          onClick={{state.CM_onClick}}
-          ownerId='CM_OwnerId'
-          menuId='CM_MenuId'
-        ></ContextMenu>
+        // <ContextMenu 
+        //   buttons='add:add|remove:Remove chat'
+        //   onClick={{state.CM_onClick}}
+        //   ownerId='CM_OwnerId'
+        //   menuId='CM_MenuId'
+        // ></ContextMenu>
               
 
       </div>`);

@@ -4,7 +4,7 @@ class MessagesBar__Header extends Component {
         return (`<div className='messages-bar__header'>
         
         <div className='header__avatar'>
-          <div className='avatar'>
+          <div className='avatar-empty'>
             <i className='c-gy3 fas fa-camera'></i>
           </div>
         </div>

@@ -4,9 +4,12 @@ import { VirtDom } from './VirtDom/VirtDOM.js';
 import { onRouteClick } from '../router/events.js';
 var EVENTS;
 (function (EVENTS) {
-    EVENTS["INIT"] = "init";
     EVENTS["FLOW_CDM"] = "flow:component-did-mount";
     EVENTS["FLOW_CDU"] = "flow:component-did-update";
+    EVENTS["FLOW_CWU"] = "flow:component-will-update";
+    EVENTS["FLOW_CWM"] = "flow:component-will-mount";
+    EVENTS["FLOW_EXECUTE"] = "flow:execute";
+    EVENTS["FLOW_COMPILE"] = "flow:compile";
     EVENTS["FLOW_RENDER"] = "flow:render";
 })(EVENTS || (EVENTS = {}));
 class Component {
@@ -32,38 +35,67 @@ class Component {
     get virtDOM() { return this._virtDOM; }
     getProps() { return this._props; }
     setProps(props) { this._props = props; }
-    _registerEvents(eventBus) {
-        eventBus.on(EVENTS.INIT, this._init.bind(this));
-        eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-        eventBus.on(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
-        eventBus.on(EVENTS.FLOW_RENDER, this._render.bind(this));
-    }
-    _init() { this.render(); }
-    init(root) {
-        this._root = root;
-        this.eventBus().emit(EVENTS.INIT);
-    }
-    _componentDidMount() { this.componentDidMount(); }
-    componentDidMount() { }
-    _componentDidUpdate(oldProps = null, newProps = null) { }
-    componentDidUpdate(_oldProps, _newProps) { return true; }
     components() { return {}; }
     template() { return ''; }
-    setState(changedState) {
-        this._render(changedState);
+    _registerEvents(eventBus) {
+        eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
+        eventBus.on(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+        eventBus.on(EVENTS.FLOW_CWU, this._componentWillUpdate.bind(this));
+        eventBus.on(EVENTS.FLOW_CWM, this._componentWillMount.bind(this));
+        eventBus.on(EVENTS.FLOW_EXECUTE, this._execute.bind(this));
+        eventBus.on(EVENTS.FLOW_COMPILE, this._compile.bind(this));
+        eventBus.on(EVENTS.FLOW_RENDER, this._render.bind(this));
     }
-    _render(changedState = null) {
-        var _a;
-        if (this._compile(changedState)) {
-            this._executeRender();
-            this.eventBus().emit(EVENTS.FLOW_CDM);
-        }
-        if (changedState) {
-            (_a = this.virtDOM) === null || _a === void 0 ? void 0 : _a.deleteMarkedNodes();
-        }
+    init(root) {
+        this._root = root;
+        this.eventBus().emit(EVENTS.FLOW_EXECUTE);
     }
-    render() { this.eventBus().emit(EVENTS.FLOW_RENDER); }
-    _executeRender() {
+    _componentDidMount(props = null, state = null) { this.componentDidMount(props, state); }
+    componentDidMount(props = null, state = null) { }
+    _componentDidUpdate(oldProps = null, newProps = null) { this.componentDidUpdate(oldProps, newProps); }
+    componentDidUpdate(oldProps = null, newProps = null) { return true; }
+    _componentWillUpdate(props = null, state = null) { this.componentWillUpdate(props, state); }
+    componentWillUpdate(props = null, state = null) { }
+    _componentWillMount(props = null, state = null) { this.componentWillMount(props, state); }
+    componentWillMount(props = null, state = null) { }
+    _execute(modifyState = {}) {
+        this.execute(modifyState);
+        this.eventBus().emit(EVENTS.FLOW_COMPILE, modifyState);
+    }
+    execute(modifyState = {}) {
+    }
+    _compile(modifyState = {}) {
+        this.eventBus().emit(EVENTS.FLOW_CWM, this.getProps(), this.state);
+        //console.log(modifyState, this.getProps(), this.state)
+        this.compile(modifyState);
+        this.eventBus().emit(EVENTS.FLOW_RENDER, modifyState);
+    }
+    compile(modifyState = {}) {
+        Object.assign(this.state, modifyState);
+        let parsedTemplate = this.parsedTemplate;
+        if (!parsedTemplate) {
+            parsedTemplate = parser(this.template());
+            this.parsedTemplate = parsedTemplate;
+        }
+        const components = this.components();
+        const props = this.getProps();
+        this._virtDOM = !this._virtDOM ? new VirtDom() : this._virtDOM;
+        this._virtDOM.compile(parsedTemplate, this.state, props, this.deleteMark);
+        this._virtDOM.getIsComponent().forEach(node => {
+            if (node.componentLink) {
+                node.componentLink.setProps(node.props);
+            }
+            else {
+                node.componentLink = new components[node.tagName](node.props);
+            }
+            node.componentLink.deleteMark = node.deleteMark;
+        });
+    }
+    _render() {
+        this.render();
+        this.eventBus().emit(EVENTS.FLOW_CDM, this.getProps(), this.state);
+    }
+    render() {
         const nodes = this._virtDOM.getNodes();
         nodes.forEach(node => {
             const root = node.parent && node.parent.root ? node.parent.root : this._root;
@@ -85,6 +117,7 @@ class Component {
                     node.element = document.createElement(node.tagName);
                 }
                 const element = node.element;
+                console.log(node.props.classes);
                 node.changedProps.forEach(prop => {
                     if (prop === 'classes') {
                         node.props.classes.forEach(nodeClass => {
@@ -131,27 +164,15 @@ class Component {
             node.isNew = false;
         });
     }
-    _compile(changedState = null) {
-        Object.assign(this.state, changedState);
-        let parsedTemplate = this.parsedTemplate;
-        if (!parsedTemplate) {
-            parsedTemplate = parser(this.template());
-            this.parsedTemplate = parsedTemplate;
+    setState(modifyState) {
+        var _a;
+        const oldProps = window.copyObj(this.getProps());
+        this.eventBus().emit(EVENTS.FLOW_CWU, this.getProps(), this.state);
+        this.eventBus().emit(EVENTS.FLOW_EXECUTE, modifyState);
+        this.eventBus().emit(EVENTS.FLOW_CDU, oldProps, this.getProps());
+        if (modifyState) {
+            (_a = this.virtDOM) === null || _a === void 0 ? void 0 : _a.deleteMarkedNodes();
         }
-        const components = this.components();
-        const props = this.getProps();
-        this._virtDOM = !this._virtDOM ? new VirtDom() : this._virtDOM;
-        this._virtDOM.compile(parsedTemplate, this.state, props, this.deleteMark);
-        this._virtDOM.getIsComponent().forEach(node => {
-            if (node.componentLink) {
-                node.componentLink.setProps(node.props);
-            }
-            else {
-                node.componentLink = new components[node.tagName](node.props);
-            }
-            node.componentLink.deleteMark = node.deleteMark;
-        });
-        return true;
     }
 }
 export default Component;

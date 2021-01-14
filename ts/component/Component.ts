@@ -5,12 +5,14 @@ import { Node as DOM_NODE}  from './VirtDom/Node'
 import { onRouteClick } from '../router/events'
 
 enum EVENTS {
-    INIT = "init", 
     FLOW_CDM = "flow:component-did-mount", 
     FLOW_CDU = "flow:component-did-update", 
+    FLOW_CWU = "flow:component-will-update", 
+    FLOW_CWM = "flow:component-will-mount", 
+    FLOW_EXECUTE = "flow:execute",
+    FLOW_COMPILE = "flow:compile",
     FLOW_RENDER = "flow:render"
   }
-
 
 class Component {
   
@@ -48,48 +50,82 @@ class Component {
   getProps(): any { return this._props }
   setProps(props: any) { this._props = props }
 
-  _registerEvents(eventBus: EventBus): void {
-    eventBus.on(EVENTS.INIT, this._init.bind(this))
-    eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
-    eventBus.on(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this))
-    eventBus.on(EVENTS.FLOW_RENDER, this._render.bind(this))
-  }
-
-  _init(): void { this.render() }
-  init(root: HTMLElement | null): void {
-    this._root = root
-    this.eventBus().emit(EVENTS.INIT)
-  }
-
-  _componentDidMount(): void { this.componentDidMount() }
-  componentDidMount(): void { }
-
-  _componentDidUpdate(oldProps: any = null, newProps: any = null): void {}
-  componentDidUpdate(_oldProps: any, _newProps: any): boolean { return true }
-
   components(): any{ return {} }
   template(): string {return ''}
 
-  setState(changedState: LooseObject) {
-    this._render(changedState)
+  _registerEvents(eventBus: EventBus): void {
+    eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
+    eventBus.on(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this))
+    eventBus.on(EVENTS.FLOW_CWU, this._componentWillUpdate.bind(this))
+    eventBus.on(EVENTS.FLOW_CWM, this._componentWillMount.bind(this))
+    eventBus.on(EVENTS.FLOW_EXECUTE, this._execute.bind(this))
+    eventBus.on(EVENTS.FLOW_COMPILE, this._compile.bind(this))
+    eventBus.on(EVENTS.FLOW_RENDER, this._render.bind(this))
   }
 
-  _render(changedState: LooseObject | null = null) { 
-    
-    if (this._compile(changedState)) {
-      this._executeRender()
-      this.eventBus().emit(EVENTS.FLOW_CDM)
-    }  
-    
-    if (changedState) {
-      this.virtDOM?.deleteMarkedNodes()
+  init(root: HTMLElement | null): void {
+    this._root = root
+    this.eventBus().emit(EVENTS.FLOW_EXECUTE)
+  }
+
+  _componentDidMount(props: any = null, state: any = null): void { this.componentDidMount(props, state) }
+  componentDidMount(props: any = null, state: any = null): void { }
+
+  _componentDidUpdate(oldProps: any = null, newProps: any = null): void { this.componentDidUpdate(oldProps, newProps) }
+  componentDidUpdate(oldProps: any = null, newProps: any = null): boolean { return true }
+
+  _componentWillUpdate(props: any = null, state: any = null) { this.componentWillUpdate(props, state) }
+  componentWillUpdate(props: any = null, state: any = null) {  }
+
+  _componentWillMount(props: any = null, state: any = null) { this.componentWillMount(props, state) }
+  componentWillMount(props: any = null, state: any = null) {  }
+
+  _execute(modifyState:LooseObject = {}) { 
+    this.execute(modifyState)
+    this.eventBus().emit(EVENTS.FLOW_COMPILE, modifyState)
+  }
+  execute(modifyState:LooseObject = {}): void {     
+  }
+
+  _compile(modifyState: LooseObject = {}) {
+    this.eventBus().emit(EVENTS.FLOW_CWM, this.getProps(), this.state)
+    //console.log(modifyState, this.getProps(), this.state)
+    this.compile(modifyState)
+    this.eventBus().emit(EVENTS.FLOW_RENDER, modifyState)
+  }
+  compile(modifyState: LooseObject = {}) {
+
+    Object.assign(this.state, modifyState)
+
+    let parsedTemplate = this.parsedTemplate
+    if (!parsedTemplate){
+      parsedTemplate = parser(this.template())
+      this.parsedTemplate = parsedTemplate
     }
-
+    
+    const components: any = this.components()
+    const props: any = this.getProps()
+    
+    this._virtDOM = !this._virtDOM ? new VirtDom() : this._virtDOM
+    this._virtDOM.compile(parsedTemplate as Array<PARSER_NODE>, this.state, props, this.deleteMark)
+    
+    this._virtDOM.getIsComponent().forEach(node => {
+      if (node.componentLink) {
+        node.componentLink.setProps(node.props)
+      } else {
+        node.componentLink = new components[node.tagName](node.props)
+      }
+      (node.componentLink as Component).deleteMark = node.deleteMark
+    })
 
   }
-  render(): void { this.eventBus().emit(EVENTS.FLOW_RENDER) }
 
-  _executeRender() { 
+  _render() { 
+    this.render()
+    this.eventBus().emit(EVENTS.FLOW_CDM, this.getProps(), this.state)
+  }
+  render() {     
+
     const nodes: Array<DOM_NODE> = (this._virtDOM as VirtDom).getNodes()
 
     nodes.forEach(node => {
@@ -113,6 +149,7 @@ class Component {
         }
         
         const element: HTMLElement = node.element as HTMLElement
+        console.log(node.props.classes)
         
         node.changedProps.forEach(prop => {
           if (prop === 'classes') {
@@ -162,32 +199,14 @@ class Component {
 
   }
 
-  _compile(changedState: LooseObject | null = null): boolean {
-
-    Object.assign(this.state, changedState)
-
-    let parsedTemplate = this.parsedTemplate
-    if (!parsedTemplate){
-      parsedTemplate = parser(this.template())
-      this.parsedTemplate = parsedTemplate
+  setState(modifyState: LooseObject) {
+    const oldProps = window.copyObj(this.getProps())
+    this.eventBus().emit(EVENTS.FLOW_CWU, this.getProps(), this.state)
+    this.eventBus().emit(EVENTS.FLOW_EXECUTE, modifyState)
+    this.eventBus().emit(EVENTS.FLOW_CDU, oldProps, this.getProps())
+    if (modifyState) {
+      this.virtDOM?.deleteMarkedNodes()
     }
-    
-    const components: any = this.components()
-    const props: any = this.getProps()
-    
-    this._virtDOM = !this._virtDOM ? new VirtDom() : this._virtDOM
-    this._virtDOM.compile(parsedTemplate as Array<PARSER_NODE>, this.state, props, this.deleteMark)
-    
-    this._virtDOM.getIsComponent().forEach(node => {
-      if (node.componentLink) {
-        node.componentLink.setProps(node.props)
-      } else {
-        node.componentLink = new components[node.tagName](node.props)
-      }
-      (node.componentLink as Component).deleteMark = node.deleteMark
-    })
-
-    return true
   }
 
 }

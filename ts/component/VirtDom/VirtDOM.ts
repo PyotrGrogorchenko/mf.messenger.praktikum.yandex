@@ -1,3 +1,4 @@
+import e from 'express'
 import Component from '../Component'
 import { PARSER_TYPES, Node as PARSER_NODE } from '../parser'
 import { Node } from './Node'
@@ -144,6 +145,19 @@ class VirtDom {
       } 
     })
 
+    if (!this._compare(context[iName], sign, right)){
+      
+      while (!this._code__isCloseBracket(template) && template.i < template.list.length) {
+        template.i++
+        template.record = template.list[template.i]
+      }
+      template.i++
+      template.record = template.list[template.i]
+      this._compileItem(context, template)
+      return
+    }
+
+
     const iStart = template.i
     for (context[iName]; this._compare(context[iName], sign, right); context[iName] = context[iName] + this._inc(step)){
       
@@ -209,26 +223,29 @@ class VirtDom {
       return template.record.content.replace(/ /ig, '') === '{%}else{%}'
     }
 
-    const codeParam = code.substring(code.indexOf('(') + 1, code.indexOf(')')).trim()
-    const rgParam: RegExpExecArray | null = new RegExp(this._REGEXP_PARAM).exec(codeParam)
-    let param = true
-    if (rgParam) {
-      param = window.get(context, rgParam[1], rgParam[1])    
+    // ifParam
+    let ifParam = true
+    const ifParamCode = code.substring(code.indexOf('(') + 1, code.indexOf(')')).trim().split(' ').filter((item:string) => item)
+    const ifParamL = this._code__calculateValue(context, ifParamCode[0])
+    if (ifParamCode[2]) {
+      const ifParamR = this._code__calculateValue(context, ifParamCode[2])
+      ifParam = this._compare(ifParamL, ifParamCode[1], ifParamR)
+    } else {
+      ifParam = ifParamL
     }
 
     template.i++
-
     for(template.i; template.i < template.list.length; template.i++) {
       const record = template.list[template.i]
       template.record = record
       if (record.type === PARSER_TYPES.CODE) {
         if (isElse()) { 
-          param = !param
+          ifParam = !ifParam
           continue 
         } else if (this._code__isCloseBracket(template)) {
           break
         } else {     
-          if (param) {
+          if (ifParam) {
             this._compileCode(context, template)  
           } else {
             while (!this._code__isCloseBracket(template) && template.i < template.list.length) {
@@ -240,8 +257,8 @@ class VirtDom {
         }
       } 
       
-      record.deleteMark = !param  
-      if (param) {
+      record.deleteMark = !ifParam  
+      if (ifParam) {
         this._compileItem(context, template)
       }  
 
@@ -251,6 +268,23 @@ class VirtDom {
   
   _code__isCloseBracket(template: LooseObject): boolean {
     return template.record.content.replace(/ /ig, '') === '{%}%}'
+  }
+
+  _code__calculateValue(context: LooseObject, code: string): any {
+
+    if (code === 'null'){
+      return null
+    }
+  
+    let value: any
+    const rg: RegExpExecArray | null = new RegExp(this._REGEXP_PARAM).exec(code)
+    if (rg){
+      value = window.get(context, rg[1], rg[1])      
+    } else {
+      value = code
+    }
+
+    return value
   }
 
   _getHeaderProps(context: LooseObject, template: LooseObject, tagName: string): any {
@@ -301,10 +335,12 @@ class VirtDom {
   _compare(left: number, sign: string, right: number): boolean {
     
     switch (sign) {
-      case '<': return left < right
-      case '<=': return left <= right
-      case '>': return left > right
-      case '>=': return left >= right
+      case '<':   return left <   right
+      case '<=':  return left <=  right
+      case '>':   return left >   right
+      case '>=':  return left >=  right
+      case '===': return left === right
+      case '!==': return left !== right
       default:
         throw new Error(`Compare error`)
     }
@@ -378,12 +414,12 @@ class VirtDom {
   deleteMarkedNodes() {
     
     this._nodes.forEach((node) => {
-      if (node.deleteMark) {
+      //if (node.deleteMark) {
         if (node.isComponent && node.componentLink) {
           (node.componentLink as Component).virtDOM?.deleteMarkedNodes()
         }
         this._nodes = this._nodes.filter((node:Node) => !node.deleteMark)
-      }
+      //}
     })
 
   }
