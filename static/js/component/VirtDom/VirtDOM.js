@@ -101,6 +101,9 @@ class VirtDom {
                 vars.push(item.substring(item.indexOf(' ')).replace(/ /ig, '').split('='));
             }
         });
+        // if (vars[0][0] === 'message') {
+        //   console.log('vars', vars)
+        // }
         if (!this._compare(context[iName], sign, right)) {
             while (!this._code__isCloseBracket(template) && template.i < template.list.length) {
                 template.i++;
@@ -220,6 +223,11 @@ class VirtDom {
         else {
             value = code;
         }
+        if (value) {
+            window.regexpMatchAll(value, /[\'\"](.*?)[\'\"]/gi).forEach((rg) => {
+                value = rg[1];
+            });
+        }
         return value;
     }
     _getHeaderProps(context, template, tagName) {
@@ -244,8 +252,10 @@ class VirtDom {
             }
             const param = new RegExp(this._REGEXP_PARAM).exec(arrKeyValue[1]);
             if (arrKeyValue[0] === 'className') {
-                const strClasses = param ? window.get(context, param[1], '') : arrKeyValue[1].replace(/[\'\"]/g, '');
-                node_props.classes = strClasses.split(' ');
+                const strClasses = param ? window.get(context, param[1], '') : arrKeyValue[1].replace(/[\'\"]/g, '').trim();
+                if (strClasses) {
+                    node_props.classes = strClasses.split(' ');
+                }
             }
             else if (arrKeyValue.length === 1) {
                 node_props[arrKeyValue[0]] = '#noValue';

@@ -18,14 +18,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Component from '../../../component/Component.js';
-import { HTTPTransport } from '../../../xhr/HTTPTransport.js';
-import { env } from '../../../const/index.js';
-import { Router } from '../../../router/Router.js';
+import { defaultPage } from '../../../router/utils.js';
+import { xhrPostLogout } from '../../../xhr/xhrExecute.js';
 export default class UserSettings extends Component {
     constructor() {
-        // componentDidMount() {
-        //   console.
-        // }
         super(...arguments);
         this.state = {
             logoutOnClick: this.logoutOnClick,
@@ -41,18 +37,11 @@ export default class UserSettings extends Component {
     logoutOnClick(e) {
         return __awaiter(this, void 0, void 0, function* () {
             e.preventDefault();
-            let req;
-            try {
-                const httpTransport = new HTTPTransport();
-                req = (yield httpTransport.post(`${env.URL_REQUEST}/auth/logout`, { withCredentials: true, headers: { 'content-type': 'application/json' } }));
-            }
-            catch (error) {
-                req = null;
-            }
+            let req = yield xhrPostLogout();
+            console.log('xhrPostLogout', req);
             if (req) {
                 if (req.status === 200) {
-                    const router = new Router();
-                    router.defaultPage();
+                    defaultPage();
                 }
             }
             else {

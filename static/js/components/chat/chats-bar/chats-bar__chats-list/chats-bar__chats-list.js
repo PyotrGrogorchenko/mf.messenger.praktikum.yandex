@@ -1,7 +1,8 @@
 //#Import
-import ChatsList__SearchWindow from '../../../../components/chat/chats-bar/chats-list__search-window/chats-list__search-window.js'
+import MW__AddChat from '../../../../components/UI/MW/MW__add-chat/MW__add-chat/MW__add-chat.js'
+import MW__SearchUser from '../../../../components/UI/MW/MW__search-user/MW__search-user/MW__search-user.js'
 import ContextMenu from '../../../../components/UI/context-menu/context-menu.js'
-import ChatsList__ChatItem from '../../../../components/chat/chats-bar/chats-list__chat-item/chats-list__chat-item.js'
+import ChatsList__ChatItem from '../../../../components/chat/chats-bar/chats-list__chat-item/chats-list__chat-item/chats-list__chat-item.js'
 //#Import
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -13,115 +14,116 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Component from '../../../../component/Component.js';
-import { HTTPTransport } from '../../../../xhr/HTTPTransport.js';
-import { env } from '../../../../const/index.js';
+import { xhrPostCreateChat, xhrGetChats, xhrOnError } from '../../../../xhr/xhrExecute.js';
 class ChatsBar__ChatsList extends Component {
     constructor() {
         super(...arguments);
-        this.CM_onClick = (data) => {
-            if (data.btnId === 'add') {
-                this.addChat_event();
+        this.chatsOnClick = (e) => {
+            e.preventDefault();
+            let arrli = e.path.filter((el) => el.nodeName === 'LI');
+            if (arrli.length === 0) {
+                return;
             }
-            else if (data.btnId === 'remove') {
+            let elLi = arrli[0];
+            let id = null;
+            if (elLi) {
+                id = elLi.getAttribute('id');
+            }
+            if (id !== null) {
+                //console.log(id)
+                const arrUser = this.state.chats.filter((el) => String(el.id) === id);
+                if (arrUser.length > 0) {
+                    this.getProps().callback({ user: arrUser[0] });
+                }
+            }
+        };
+        this.CM_onClick = (data) => {
+            if (data.btnId === 'addUser') {
+                this.addUser_event(data);
+            }
+            else if (data.btnId === 'removeUser') {
+                this.removeUser_event(data);
+            }
+            else if (data.btnId === 'addChat') {
+                this.addChat_event(data);
+            }
+            else if (data.btnId === 'removeChat') {
                 this.removeChat_event(data);
             }
         };
+        this.addUser_event = (data) => __awaiter(this, void 0, void 0, function* () {
+            this.setState({ showSearchUsers: true });
+        });
+        this.removeUser_event = (data) => {
+        };
+        this.searchUsers_callback = (chat) => __awaiter(this, void 0, void 0, function* () {
+            this.setState({ showSearchUsers: false });
+        });
+        //
+        this.addChat_event = (data) => __awaiter(this, void 0, void 0, function* () {
+            this.setState({ showAddChat: true });
+        });
         this.removeChat_event = (data) => {
-            let chatid = '';
-            for (let i = 0; i < data.targetPath.length; i++) {
-                let el = data.targetPath[i];
-                if (el.classList && el.classList.contains('chats-list__chat-item')) {
-                    chatid = el.getAttribute('chatid');
-                    break;
-                }
-            }
-            if (!chatid) {
+        };
+        this.addChat_callback = (data) => __awaiter(this, void 0, void 0, function* () {
+            this.setState({ showAddChat: false });
+            if (!data) {
                 return;
             }
-            console.log('removeUser', this.state.showUsers);
-            let chats = this.state.chats.filter((item) => item.id !== chatid);
-            this.setState({ chats });
-        };
-        this.addChat_event = () => __awaiter(this, void 0, void 0, function* () {
-            this.setState({ showUsers: true });
-            // const httpTransport = new HTTPTransport()
-            // const req = await httpTransport.post(`${env.URL_REQUEST}/user/search`, 
-            //     {
-            //       withCredentials: true,
-            //       headers: {'content-type': 'application/json'},
-            //       data: {login: 'string'}
-            //     }) as XMLHttpRequest
-            // console.log('getChats', req)
-        });
-        this.addChat_Callback = (chat) => __awaiter(this, void 0, void 0, function* () {
-            this.setState({ showUsers: false });
-            if (chat) {
-                yield this.putChat(chat);
+            let req;
+            req = yield xhrPostCreateChat(data);
+            if (req && req.status >= 400) {
+                alert(`Failed to create chat: ${req.response.error}, ${req.response.reason}`);
+                return;
             }
+            this.setState({ chats: yield this.getChats() });
         });
         this.state = {
-            chats1: this.getChats(),
             CM_onClick: this.CM_onClick,
             chatsOnClick: this.chatsOnClick,
-            addChat_Callback: this.addChat_Callback,
-            showUsers: false,
-            chats: [
-            // {id: '1', name: 'Sasha', countUnread: 10, lastMessage: {type: 'in',  date: '13:15', text: 'Putting the page number in the middle of the wording is a bad idea'}},
-            // {id: '2', name: 'Timur', countUnread: 500, lastMessage: {type: 'in',  date: '22:14', text: 'It was snapped off at the handle, and the blade was splintered, like somebody used it to hit something hard.'}},
-            // {id: '3', name: 'Lena',  countUnread: 12, lastMessage: {type: 'out', date: '02:14', text: 'Barbie saw one of the rotors break off.'}},
-            // {id: '4', name: 'Vika',  countUnread: 0, lastMessage: {type: 'out', date: '17:14', text: 'The Swiss Guard chopper churned in neutral as Langdon and Vittoria approached.'}},
-            // {id: '5', name: 'Ruprt', countUnread: 3, lastMessage: {type: 'in',  date: '20:19', text: 'Putting the page number in the middle of the wording is a bad idea,'}}
-            ]
+            showSearchUsers: false,
+            searchUsers_callback: this.searchUsers_callback,
+            showAddChat: false,
+            addChat_callback: this.addChat_callback
         };
+    }
+    componentDidMount(props, state) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.setState({ chats: yield this.getChats() });
+        });
     }
     getChats() {
         return __awaiter(this, void 0, void 0, function* () {
-            const httpTransport = new HTTPTransport();
-            const req = yield httpTransport.get(`${env.URL_REQUEST}/chats`, { withCredentials: true, headers: { 'content-type': 'application/json' } });
-            //console.log('getChats', req)
+            let req = yield xhrGetChats();
+            if (!req) {
+                return;
+            }
+            if (req.response.status >= 400) {
+                xhrOnError();
+            }
+            return req.response;
         });
-    }
-    putChat(chat) {
-        return __awaiter(this, void 0, void 0, function* () {
-            // try {
-            //   const httpTransport = new HTTPTransport()
-            //   const req = await httpTransport.put(`${env.URL_REQUEST}/chats/users`, 
-            //       { withCredentials: true,
-            //         headers: {'content-type': 'application/json'},
-            //         data: {login: }
-            //       }) as XMLHttpRequest
-            // } catch (error) {
-            //   console.error(error)      
-            // }
-        });
-    }
-    chatsOnClick(e) {
-        e.preventDefault();
-        //let li: Array<HTMLElement> = e.path.filter((el: HTMLElement) => el.nodeName === 'LI')
-        //console.log('chatsOnClick')
-        // if (!li) {
-        //   return
-        // }
     }
     //#Components
-components() {return {ChatsList__ChatItem,ContextMenu,ChatsList__SearchWindow}}
+components() {return {ChatsList__ChatItem,ContextMenu,MW__SearchUser,MW__AddChat}}
 //#Components
 template() {
         return (`
       <div className='chats-bar__chats-list' onClick={{state.chatsOnClick}} id='chats-list'>
 
-
         <ul className='chats-list__list'>
           
           {% for (let i = 0; i < state.chats.length; i++) { const chat = state.chats[i]; %}
             <ChatsList__ChatItem 
-              chatid={{chat.id}}
+              id={{chat.id}}
               key={{chat.id}}
-              name={{chat.name}}
-              lastMessageType={{chat.lastMessage.type}}
-              lastMessageDate={{chat.lastMessage.date}}
-              lastMessageText={{chat.lastMessage.text}}
-              countUnread={{chat.countUnread}}
+              name={{chat.title}}
+              avatar={{chat.avatar}}
+              //markId={{}}
+              // lastMessageType={{chat.lastMessage.type}}
+              // lastMessageDate={{chat.lastMessage.date}}
+              // lastMessageText={{chat.lastMessage.text}}
+              // countUnread={{chat.countUnread}}
             ></ChatsList__ChatItem>
           {% } %}
         </ul>
@@ -130,14 +132,14 @@ template() {
 
       <ContextMenu 
         buttons='addChat:add:Add chat|removeChat:remove:Remove chat|addUser:add:Add user|removeUser:remove:Remove user'
-        blockButtons='addChat|removeChat'
+        //blockButtons='addChat|removeChat'
         onClick={{state.CM_onClick}}
         ownerId='chats-list'
         menuId='chats-list-context-menu'
       ></ContextMenu>
   
-      <ChatsList__SearchWindow show={{state.showUsers}} callback={{state.addChat_Callback}}></ChatsList__SearchWindow>
-
+      <MW__SearchUser showSearchUsers={{state.showSearchUsers}} callback={{state.searchUsers_callback}}></MW__SearchUser>
+      <MW__AddChat showAddChat={{state.showAddChat}} callback={{state.addChat_callback}}></MW__AddChat>
       `);
     }
 }

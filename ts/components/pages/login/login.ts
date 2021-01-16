@@ -1,7 +1,6 @@
 import Component from '../../../component/Component'
-import { HTTPTransport } from '../../../xhr/HTTPTransport'
-import { env } from '../../../const/index'
-import { Router } from '../../../router/Router'
+import { defaultPage } from '../../../router/utils'
+import { xhrPostAuthSignin } from '../../../xhr/xhrExecute'
 
 export default class Login extends Component {
 
@@ -17,23 +16,12 @@ export default class Login extends Component {
       body[formdata.data[key].name] = formdata.data[key].value
     }
     
-    //console.log(body)
-
-    let req: XMLHttpRequest | null
-
-    try {
-      const httpTransport = new HTTPTransport()
-      req = await httpTransport.post(`${env.URL_REQUEST}/auth/signin`, {data:body, withCredentials: true ,headers: {'content-type': 'application/json'}}) as XMLHttpRequest
-    } catch (error) {
-      req = null
-      console.log('err', error)  
-    }
+    let req = await xhrPostAuthSignin(body)
 
     if (req) {
       
       if (req.status === 200) {
-        const router = new Router()
-        router.defaultPage()
+        defaultPage()
       } else if (req.status >= 400){
         alert(`Failed to execute sign in. reason ${req.response.reason}`)
       } else {

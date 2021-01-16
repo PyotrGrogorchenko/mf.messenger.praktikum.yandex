@@ -1,5 +1,3 @@
-import { isArray } from "util"
-
 export const copyObj = (obj: any): any => {
   
   // if (Object.keys(a).length !== Object.keys(b).length) {

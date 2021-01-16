@@ -1,17 +1,12 @@
 import { startRouter } from "./router/index.js";
 import { setUtils } from "./utils/index.js";
 import { initDomEvents } from "./DOMevents/index.js";
-//import { HTTPTransport } from "./xhr/HTTPTransport.js"
+import { defaultPage } from "./router/utils.js";
 setUtils();
 startRouter();
 initDomEvents();
-//let req: XMLHttpRequest | null
-// try {
-//   const httpTransport = new HTTPTransport()
-//   req = await httpTransport.get(`${env.URL_REQUEST}/auth/logout`, {withCredentials: true ,headers: {'content-type': 'application/json'}}) as XMLHttpRequest
-// } catch (error) {
-//   req = null
-//   console.log('err', error)  
-// }
-// console.log(req)
+startApp();
+function startApp() {
+    defaultPage(window.location.pathname);
+}
 //# sourceMappingURL=index.js.map

@@ -1,4 +1,7 @@
 /* created automatically */
+@import '../components/MW.css';
+@import '../components/MW__add-chat.css';
+@import '../components/MW__search-user.css';
 @import '../components/anchor-main.css';
 @import '../components/anchor-to-go.css';
 @import '../components/auth-bar-form.css';
@@ -14,7 +17,6 @@
 @import '../components/chats-bar.css';
 @import '../components/chats-bar__chats-list.css';
 @import '../components/chats-list__chat-item.css';
-@import '../components/chats-list__search-window.css';
 @import '../components/context-menu.css';
 @import '../components/error-bar.css';
 @import '../components/error404.css';
@@ -30,12 +32,11 @@
 @import '../components/messages-bar.css';
 @import '../components/messages-bar__footer.css';
 @import '../components/messages-bar__header.css';
+@import '../components/messages-bar__messages.css';
 @import '../components/messages__date.css';
-@import '../components/modal-window.css';
 @import '../components/page-column.css';
 @import '../components/pagesMenu.css';
-@import '../components/search-window__search-item.css';
-@import '../components/selectChat.css';
+@import '../components/search-user__item.css';
 @import '../components/signup.css';
 @import '../components/testPage.css';
 @import '../components/user-settings-bar-input.css';

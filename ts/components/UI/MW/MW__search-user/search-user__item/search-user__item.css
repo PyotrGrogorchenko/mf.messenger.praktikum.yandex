@@ -1,0 +1,22 @@
+.search-user__item {
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+
+  margin-left: 0;
+  padding-left: 0;  
+}
+
+.search-user__item:hover {
+  background: var(--color-gray5);
+}
+
+.search-user__item-avatar {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  padding: 5px;
+
+}

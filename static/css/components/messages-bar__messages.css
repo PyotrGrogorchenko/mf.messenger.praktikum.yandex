@@ -1,0 +1,11 @@
+.messages-bar__messages {
+  flex: 1;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  
+  width: 100%;
+}
+
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3RzL2NvbXBvbmVudHMvY2hhdC9tZXNzYWdlcy1iYXIvbWVzc2FnZXMtYmFyX19tZXNzYWdlcy9tZXNzYWdlcy1iYXJfX21lc3NhZ2VzLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLE9BQU87O0VBRVAsYUFBYTtFQUNiLHNCQUFzQjtFQUN0Qix5QkFBeUI7O0VBRXpCLFdBQVc7QUFDYiIsImZpbGUiOiJtZXNzYWdlcy1iYXJfX21lc3NhZ2VzLmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5tZXNzYWdlcy1iYXJfX21lc3NhZ2VzIHtcbiAgZmxleDogMTtcbiAgXG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG4gIGp1c3RpZnktY29udGVudDogZmxleC1lbmQ7XG4gIFxuICB3aWR0aDogMTAwJTtcbn1cbiJdfQ== */

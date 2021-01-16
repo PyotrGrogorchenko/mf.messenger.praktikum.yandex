@@ -23,6 +23,8 @@ class Component {
   private _parsedTemplate:Array<PARSER_NODE> | null = null
   private _deleteMark: boolean = false
 
+  private _componentDidMountExecuted: boolean = false
+
   eventBus: () => EventBus
 
   state: any = {}
@@ -65,14 +67,16 @@ class Component {
 
   init(root: HTMLElement | null): void {
     this._root = root
+    this.eventBus().emit(EVENTS.FLOW_CWM, this.getProps(), this.state)
     this.eventBus().emit(EVENTS.FLOW_EXECUTE)
+    this.eventBus().emit(EVENTS.FLOW_CDM, this.getProps(), this.state)
   }
 
-  _componentDidMount(props: any = null, state: any = null): void { this.componentDidMount(props, state) }
-  componentDidMount(props: any = null, state: any = null): void { }
+  _componentDidMount(props: any = null, state: any = null) { this.componentDidMount(props, state) }
+  componentDidMount(props: any = null, state: any = null) { }
 
-  _componentDidUpdate(oldProps: any = null, newProps: any = null): void { this.componentDidUpdate(oldProps, newProps) }
-  componentDidUpdate(oldProps: any = null, newProps: any = null): boolean { return true }
+  _componentDidUpdate(oldProps: any = null, newProps: any = null) { this.componentDidUpdate(oldProps, newProps) }
+  componentDidUpdate(oldProps: any = null, newProps: any = null) {  }
 
   _componentWillUpdate(props: any = null, state: any = null) { this.componentWillUpdate(props, state) }
   componentWillUpdate(props: any = null, state: any = null) {  }
@@ -88,8 +92,6 @@ class Component {
   }
 
   _compile(modifyState: LooseObject = {}) {
-    this.eventBus().emit(EVENTS.FLOW_CWM, this.getProps(), this.state)
-    //console.log(modifyState, this.getProps(), this.state)
     this.compile(modifyState)
     this.eventBus().emit(EVENTS.FLOW_RENDER, modifyState)
   }
@@ -106,6 +108,8 @@ class Component {
     const components: any = this.components()
     const props: any = this.getProps()
     
+
+
     this._virtDOM = !this._virtDOM ? new VirtDom() : this._virtDOM
     this._virtDOM.compile(parsedTemplate as Array<PARSER_NODE>, this.state, props, this.deleteMark)
     
@@ -122,7 +126,6 @@ class Component {
 
   _render() { 
     this.render()
-    this.eventBus().emit(EVENTS.FLOW_CDM, this.getProps(), this.state)
   }
   render() {     
 
@@ -149,7 +152,6 @@ class Component {
         }
         
         const element: HTMLElement = node.element as HTMLElement
-        console.log(node.props.classes)
         
         node.changedProps.forEach(prop => {
           if (prop === 'classes') {

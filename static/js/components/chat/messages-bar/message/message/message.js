@@ -8,8 +8,8 @@ class Message extends Component {
 components() {return {Message__Incoming,Message__Outgoing}}
 //#Components
 template() {
-        return (`<div className='message'>
-        {% if (props.type === 'in') { %}
+        return (`<li className='message'>
+        {% if ({{props.type}} === 'in') { %}
           <Message__Incoming
             text={{props.text}}
             date={{props.date}}
@@ -20,7 +20,7 @@ template() {
             date={{props.date}}
           ></Message__Outgoing>     
         {% } %} 
-      </div>`);
+      </li>`);
     }
 }
 export default Message;

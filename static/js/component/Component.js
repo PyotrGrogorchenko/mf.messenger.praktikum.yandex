@@ -20,6 +20,7 @@ class Component {
         this._rootOut = null;
         this._parsedTemplate = null;
         this._deleteMark = false;
+        this._componentDidMountExecuted = false;
         this.state = {};
         this._root = null;
         const eventBus = new EventBus();
@@ -48,12 +49,14 @@ class Component {
     }
     init(root) {
         this._root = root;
+        this.eventBus().emit(EVENTS.FLOW_CWM, this.getProps(), this.state);
         this.eventBus().emit(EVENTS.FLOW_EXECUTE);
+        this.eventBus().emit(EVENTS.FLOW_CDM, this.getProps(), this.state);
     }
     _componentDidMount(props = null, state = null) { this.componentDidMount(props, state); }
     componentDidMount(props = null, state = null) { }
     _componentDidUpdate(oldProps = null, newProps = null) { this.componentDidUpdate(oldProps, newProps); }
-    componentDidUpdate(oldProps = null, newProps = null) { return true; }
+    componentDidUpdate(oldProps = null, newProps = null) { }
     _componentWillUpdate(props = null, state = null) { this.componentWillUpdate(props, state); }
     componentWillUpdate(props = null, state = null) { }
     _componentWillMount(props = null, state = null) { this.componentWillMount(props, state); }
@@ -65,8 +68,6 @@ class Component {
     execute(modifyState = {}) {
     }
     _compile(modifyState = {}) {
-        this.eventBus().emit(EVENTS.FLOW_CWM, this.getProps(), this.state);
-        //console.log(modifyState, this.getProps(), this.state)
         this.compile(modifyState);
         this.eventBus().emit(EVENTS.FLOW_RENDER, modifyState);
     }
@@ -93,7 +94,6 @@ class Component {
     }
     _render() {
         this.render();
-        this.eventBus().emit(EVENTS.FLOW_CDM, this.getProps(), this.state);
     }
     render() {
         const nodes = this._virtDOM.getNodes();
@@ -117,7 +117,6 @@ class Component {
                     node.element = document.createElement(node.tagName);
                 }
                 const element = node.element;
-                console.log(node.props.classes);
                 node.changedProps.forEach(prop => {
                     if (prop === 'classes') {
                         node.props.classes.forEach(nodeClass => {

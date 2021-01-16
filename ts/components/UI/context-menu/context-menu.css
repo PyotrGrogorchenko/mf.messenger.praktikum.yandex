@@ -15,10 +15,18 @@
 }
 
 .cm__cm-element {
+  
   width: 100%;
-  padding: 5px 5px; 
+  padding: 5px; 
   box-sizing: border-box;
   cursor: pointer;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+
+  
   /* font-size: 20px; */
 }
 
@@ -29,7 +37,7 @@
 .cm-icon {
   visibility: visible;
   width: 20px;
-  padding: 5px;
+  /* padding: 5px; */
 }
 
 .cm-icon_hide {
@@ -37,5 +45,5 @@
 }
 
 .cm-block {
-  color: var(--color-gray3) !important;
+  color: var(--color-gray4) !important;
 }

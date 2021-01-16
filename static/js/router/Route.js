@@ -24,7 +24,6 @@ class Route {
         const root = document.querySelector(this._props.rootQuery);
         const app = new this._blockClass(root);
         app.init(root);
-        //app.render(root, true)
         window.createValidateEvents();
     }
 }

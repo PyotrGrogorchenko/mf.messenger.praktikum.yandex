@@ -1,4 +1,5 @@
 import Component from '../../../component/Component'
+import { env } from '../../../const/index'
 
 class Avatar extends Component {
 

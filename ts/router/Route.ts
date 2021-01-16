@@ -12,12 +12,11 @@ class Route {
     this._props = props;
   }
 
-
   navigate(pathname: string) {
-      if (this.match(pathname)) {
-          this._pathname = pathname;
-          this.render();
-      }
+    if (this.match(pathname)) {
+      this._pathname = pathname;
+      this.render();
+    }
   }
 
   leave() {
@@ -30,7 +29,7 @@ class Route {
   }
 
   match(pathname: string) {
-      return pathname === this._pathname
+  return pathname === this._pathname
   }
 
   render() {
@@ -38,7 +37,6 @@ class Route {
     const root: HTMLElement = document.querySelector(this._props.rootQuery)
     const app = new this._blockClass(root)
     app.init(root)
-    //app.render(root, true)
     window.createValidateEvents()
 
   }

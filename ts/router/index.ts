@@ -25,8 +25,12 @@ function startRouter():void {
     .use('/userSettings', UserSettings)
     .use('/testPage', TestPage)
     .start()
-    .defaultPage()
+   
+    // if (document.location.pathname = '/'){
 
+    // }
+    
+    // console.log(document.location)
 }
 
 export { startRouter }

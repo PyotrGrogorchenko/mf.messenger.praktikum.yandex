@@ -39,28 +39,25 @@ class ContextMenu extends Component {
         }, false);
     }
     getButtons() {
-        const blockButtons = this.getProps().blockButtons.split('|');
+        const blockButtons = this.getProps().blockButtons ? this.getProps().blockButtons.split('|') : [];
         const res = [];
-        const getIcon = this.getIcon;
+        const getIconclassName = this.getIconclassName;
         this.getProps().buttons.split('|').forEach(function (buttonStr) {
             const button = buttonStr.split(':');
             const block = blockButtons.includes(button[0]);
-            // const className = 'cm__cm-element'
-            //  + block ? ' test' : ''
-            //console.log(className)
             res.push({
                 id: button[0],
                 type: button[1],
                 text: button[2],
-                icon: getIcon(button[1]),
                 block: blockButtons.includes(button[0]),
-                className: 'cm__cm-element'.concat(+block ? ' cm-block' : '')
+                li_className: 'cm__cm-element',
+                i_className: getIconclassName(button[1], block),
+                p_className: block ? 'cm-block' : ''
             });
         });
-        console.log(res);
         return res;
     }
-    getIcon(type) {
+    getIconclassName(type, block) {
         let className = '';
         switch (type) {
             case 'add':
@@ -73,7 +70,7 @@ class ContextMenu extends Component {
                 className = 'fas fa-circle cm-icon_hide';
                 break;
         }
-        return className + ' ' + 'cm-icon';
+        return className.concat(' cm-icon').concat(block ? ' cm-block' : '');
     }
     template() {
         return (`<ul className='cm' id={{props.menuId}}>
@@ -81,13 +78,14 @@ class ContextMenu extends Component {
           const button = state.buttons[i];
         %}
           <li 
-            className={{button.className}}
+            className={{button.li_className}}
             id={{button.id}}
             key={{button.id}}
             onClick={{state.onClick}}
           >
-            <i className={{button.icon}}></i>
-            <p>{{button.text}}</p>  
+            <i className={{button.i_className}}></i>
+            <p className={{button.p_className}}>{{button.text}}</p>  
+
           </li> 
         {% } %}
       </ul>`);
