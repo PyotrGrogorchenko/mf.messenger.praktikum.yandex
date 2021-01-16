@@ -1,4 +1,4 @@
-import Component from '../../../component/component.js';
+import Component from '../../../component/Component.js';
 class UserSettingsBarInput extends Component {
     template() {
         return (`<div className='user-settings-bar-input'>

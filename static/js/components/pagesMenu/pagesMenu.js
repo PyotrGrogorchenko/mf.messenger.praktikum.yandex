@@ -1,7 +1,7 @@
 //#Import
 import PageColumn from '../../components/page-column/page-column.js'
 //#Import
-import Component from '../../component/component.js';
+import Component from '../../component/Component.js';
 export default class PagesMenu extends Component {
     //#Components
 components() {return {PageColumn}}

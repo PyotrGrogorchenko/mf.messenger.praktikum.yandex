@@ -17,15 +17,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import Component from '../../../component/component.js';
-import { env } from '../../../const/index.js';
-import { HTTPTransport } from '../../../xhr/HTTPTransport.js';
-import { Router } from '../../../router/Router.js';
-//import { config as dotenv } from 'dotenv/config.js'
-//import * as dotenv from "dotenv.js"
-//require('dotenv')
-//dotenv()
+import Component from '../../../component/Component.js';
+import { defaultPage } from '../../../router/utils.js';
+import { xhrPostAuthSignUp } from '../../../xhr/xhrExecute.js';
 export default class Signup extends Component {
+    constructor() {
+        super(...arguments);
+        this.state = {
+            signUpOnClick: this.signUpOnClick,
+            first_name: !localStorage.getItem('first_name') ? '' : localStorage.getItem('first_name'),
+            second_name: !localStorage.getItem('second_name') ? '' : localStorage.getItem('second_name'),
+            login: !localStorage.getItem('login') ? '' : localStorage.getItem('login'),
+            email: !localStorage.getItem('email') ? '' : localStorage.getItem('email'),
+            phone: !localStorage.getItem('phone') ? '' : localStorage.getItem('phone'),
+            password: ''
+        };
+    }
     signUpOnClick(e) {
         return __awaiter(this, void 0, void 0, function* () {
             e.preventDefault();
@@ -34,14 +41,11 @@ export default class Signup extends Component {
             for (const key in formdata.data) {
                 body[formdata.data[key].name] = formdata.data[key].value;
             }
-            console.log(body);
-            let req;
-            const httpTransport = new HTTPTransport();
-            req = (yield httpTransport.post(`${env.URL_REQUEST}/auth/signup`, { data: body, withCredentials: true, headers: { 'content-type': 'application/json' } }));
+            let req = yield xhrPostAuthSignUp(body);
             if (req) {
                 if (req.status === 200) {
-                    const router = new Router();
-                    router.defaultPage();
+                    console.log('signup', defaultPage);
+                    defaultPage();
                 }
                 else if (req.status >= 400) {
                     alert(`Failed to execute sign up. reason ${req.response.reason}`);
@@ -54,17 +58,6 @@ export default class Signup extends Component {
                 alert(`Failed to execute sign up.`);
             }
         });
-    }
-    state() {
-        return {
-            signUpOnClick: this.signUpOnClick,
-            first_name: !localStorage.getItem('first_name') ? '' : localStorage.getItem('first_name'),
-            second_name: !localStorage.getItem('second_name') ? '' : localStorage.getItem('second_name'),
-            login: !localStorage.getItem('login') ? '' : localStorage.getItem('login'),
-            email: !localStorage.getItem('email') ? '' : localStorage.getItem('email'),
-            phone: !localStorage.getItem('phone') ? '' : localStorage.getItem('phone'),
-            password: ''
-        };
     }
     //#Components
 components() {return {PageColumn,AuthBarForm,Bar__Header,Bar__Content,AuthBarInput,Bar__Footer,ButtonMain,AnchorMain}}

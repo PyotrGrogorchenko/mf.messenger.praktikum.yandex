@@ -1,12 +1,12 @@
-import Component from '../../../../../component/component'
+import Component from '../../../../../component/Component'
 
 class Message extends Component {
 
   template() { 
     
     return (
-      `<div className='message'>
-        {% if (props.type === 'in') { %}
+      `<li className='message'>
+        {% if ({{props.type}} === 'in') { %}
           <Message__Incoming
             text={{props.text}}
             date={{props.date}}
@@ -17,7 +17,7 @@ class Message extends Component {
             date={{props.date}}
           ></Message__Outgoing>     
         {% } %} 
-      </div>`
+      </li>`
     )
   }
 

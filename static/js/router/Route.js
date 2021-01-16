@@ -22,8 +22,8 @@ class Route {
     }
     render() {
         const root = document.querySelector(this._props.rootQuery);
-        const app = new this._blockClass();
-        app.render(root);
+        const app = new this._blockClass(root);
+        app.init(root);
         window.createValidateEvents();
     }
 }

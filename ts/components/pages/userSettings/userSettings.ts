@@ -1,30 +1,19 @@
-import Component from '../../../component/component'
-import { HTTPTransport } from '../../../xhr/HTTPTransport'
-import { env } from '../../../const/index'
-import { Router } from '../../../router/Router'
+import Component from '../../../component/Component'
+import { defaultPage } from '../../../router/utils'
+import { xhrPostLogout } from '../../../xhr/xhrExecute'
 
 export default class UserSettings extends Component {
-
-  // componentDidMount() {
-  //   console.
-  // }
 
   async logoutOnClick (e:Event) {
     e.preventDefault()
     
-    let req: XMLHttpRequest | null
+    let req = await xhrPostLogout()
 
-    try {
-      const httpTransport = new HTTPTransport()
-      req = await httpTransport.post(`${env.URL_REQUEST}/auth/logout`, {withCredentials: true ,headers: {'content-type': 'application/json'}}) as XMLHttpRequest
-    } catch (error) {
-      req = null
-    }
+    console.log('xhrPostLogout', req)
 
     if (req){
       if (req.status === 200) {
-        const router = new Router()
-        router.defaultPage()
+        defaultPage()
       }
     }else {
       alert(`Failed to execute log out`)
@@ -32,7 +21,8 @@ export default class UserSettings extends Component {
 
   }
   
-  state() {return {
+  state = {
+    
     logoutOnClick: this.logoutOnClick,
 
     first_name: !localStorage.getItem('first_name') ? '' : localStorage.getItem('first_name'),
@@ -43,7 +33,7 @@ export default class UserSettings extends Component {
     oldPassword: '',
     newPassword: ''
   
-  }}
+  }
 
   template() { 
 

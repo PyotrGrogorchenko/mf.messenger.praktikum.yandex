@@ -20,8 +20,10 @@ function startRouter() {
         .use('/error500', Error500)
         .use('/userSettings', UserSettings)
         .use('/testPage', TestPage)
-        .start()
-        .defaultPage();
+        .start();
+    // if (document.location.pathname = '/'){
+    // }
+    // console.log(document.location)
 }
 export { startRouter };
 //# sourceMappingURL=index.js.map

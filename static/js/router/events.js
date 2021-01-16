@@ -1,7 +1,15 @@
 import { Router } from './Router.js';
 function onRouteClick(e) {
     e.preventDefault();
-    let href = e.target.getAttribute('href');
+    e.stopPropagation();
+    let href = null;
+    for (let i = 0; i < e.path.length; i++) {
+        const el = e.path[i];
+        href = el.getAttribute('href');
+        if (href && href.startsWith('#{R}')) {
+            break;
+        }
+    }
     if (!href) {
         console.error('Route not found');
         return;

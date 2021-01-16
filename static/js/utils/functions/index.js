@@ -4,5 +4,6 @@ import { startsWithUpper } from './startsWithUpper.js';
 import { uid } from './uid.js';
 import { regexpMatchAll } from './regexpMatchAll.js';
 import { queryStringify } from './queryStringify.js';
-export { get, isEqual, startsWithUpper, uid, regexpMatchAll, queryStringify };
+import { copyObj } from './copyObj.js';
+export { get, isEqual, startsWithUpper, uid, regexpMatchAll, queryStringify, copyObj };
 //# sourceMappingURL=index.js.map

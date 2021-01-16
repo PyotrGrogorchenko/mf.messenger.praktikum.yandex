@@ -1,8 +1,5 @@
 "use strict";
 
-const { Console } = require('console');
-const { classicNameResolver } = require('typescript');
-
 (async () => {
   await execute()
   console.log(' importComponentsJS done')
@@ -42,7 +39,7 @@ async function execute() {
     const filePath = filePaths[i]
     const pathParse = path.parse(filePath)
 
-    // if (pathParse.base !== 'users-bar__users-list.js') {
+    // if (pathParse.base !== 'mw__search-user.js') {
     //   continue
     // }
     
@@ -53,7 +50,7 @@ async function execute() {
     templ = new RegExp(/[\`](.*?)[\`]/g).exec(templ)[1]
 
     const components = []
-    const regExp = new RegExp(/[<][A-Z0-9](.*?)[a-z0-9][\s>]/g)   
+    const regExp = new RegExp(/[<][A-Z0-9](.*?)[a-zA-Z0-9][\s>]/g)   
     
     let txt
     while ((txt = regExp.exec(templ))) {
@@ -81,7 +78,7 @@ async function execute() {
     components.forEach(function(component) {
       const pathParsecomponent = fileClass[component]
       if (!pathParsecomponent){
-        console.error(' pathParse.base: ' + pathParse.base + ' Not found ' + component)
+        console.error(' pathParse.base: ' + pathParse.base + ' Not found component ' + component)
         return
       }
       
@@ -114,6 +111,8 @@ function getClassName (fileName) {
   result = result.split('-').reduce(function(res, item) {
     return res + item[0].toUpperCase() + item.slice(1)  
   }, '')
+
+  //console.log(fileName, result)
 
   return result
 

@@ -1,4 +1,4 @@
-import Component from '../../../../../component/component.js';
+import Component from '../../../../../component/Component.js';
 class Message__Outgoing extends Component {
     template() {
         return (`<div className='message__free-space'>

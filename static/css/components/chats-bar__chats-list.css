@@ -1,12 +1,15 @@
-.chats-bar__users-list {
+/* .chats-bar__users-list {
   flex: 9;
   display: flex;
   flex-direction: column;
+} */
+
+/* .chats-list__list { */
+  /* height: 1000; */
+  /* flex: 1; */
+/* } */
+
+.chats-bar__chats-list {
+  height: 100%;
 }
-
-.chats-list__list {
-  flex: 1;
-}
-
-
-/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3RzL2NvbXBvbmVudHMvY2hhdC9jaGF0cy1iYXIvY2hhdHMtYmFyX19jaGF0cy1saXN0L2NoYXRzLWJhcl9fY2hhdHMtbGlzdC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxPQUFPO0VBQ1AsYUFBYTtFQUNiLHNCQUFzQjtBQUN4Qjs7QUFFQTtFQUNFLE9BQU87QUFDVCIsImZpbGUiOiJjaGF0cy1iYXJfX2NoYXRzLWxpc3QuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNoYXRzLWJhcl9fdXNlcnMtbGlzdCB7XG4gIGZsZXg6IDk7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG59XG5cbi5jaGF0cy1saXN0X19saXN0IHtcbiAgZmxleDogMTtcbn1cblxuIl19 */
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3RzL2NvbXBvbmVudHMvY2hhdC9jaGF0cy1iYXIvY2hhdHMtYmFyX19jaGF0cy1saXN0L2NoYXRzLWJhcl9fY2hhdHMtbGlzdC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7Ozs7R0FJRzs7QUFFSCx3QkFBd0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGFBQWE7QUFDZixNQUFNOztBQUVOO0VBQ0UsWUFBWTtBQUNkIiwiZmlsZSI6ImNoYXRzLWJhcl9fY2hhdHMtbGlzdC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvKiAuY2hhdHMtYmFyX191c2Vycy1saXN0IHtcbiAgZmxleDogOTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcbn0gKi9cblxuLyogLmNoYXRzLWxpc3RfX2xpc3QgeyAqL1xuICAvKiBoZWlnaHQ6IDEwMDA7ICovXG4gIC8qIGZsZXg6IDE7ICovXG4vKiB9ICovXG5cbi5jaGF0cy1iYXJfX2NoYXRzLWxpc3Qge1xuICBoZWlnaHQ6IDEwMCU7XG59Il19 */

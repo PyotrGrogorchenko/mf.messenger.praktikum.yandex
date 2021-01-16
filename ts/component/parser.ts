@@ -2,7 +2,9 @@ enum PARSER_TYPES {BEGIN, END, TEXT, CODE}
 
 type Node = {
   type: PARSER_TYPES,
-  content: string
+  content: string,
+  uid: number,
+  deleteMark: boolean
 }
 
 function parser(str:string): Array<Node> {
@@ -12,16 +14,25 @@ function parser(str:string): Array<Node> {
 }
 
 function parserNoREGEXP(str: string): Array<Node> {
-
+  
   const res: Array<Node> = Array<Node>()
 
   str = str.replace(/{%/g, '<{%')
   str = str.replace(/%}/g, '%}>')
 
   const addItem = (type: PARSER_TYPES, content: string): void => {
-    res.push({type, content})
+    const uid = type === PARSER_TYPES.BEGIN ? window.uid() : 0
+    res.push({type, content, uid: uid, deleteMark: false})
   }  
   
+  str = str.split(/\n/g).reduce(function(result, current) {
+    const currentClean = current.replace(/\s/g, '')
+    if (currentClean.startsWith('//')) {
+      return result
+    }
+    return result + '\n' + current
+  }, '').trim()
+
   while (str) {
   
     const beginTagPos: number = str.indexOf('<')
@@ -30,8 +41,7 @@ function parserNoREGEXP(str: string): Array<Node> {
     const isCode: boolean = str.startsWith('<{%')  
     endTagPos = isCode ? str.indexOf('%}>') + 2 : endTagPos
 
-    let tagContent: string = str.slice(beginTagPos + 1, endTagPos).trim()
-    tagContent = tagContent.replace(/[\r\n]+/g, '')
+    let tagContent: string = str.slice(beginTagPos + 1, endTagPos).trim().replace(/[\r\n]+/g, '')
 
     const isEndTag: boolean = tagContent.startsWith('/')  
 
@@ -43,9 +53,8 @@ function parserNoREGEXP(str: string): Array<Node> {
       
     str = str.slice(endTagPos + 1).trim()
 
-
     if (str.indexOf('<') >= 0) {
-      const content = str.substring(0, str.indexOf('<')).trim()
+      const content = str.substring(0, str.indexOf('<'))
       if (content){
         addItem(PARSER_TYPES.TEXT, content)
       }

@@ -1,4 +1,4 @@
-function queryStringify(data) {
+export const queryStringify = (data) => {
     if (!data) {
         return '';
     }
@@ -10,6 +10,5 @@ function queryStringify(data) {
         res = '?' + res.substr(1);
     }
     return res;
-}
-export { queryStringify };
+};
 //# sourceMappingURL=queryStringify.js.map

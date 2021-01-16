@@ -1,7 +1,7 @@
 //#Import
 import Message__FreeSpace from '../../../../../components/chat/messages-bar/message/message__free-space/message__free-space.js'
 //#Import
-import Component from '../../../../../component/component.js';
+import Component from '../../../../../component/Component.js';
 class Message__Incoming extends Component {
     //#Components
 components() {return {Message__FreeSpace}}

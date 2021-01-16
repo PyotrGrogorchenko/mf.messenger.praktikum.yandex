@@ -1,4 +1,4 @@
-function regexpMatchAll(str: string, TEMPLATE_REGEXP: RegExp): Array<RegExpExecArray> {
+export const regexpMatchAll = (str: string, TEMPLATE_REGEXP: RegExp): Array<RegExpExecArray> =>  {
 
   let key = null;
   const res:Array<RegExpExecArray> = []
@@ -11,5 +11,3 @@ function regexpMatchAll(str: string, TEMPLATE_REGEXP: RegExp): Array<RegExpExecA
   return res
 
 }
-
-export { regexpMatchAll }

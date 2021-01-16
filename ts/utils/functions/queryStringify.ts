@@ -1,4 +1,4 @@
-function queryStringify(data: Indexed): string {
+export const queryStringify = (data: Indexed): string => {
   if (!data) {
     return ''
   }
@@ -12,5 +12,3 @@ function queryStringify(data: Indexed): string {
   }
   return res
 }
- 
-export { queryStringify }

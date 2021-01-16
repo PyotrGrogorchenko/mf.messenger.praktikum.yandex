@@ -17,38 +17,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import Component from '../../../component/component.js';
-import { HTTPTransport } from '../../../xhr/HTTPTransport.js';
-import { env } from '../../../const/index.js';
-import { Router } from '../../../router/Router.js';
+import Component from '../../../component/Component.js';
+import { defaultPage } from '../../../router/utils.js';
+import { xhrPostLogout } from '../../../xhr/xhrExecute.js';
 export default class UserSettings extends Component {
-    // componentDidMount() {
-    //   console.
-    // }
-    logoutOnClick(e) {
-        return __awaiter(this, void 0, void 0, function* () {
-            e.preventDefault();
-            let req;
-            try {
-                const httpTransport = new HTTPTransport();
-                req = (yield httpTransport.post(`${env.URL_REQUEST}/auth/logout`, { withCredentials: true, headers: { 'content-type': 'application/json' } }));
-            }
-            catch (error) {
-                req = null;
-            }
-            if (req) {
-                if (req.status === 200) {
-                    const router = new Router();
-                    router.defaultPage();
-                }
-            }
-            else {
-                alert(`Failed to execute log out`);
-            }
-        });
-    }
-    state() {
-        return {
+    constructor() {
+        super(...arguments);
+        this.state = {
             logoutOnClick: this.logoutOnClick,
             first_name: !localStorage.getItem('first_name') ? '' : localStorage.getItem('first_name'),
             second_name: !localStorage.getItem('second_name') ? '' : localStorage.getItem('second_name'),
@@ -58,6 +33,21 @@ export default class UserSettings extends Component {
             oldPassword: '',
             newPassword: ''
         };
+    }
+    logoutOnClick(e) {
+        return __awaiter(this, void 0, void 0, function* () {
+            e.preventDefault();
+            let req = yield xhrPostLogout();
+            console.log('xhrPostLogout', req);
+            if (req) {
+                if (req.status === 200) {
+                    defaultPage();
+                }
+            }
+            else {
+                alert(`Failed to execute log out`);
+            }
+        });
     }
     //#Components
 components() {return {PageColumn,UserSettingsBar,Bar__Header,Bar__Content,UserSettingsBarInput,Bar__Footer,ButtonMain,ButtonSecondary}}

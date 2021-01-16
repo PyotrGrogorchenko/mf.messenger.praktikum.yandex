@@ -17,11 +17,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import Component from '../../../component/component.js';
-import { HTTPTransport } from '../../../xhr/HTTPTransport.js';
-import { env } from '../../../const/index.js';
-import { Router } from '../../../router/Router.js';
+import Component from '../../../component/Component.js';
+import { defaultPage } from '../../../router/utils.js';
+import { xhrPostAuthSignin } from '../../../xhr/xhrExecute.js';
 export default class Login extends Component {
+    constructor() {
+        super(...arguments);
+        this.state = {
+            loginOnClick: this.loginOnClick,
+            login: !localStorage.getItem('login') ? '' : localStorage.getItem('login'),
+            password: ''
+        };
+    }
     loginOnClick(e) {
         return __awaiter(this, void 0, void 0, function* () {
             e.preventDefault();
@@ -31,20 +38,10 @@ export default class Login extends Component {
             for (const key in formdata.data) {
                 body[formdata.data[key].name] = formdata.data[key].value;
             }
-            //console.log(body)
-            let req;
-            try {
-                const httpTransport = new HTTPTransport();
-                req = (yield httpTransport.post(`${env.URL_REQUEST}/auth/signin`, { data: body, withCredentials: true, headers: { 'content-type': 'application/json' } }));
-            }
-            catch (error) {
-                req = null;
-                console.log('err', error);
-            }
+            let req = yield xhrPostAuthSignin(body);
             if (req) {
                 if (req.status === 200) {
-                    const router = new Router();
-                    router.defaultPage();
+                    defaultPage();
                 }
                 else if (req.status >= 400) {
                     alert(`Failed to execute sign in. reason ${req.response.reason}`);
@@ -54,13 +51,6 @@ export default class Login extends Component {
                 }
             }
         });
-    }
-    state() {
-        return {
-            loginOnClick: this.loginOnClick,
-            login: !localStorage.getItem('login') ? '' : localStorage.getItem('login'),
-            password: ''
-        };
     }
     //#Components
 components() {return {PageColumn,AuthBarForm,Bar__Header,Bar__Content,AuthBarInput,Bar__Footer,ButtonMain,AnchorMain}}

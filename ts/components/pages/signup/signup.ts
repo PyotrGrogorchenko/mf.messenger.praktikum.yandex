@@ -1,14 +1,6 @@
-import Component from '../../../component/component'
-import { env } from '../../../const/index'
-import { HTTPTransport } from '../../../xhr/HTTPTransport'
-import { Router } from '../../../router/Router'
-
-//import { config as dotenv } from 'dotenv/config'
-//import * as dotenv from "dotenv"
-
-//require('dotenv')
-
-//dotenv()
+import Component from '../../../component/Component'
+import { defaultPage } from '../../../router/utils'
+import { xhrPostAuthSignUp } from '../../../xhr/xhrExecute'
 
 export default class Signup extends Component {
 
@@ -22,17 +14,12 @@ export default class Signup extends Component {
       body[formdata.data[key].name] = formdata.data[key].value
     }
     
-    console.log(body)
-
-    let req: XMLHttpRequest | null
-
-    const httpTransport = new HTTPTransport()
-    req = await httpTransport.post(`${env.URL_REQUEST}/auth/signup`, {data:body, withCredentials: true ,headers: {'content-type': 'application/json'}}) as XMLHttpRequest
+    let req = await xhrPostAuthSignUp(body)
 
     if (req) {
       if (req.status === 200) {
-        const router = new Router()
-        router.defaultPage()
+        console.log('signup', defaultPage)
+        defaultPage()
       } else if (req.status >= 400){
         alert(`Failed to execute sign up. reason ${req.response.reason}`)
       } else {
@@ -44,7 +31,7 @@ export default class Signup extends Component {
     }
   }
 
-  state() {return {
+  state = {
     
     signUpOnClick: this.signUpOnClick,
   
@@ -55,7 +42,7 @@ export default class Signup extends Component {
     phone: !localStorage.getItem('phone') ? '' : localStorage.getItem('phone'),
     password: ''
     
-  }}
+  }
 
 
 

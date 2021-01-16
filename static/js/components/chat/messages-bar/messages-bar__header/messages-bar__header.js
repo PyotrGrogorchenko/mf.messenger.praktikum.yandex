@@ -1,17 +1,25 @@
-import Component from '../../../../component/component.js';
+//#Import
+import Avatar from '../../../../components/img/avatar/avatar.js'
+//#Import
+import Component from '../../../../component/Component.js';
 class MessagesBar__Header extends Component {
-    template() {
-        return (`<div className='messages-bar__header'>
+    //#Components
+components() {return {Avatar}}
+//#Components
+template() {
+        return (`<div className='messages-bar__header' id={{props.id}}>
         
         <div className='header__avatar'>
-          <div className='avatar'>
-            <i className='c-gy3 fas fa-camera'></i>
-          </div>
+          <Avatar avatar={{props.avatar}}></Avatar>
+
+          // <div className='avatar-empty'>
+          //   <i className='c-gy3 fas fa-camera'></i>
+          // </div>
         </div>
         
         <div className='header__content'>
           <div className='header__username'>
-            <h1>{{props.name}}</h1>
+            <h1>{{props.title}}</h1>
           </div>
           <div className='header__last-seen'>
             {{props.lastSeen}}
@@ -19,9 +27,9 @@ class MessagesBar__Header extends Component {
         </div>
         
         <div className='header__menu'>
-          <button className='button-vertical bg-w'>
-            <i className='fas fa-ellipsis-v'></i>
-          </button>  
+          // <button className='button-vertical bg-w'>
+          //   <i className='fas fa-ellipsis-v'></i>
+          // </button>  
         </div>
       
       </div>`);

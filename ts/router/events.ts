@@ -1,9 +1,17 @@
 import { Router } from './Router'
 
-function onRouteClick(e:Event) {
+function onRouteClick(e:MouseEvent) {
   e.preventDefault()
-  
-  let href : string | null = (e.target as HTMLElement).getAttribute('href')
+  e.stopPropagation()
+
+  let href : string | null = null
+  for (let i = 0; i < e.path.length; i++) {
+    const el = e.path[i]
+    href = el.getAttribute('href')
+    if (href && href.startsWith('#{R}')) {
+      break
+    }
+  }
 
   if (!href){
     console.error('Route not found')

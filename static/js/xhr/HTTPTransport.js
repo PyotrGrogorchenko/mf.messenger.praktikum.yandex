@@ -5,7 +5,7 @@ var METHODS;
     METHODS["PUT"] = "PUT";
     METHODS["DELETE"] = "DELETE";
 })(METHODS || (METHODS = {}));
-class HTTPTransport {
+export class HTTPTransport {
     constructor() {
         this.get = (url, options = {}) => {
             return this.request(url, Object.assign(Object.assign({}, options), { method: METHODS.GET }), options.timeout);
@@ -62,5 +62,4 @@ class HTTPTransport {
         };
     }
 }
-export { HTTPTransport };
 //# sourceMappingURL=HTTPTransport.js.map

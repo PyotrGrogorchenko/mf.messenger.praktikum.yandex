@@ -1,7 +1,7 @@
 //#Import
 import ErrorBar from '../../../components/error-bar/error-bar.js'
 //#Import
-import Component from '../../../component/component.js';
+import Component from '../../../component/Component.js';
 export default class Error500 extends Component {
     //#Components
 components() {return {ErrorBar}}
