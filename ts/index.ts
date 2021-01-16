@@ -9,6 +9,6 @@ initDomEvents()
 startApp()
 
 function startApp() {
-  defaultPage()
+  defaultPage(window.location.hash)
 }
 
