@@ -1,4 +1,5 @@
 import { Router } from './Router'
+import { defaultPage } from './utils'
 
 function onRouteClick(e:MouseEvent) {
   e.preventDefault()
@@ -19,13 +20,20 @@ function onRouteClick(e:MouseEvent) {
   }
 
   const router: Router = new Router()
-  router.go(`/${href?.slice(4)}`)
+  router.go(`${href?.slice(4)}`)
 
 }
 
-// window.addEventListener("hashchange", function(e: Event) {
-//   console.log('hashchange', e)
-// }, false)
+window.addEventListener("hashchange", function(e: Event) {
+  
+  if (window.location.hash === '') {
+    window.history.back()
+  } else {
+    const router: Router = new Router()
+    router.renderPage(window.location.hash)
+  }
+
+}, false)
 
 // window.addEventListener('popstate', function(e: Event) {
 //   console.log('popstate', e)

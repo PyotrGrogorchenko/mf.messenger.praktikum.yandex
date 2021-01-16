@@ -78,7 +78,7 @@ template() {
           
           <Bar__Footer>
             <ButtonMain text='Sign up'      id='button-sign-up' onClick={{state.signUpOnClick}}></ButtonMain>
-            <AnchorMain text='Log in'  id='button-to-log-in' href='#{R}login'></AnchorMain>
+            <AnchorMain text='Log in'  id='button-to-log-in' href='#{R}#login'></AnchorMain>
           </Bar__Footer>
         
         </AuthBarForm>

@@ -4,7 +4,7 @@ const path = require('path');
 const app = express();
 const PORT = 4000;
 app.use(express.static(path.join(__dirname, 'static')));
-app.get(/.*/, function (request, res) {
+app.get('/', function (request, res) {
     res.status(200).sendFile('index.html', { root: path.join(__dirname, './static') });
 });
 

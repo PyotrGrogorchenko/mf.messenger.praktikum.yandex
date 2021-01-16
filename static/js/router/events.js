@@ -15,11 +15,17 @@ function onRouteClick(e) {
         return;
     }
     const router = new Router();
-    router.go(`/${href === null || href === void 0 ? void 0 : href.slice(4)}`);
+    router.go(`${href === null || href === void 0 ? void 0 : href.slice(4)}`);
 }
-// window.addEventListener("hashchange", function(e: Event) {
-//   console.log('hashchange', e)
-// }, false)
+window.addEventListener("hashchange", function (e) {
+    if (window.location.hash === '') {
+        window.history.back();
+    }
+    else {
+        const router = new Router();
+        router.renderPage(window.location.hash);
+    }
+}, false);
 // window.addEventListener('popstate', function(e: Event) {
 //   console.log('popstate', e)
 // })

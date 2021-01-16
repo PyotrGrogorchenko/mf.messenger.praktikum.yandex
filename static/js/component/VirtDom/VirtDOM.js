@@ -101,9 +101,6 @@ class VirtDom {
                 vars.push(item.substring(item.indexOf(' ')).replace(/ /ig, '').split('='));
             }
         });
-        // if (vars[0][0] === 'message') {
-        //   console.log('vars', vars)
-        // }
         if (!this._compare(context[iName], sign, right)) {
             while (!this._code__isCloseBracket(template) && template.i < template.list.length) {
                 template.i++;
@@ -337,12 +334,10 @@ class VirtDom {
     deleteMarkedNodes() {
         this._nodes.forEach((node) => {
             var _a;
-            //if (node.deleteMark) {
             if (node.isComponent && node.componentLink) {
                 (_a = node.componentLink.virtDOM) === null || _a === void 0 ? void 0 : _a.deleteMarkedNodes();
             }
             this._nodes = this._nodes.filter((node) => !node.deleteMark);
-            //}
         });
     }
     printNodes() {

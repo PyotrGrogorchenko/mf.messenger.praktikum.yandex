@@ -32,6 +32,7 @@ class Router {
     _onRoute(pathname) {
         const route = this.getRoute(pathname);
         if (!route) {
+            console.error('Route not found:' + pathname);
             return;
         }
         if (this._currentRoute) {

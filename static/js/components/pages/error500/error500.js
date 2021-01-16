@@ -10,7 +10,7 @@ template() {
         return (`<ErrorBar
         errCode='500'
         message='Sorry, something is wrong'
-        href='#{R}selectChat'
+        href='#{R}#chat'
       ></>`);
     }
 }

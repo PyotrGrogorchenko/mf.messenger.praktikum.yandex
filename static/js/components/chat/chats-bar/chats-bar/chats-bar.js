@@ -20,7 +20,7 @@ components() {return {AnchorToGo,InputGray5,ChatsBar__ChatsList}}
 template() {
         return (`<div className='chats-bar'>
         <form id='form__header' className='chats-bar__header'>
-          <AnchorToGo text='Profile' href='#{R}userSettings'></AnchorToGo>
+          <AnchorToGo text='Profile' href='#{R}#userSettings'></AnchorToGo>
           <InputGray5></InputGray5>
         </form>
         <ChatsBar__ChatsList callback={{state.list_callback}}></ChatsBar__ChatsList>

@@ -8,7 +8,7 @@ export default class Error404 extends Component {
       `<ErrorBar 
         errCode='404'
         message='Wrong way'
-        href='#{R}selectChat'
+        href='#{R}#chat'
       ></>`
     )
   }
