@@ -145,10 +145,6 @@ class VirtDom {
       } 
     })
 
-    // if (vars[0][0] === 'message') {
-    //   console.log('vars', vars)
-    // }
-
     if (!this._compare(context[iName], sign, right)){
       
       while (!this._code__isCloseBracket(template) && template.i < template.list.length) {
@@ -429,12 +425,10 @@ class VirtDom {
   deleteMarkedNodes() {
     
     this._nodes.forEach((node) => {
-      //if (node.deleteMark) {
-        if (node.isComponent && node.componentLink) {
-          (node.componentLink as Component).virtDOM?.deleteMarkedNodes()
-        }
-        this._nodes = this._nodes.filter((node:Node) => !node.deleteMark)
-      //}
+      if (node.isComponent && node.componentLink) {
+        (node.componentLink as Component).virtDOM?.deleteMarkedNodes()
+      }
+      this._nodes = this._nodes.filter((node:Node) => !node.deleteMark)
     })
 
   }

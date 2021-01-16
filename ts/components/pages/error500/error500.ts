@@ -8,7 +8,7 @@ export default class Error500 extends Component {
       `<ErrorBar
         errCode='500'
         message='Sorry, something is wrong'
-        href='#{R}selectChat'
+        href='#{R}#chat'
       ></>`
     )
   }

@@ -1,5 +1,3 @@
-import { HTTPTransport } from '../xhr/HTTPTransport'
-import { env } from '../const/index'
 import Route from './Route'
 
 class Router {
@@ -47,19 +45,21 @@ class Router {
     }
 
     _onRoute(pathname: string) {
-        const route = this.getRoute(pathname)
-
-        if (!route) {
-          return;
-        }
-
-        if (this._currentRoute) {
-          this._currentRoute.leave()
-        }
-
-        this._currentRoute = route
         
-        route.render()
+      const route = this.getRoute(pathname)
+
+      if (!route) {
+        console.error('Route not found:' + pathname)
+        return;
+      }
+
+      if (this._currentRoute) {
+        this._currentRoute.leave()
+      }
+
+      this._currentRoute = route
+       
+      route.render()
     }
 
     go(pathname: string) {

@@ -92,7 +92,7 @@ template() {
             <li key={{listEl.a}}>
               <AuthBarInput key={{listEl.a}} id={{listEl.a}} text={{listEl.b}}    type='text'     value='{{listEl.b}}></AuthBarInput> 
               <a key={{listEl.a}} id={{listEl.a}}>{{listEl.b}}</a> 
-              <AnchorMain key={{listEl.a}} id={{listEl.a}} text={{listEl.b}} href='#{R}signup'></AnchorMain>
+              <AnchorMain key={{listEl.a}} id={{listEl.a}} text={{listEl.b}} href='#{R}#signup'></AnchorMain>
             </li>
         
           {% } %}
@@ -107,7 +107,7 @@ template() {
         <PageColumn>
           <AuthBarInput text='false'    type='text'     id='input_login'    value='false'></AuthBarInput> 
           <a>000</a> 
-          <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}signup'></AnchorMain>
+          <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}#signup'></AnchorMain>
         </PageColumn>
       {% } %}
       
@@ -133,7 +133,7 @@ template() {
 // <PageColumn>
 //  <AuthBarInput text='false'    type='text'     id='input_login'    value='false'></AuthBarInput> 
 //  <a>000</a> 
-//  <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}signup'></AnchorMain>
+//  <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}#signup'></AnchorMain>
 // </PageColumn>
 // {% } %}
 // <ul className='list-test'>
@@ -143,7 +143,7 @@ template() {
 //   <div key={{listEl.a}}>
 //     <AuthBarInput key={{listEl.a}} id={{listEl.a}} text={{listEl.a}}    type='text'     value='{{listEl.b}}></AuthBarInput> 
 //     <a key={{listEl.a}} id={{listEl.a}}>{{listEl.a}}</a> 
-//     <AnchorMain key={{listEl.a}} id={{listEl.a}} text={{listEl.a}} href='#{R}signup'></AnchorMain>
+//     <AnchorMain key={{listEl.a}} id={{listEl.a}} text={{listEl.a}} href='#{R}#signup'></AnchorMain>
 //   </div>
 // {% } %}
 // </ul>
@@ -154,7 +154,7 @@ template() {
 //   //<PageColumn key={{listEl.a}}>
 //     <AuthBarInput key={{listEl.a}} id={{listEl.a}} text='true'    type='text'     value='true'></AuthBarInput> 
 //     <a key={{listEl.a}} id={{listEl.a}}>99+</a> 
-//     <AnchorMain key={{listEl.a}} id={{listEl.a}} text='Test if' href='#{R}signup'></AnchorMain>
+//     <AnchorMain key={{listEl.a}} id={{listEl.a}} text='Test if' href='#{R}#signup'></AnchorMain>
 //   //</PageColumn>
 // {% } %}
 // </ul>
@@ -167,13 +167,13 @@ template() {
 // {% if({{state.condition}}) { %}
 // <AuthBarInput text='login'    type='text'     id='input_login'    value='Test if'></AuthBarInput> 
 // {% } else { %}
-// <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}signup'></AnchorMain>
+// <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}#signup'></AnchorMain>
 // {% } %}
 // {% if({{state.condition}}) { %}
 // <AuthBarInput text='login'    type='text'     id='input_login'    value='Test if'></AuthBarInput> 
 // {% } %}
 // {% } else { %}
-// <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}signup'></AnchorMain>
+// <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}#signup'></AnchorMain>
 // <ContextMenu 
 // buttons='add:Add chat|remove:Remove chat'
 // onClick={{state.CM_onClick}}

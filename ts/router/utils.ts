@@ -1,10 +1,10 @@
 import { xhrGetAuthUser, xhrOnError } from "../xhr/xhrExecute"
 import { Router } from "./Router"
 
-export const defaultPage = (pathname: string = '/') => {
+export const defaultPage = (hash: string = '') => {
 
-  if (pathname === '/') { 
-    
+  if (hash === '') { 
+
     xhrGetAuthUser()
       .then(
         req => {
@@ -12,7 +12,7 @@ export const defaultPage = (pathname: string = '/') => {
         if (!req) { throw 'Something went wrong' }
 
         if ((req as XMLHttpRequest).status === 401){
-          window.location.replace(`${window.location.href}login`)
+          window.location.hash = '#login'
           return
         } else if ((req as XMLHttpRequest).status > 400) { throw 'Something went wrong' }
       
@@ -22,15 +22,20 @@ export const defaultPage = (pathname: string = '/') => {
         localStorage.setItem('email',         req.response.email)
         localStorage.setItem('phone',         req.response.phone)
 
-        window.location.replace(`${window.location.href}chat`)
-
+        if (window.location.hash === '#chat') {
+          const router: Router = new Router()
+          router.renderPage(window.location.hash)
+        } else {
+          window.location.hash = '#chat'
+        }
+        
       },
       error => {
         xhrOnError(error)
       })
   } else {
     const router: Router = new Router()
-    router.renderPage(window.location.pathname)
+    router.renderPage(window.location.hash)
   }
 
 }

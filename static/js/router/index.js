@@ -12,18 +12,14 @@ function startRouter() {
     const router = new Router('.app');
     router
         .use('/', Index)
-        .use('/login', Login)
-        .use('/signup', Signup)
-        //.use('/selectChat', SelectChat)
-        .use('/chat', Chat)
-        .use('/error404', Error404)
-        .use('/error500', Error500)
-        .use('/userSettings', UserSettings)
-        .use('/testPage', TestPage)
+        .use('#login', Login)
+        .use('#signup', Signup)
+        .use('#chat', Chat)
+        .use('#error404', Error404)
+        .use('#error500', Error500)
+        .use('#userSettings', UserSettings)
+        .use('#testPage', TestPage)
         .start();
-    // if (document.location.pathname = '/'){
-    // }
-    // console.log(document.location)
 }
 export { startRouter };
 //# sourceMappingURL=index.js.map
