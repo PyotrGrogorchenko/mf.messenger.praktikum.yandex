@@ -7,6 +7,6 @@ startRouter();
 initDomEvents();
 startApp();
 function startApp() {
-    defaultPage();
+    defaultPage(window.location.hash);
 }
 //# sourceMappingURL=index.js.map
