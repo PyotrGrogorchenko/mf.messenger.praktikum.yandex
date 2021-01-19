@@ -22,6 +22,7 @@ class Component {
   private _rootOut: HTMLElement | null = null
   private _parsedTemplate:Array<PARSER_NODE> | null = null
   private _deleteMark: boolean = false
+  private _isNew: boolean = true
 
   private _componentDidMountExecuted: boolean = false
 
@@ -67,9 +68,10 @@ class Component {
 
   init(root: HTMLElement | null): void {
     this._root = root
-    this.eventBus().emit(EVENTS.FLOW_CWM, this.getProps(), this.state)
+    if (this._isNew) this.eventBus().emit(EVENTS.FLOW_CWM, this.getProps(), this.state)
     this.eventBus().emit(EVENTS.FLOW_EXECUTE)
-    this.eventBus().emit(EVENTS.FLOW_CDM, this.getProps(), this.state)
+    if (this._isNew) this.eventBus().emit(EVENTS.FLOW_CDM, this.getProps(), this.state)
+    this._isNew = false 
   }
 
   _componentDidMount(props: any = null, state: any = null) { this.componentDidMount(props, state) }
@@ -108,8 +110,6 @@ class Component {
     const components: any = this.components()
     const props: any = this.getProps()
     
-
-
     this._virtDOM = !this._virtDOM ? new VirtDom() : this._virtDOM
     this._virtDOM.compile(parsedTemplate as Array<PARSER_NODE>, this.state, props, this.deleteMark)
     
@@ -209,6 +209,7 @@ class Component {
     if (modifyState) {
       this.virtDOM?.deleteMarkedNodes()
     }
+    window.createValidateEvents()
   }
 
 }

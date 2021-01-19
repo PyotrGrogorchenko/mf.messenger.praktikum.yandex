@@ -18,7 +18,7 @@ export default class Signup extends Component {
 
     if (req) {
       if (req.status === 200) {
-        console.log('signup', defaultPage)
+        console.log('#signup', defaultPage)
         defaultPage()
       } else if (req.status >= 400){
         alert(`Failed to execute sign up. reason ${req.response.reason}`)

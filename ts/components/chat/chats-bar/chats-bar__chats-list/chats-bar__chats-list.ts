@@ -1,14 +1,10 @@
 import Component from '../../../../component/Component'
-import { HTTPTransport } from '../../../../xhr/HTTPTransport'
-import { env } from '../../../../const/index'
 import { xhrPostCreateChat, xhrGetChats, xhrOnError } from '../../../../xhr/xhrExecute'
 
 class ChatsBar__ChatsList extends Component {
 
   async componentDidMount(props: any, state: any) {
-    
     this.setState({chats: await this.getChats()})
-
   }
 
   async getChats() {

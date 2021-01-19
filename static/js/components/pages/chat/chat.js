@@ -22,6 +22,9 @@ export default class Chat extends Component {
             showMessages: false
         };
     }
+    componentDidUpdate() {
+        window.createValidateEvents();
+    }
     //#Components
 components() {return {ChatsBar,MessagesBar,MessagesBarSelect}}
 //#Components
