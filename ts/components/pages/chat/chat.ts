@@ -2,6 +2,11 @@ import Component from '../../../component/Component'
 
 export default class Chat extends Component {
 
+  componentDidUpdate() {
+    window.createValidateEvents()
+  }
+
+
   currentId: number = 0
 
   chatsBar_callback = (data: LooseObject) => {

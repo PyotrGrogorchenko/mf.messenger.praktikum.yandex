@@ -20,6 +20,7 @@ class Component {
         this._rootOut = null;
         this._parsedTemplate = null;
         this._deleteMark = false;
+        this._isNew = true;
         this._componentDidMountExecuted = false;
         this.state = {};
         this._root = null;
@@ -49,9 +50,12 @@ class Component {
     }
     init(root) {
         this._root = root;
-        this.eventBus().emit(EVENTS.FLOW_CWM, this.getProps(), this.state);
+        if (this._isNew)
+            this.eventBus().emit(EVENTS.FLOW_CWM, this.getProps(), this.state);
         this.eventBus().emit(EVENTS.FLOW_EXECUTE);
-        this.eventBus().emit(EVENTS.FLOW_CDM, this.getProps(), this.state);
+        if (this._isNew)
+            this.eventBus().emit(EVENTS.FLOW_CDM, this.getProps(), this.state);
+        this._isNew = false;
     }
     _componentDidMount(props = null, state = null) { this.componentDidMount(props, state); }
     componentDidMount(props = null, state = null) { }
@@ -172,6 +176,7 @@ class Component {
         if (modifyState) {
             (_a = this.virtDOM) === null || _a === void 0 ? void 0 : _a.deleteMarkedNodes();
         }
+        window.createValidateEvents();
     }
 }
 export default Component;
