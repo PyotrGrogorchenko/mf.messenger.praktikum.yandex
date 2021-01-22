@@ -1,10 +1,13 @@
-// const path = require('path')
+const path = require('path')
 
-// module.exports = {
-//   entry: './static/js/index.js',
-//   output: {
-//     filename: 'bundle.js',
-//     path: path.resolve(__dirname, 'static/dist')
-//     //path: 'static/dist'
-//   }
-// }
+module.exports = {
+  mode: 'development',
+  entry: {
+    main: './static/js/index.js'
+  },
+  output: {
+    filename: '[name].[contenthash].js',
+    path: path.resolve(__dirname, 'static/dist')
+    //path: 'static/dist'
+  }
+}
