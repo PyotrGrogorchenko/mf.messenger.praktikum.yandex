@@ -1,0 +1,21 @@
+// {
+//   "extends": ["plugin:@typescript-eslint/recommended"],
+//   "parser": "@typescript-eslint/parser",
+//   "plugins": ["@typescript-eslint"],
+//   "parserOptions":  {
+//     "ecmaVersion":  2020,  // Allows for the parsing of modern ECMAScript features
+//     "sourceType":  "module"  // Allows for the use of imports
+//   },
+//   "rules": {
+//     "no-unused-vars": ["error"],
+//     "quotes": ["error", "single"]
+//   }
+// } 
+
+{
+  "parser": "babel-eslint",
+  "rules": {
+    "no-unused-vars": ["error"],
+    "quotes": ["error", "single"]
+  }
+} 

@@ -1,6 +1,6 @@
 function valueIsValid(type: string, val: string): boolean{
 
-  return validateText(val)
+  //return validateText(val)
 
   let res: boolean = true
 

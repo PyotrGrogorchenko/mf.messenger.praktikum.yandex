@@ -11,4 +11,3 @@ describe('utils => functions: startsWithUpper', () => {
   })
 
 })
-

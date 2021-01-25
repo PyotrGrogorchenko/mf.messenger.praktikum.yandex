@@ -1,4 +1,3 @@
-import e from 'express'
 import Component from '../Component'
 import { PARSER_TYPES, Node as PARSER_NODE } from '../parser'
 import { Node } from './Node'

@@ -1,6 +1,10 @@
 const path = require('path')
-const HTMLWebpackPlugin = require('html-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+const TerserWebpackPlugin = require('terser-webpack-plugin')
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -11,20 +15,37 @@ module.exports = {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist')
   },
-  plugins: [
-    new HTMLWebpackPlugin({
-      template: './static/index.html'
-    }),
-    new CleanWebpackPlugin()
-  ],
   module: {
+
     rules: [
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
-      }
-    ]
-  }
+        test: /\.css$/i,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader
+          },
+          'css-loader',
+          'postcss-loader'
+        ],
+      },
+      {
+        test: /\.ts$/,
+        use: {}
 
-  
+      }
+    ],
+  },
+
+  plugins: [
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({filename: 'bundle.css'}),
+    // Не получилось с ts??? С js ok
+    new ESLintPlugin({extensions: ['js'], files: 'static/js/index.js'}),
+    //new ESLintPlugin({extensions: ['ts'], files: 'ts/index.ts'}), // 
+    new HtmlWebpackPlugin({
+      template: 'static/index.html',
+      filename: 'index.html',
+    }),
+  ],
+
 }

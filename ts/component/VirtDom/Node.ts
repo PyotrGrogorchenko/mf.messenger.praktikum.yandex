@@ -35,6 +35,7 @@ class Node {
   set deleteMark(value) { this._deleteMark = value }
   
   setContentProps(context: LooseObject, template: LooseObject): void {
+    
     const oldTextConent =  this.textContent
     let { content } = template.record
     if (!content) {

@@ -10,6 +10,16 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./static/css/build/index.css":
+/*!************************************!*\
+  !*** ./static/css/build/index.css ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n\n\n//# sourceURL=webpack://mf.messenger.praktikum.yandex/./static/css/build/index.css?");
+
+/***/ }),
+
 /***/ "./static/js/DOMevents/clickEvent.js":
 /*!*******************************************!*\
   !*** ./static/js/DOMevents/clickEvent.js ***!
@@ -506,7 +516,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _router_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./router/index.js */ \"./static/js/router/index.js\");\n/* harmony import */ var _utils_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/index.js */ \"./static/js/utils/index.js\");\n/* harmony import */ var _DOMevents_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DOMevents/index.js */ \"./static/js/DOMevents/index.js\");\n/* harmony import */ var _router_utils_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./router/utils.js */ \"./static/js/router/utils.js\");\n\n\n\n\n(0,_utils_index_js__WEBPACK_IMPORTED_MODULE_1__.setUtils)();\n(0,_router_index_js__WEBPACK_IMPORTED_MODULE_0__.startRouter)();\n(0,_DOMevents_index_js__WEBPACK_IMPORTED_MODULE_2__.initDomEvents)();\nstartApp();\nfunction startApp() {\n    (0,_router_utils_js__WEBPACK_IMPORTED_MODULE_3__.defaultPage)(window.location.hash);\n}\n//# sourceMappingURL=index.js.map\n\n//# sourceURL=webpack://mf.messenger.praktikum.yandex/./static/js/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _css_build_index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../css/build/index.css */ \"./static/css/build/index.css\");\n/* harmony import */ var _router_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router/index.js */ \"./static/js/router/index.js\");\n/* harmony import */ var _utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/index.js */ \"./static/js/utils/index.js\");\n/* harmony import */ var _DOMevents_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DOMevents/index.js */ \"./static/js/DOMevents/index.js\");\n/* harmony import */ var _router_utils_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./router/utils.js */ \"./static/js/router/utils.js\");\n /* created automatically */\n\n\n\n\n\nlet a\n;(0,_utils_index_js__WEBPACK_IMPORTED_MODULE_2__.setUtils)();\n(0,_router_index_js__WEBPACK_IMPORTED_MODULE_1__.startRouter)();\n(0,_DOMevents_index_js__WEBPACK_IMPORTED_MODULE_3__.initDomEvents)();\nstartApp();\nfunction startApp() {\n    (0,_router_utils_js__WEBPACK_IMPORTED_MODULE_4__.defaultPage)(window.location.hash);\n}\n//# sourceMappingURL=index.js.map\n\n//# sourceURL=webpack://mf.messenger.praktikum.yandex/./static/js/index.js?");
 
 /***/ }),
 

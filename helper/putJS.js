@@ -13,7 +13,7 @@ async function execute() {
   const FileHound = require('filehound')
   const fs = require('fs')
   
-  var appRoot = require('app-root-path')
+  const appRoot = require('app-root-path')
   const { executionAsyncResource } = require('async_hooks')
   
   const filePaths = await FileHound.create()
