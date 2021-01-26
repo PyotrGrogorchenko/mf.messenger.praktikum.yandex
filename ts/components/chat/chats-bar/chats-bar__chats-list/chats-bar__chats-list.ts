@@ -1,7 +1,9 @@
 import Component from '../../../../component/Component'
-import { xhrPostCreateChat, xhrGetChats, xhrOnError } from '../../../../xhr/xhrExecute'
+import { xhrPostCreateChat, xhrGetChats, xhrOnError, xhrPutChatUsers } from '../../../../xhr/xhrExecute'
 
 class ChatsBar__ChatsList extends Component {
+
+  currentChatId: number = 0
 
   async componentDidMount(props: any, state: any) {
     this.setState({chats: await this.getChats()})
@@ -9,10 +11,12 @@ class ChatsBar__ChatsList extends Component {
 
   async getChats() {
     
-    let req = await xhrGetChats()
+    const req = await xhrGetChats()
     if (!req) { return }
     if (req.response.status >= 400) { xhrOnError() }
     
+    console.log('getChats req', req)
+
     return req.response
 
   }
@@ -24,14 +28,13 @@ class ChatsBar__ChatsList extends Component {
     if (arrli.length === 0) { return }
     let elLi = arrli[0]
     
-    let id: string | null = null
-    if (elLi) { id = elLi.getAttribute('id')  }
-
-    if (id !== null) {
-      //console.log(id)
-      const arrUser = (this.state as any).chats.filter((el: LooseObject) => String(el.id) === id)  
-      if (arrUser.length > 0) {
-        this.getProps().callback({user: arrUser[0]})  
+    let chatId: string | null = null
+    if (elLi) { chatId = elLi.getAttribute('id')  }
+    this.currentChatId = Number(chatId as string)
+    if (chatId !== null) {
+      const arrChats = (this.state as any).chats.filter((el: LooseObject) => String(el.id) === chatId)  
+      if (arrChats.length > 0) {
+        this.getProps().callback({chat: arrChats[0]})  
       }
     }
 
@@ -57,7 +60,13 @@ class ChatsBar__ChatsList extends Component {
   removeUser_event = (data: LooseObject) => {
   }
 
-  searchUsers_callback = async (chat: any) => {
+  searchUsers_callback = async (user: any) => {
+    
+    let req = await xhrPutChatUsers({
+      chatId : this.currentChatId,
+      users: [user.id]
+    })
+        
     this.setState({showSearchUsers: false})
   }
 
@@ -77,8 +86,7 @@ class ChatsBar__ChatsList extends Component {
     
     if (!data) {return}
 
-    let req
-    req  = await xhrPostCreateChat(data)
+    const req = await xhrPostCreateChat(data)
     if (req && req.status >= 400) {
       alert(`Failed to create chat: ${req.response.error}, ${req.response.reason}`)
       return

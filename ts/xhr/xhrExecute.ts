@@ -133,6 +133,43 @@ export const xhrPostLogout = async () => {
 
 }
 
+export const xhrPostChatsToken = async (data: LooseObject) => {
+
+  try {
+    
+    const httpTransport = new HTTPTransport()
+    const req = await httpTransport.post(`${env.URL_REQUEST}/chats/token/:${data.id}`, 
+      {
+        withCredentials: true,
+        headers: {'content-type': 'application/json'
+      }}) as XMLHttpRequest
+
+    return req
+
+  } catch (error) {
+    xhrOnError(error) 
+  }
+
+}
+
+export const xhrPutChatUsers = async (data:LooseObject) => {
+  
+  try {
+    const httpTransport = new HTTPTransport()
+    const req = await httpTransport.put(`${env.URL_REQUEST}/chats/users`, 
+      { withCredentials: true,
+        headers: {'content-type': 'application/json'},
+        data
+      }) as XMLHttpRequest
+        
+    return req
+
+  } catch (error) {
+    xhrOnError(error) 
+  }
+
+}
+
 export const xhrOnError = (error: any = null) => {
   console.error('xhrExecute:' + error)      
 }

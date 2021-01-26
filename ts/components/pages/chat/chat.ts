@@ -1,21 +1,65 @@
 import Component from '../../../component/Component'
+import { xhrPostChatsToken } from '../../../xhr/xhrExecute'
 
 export default class Chat extends Component {
+  
+  currentId: number = 0
 
   componentDidUpdate() {
     window.createValidateEvents()
   }
 
 
-  currentId: number = 0
 
-  chatsBar_callback = (data: LooseObject) => {
-    if (data.user) {
-      if (this.currentId === data.user.id) {
+
+  chatsBar_callback = async (data: LooseObject) => {
+   
+    if (data.chat) {
+      if (this.currentId === data.chat.id) {
         return
       }
-      this.currentId === data.user.id 
-      this.setState({showMessages: true, id: String(data.user.id), avatar: data.user.avatar, title: data.user.title})
+      this.currentId === data.chat.id 
+      
+      let req = await xhrPostChatsToken({id:data.chat.id})
+      const token = req?.response.token
+      console.log('userid', localStorage.getItem('id'), 'chatid', data.chat.id, 'token',token)
+      console.log('socket', `wss://ya-praktikum.tech/ws/chats/${localStorage.getItem('id')}/${data.chat.id}/${token}`)
+      //if (!req) { return }
+      //if (req.response.status >= 400) { xhrOnError() }
+      
+      //const socket = new WebSocket('wss://ya-praktikum.tech/ws/chats/<USER_ID>/<CHAT_ID>/<TOKEN_VALUE>')
+      const socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${localStorage.getItem('id')}/${data.chat.id}/${token}`)
+
+      socket.addEventListener('open', () => {
+        console.log('Соединение установлено');
+    
+        socket.send(JSON.stringify({
+            content: 'Моё первое сообщение миру!',
+            type: 'message',
+        }));
+      });
+    
+      socket.addEventListener('close', event => {
+        if (event.wasClean) {
+            console.log('Соединение закрыто чисто');
+        } else {
+            console.log('Обрыв соединения');
+        }
+    
+        console.log(`Код: ${event.code} | Причина: ${event.reason}`);
+      });
+    
+      socket.addEventListener('message', event => {
+        console.log('Получены данные', event)  
+        console.log('Получены данные', event.data);
+      });
+    
+      socket.addEventListener('error', event => {
+        console.log('Ошибка', event);
+      }); 
+
+
+      this.setState({showMessages: true, id: String(data.chat.id), avatar: data.chat.avatar, title: data.chat.title})
     }
   }
 

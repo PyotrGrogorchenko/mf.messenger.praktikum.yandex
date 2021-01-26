@@ -14,10 +14,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Component from '../../../../component/Component.js';
-import { xhrPostCreateChat, xhrGetChats, xhrOnError } from '../../../../xhr/xhrExecute.js';
+import { xhrPostCreateChat, xhrGetChats, xhrOnError, xhrPutChatUsers } from '../../../../xhr/xhrExecute.js';
 class ChatsBar__ChatsList extends Component {
     constructor() {
         super(...arguments);
+        this.currentChatId = 0;
         this.chatsOnClick = (e) => {
             e.preventDefault();
             let arrli = e.path.filter((el) => el.nodeName === 'LI');
@@ -25,15 +26,15 @@ class ChatsBar__ChatsList extends Component {
                 return;
             }
             let elLi = arrli[0];
-            let id = null;
+            let chatId = null;
             if (elLi) {
-                id = elLi.getAttribute('id');
+                chatId = elLi.getAttribute('id');
             }
-            if (id !== null) {
-                //console.log(id)
-                const arrUser = this.state.chats.filter((el) => String(el.id) === id);
-                if (arrUser.length > 0) {
-                    this.getProps().callback({ user: arrUser[0] });
+            this.currentChatId = Number(chatId);
+            if (chatId !== null) {
+                const arrChats = this.state.chats.filter((el) => String(el.id) === chatId);
+                if (arrChats.length > 0) {
+                    this.getProps().callback({ chat: arrChats[0] });
                 }
             }
         };
@@ -56,7 +57,11 @@ class ChatsBar__ChatsList extends Component {
         });
         this.removeUser_event = (data) => {
         };
-        this.searchUsers_callback = (chat) => __awaiter(this, void 0, void 0, function* () {
+        this.searchUsers_callback = (user) => __awaiter(this, void 0, void 0, function* () {
+            let req = yield xhrPutChatUsers({
+                chatId: this.currentChatId,
+                users: [user.id]
+            });
             this.setState({ showSearchUsers: false });
         });
         //
@@ -101,6 +106,7 @@ class ChatsBar__ChatsList extends Component {
             if (req.response.status >= 400) {
                 xhrOnError();
             }
+            console.log('getChats req', req);
             return req.response;
         });
     }

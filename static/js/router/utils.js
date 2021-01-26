@@ -14,6 +14,7 @@ export const defaultPage = (hash = '') => {
             else if (req.status > 400) {
                 throw 'Something went wrong';
             }
+            localStorage.setItem('id', req.response.id);
             localStorage.setItem('first_name', req.response.first_name);
             localStorage.setItem('second_name', req.response.second_name);
             localStorage.setItem('login', req.response.login);

@@ -103,6 +103,33 @@ export const xhrPostLogout = () => __awaiter(void 0, void 0, void 0, function* (
         xhrOnError(error);
     }
 });
+export const xhrPostChatsToken = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const httpTransport = new HTTPTransport();
+        const req = yield httpTransport.post(`${env.URL_REQUEST}/chats/token/:${data.id}`, {
+            withCredentials: true,
+            headers: { 'content-type': 'application/json'
+            }
+        });
+        return req;
+    }
+    catch (error) {
+        xhrOnError(error);
+    }
+});
+export const xhrPutChatUsers = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const httpTransport = new HTTPTransport();
+        const req = yield httpTransport.put(`${env.URL_REQUEST}/chats/users`, { withCredentials: true,
+            headers: { 'content-type': 'application/json' },
+            data
+        });
+        return req;
+    }
+    catch (error) {
+        xhrOnError(error);
+    }
+});
 export const xhrOnError = (error = null) => {
     console.error('xhrExecute:' + error);
 };

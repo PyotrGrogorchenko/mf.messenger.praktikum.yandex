@@ -3,9 +3,9 @@ import { setUtils } from './utils/index'
 import { initDomEvents } from './DOMevents/index'
 import { defaultPage } from './router/utils'
 
-let a
-let b = "jjj"
-//process.env.NODE_ENV
+// let a
+// let b = "jjj"
+// //process.env.NODE_ENV
 
 setUtils()
 startRouter()

@@ -11,6 +11,7 @@ module.exports = merge(common, {
     port: 4000,
     hot: true
   },
+  devtool: 'source-map',
   plugins: [
     new HtmlWebpackPlugin({
       template: 'static/index.html',

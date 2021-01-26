@@ -2,8 +2,6 @@ const path = require('path')
 const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
-const TerserWebpackPlugin = require('terser-webpack-plugin')
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {

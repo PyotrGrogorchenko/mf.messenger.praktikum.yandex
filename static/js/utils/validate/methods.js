@@ -1,5 +1,5 @@
 function valueIsValid(type, val) {
-    return validateText(val);
+    //return validateText(val)
     let res = true;
     switch (type) {
         case 'text':

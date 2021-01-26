@@ -84,12 +84,13 @@
     "webpack-merge": "^5.7.3"
   },
   "scripts": {
-    "dev": "npm run build && npm run serve",
-    "prod": "npm run build && webpack --config webpack.config.prod.js",
+    "dev": "npm run build && npm run webpack:dev",
+    "prod": "npm run build && npm run webpack:prod",
     "start": "node app.js",
     "test": "jest",
-    "serve": "webpack serve --mode=development --progress",
+    "test:single": "jest -t router.test.ts",
     "lint": "eslint ./static/js/index.js",
+    "webpack:serve": "webpack serve --mode=development --progress",
     "webpack:dev": "cross-env NODE_ENV=development npx webpack --mode=development --config webpack.config.dev.js",
     "webpack:prod": "cross-env NODE_ENV=production npx webpack --mode=production --config webpack.config.prod.js",
     "build-tmpl": "npm run build-tmpl:tsc && npm run build-tmpl:putJS && npm run build-tmpl:importComponentsJS",
