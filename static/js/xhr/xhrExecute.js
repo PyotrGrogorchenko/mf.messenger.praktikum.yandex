@@ -106,7 +106,7 @@ export const xhrPostLogout = () => __awaiter(void 0, void 0, void 0, function* (
 export const xhrPostChatsToken = (data) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const httpTransport = new HTTPTransport();
-        const req = yield httpTransport.post(`${env.URL_REQUEST}/chats/token/:${data.id}`, {
+        const req = yield httpTransport.post(`${env.URL_REQUEST}/chats/token/${data.id}`, {
             withCredentials: true,
             headers: { 'content-type': 'application/json'
             }
@@ -123,6 +123,18 @@ export const xhrPutChatUsers = (data) => __awaiter(void 0, void 0, void 0, funct
         const req = yield httpTransport.put(`${env.URL_REQUEST}/chats/users`, { withCredentials: true,
             headers: { 'content-type': 'application/json' },
             data
+        });
+        return req;
+    }
+    catch (error) {
+        xhrOnError(error);
+    }
+});
+export const xhrGetChatsUsers = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const httpTransport = new HTTPTransport();
+        const req = yield httpTransport.get(`${env.URL_REQUEST}/chats/${data.id}/users`, { withCredentials: true,
+            headers: { 'content-type': 'application/json' }
         });
         return req;
     }

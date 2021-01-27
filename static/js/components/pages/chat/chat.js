@@ -13,53 +13,50 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Component from '../../../component/Component.js';
+import { WS } from '../../../webSocket/WebSoket.js';
 import { xhrPostChatsToken } from '../../../xhr/xhrExecute.js';
 export default class Chat extends Component {
     constructor() {
         super(...arguments);
-        this.currentId = 0;
+        this.chatid = 0;
+        this.token = '';
+        this.ws = null;
+        this.avatar = '';
+        this.title = '';
         this.chatsBar_callback = (data) => __awaiter(this, void 0, void 0, function* () {
             if (data.chat) {
-                if (this.currentId === data.chat.id) {
+                if (this.chatid === data.chat.id) {
                     return;
                 }
-                this.currentId === data.chat.id;
-                let req = yield xhrPostChatsToken({ id: data.chat.id });
-                const token = req === null || req === void 0 ? void 0 : req.response.token;
-                console.log('userid', localStorage.getItem('id'), 'chatid', data.chat.id, 'token', token);
-                console.log('socket', `wss://ya-praktikum.tech/ws/chats/${localStorage.getItem('id')}/${data.chat.id}/${token}`);
-                //if (!req) { return }
-                //if (req.response.status >= 400) { xhrOnError() }
-                //const socket = new WebSocket('wss://ya-praktikum.tech/ws/chats/<USER_ID>/<CHAT_ID>/<TOKEN_VALUE>')
-                const socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${localStorage.getItem('id')}/${data.chat.id}/${token}`);
-                socket.addEventListener('open', () => {
-                    console.log('Соединение установлено');
-                    socket.send(JSON.stringify({
-                        content: 'Моё первое сообщение миру!',
-                        type: 'message',
-                    }));
-                });
-                socket.addEventListener('close', event => {
-                    if (event.wasClean) {
-                        console.log('Соединение закрыто чисто');
-                    }
-                    else {
-                        console.log('Обрыв соединения');
-                    }
-                    console.log(`Код: ${event.code} | Причина: ${event.reason}`);
-                });
-                socket.addEventListener('message', event => {
-                    console.log('Получены данные', event);
-                    console.log('Получены данные', event.data);
-                });
-                socket.addEventListener('error', event => {
-                    console.log('Ошибка', event);
-                });
-                this.setState({ showMessages: true, id: String(data.chat.id), avatar: data.chat.avatar, title: data.chat.title });
+                this.chatid = data.chat.id;
+                this.avatar = data.chat.avatar;
+                this.title = data.chat.title;
+                const req = yield xhrPostChatsToken({ id: this.chatid });
+                this.token = req === null || req === void 0 ? void 0 : req.response.token;
+                this.setState({ showMessages: true, shatid: String(this.chatid), chatid: this.chatid, avatar: this.avatar, title: this.title, token: this.token });
+                // const reqChatUsers = await xhrGetChatsUsers({id:data.chat.id}) 
+                // console.log('reqChatUsers', reqChatUsers)
+                // this.ws = new WS(String(localStorage.getItem('id')), String(this.shatId), this.token)
+                // this.ws.onMessage = this.wsOnMessagesGetOld
+                // this.ws.onOpen = () => { this.ws?.send('0', 'get old') }
             }
         });
+        this.sendMesageOnClick_callback = (message) => __awaiter(this, void 0, void 0, function* () {
+            this.ws = new WS(String(localStorage.getItem('id')), String(this.chatid), this.token);
+            this.ws.onMessage = this.wsOnMessagesSendMessages;
+            this.ws.onOpen = () => { var _a; (_a = this.ws) === null || _a === void 0 ? void 0 : _a.send(message); };
+        });
+        this.wsOnMessagesSendMessages = (event) => {
+            this.ws = new WS(String(localStorage.getItem('id')), String(this.chatid), this.token);
+            this.ws.onMessage = this.wsOnMessagesGetOld;
+            this.ws.onOpen = () => { var _a; (_a = this.ws) === null || _a === void 0 ? void 0 : _a.send('0', 'get old'); };
+        };
+        this.wsOnMessagesGetOld = (event) => {
+            this.setState({ showMessages: true, id: String(this.chatid), avatar: this.avatar, title: this.title, messages: event.data });
+        };
         this.state = {
             chatsBar_callback: this.chatsBar_callback,
+            sendMesageOnClick_callback: this.sendMesageOnClick_callback,
             showMessages: false
         };
     }
@@ -73,7 +70,13 @@ template() {
         return (`<div className='page-chat'>
         <ChatsBar callback={{state.chatsBar_callback}}></ChatsBar>
         {% if({{state.showMessages}}) { %}
-          <MessagesBar id={{state.id}} avatar={{state.avatar}} title={{state.title}}></MessagesBar>
+          <MessagesBar 
+            chatid={{state.chatid}} 
+            token={{state.token}} 
+            avatar={{state.avatar}} 
+            title={{state.title}} 
+            sendMesageOnClick_callback={{state.sendMesageOnClick_callback}}
+          ></MessagesBar>
         {% } else { %}
           <MessagesBarSelect></MessagesBarSelect>
         {% } %}

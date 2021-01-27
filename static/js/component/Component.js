@@ -50,11 +50,19 @@ class Component {
     }
     init(root) {
         this._root = root;
-        if (this._isNew)
-            this.eventBus().emit(EVENTS.FLOW_CWM, this.getProps(), this.state);
+        if (this._isNew) {
+            this.eventBus().emit(EVENTS.FLOW_CWM, this.getProps(), this.getProps());
+        }
+        else {
+            this.eventBus().emit(EVENTS.FLOW_CWU, this.getProps(), this.state);
+        }
         this.eventBus().emit(EVENTS.FLOW_EXECUTE);
-        if (this._isNew)
+        if (this._isNew) {
             this.eventBus().emit(EVENTS.FLOW_CDM, this.getProps(), this.state);
+        }
+        else {
+            this.eventBus().emit(EVENTS.FLOW_CDU, this.getProps(), this.getProps());
+        }
         this._isNew = false;
     }
     _componentDidMount(props = null, state = null) { this.componentDidMount(props, state); }

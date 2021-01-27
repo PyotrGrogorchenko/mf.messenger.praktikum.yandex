@@ -15,8 +15,6 @@ class ChatsBar__ChatsList extends Component {
     if (!req) { return }
     if (req.response.status >= 400) { xhrOnError() }
     
-    console.log('getChats req', req)
-
     return req.response
 
   }

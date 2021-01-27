@@ -88,7 +88,7 @@
     "prod": "npm run build && npm run webpack:prod",
     "start": "node app.js",
     "test": "jest",
-    "test:single": "jest -t router.test.ts",
+    "test:single": "jest -t 'router: router'",
     "lint": "eslint ./static/js/index.js",
     "webpack:serve": "webpack serve --mode=development --progress",
     "webpack:dev": "cross-env NODE_ENV=development npx webpack --mode=development --config webpack.config.dev.js",

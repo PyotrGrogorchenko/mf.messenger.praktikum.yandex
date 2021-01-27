@@ -75,8 +75,7 @@ class ChatsBar__ChatsList extends Component {
             if (!data) {
                 return;
             }
-            let req;
-            req = yield xhrPostCreateChat(data);
+            const req = yield xhrPostCreateChat(data);
             if (req && req.status >= 400) {
                 alert(`Failed to create chat: ${req.response.error}, ${req.response.reason}`);
                 return;
@@ -99,14 +98,13 @@ class ChatsBar__ChatsList extends Component {
     }
     getChats() {
         return __awaiter(this, void 0, void 0, function* () {
-            let req = yield xhrGetChats();
+            const req = yield xhrGetChats();
             if (!req) {
                 return;
             }
             if (req.response.status >= 400) {
                 xhrOnError();
             }
-            console.log('getChats req', req);
             return req.response;
         });
     }

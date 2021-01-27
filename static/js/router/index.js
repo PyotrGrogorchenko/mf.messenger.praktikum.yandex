@@ -2,7 +2,6 @@ import { Router } from './Router.js';
 import Login from '../components/pages/login/login.js';
 import Signup from '../components/pages/signup/signup.js';
 import Index from '../components/pages/index/index.js';
-//import SelectChat from '../components/pages/selectChat/selectChat.js'
 import Chat from '../components/pages/chat/chat.js';
 import UserSettings from '../components/pages/userSettings/userSettings.js';
 import Error404 from '../components/pages/error404/error404.js';

@@ -138,7 +138,7 @@ export const xhrPostChatsToken = async (data: LooseObject) => {
   try {
     
     const httpTransport = new HTTPTransport()
-    const req = await httpTransport.post(`${env.URL_REQUEST}/chats/token/:${data.id}`, 
+    const req = await httpTransport.post(`${env.URL_REQUEST}/chats/token/${data.id}`, 
       {
         withCredentials: true,
         headers: {'content-type': 'application/json'
@@ -160,6 +160,23 @@ export const xhrPutChatUsers = async (data:LooseObject) => {
       { withCredentials: true,
         headers: {'content-type': 'application/json'},
         data
+      }) as XMLHttpRequest
+        
+    return req
+
+  } catch (error) {
+    xhrOnError(error) 
+  }
+
+}
+
+export const xhrGetChatsUsers = async (data:LooseObject) => {
+  
+  try {
+    const httpTransport = new HTTPTransport()
+    const req = await httpTransport.get(`${env.URL_REQUEST}/chats/${data.id}/users`, 
+      { withCredentials: true,
+        headers: {'content-type': 'application/json'}
       }) as XMLHttpRequest
         
     return req
