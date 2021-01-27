@@ -33,7 +33,6 @@ export default class Login extends Component {
         return __awaiter(this, void 0, void 0, function* () {
             e.preventDefault();
             const formdata = window.getFormData();
-            console.log(formdata);
             const body = {};
             for (const key in formdata.data) {
                 body[formdata.data[key].name] = formdata.data[key].value;

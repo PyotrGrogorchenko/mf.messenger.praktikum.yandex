@@ -1,6 +1,5 @@
 import Component from '../../../../component/Component'
 import { WS } from '../../../../webSocket/WebSoket'
-import { xhrPostChatsToken } from '../../../../xhr/xhrExecute'
 
 class MessagesBar extends Component {
 
@@ -45,11 +44,12 @@ class MessagesBar extends Component {
   wsOnMessagesGetOld = (event: MessageEvent) => {
     const messages = JSON.parse(event.data)
     this.messages = []
-    for (let i=0; i<messages.length; i++) {
+    
+    for (let i = 0; i < messages.length; i++) {
       const message = messages[i]
-      const type = String(message.user_id) === this.userid ? 'out' : 'in'
       const id = message.id ? message.id : ''
-      this.messages.unshift({ id, type, date: this.formatDate(message.time), text: message.content})      
+      const type = String(message.user_id) === this.userid ? 'out' : 'in'
+      this.messages.unshift({ id: messages.length - i, type, date: this.formatDate(message.time), text: message.content})
     }
     this.setState({messages: this.messages})
   }
@@ -67,9 +67,12 @@ class MessagesBar extends Component {
       return
     }
 
+
     this.ws = new WS(String(localStorage.getItem('id')), String(this.chatid), this.token)
     this.ws.onMessage = this.wsOnMessagesSendMessages
-    this.ws.onOpen = () => { this.ws?.send(value) }
+    this.ws.onOpen = () => { 
+      this.ws?.send(value) 
+    }
 
 
   }
@@ -82,7 +85,17 @@ class MessagesBar extends Component {
 
 
   formatDate(date: string) {
-    return date
+    
+    var options = {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric'
+    }    
+    
+    return new Date(date).toLocaleString("ru", options)
   }
 
   state = {

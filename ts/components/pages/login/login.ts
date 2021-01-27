@@ -9,8 +9,6 @@ export default class Login extends Component {
     
     const formdata = window.getFormData()
 
-    console.log(formdata)
-
     const body: LooseObject = {}
     for (const key in formdata.data){
       body[formdata.data[key].name] = formdata.data[key].value

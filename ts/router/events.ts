@@ -35,16 +35,4 @@ window.addEventListener("hashchange", function(e: Event) {
 
 }, false)
 
-// window.addEventListener('popstate', function(e: Event) {
-//   console.log('popstate', e)
-// })
-
-// window.addEventListener('beforeunload', function(e: Event) {
-//   console.log('beforeunload', e)
-// })
-
-// window.addEventListener('unload', function(e: Event) {
-//   console.log('unload', e)
-// })
-
 export { onRouteClick }

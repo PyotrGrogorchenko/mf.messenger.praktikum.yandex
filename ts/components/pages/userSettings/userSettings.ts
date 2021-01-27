@@ -9,8 +9,6 @@ export default class UserSettings extends Component {
     
     let req = await xhrPostLogout()
 
-    console.log('xhrPostLogout', req)
-
     if (req){
       if (req.status === 200) {
         defaultPage()

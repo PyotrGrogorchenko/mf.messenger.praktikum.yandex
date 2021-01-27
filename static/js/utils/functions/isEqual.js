@@ -19,16 +19,14 @@ export const isEqual = (a, b) => {
             }
             for (let i = 0; i < a[key].lenght; i++) {
                 res = isEqual(a[key][i], b[key][i]);
-                if (!res) {
+                if (!res)
                     return res;
-                }
             }
         }
         if (typeof a[key] === 'object') {
             res = isEqual(a[key], b[key]);
-            if (!res) {
+            if (!res)
                 return res;
-            }
         }
         else if (a[key] !== b[key]) {
             return false;

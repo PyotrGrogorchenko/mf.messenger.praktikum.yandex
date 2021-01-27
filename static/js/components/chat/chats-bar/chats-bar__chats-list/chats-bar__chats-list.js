@@ -58,13 +58,14 @@ class ChatsBar__ChatsList extends Component {
         this.removeUser_event = (data) => {
         };
         this.searchUsers_callback = (user) => __awaiter(this, void 0, void 0, function* () {
+            this.setState({ showSearchUsers: false });
+            if (!user)
+                return;
             let req = yield xhrPutChatUsers({
                 chatId: this.currentChatId,
                 users: [user.id]
             });
-            this.setState({ showSearchUsers: false });
         });
-        //
         this.addChat_event = (data) => __awaiter(this, void 0, void 0, function* () {
             this.setState({ showAddChat: true });
         });
@@ -82,9 +83,23 @@ class ChatsBar__ChatsList extends Component {
             }
             this.setState({ chats: yield this.getChats() });
         });
+        this.chatsOnСontextMenu = (e) => {
+            e.preventDefault();
+            let arrli = e.path.filter((el) => el.nodeName === 'LI');
+            if (arrli.length === 0) {
+                return;
+            }
+            let elLi = arrli[0];
+            let chatId = null;
+            if (elLi) {
+                chatId = elLi.getAttribute('id');
+            }
+            this.currentChatId = Number(chatId);
+        };
         this.state = {
             CM_onClick: this.CM_onClick,
             chatsOnClick: this.chatsOnClick,
+            chatsOnСontextMenu: this.chatsOnСontextMenu,
             showSearchUsers: false,
             searchUsers_callback: this.searchUsers_callback,
             showAddChat: false,
@@ -113,7 +128,12 @@ components() {return {ChatsList__ChatItem,ContextMenu,MW__SearchUser,MW__AddChat
 //#Components
 template() {
         return (`
-      <div className='chats-bar__chats-list' onClick={{state.chatsOnClick}} id='chats-list'>
+      <div 
+        className='chats-bar__chats-list' 
+        onClick={{state.chatsOnClick}} 
+        oncontextmenu={{state.chatsOnСontextMenu}} 
+        id='chats-list'
+      >
 
         <ul className='chats-list__list'>
           

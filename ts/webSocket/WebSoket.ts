@@ -43,7 +43,7 @@ class WS {
     })
     
     this.socket?.addEventListener('message', (event) => {
-      //console.log('Получены данные', event.data)
+      console.log('Получены данные', event.data)
     
       if (this.onMessage) { this.onMessage(event) }
     

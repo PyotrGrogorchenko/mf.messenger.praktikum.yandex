@@ -36,7 +36,7 @@ class WS {
             }
         });
         (_c = this.socket) === null || _c === void 0 ? void 0 : _c.addEventListener('message', (event) => {
-            //console.log('Получены данные', event.data)
+            console.log('Получены данные', event.data);
             if (this.onMessage) {
                 this.onMessage(event);
             }

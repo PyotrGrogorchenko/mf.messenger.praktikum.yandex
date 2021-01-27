@@ -22,8 +22,6 @@ class MW__SearchUser extends Component {
   search_onChange = async (e:Event) => {
     e.preventDefault()
     e.stopPropagation()
-    //console.log('search_onChange')
-    //this.setState({users: this.getUsers((e.target as HTMLInputElement).value)))
     await this.getUsers((e.target as HTMLInputElement).value)
   }
 

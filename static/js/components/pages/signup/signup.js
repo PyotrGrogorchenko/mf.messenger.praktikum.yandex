@@ -44,7 +44,6 @@ export default class Signup extends Component {
             let req = yield xhrPostAuthSignUp(body);
             if (req) {
                 if (req.status === 200) {
-                    console.log('#signup', defaultPage);
                     defaultPage();
                 }
                 else if (req.status >= 400) {

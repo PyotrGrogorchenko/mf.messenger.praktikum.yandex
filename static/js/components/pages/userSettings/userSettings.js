@@ -38,7 +38,6 @@ export default class UserSettings extends Component {
         return __awaiter(this, void 0, void 0, function* () {
             e.preventDefault();
             let req = yield xhrPostLogout();
-            console.log('xhrPostLogout', req);
             if (req) {
                 if (req.status === 200) {
                     defaultPage();

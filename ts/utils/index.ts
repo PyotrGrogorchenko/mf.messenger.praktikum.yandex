@@ -1,4 +1,13 @@
-import { get, isEqual, startsWithUpper, uid, regexpMatchAll, queryStringify, copyObj } from './functions/index'
+import { 
+  get,
+  isEqual, 
+  startsWithUpper, 
+  uid, 
+  regexpMatchAll, 
+  queryStringify, 
+  copyObj 
+} from './functions/index'
+
 import { getFormData, createValidateEvents } from './validate/index'
 
 declare global {

@@ -60,15 +60,17 @@ class ChatsBar__ChatsList extends Component {
 
   searchUsers_callback = async (user: any) => {
     
+    this.setState({showSearchUsers: false})
+
+    if (!user) return
+
     let req = await xhrPutChatUsers({
       chatId : this.currentChatId,
       users: [user.id]
     })
         
-    this.setState({showSearchUsers: false})
   }
 
-  //
   addChat_event = async (data: LooseObject) => {
     this.setState({showAddChat: true})
 
@@ -93,10 +95,25 @@ class ChatsBar__ChatsList extends Component {
     this.setState({chats: await this.getChats()})
   }
 
+  chatsOnСontextMenu = (e:MouseEvent) => {
+
+    e.preventDefault()
+    
+    let arrli: Array<HTMLElement> = e.path.filter((el: HTMLElement) => el.nodeName === 'LI')
+    if (arrli.length === 0) { return }
+    let elLi = arrli[0]
+    
+    let chatId: string | null = null
+    if (elLi) { chatId = elLi.getAttribute('id')  }
+    this.currentChatId = Number(chatId as string)
+
+  }
+
   state = {
 
     CM_onClick: this.CM_onClick,
     chatsOnClick: this.chatsOnClick,
+    chatsOnСontextMenu: this.chatsOnСontextMenu,
     
     showSearchUsers: false,
     searchUsers_callback: this.searchUsers_callback,
@@ -107,7 +124,12 @@ class ChatsBar__ChatsList extends Component {
   template() { 
     return (
       `
-      <div className='chats-bar__chats-list' onClick={{state.chatsOnClick}} id='chats-list'>
+      <div 
+        className='chats-bar__chats-list' 
+        onClick={{state.chatsOnClick}} 
+        oncontextmenu={{state.chatsOnСontextMenu}} 
+        id='chats-list'
+      >
 
         <ul className='chats-list__list'>
           

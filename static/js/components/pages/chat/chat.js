@@ -13,8 +13,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Component from '../../../component/Component.js';
-import { WS } from '../../../webSocket/WebSoket.js';
-import { xhrPostChatsToken } from '../../../xhr/xhrExecute.js';
 export default class Chat extends Component {
     constructor() {
         super(...arguments);
@@ -31,32 +29,11 @@ export default class Chat extends Component {
                 this.chatid = data.chat.id;
                 this.avatar = data.chat.avatar;
                 this.title = data.chat.title;
-                const req = yield xhrPostChatsToken({ id: this.chatid });
-                this.token = req === null || req === void 0 ? void 0 : req.response.token;
                 this.setState({ showMessages: true, shatid: String(this.chatid), chatid: this.chatid, avatar: this.avatar, title: this.title, token: this.token });
-                // const reqChatUsers = await xhrGetChatsUsers({id:data.chat.id}) 
-                // console.log('reqChatUsers', reqChatUsers)
-                // this.ws = new WS(String(localStorage.getItem('id')), String(this.shatId), this.token)
-                // this.ws.onMessage = this.wsOnMessagesGetOld
-                // this.ws.onOpen = () => { this.ws?.send('0', 'get old') }
             }
         });
-        this.sendMesageOnClick_callback = (message) => __awaiter(this, void 0, void 0, function* () {
-            this.ws = new WS(String(localStorage.getItem('id')), String(this.chatid), this.token);
-            this.ws.onMessage = this.wsOnMessagesSendMessages;
-            this.ws.onOpen = () => { var _a; (_a = this.ws) === null || _a === void 0 ? void 0 : _a.send(message); };
-        });
-        this.wsOnMessagesSendMessages = (event) => {
-            this.ws = new WS(String(localStorage.getItem('id')), String(this.chatid), this.token);
-            this.ws.onMessage = this.wsOnMessagesGetOld;
-            this.ws.onOpen = () => { var _a; (_a = this.ws) === null || _a === void 0 ? void 0 : _a.send('0', 'get old'); };
-        };
-        this.wsOnMessagesGetOld = (event) => {
-            this.setState({ showMessages: true, id: String(this.chatid), avatar: this.avatar, title: this.title, messages: event.data });
-        };
         this.state = {
             chatsBar_callback: this.chatsBar_callback,
-            sendMesageOnClick_callback: this.sendMesageOnClick_callback,
             showMessages: false
         };
     }
@@ -83,6 +60,4 @@ template() {
       </div>`);
     }
 }
-// <ChatsBar></ChatsBar>
-// <MessagesBarSelect></MessagesBarSelect>      
 //# sourceMappingURL=chat.js.map

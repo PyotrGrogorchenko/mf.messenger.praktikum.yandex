@@ -1,7 +1,5 @@
-import { workerData } from 'worker_threads'
 import Component from '../../../component/Component'
 import { WS } from '../../../webSocket/WebSoket'
-import { xhrPostChatsToken, xhrGetChatsUsers } from '../../../xhr/xhrExecute'
 
 export default class Chat extends Component {
   
@@ -25,46 +23,13 @@ export default class Chat extends Component {
       this.avatar = data.chat.avatar 
       this.title = data.chat.title 
       
-      const req = await xhrPostChatsToken({id:this.chatid})
-      this.token = req?.response.token
-      
       this.setState({showMessages: true, shatid: String(this.chatid), chatid:this.chatid, avatar: this.avatar, title: this.title, token:this.token})
 
-      // const reqChatUsers = await xhrGetChatsUsers({id:data.chat.id}) 
-      // console.log('reqChatUsers', reqChatUsers)
-
-
-      // this.ws = new WS(String(localStorage.getItem('id')), String(this.shatId), this.token)
-      // this.ws.onMessage = this.wsOnMessagesGetOld
-      // this.ws.onOpen = () => { this.ws?.send('0', 'get old') }
-  
     }
   }
 
-  sendMesageOnClick_callback = async (message: string) => { 
-
-    this.ws = new WS(String(localStorage.getItem('id')), String(this.chatid), this.token)
-    this.ws.onMessage = this.wsOnMessagesSendMessages
-    this.ws.onOpen = () => { this.ws?.send(message) }
-
-    
-    
-  }
-
-  wsOnMessagesSendMessages = (event: Event) => {
-    
-    this.ws = new WS(String(localStorage.getItem('id')), String(this.chatid), this.token)
-    this.ws.onMessage = this.wsOnMessagesGetOld
-    this.ws.onOpen = () => { this.ws?.send('0', 'get old') }
-
-  }
-
-  wsOnMessagesGetOld = (event: MessageEvent) => {
-    this.setState({showMessages: true, id: String(this.chatid), avatar: this.avatar, title: this.title, messages: event.data})
-  }
   state = {
     chatsBar_callback: this.chatsBar_callback,
-    sendMesageOnClick_callback: this.sendMesageOnClick_callback,
     showMessages: false
   }
 
@@ -89,8 +54,3 @@ export default class Chat extends Component {
   }
 
 }
-
-
-
-// <ChatsBar></ChatsBar>
-// <MessagesBarSelect></MessagesBarSelect>      

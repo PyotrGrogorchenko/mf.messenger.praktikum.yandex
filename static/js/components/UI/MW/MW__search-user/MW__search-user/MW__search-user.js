@@ -20,8 +20,6 @@ class MW__SearchUser extends Component {
         this.search_onChange = (e) => __awaiter(this, void 0, void 0, function* () {
             e.preventDefault();
             e.stopPropagation();
-            //console.log('search_onChange')
-            //this.setState({users: this.getUsers((e.target as HTMLInputElement).value)))
             yield this.getUsers(e.target.value);
         });
         this.search_onClick = (e) => {
