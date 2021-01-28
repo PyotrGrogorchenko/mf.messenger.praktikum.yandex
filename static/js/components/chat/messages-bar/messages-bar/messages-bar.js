@@ -52,7 +52,7 @@ class MessagesBar extends Component {
     }
     componentDidMount(props) {
         this.updatePage(props);
-        //setInterval(() => {this.updatePage(this.getProps)}, 5000);
+        setInterval(() => this.updatePage(this.getProps()), 5000);
     }
     componentDidUpdate(oldProps, props) {
         if (props.chatid === this.chatid) {

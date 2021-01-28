@@ -97,15 +97,15 @@ class ChatsBar__ChatsList extends Component {
 
   chatsOnСontextMenu = (e:MouseEvent) => {
 
-    e.preventDefault()
+    // e.preventDefault()
     
-    let arrli: Array<HTMLElement> = e.path.filter((el: HTMLElement) => el.nodeName === 'LI')
-    if (arrli.length === 0) { return }
-    let elLi = arrli[0]
+    // let arrli: Array<HTMLElement> = e.path.filter((el: HTMLElement) => el.nodeName === 'LI')
+    // if (arrli.length === 0) { return }
+    // let elLi = arrli[0]
     
-    let chatId: string | null = null
-    if (elLi) { chatId = elLi.getAttribute('id')  }
-    this.currentChatId = Number(chatId as string)
+    // let chatId: string | null = null
+    // if (elLi) { chatId = elLi.getAttribute('id')  }
+    // this.currentChatId = Number(chatId as string)
 
   }
 

@@ -7,8 +7,8 @@ class Message__Outgoing extends Component {
         <div className='message__decor bg-gy5'>
           {{props.text}}  
           <span className='message__info'>
-            <i className='color-gray2 fas fa-check-double'></i>
-            {{props.date}}
+            //<i className='color-gray2 fas fa-check-double'></i>
+            <p>{{props.date}}</p>
           </span>
         </div>
       </div>`);

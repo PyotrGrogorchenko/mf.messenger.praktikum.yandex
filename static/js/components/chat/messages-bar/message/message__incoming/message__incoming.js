@@ -12,7 +12,7 @@ template() {
           {{props.text}} 
         <span className='message__info'>
           <i className='hide color-gray2 fas fa-check-double'></i>
-          {{props.date}} 
+          <p>{{props.date}}</p>
         </span>
         </div>
           

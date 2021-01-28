@@ -13,6 +13,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Component from '../../../component/Component.js';
+import { xhrPostChatsToken } from '../../../xhr/xhrExecute.js';
 export default class Chat extends Component {
     constructor() {
         super(...arguments);
@@ -29,6 +30,8 @@ export default class Chat extends Component {
                 this.chatid = data.chat.id;
                 this.avatar = data.chat.avatar;
                 this.title = data.chat.title;
+                const req = yield xhrPostChatsToken({ id: this.chatid });
+                this.token = req === null || req === void 0 ? void 0 : req.response.token;
                 this.setState({ showMessages: true, shatid: String(this.chatid), chatid: this.chatid, avatar: this.avatar, title: this.title, token: this.token });
             }
         });

@@ -5,7 +5,7 @@ class MessagesBarSelect extends Component {
   template() { 
     return (
       `<div class='messages-bar'>
-        Please select a chat to start messaging 
+        Для добавления чатов/пользователей используй контестное меню списка чатов
       </div>`
     )
   }

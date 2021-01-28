@@ -84,17 +84,13 @@ class ChatsBar__ChatsList extends Component {
             this.setState({ chats: yield this.getChats() });
         });
         this.chatsOnСontextMenu = (e) => {
-            e.preventDefault();
-            let arrli = e.path.filter((el) => el.nodeName === 'LI');
-            if (arrli.length === 0) {
-                return;
-            }
-            let elLi = arrli[0];
-            let chatId = null;
-            if (elLi) {
-                chatId = elLi.getAttribute('id');
-            }
-            this.currentChatId = Number(chatId);
+            // e.preventDefault()
+            // let arrli: Array<HTMLElement> = e.path.filter((el: HTMLElement) => el.nodeName === 'LI')
+            // if (arrli.length === 0) { return }
+            // let elLi = arrli[0]
+            // let chatId: string | null = null
+            // if (elLi) { chatId = elLi.getAttribute('id')  }
+            // this.currentChatId = Number(chatId as string)
         };
         this.state = {
             CM_onClick: this.CM_onClick,

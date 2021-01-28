@@ -22,12 +22,7 @@ class WS {
     
     this.socket?.addEventListener('open', () => {
       console.log('Соединение установлено');
-      
-      if (this.onOpen) { this.onOpen() }
-      // this.socket?.send(JSON.stringify({
-      //     content: 'Моё первое сообщение миру!',
-      //     type: 'message',
-      // }));
+      if (this.onOpen) this.onOpen()
     })
 
     this.socket?.addEventListener('close', (event) => {
@@ -38,21 +33,18 @@ class WS {
       }
       console.log(`Код: ${event.code} | Причина: ${event.reason}`);
       
-      if (this.onClose) { this.onClose(event) }
+      if (this.onClose) this.onClose(event)
     
     })
     
     this.socket?.addEventListener('message', (event) => {
-      console.log('Получены данные', event.data)
-    
-      if (this.onMessage) { this.onMessage(event) }
-    
+      if (this.onMessage) this.onMessage(event)
     })
 
     this.socket?.addEventListener('error', (event) => {
       console.log('Ошибка', event)
       
-      if (this.onError) { this.onError(event) }
+      if (this.onError) this.onError(event)
             
     })
     

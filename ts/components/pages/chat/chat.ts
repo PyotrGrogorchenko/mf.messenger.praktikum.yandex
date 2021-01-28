@@ -1,5 +1,6 @@
 import Component from '../../../component/Component'
 import { WS } from '../../../webSocket/WebSoket'
+import { xhrPostChatsToken } from '../../../xhr/xhrExecute'
 
 export default class Chat extends Component {
   
@@ -23,6 +24,9 @@ export default class Chat extends Component {
       this.avatar = data.chat.avatar 
       this.title = data.chat.title 
       
+      const req = await xhrPostChatsToken({id: this.chatid})
+      this.token = req?.response.token
+
       this.setState({showMessages: true, shatid: String(this.chatid), chatid:this.chatid, avatar: this.avatar, title: this.title, token:this.token})
 
     }
