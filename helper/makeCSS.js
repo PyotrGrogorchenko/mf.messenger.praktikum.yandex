@@ -1,4 +1,4 @@
-"use strict";
+'use strict'
 
 (async () => {
   await execute()
@@ -27,7 +27,6 @@ async function execute() {
     const filePathTS = filePathsTS[i]
 
     const pathParseTS = path.parse(filePathTS)
-    const arrDirTS = pathParseTS.dir.split('/')
   
     const filePathsCSS = await FileHound.create()
                           .paths(pathParseTS.dir)

@@ -1,4 +1,4 @@
-"use strict";
+'use strict'
 
 (async () => {
   await execute()
@@ -32,7 +32,7 @@ async function execute() {
     const pathParse = path.parse(filePath)
     
     data += `\n@import '../components/${pathParse.base}';` 
-    fs.writeFileSync(`static/css/build/components.css`, data)
+    fs.writeFileSync('static/css/build/components.css', data)
 
     progressBar.update(i)
   

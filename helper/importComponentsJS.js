@@ -1,4 +1,4 @@
-"use strict";
+'use strict'
 
 (async () => {
   await execute()
@@ -69,7 +69,6 @@ async function execute() {
     data = data.replace(/\/\/#Import(.*?)\/\/#Import\n/gs, '')
     data = data.replace(/\/\/#Components(.*?)\/\/#Components\n/gs, '')
 
-    const depth = pathParse.dir.slice(pathParse.dir.indexOf('components')).split('/').length
     const importBegin = pathParse.dir.slice(pathParse.dir.indexOf('components')).split('/')
                         .reduce(function(res) {return res + '../'}, '')
 

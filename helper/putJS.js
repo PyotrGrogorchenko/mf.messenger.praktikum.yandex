@@ -1,4 +1,4 @@
-"use strict";
+'use strict'
 
 (async () => {
   await execute()
@@ -14,7 +14,6 @@ async function execute() {
   const fs = require('fs')
   
   const appRoot = require('app-root-path')
-  const { executionAsyncResource } = require('async_hooks')
   
   const filePaths = await FileHound.create()
                   .paths(appRoot.path + '/static/js')

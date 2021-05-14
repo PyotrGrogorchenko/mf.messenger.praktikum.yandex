@@ -1,4 +1,4 @@
-"use strict";
+'use strict'
 
 (async () => {
   await execute()
@@ -53,5 +53,4 @@ async function execute() {
 
   progressBar.stop()
 
-}  
-
+}
