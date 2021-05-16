@@ -1,21 +1,62 @@
-// {
-//   "extends": ["plugin:@typescript-eslint/recommended"],
-//   "parser": "@typescript-eslint/parser",
-//   "plugins": ["@typescript-eslint"],
-//   "parserOptions":  {
-//     "ecmaVersion":  2020,  // Allows for the parsing of modern ECMAScript features
-//     "sourceType":  "module"  // Allows for the use of imports
-//   },
-//   "rules": {
-//     "no-unused-vars": ["error"],
-//     "quotes": ["error", "single"]
-//   }
-// } 
-
 {
-  "parser": "babel-eslint",
+  "extends": [
+    "airbnb-typescript"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.eslint.json"
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "jasmine": true
+  },
   "rules": {
-    "no-unused-vars": ["error"],
-    "quotes": ["error", "single"]
+    "no-tabs": 2,
+    "max-len": [
+      "error", 
+      {
+        "code": 150,
+        "tabWidth": 2
+      }
+    ],
+    "import/prefer-default-export": 0,
+    "@typescript-eslint/semi": 0,
+    "indent": "off",
+    "@typescript-eslint/indent": [
+      "error",
+      2
+    ],
+    "block-spacing" : [
+      "error",
+      "never"
+    ],
+    "object-curly-spacing": "off",
+    "@typescript-eslint/object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "no-plusplus": "off",
+    "no-underscore-dangle": "off",
+    "arrow-parens": "off",
+    "@typescript-eslint/lines-between-class-members": "off",
+    "@typescript-eslint/comma-dangle": [
+      "error",
+      "never"
+    ],
+    "import/no-extraneous-dependencies": [
+      "error", 
+      {
+        "devDependencies": true,
+        "optionalDependencies": false,
+        "peerDependencies": false
+      }]
   }
-} 
+}

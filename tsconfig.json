@@ -1,37 +1,42 @@
 {
   "compilerOptions": {
-    /* Visit https://aka.ms/tsconfig.json to read more about this file */
-  
-    /* Basic Options */
-    "target": "es6",                          /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */
-    "module": "es6",                     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
-    "sourceMap": true,                     /* Generates corresponding '.map' file. */
-    "outDir": "./static/js",                        /* Redirect output structure to the directory. */
-    "rootDir": "ts",                       /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
-
-    /* Strict Type-Checking Options */
-    "strict": true,                           /* Enable all strict type-checking options. */
-    "noImplicitAny": true,                 /* Raise error on expressions and declarations with an implied 'any' type. */
-    "strictNullChecks": true,              /* Enable strict null checks. */
-    "alwaysStrict": true,                  /* Parse in strict mode and emit "use strict" for each source file. */
-
-    /* Additional Checks */
-    "noUnusedLocals": false,                /* Report errors on unused locals. */
-    "noUnusedParameters": false,            /* Report errors on unused parameters. */
-
-    /* Module Resolution Options */
-    "esModuleInterop": true,                  /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
-
-    /* Source Map Options */
-
-    /* Experimental Options */
+    "target": "es6",
+    // "module": "esnext",
+    "sourceMap": true,
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "moduleResolution": "node",
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "esModuleInterop": true,
     "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@xhr": ["src/xhr/index"]
+      // "@state/*": ["src/store/*"],
+      // "@utils": ["src/utils/index"],
+      // "@apiDb": ["src/services/API/db/index"]
+    }
+  },       
+  "include": [
+    "src/**/*.ts"
+  ]
 
-    /* Advanced Options */
-    "skipLibCheck": true,                     /* Skip type checking of declaration files. */
-    "forceConsistentCasingInFileNames": true  /* Disallow inconsistently-cased references to the same file. */
-  },
 
-  "exclude": ["ts/__test__"]
+  // "include": [
+  //   "src"
+  //   // "typings/**/*.d.ts",
+  //   // "./node_modules/@types",
+  //   // "tests/**/*.test.js",
+  //   // "tests/**/*.test.ts",
+  //   // "SPA/index.tsx"
+  // ],
+
+  // "exclude": ["src/__test__"]
 
 }

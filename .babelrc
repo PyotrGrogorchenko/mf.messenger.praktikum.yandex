@@ -1,0 +1,30 @@
+{
+  "presets": [
+    
+    "@babel/preset-typescript",
+    "@babel/preset-env"
+  ],
+  "plugins": [
+    "transform-class-properties"
+    // "@babel/plugin-proposal-class-properties",
+    //   "@babel/plugin-syntax-dynamic-import",
+    //   "@loadable/babel-plugin"
+  ]
+}
+
+// export default api => {
+  
+//   // Cache configuration is a required option
+//   api.cache(false)
+
+//   const presets = [
+//     '@babel/preset-typescript',
+//     '@babel/preset-env'
+//   ]
+
+//   const plugins = [
+//     'transform-class-properties'
+//   ]
+
+//   return { presets, plugins }
+// }

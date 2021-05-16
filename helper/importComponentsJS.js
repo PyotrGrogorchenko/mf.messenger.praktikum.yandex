@@ -1,28 +1,25 @@
-'use strict'
-
-(async () => {
+'use strict'(async () => {
   await execute()
   console.log(' importComponentsJS done')
 })()
 
 async function execute() {
-
   const FileHound = require('filehound')
   const fs = require('fs')
   const path = require('path')
-  
+
   const appRoot = require('app-root-path')
-  
+
   const filePaths = await FileHound.create()
-                        .paths(appRoot.path + '/static/js/components')
-                        .ext('js')
-                        .find()
-  
+    .paths(`${appRoot.path}/static/js/components`)
+    .ext('js')
+    .find()
+
   const fileClass = {}
-  for (let i = 0; i < filePaths.length; i++){  
+  for (let i = 0; i < filePaths.length; i++) {
     const filePath = filePaths[i]
-    const pathParse = {...path.parse(filePath)}
-    
+    const pathParse = { ...path.parse(filePath) }
+
     pathParse.dir = pathParse.dir.slice(pathParse.dir.indexOf('components'))
 
     fileClass[getClassName(pathParse.name)] = pathParse
@@ -31,9 +28,8 @@ async function execute() {
   const cliProgress = require('cli-progress')
   const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic)
   progressBar.start(filePaths.length - 1, 0)
-  
-  for (let i = 0; i < filePaths.length; i++){  
-    
+
+  for (let i = 0; i < filePaths.length; i++) {
     progressBar.update(i)
 
     const filePath = filePaths[i]
@@ -42,7 +38,7 @@ async function execute() {
     // if (pathParse.base !== 'mw__search-user.js') {
     //   continue
     // }
-    
+
     let data = fs.readFileSync(filePath, 'utf8')
     const templIndex = data.indexOf('template()')
 
@@ -50,19 +46,19 @@ async function execute() {
     templ = new RegExp(/[\`](.*?)[\`]/g).exec(templ)[1]
 
     const components = []
-    const regExp = new RegExp(/[<][A-Z0-9](.*?)[a-zA-Z0-9][\s>]/g)   
-    
+    const regExp = new RegExp(/[<][A-Z0-9](.*?)[a-zA-Z0-9][\s>]/g)
+
     let txt
     while ((txt = regExp.exec(templ))) {
       const component = txt[0].slice(1, txt[0].length - 1)
-      if (components.indexOf(component) === -1){
+      if (components.indexOf(component) === -1) {
         components.push(component)
       }
-    }    
+    }
 
-    //console.log(components, templ)
+    // console.log(components, templ)
 
-    if (components.length === 0){
+    if (components.length === 0) {
       continue
     }
 
@@ -70,49 +66,41 @@ async function execute() {
     data = data.replace(/\/\/#Components(.*?)\/\/#Components\n/gs, '')
 
     const importBegin = pathParse.dir.slice(pathParse.dir.indexOf('components')).split('/')
-                        .reduce(function(res) {return res + '../'}, '')
+      .reduce((res) => `${res}../`, '')
 
-    data = '//#Import\n' + data
-    
-    components.forEach(function(component) {
+    data = `//#Import\n${data}`
+
+    components.forEach((component) => {
       const pathParsecomponent = fileClass[component]
-      if (!pathParsecomponent){
-        console.error(' pathParse.base: ' + pathParse.base + ' Not found component ' + component)
+      if (!pathParsecomponent) {
+        console.error(` pathParse.base: ${pathParse.base} Not found component ${component}`)
         return
       }
-      
-      data = `import ${ component } from '${importBegin}${pathParsecomponent.dir}/${pathParsecomponent.base}'\n` + data
+
+      data = `import ${component} from '${importBegin}${pathParsecomponent.dir}/${pathParsecomponent.base}'\n${data}`
     })
-    data = '//#Import\n' + data
+    data = `//#Import\n${data}`
 
     let funcComonents = '//#Components\n'
     funcComonents += `components() {return {${components.toString()}}}\n`
     funcComonents += '//#Components\n'
-    
-    data = data.replace('template()', funcComonents + 'template()')
-    
+
+    data = data.replace('template()', `${funcComonents}template()`)
+
     fs.writeFileSync(filePath, data)
-    
-  } 
+  }
 
   progressBar.stop()
-
 }
 
-function getClassName (fileName) {
-  
+function getClassName(fileName) {
   let result = fileName
 
-  result = result.split('__').reduce(function(res, item) {
-    return res + (res === '' ? '' : '__') + item[0].toUpperCase() + item.slice(1)  
-  }, '')
+  result = result.split('__').reduce((res, item) => res + (res === '' ? '' : '__') + item[0].toUpperCase() + item.slice(1), '')
 
-  result = result.split('-').reduce(function(res, item) {
-    return res + item[0].toUpperCase() + item.slice(1)  
-  }, '')
+  result = result.split('-').reduce((res, item) => res + item[0].toUpperCase() + item.slice(1), '')
 
-  //console.log(fileName, result)
+  // console.log(fileName, result)
 
   return result
-
 }
