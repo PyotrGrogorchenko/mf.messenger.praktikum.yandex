@@ -7,10 +7,6 @@ type Node = {
   deleteMark: boolean
 }
 
-function parser(str:string): Array<Node> {
-  return parserNoREGEXP(str)
-}
-
 function parserNoREGEXP(str: string): Array<Node> {
   const res: Array<Node> = Array<Node>()
 
@@ -61,6 +57,10 @@ function parserNoREGEXP(str: string): Array<Node> {
   }
 
   return res
+}
+
+function parser(str:string): Array<Node> {
+  return parserNoREGEXP(str)
 }
 
 export { parser, PARSER_TYPES, Node }

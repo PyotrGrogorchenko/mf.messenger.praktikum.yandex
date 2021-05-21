@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    // "module": "esnext",
+    "target": "es5",
+    "module": "commonjs",
     "sourceMap": true,
     "baseUrl": "./",
     "outDir": "./dist",
@@ -17,6 +17,8 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
+      "@Component": ["src/component/Component"],
+      "@Components/*": ["src/components/*"],
       "@xhr": ["src/xhr/index"]
       // "@state/*": ["src/store/*"],
       // "@utils": ["src/utils/index"],

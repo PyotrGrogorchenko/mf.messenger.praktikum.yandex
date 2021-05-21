@@ -1,8 +1,8 @@
 import EventBus from './EventBus'
 import { Node as PARSER_NODE, parser } from './parser'
-import { VirtDom } from './VirtDom/VirtDOM'
-import { Node as DOM_NODE } from './VirtDom/Node'
+import { VirtDom, Node as DOM_NODE } from './VirtDom/index'
 import { onRouteClick } from '../router/events'
+import 'regenerator-runtime/runtime'
 
 enum EVENTS {
   FLOW_CDM = 'flow:component-did-mount',
@@ -95,8 +95,7 @@ class Component {
     this.execute(modifyState)
     this.eventBus().emit(EVENTS.FLOW_COMPILE, modifyState)
   }
-  execute(modifyState:LooseObject = {}): void {
-  }
+  execute(modifyState:LooseObject = {}): void {}
 
   _compile(modifyState: LooseObject = {}) {
     this.compile(modifyState)
@@ -105,6 +104,7 @@ class Component {
   compile(modifyState: LooseObject = {}) {
     Object.assign(this.state, modifyState)
 
+    // console.log('compile')
     let { parsedTemplate } = this
     if (!parsedTemplate) {
       parsedTemplate = parser(this.template())
@@ -117,11 +117,11 @@ class Component {
     this._virtDOM = !this._virtDOM ? new VirtDom() : this._virtDOM
     this._virtDOM.compile(parsedTemplate as Array<PARSER_NODE>, this.state, props, this.deleteMark)
 
-    this._virtDOM.getIsComponent().forEach(node => {
+    this._virtDOM.getIsComponent().forEach((node) => {
       if (node.componentLink) {
         node.componentLink.setProps(node.props)
       } else {
-        node.componentLink = new components[node.tagName](node.props)
+        node.componentLink = new components[node.tagName](node.props);
       }
       (node.componentLink as Component).deleteMark = node.deleteMark
     })
@@ -173,6 +173,7 @@ class Component {
             }
             element.setAttribute(prop, node.props[prop])
           } else if (node.props[prop] === '#noValue') {
+            // No actions
           } else {
             element.setAttribute(prop, node.props[prop])
           }

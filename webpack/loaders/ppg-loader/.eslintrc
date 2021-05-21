@@ -1,7 +1,4 @@
 {
-  "extends": [
-    "airbnb-typescript"
-  ],
   "parserOptions": {
     "project": "./tsconfig.eslint.json"
   },
@@ -26,7 +23,6 @@
     "import/prefer-default-export": 0,
     "@typescript-eslint/semi": 0,
     "indent": "off",
-    "semi": ["error", "never"],
     "@typescript-eslint/indent": [
       "error",
       2
@@ -48,6 +44,14 @@
     "no-underscore-dangle": "off",
     "arrow-parens": "off",
     "@typescript-eslint/lines-between-class-members": "off",
+    "semi": ["error", "never"],
+    "func-names": ["error", "never"],
+    "prefer-destructuring": ["error", {
+      "array": false,
+      "object": true
+    }, {
+      "enforceForRenamedProperties": false
+    }],
     "@typescript-eslint/comma-dangle": [
       "error",
       "never"

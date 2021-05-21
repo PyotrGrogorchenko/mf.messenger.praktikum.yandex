@@ -1,0 +1,21 @@
+{
+  "name": "ppg-loader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "directories": {
+    "lib": "dist"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "app-root-path": "^3.0.0",
+    "loader-utils": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/app-root-path": "^1.2.4"
+  }
+}

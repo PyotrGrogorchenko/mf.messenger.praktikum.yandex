@@ -44,6 +44,7 @@ class Router {
     const route = this.getRoute(pathname)
 
     if (!route) {
+      // eslint-disable-next-line no-console
       console.error(`Route not found:${pathname}`)
       return;
     }
