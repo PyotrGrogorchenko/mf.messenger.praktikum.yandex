@@ -5,7 +5,7 @@ export class Home extends Component {
     return (
       `<PageColumn>
         <h1>Messangerrrrrrrr</h1>
-      </PageColumn>`
+        </PageColumn>`
     )
   }
 }

@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "lib": [
+      "es2020.string"
+    ],
     "target": "es5",
     "module": "commonjs",
     "sourceMap": true,

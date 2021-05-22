@@ -45,7 +45,7 @@ export const config: Configuration = {
         ],
         use: [
           'babel-loader',
-          'ppg-loader'
+          'gpp-loader'
         ]
       },
       {

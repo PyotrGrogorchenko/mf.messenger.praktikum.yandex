@@ -1,4 +1,4 @@
-import { PageColumn } from './PageColumn.ppg'
+import { PageColumn } from './PageColumn.gpp'
 import './style.css'
 
 export { PageColumn }
