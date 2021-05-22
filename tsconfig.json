@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "lib": [
-      "es2020.string"
+      "es2020.string",
+      "dom"
     ],
     "target": "es5",
     "module": "commonjs",
@@ -22,26 +23,12 @@
     "paths": {
       "@Component": ["src/component/Component"],
       "@Components/*": ["src/components/*"],
-      "@xhr": ["src/xhr/index"]
-      // "@state/*": ["src/store/*"],
-      // "@utils": ["src/utils/index"],
-      // "@apiDb": ["src/services/API/db/index"]
+      "@xhr": ["src/xhr/index"],
+      "@utils": ["src/utils/index"],
+      "@valid": ["src/valid/index"]
     }
   },       
   "include": [
     "src/**/*.ts"
   ]
-
-
-  // "include": [
-  //   "src"
-  //   // "typings/**/*.d.ts",
-  //   // "./node_modules/@types",
-  //   // "tests/**/*.test.js",
-  //   // "tests/**/*.test.ts",
-  //   // "SPA/index.tsx"
-  // ],
-
-  // "exclude": ["src/__test__"]
-
 }

@@ -1,3 +1,5 @@
+import { getUid } from '@utils'
+
 enum PARSER_TYPES {BEGIN, END, TEXT, CODE}
 
 type Node = {
@@ -14,7 +16,7 @@ function parserNoREGEXP(str: string): Array<Node> {
   str = str.replace(/%}/g, '%}>')
 
   const addItem = (type: PARSER_TYPES, content: string): void => {
-    const uid = type === PARSER_TYPES.BEGIN ? window.uid() : 0
+    const uid = type === PARSER_TYPES.BEGIN ? getUid() : 0
     res.push({
       type, content, uid, deleteMark: false
     })

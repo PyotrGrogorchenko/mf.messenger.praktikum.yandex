@@ -1,6 +1,8 @@
+import { get, regexpMatchAll } from '@utils'
 import Component from '../Component'
 import { PARSER_TYPES, Node as PARSER_NODE } from '../parser'
 import { Node } from './Node'
+import { codeIsCloseBracket } from './utils'
 
 class VirtDom {
   private _nodes: Array<Node> = Array<Node>()
@@ -110,7 +112,7 @@ class VirtDom {
 
     const condition:Array<string> = codeHead[1].trim().split(' ').filter((item:string) => item)
     const sign = condition[1]
-    const right = window.get(context, condition[2], 0)
+    const right = get(context, condition[2], 0)
 
     const step: string = codeHead[2].trim().replace(begin[1], '')
 
@@ -124,7 +126,7 @@ class VirtDom {
     })
 
     if (!this._compare(context[iName], sign, right)) {
-      while (!this._code__isCloseBracket(template) && template.i < template.list.length) {
+      while (!codeIsCloseBracket(template) && template.i < template.list.length) {
         template.i++
         template.record = template.list[template.i]
       }
@@ -150,7 +152,7 @@ class VirtDom {
         template.record = record
 
         if (record.type === PARSER_TYPES.CODE) {
-          if (this._code__isCloseBracket(template)) {
+          if (codeIsCloseBracket(template)) {
             template.i++
             template.record = { ...template.list[template.i] }
             break
@@ -158,7 +160,7 @@ class VirtDom {
           this._compileCode(context, template)
         }
 
-        window.regexpMatchAll(record.content, this._REGEXP_PARAM).forEach((param: any) => {
+        regexpMatchAll(record.content, this._REGEXP_PARAM).forEach((param: any) => {
           vars.forEach((variable: Array<string>) => {
             if (param[1] && param[1].startsWith(variable[0])) {
               context.state[variable[0]] = context[variable[0]]
@@ -210,12 +212,12 @@ class VirtDom {
         if (isElse()) {
           ifParam = !ifParam
           continue
-        } else if (this._code__isCloseBracket(template)) {
+        } else if (codeIsCloseBracket(template)) {
           break
         } else if (ifParam) {
           this._compileCode(context, template)
         } else {
-          while (!this._code__isCloseBracket(template) && template.i < template.list.length) {
+          while (!codeIsCloseBracket(template) && template.i < template.list.length) {
             template.i++
             template.record = template.list[template.i]
           }
@@ -230,9 +232,9 @@ class VirtDom {
     }
   }
 
-  _code__isCloseBracket(template: LooseObject): boolean {
-    return template.record.content.replace(/ /ig, '') === '{%}%}'
-  }
+  // _code__isCloseBracket(template: LooseObject): boolean {
+  //   return template.record.content.replace(/ /ig, '') === '{%}%}'
+  // }
 
   _code__calculateValue(context: LooseObject, code: string): any {
     if (code === 'null') {
@@ -242,13 +244,13 @@ class VirtDom {
     let value: any
     const rg: RegExpExecArray | null = new RegExp(this._REGEXP_PARAM).exec(code)
     if (rg) {
-      value = window.get(context, rg[1], rg[1])
+      value = get(context, rg[1], rg[1])
     } else {
       value = code
     }
 
     if (value) {
-      window.regexpMatchAll(value, /[\'\"](.*?)[\'\"]/gi).forEach((rg: RegExpExecArray) => {
+      regexpMatchAll(value, /[\'\"](.*?)[\'\"]/gi).forEach((rg: RegExpExecArray) => {
         value = rg[1]
       })
     }
@@ -263,7 +265,7 @@ class VirtDom {
 
     const cacheTxt: LooseObject = {}
     let count: number = 1
-    window.regexpMatchAll(content, /[\'\"](.*?)[\'\"]/gi).forEach((txt: RegExpExecArray) => {
+    regexpMatchAll(content, /[\'\"](.*?)[\'\"]/gi).forEach((txt: RegExpExecArray) => {
       if (txt[0]) {
         cacheTxt[`text${count}`] = txt[0]
         content = content.replace(txt[0], `text${count}`)
@@ -285,14 +287,14 @@ class VirtDom {
       const param: RegExpExecArray | null = new RegExp(this._REGEXP_PARAM).exec(arrKeyValue[1])
 
       if (arrKeyValue[0] === 'className') {
-        const strClasses: string = param ? window.get(context, param[1], '') : arrKeyValue[1].replace(/[\'\"]/g, '').trim()
+        const strClasses: string = param ? get(context, param[1], '') : arrKeyValue[1].replace(/[\'\"]/g, '').trim()
         if (strClasses) {
           node_props.classes = strClasses.split(' ')
         }
       } else if (arrKeyValue.length === 1) {
         node_props[arrKeyValue[0]] = '#noValue'
       } else if (param) {
-        node_props[arrKeyValue[0]] = window.get(context, param[1], param[1])
+        node_props[arrKeyValue[0]] = get(context, param[1], param[1])
       } else {
         node_props[arrKeyValue[0]] = arrKeyValue[1].replace(/[\'\"]/g, '')
       }

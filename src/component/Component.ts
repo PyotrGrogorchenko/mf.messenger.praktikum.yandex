@@ -1,3 +1,5 @@
+import { copyObj } from '@utils'
+import { createValidateEvents } from '@valid'
 import EventBus from './EventBus'
 import { Node as PARSER_NODE, parser } from './parser'
 import { VirtDom, Node as DOM_NODE } from './VirtDom/index'
@@ -198,14 +200,14 @@ class Component {
   }
 
   setState(modifyState: LooseObject) {
-    const oldProps = window.copyObj(this.getProps())
+    const oldProps = copyObj(this.getProps())
     this.eventBus().emit(EVENTS.FLOW_CWU, this.getProps(), this.state)
     this.eventBus().emit(EVENTS.FLOW_EXECUTE, modifyState)
     this.eventBus().emit(EVENTS.FLOW_CDU, oldProps, this.getProps())
     if (modifyState) {
       this.virtDOM?.deleteMarkedNodes()
     }
-    window.createValidateEvents()
+    createValidateEvents()
   }
 }
 
