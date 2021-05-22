@@ -1,0 +1,36 @@
+{
+  "name": "gpp-loader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "directories": {
+    "lib": "dist"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "app-root-path": "^3.0.0",
+    "core-js": "^3.12.1",
+    "loader-utils": "^2.0.0",
+    "regenerator-runtime": "^0.13.7"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/preset-env": "^7.14.2",
+    "@babel/preset-typescript": "^7.13.0",
+    "@loadable/babel-plugin": "^5.13.2",
+    "@types/app-root-path": "^1.2.4",
+    "@types/jest": "^26.0.23",
+    "jest": "^26.6.3",
+    "memfs": "^3.2.2",
+    "ts-jest": "^26.5.6",
+    "typescript": "^4.2.4",
+    "webpack": "^5.37.1"
+  }
+}
