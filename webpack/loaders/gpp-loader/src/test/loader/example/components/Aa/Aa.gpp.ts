@@ -1,5 +1,7 @@
 export class Aa {
   template() {
-    `<div>divA</div>`
+    `<Cc>
+      <div>divA</div>
+    <Cc>`
   }
 }

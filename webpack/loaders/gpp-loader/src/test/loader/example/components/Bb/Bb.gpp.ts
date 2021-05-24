@@ -1,10 +1,10 @@
 export class Bb {
   template() {
-    `<C>
+    `<Cc>
       <h1>ClassC</h1>
-    </C>
-    <D>
+    </Cc>
+    <Dd>
       <h1>ClassD</h1>
-    </D>`
+    </Dd>`
   }
 }

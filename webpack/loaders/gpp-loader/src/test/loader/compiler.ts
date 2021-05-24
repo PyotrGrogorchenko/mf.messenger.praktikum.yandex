@@ -1,8 +1,8 @@
 import path from 'path'
-import webpack from 'webpack'
 import { createFsFromVolume, Volume } from 'memfs'
+import webpack, { Stats } from 'webpack'
 
-export default (fixture: string, options = {}) => {
+export default (fixture: string, options = {}): Promise<Stats> => {
   const compiler = webpack({
     context: `${__dirname}/example`,
     entry: `./${fixture}`,
@@ -26,11 +26,11 @@ export default (fixture: string, options = {}) => {
   compiler.outputFileSystem = createFsFromVolume(new Volume())
   compiler.outputFileSystem.join = path.join.bind(path)
 
-  return new Promise((resolve, reject) => {
+  return new Promise<Stats>((resolve, reject) => {
     compiler.run((err, stats) => {
       if (err || !stats) reject(err)
       if (stats && stats.hasErrors()) reject(stats.toJson().errors)
-      resolve(stats)
+      resolve(stats as webpack.Stats)
     })
   })
 }

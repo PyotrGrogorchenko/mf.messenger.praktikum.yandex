@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loader component Bb 1`] = `
+"//#gpp-loader #importComponents\\\\\\\\
+import {Cc} from '/home/pyotr/prg/mf.messenger.praktikum.yandex/webpack/loaders/gpp-loader/src/test/loader/example/components/CD/Cc/Cc.gpp.ts'
+import {Dd} from '/home/pyotr/prg/mf.messenger.praktikum.yandex/webpack/loaders/gpp-loader/src/test/loader/example/components/CD/Dd/index.ts'
+//#gpp-loader #importComponents//
+export class Bb {
+  //#gpp-loader #componentsfunc\\\\\\\\
+components() {return {Cc,Dd}}
+//#gpp-loader #componentsfunc//
+template() {
+    \`<Cc>
+      <h1>ClassC</h1>
+    </Cc>
+    <Dd>
+      <h1>ClassD</h1>
+    </Dd>\`
+  }
+}"
+`;
+
+exports[`Loader index 1`] = `
+"//#gpp-loader #importComponents\\\\\\\\
+import {Aa} from '/home/pyotr/prg/mf.messenger.praktikum.yandex/webpack/loaders/gpp-loader/src/test/loader/example/components/Aa/Aa.gpp.ts'
+import {Dd} from '/home/pyotr/prg/mf.messenger.praktikum.yandex/webpack/loaders/gpp-loader/src/test/loader/example/components/CD/Dd/index.ts'
+//#gpp-loader #importComponents//
+export class Index {
+  //#gpp-loader #componentsfunc\\\\\\\\
+components() {return {Aa,Dd}}
+//#gpp-loader #componentsfunc//
+template() {
+    \`<Aa>
+      <h1>ClassA</h1>
+      <Dd>
+        <h1>ClassB</h1>
+      </Dd>
+    </Aa>\`
+  }
+}
+"
+`;
