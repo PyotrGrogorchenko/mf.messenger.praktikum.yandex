@@ -1,6 +1,6 @@
-import Component from '../../../../component/Component'
+import Component from '@Component'
 
-class ButtonMain extends Component {
+export class ButtonMain extends Component {
   template() {
     return (
       `<button 
@@ -15,5 +15,3 @@ class ButtonMain extends Component {
     )
   }
 }
-
-export default ButtonMain

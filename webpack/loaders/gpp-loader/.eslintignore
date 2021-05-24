@@ -4,3 +4,4 @@
 /.idea
 package-lock.json
 package.json
+src/test/loader/example

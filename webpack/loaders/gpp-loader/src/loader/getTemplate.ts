@@ -1,8 +1,11 @@
-export const getTemplate = (source: string): string | null => {
+import { LooseObject } from 'src/types'
+
+export const getTemplate = (props: LooseObject) => {
+  const { source } = props
   const tmplIndex = source.indexOf('template()')
-  if (tmplIndex < 0) return null
+  if (tmplIndex < 0) return
   const tmplFunc: string = source.slice(tmplIndex).replace(/\n/g, '')
   const tmplRG = new RegExp(/[`](.*?)[`]/g).exec(tmplFunc)
-  if (!tmplRG) return null
-  return tmplRG[1]
+  if (!tmplRG) return
+  props.tmpl = tmplRG[1]
 }

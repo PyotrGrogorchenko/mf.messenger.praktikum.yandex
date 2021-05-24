@@ -1,11 +1,11 @@
 import fs from 'fs'
 import { LooseObject, This } from '../types'
 
-export const getComponentsPath = function (this: This) {
+export const getComponentsPath = function (this: This, componentsDir: string) {
   const componentsPath: LooseObject = {}
 
   const compilerOptions = this._compiler.options
-  const context = `${compilerOptions.context}/components`
+  const context = `${compilerOptions.context}${componentsDir === '' ? '' : `/${componentsDir}`}`
 
   const readDir = (root: string, dir: string) => {
     const rootDir = `${root}${dir === '' ? '' : `/${dir}`}`

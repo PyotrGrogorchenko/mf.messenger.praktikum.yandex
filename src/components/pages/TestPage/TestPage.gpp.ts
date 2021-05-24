@@ -1,6 +1,6 @@
-import Component from '../../../component/Component'
+import Component from '@Component'
 
-export default class TestPage extends Component {
+export class TestPage extends Component {
   CM_onClick = (data: LooseObject) => {
     this.setState({ btnTestUpdate_text: 'Success!', btnTestUpdate_id: 'newId' })
     const { list } = this.state

@@ -1,4 +1,7 @@
 {
+  // "extends": [
+  //   "airbnb-typescript/base"
+  // ],
   "parserOptions": {
     "project": "./tsconfig.eslint.json"
   },
@@ -42,6 +45,7 @@
     ],
     "no-plusplus": "off",
     "no-underscore-dangle": "off",
+    "no-param-reassign": "off",
     "arrow-parens": "off",
     "@typescript-eslint/lines-between-class-members": "off",
     "semi": ["error", "never"],

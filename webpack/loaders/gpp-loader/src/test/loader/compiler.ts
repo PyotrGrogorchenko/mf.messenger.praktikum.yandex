@@ -2,9 +2,9 @@ import path from 'path'
 import webpack from 'webpack'
 import { createFsFromVolume, Volume } from 'memfs'
 
-export default (fixture: string, options = {}): Promise<webpack.Stats> => {
+export default (fixture: string, options = {}) => {
   const compiler = webpack({
-    context: path.resolve(__dirname, './example'),
+    context: `${__dirname}/example`,
     entry: `./${fixture}`,
     output: {
       path: path.resolve(__dirname),
@@ -13,9 +13,9 @@ export default (fixture: string, options = {}): Promise<webpack.Stats> => {
     module: {
       rules: [
         {
-          test: /\.txt$/,
+          test: /\.ts$/,
           use: {
-            loader: path.resolve(__dirname, '../test/loader.ts'),
+            loader: path.resolve(__dirname, '../../index.ts'),
             options
           }
         }
@@ -30,7 +30,6 @@ export default (fixture: string, options = {}): Promise<webpack.Stats> => {
     compiler.run((err, stats) => {
       if (err || !stats) reject(err)
       if (stats && stats.hasErrors()) reject(stats.toJson().errors)
-
       resolve(stats)
     })
   })
