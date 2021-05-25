@@ -1,7 +1,7 @@
-import Component from '@Component'
 import {
   regexpMatchAll, get, startsWithUpper, isEqual
 } from '@utils'
+import { Component } from '../Component'
 
 const REGEXP_PARAM: RegExp = /\{\{(.*?)\}\}/gi
 

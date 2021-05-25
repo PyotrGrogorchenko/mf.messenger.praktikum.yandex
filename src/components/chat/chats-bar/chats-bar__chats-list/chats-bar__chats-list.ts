@@ -1,7 +1,7 @@
+import { Component } from '@Component'
 import {
   xhrPostCreateChat, xhrGetChats, xhrOnError, xhrPutChatUsers
 } from '@xhr'
-import Component from '../../../../component/Component'
 
 class ChatsBar__ChatsList extends Component {
   currentChatId: number = 0

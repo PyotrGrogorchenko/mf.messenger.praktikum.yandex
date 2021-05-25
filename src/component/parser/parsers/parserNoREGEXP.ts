@@ -1,15 +1,8 @@
-import { getUid } from '@utils'
+import { Node } from '../types'
+import { getUid } from '../../utils'
+import { PARSER_TYPES } from '../PARSER_TYPES'
 
-enum PARSER_TYPES {BEGIN, END, TEXT, CODE}
-
-type Node = {
-  type: PARSER_TYPES,
-  content: string,
-  uid: number,
-  deleteMark: boolean
-}
-
-function parserNoREGEXP(str: string): Array<Node> {
+export function parserNoREGEXP(str: string): Array<Node> {
   const res: Array<Node> = Array<Node>()
 
   str = str.replace(/{%/g, '<{%')
@@ -60,9 +53,3 @@ function parserNoREGEXP(str: string): Array<Node> {
 
   return res
 }
-
-function parser(str:string): Array<Node> {
-  return parserNoREGEXP(str)
-}
-
-export { parser, PARSER_TYPES, Node }

@@ -1,4 +1,4 @@
-import Component from '@Component'
+import { Component } from '@Component'
 
 export class TestPage extends Component {
   CM_onClick = (data: LooseObject) => {
@@ -77,38 +77,46 @@ export class TestPage extends Component {
     return (
       `<div className='right-click-area' id='CM_OwnerId' >
         
-      // <ButtonMain text={{state.btnTestUpdate_text}} id={{state.btnTestUpdate_id}} onClick={{state.btnTestUpdate_onClick}} ></ButtonMain>
-      <ButtonMain text='test if' id='test-if' onClick={{state.btnTestIf_onClick}} ></ButtonMain>
-      // <ButtonMain text='test cycle' id='test-cycle' onClick={{state.btnTestCycle_onClick}} ></ButtonMain>
-      // <ButtonMain text='test cycle item update' id='test-cycle_item_update' onClick={{state.btnTestCycleItemUpdate_onClick}} ></ButtonMain>
+      <ButtonMain 
+        text='test if'
+        id='test-if'
+        onClick={{state.btnTestIf_onClick}}>
+      </ButtonMain>
       
       {% if({{state.condition}} === null ) { %}
         <PageColumn>
       
-          <ul className='list-test'>
           {% for (let    i   =    0; i < state.list.length; i++) { 
             const listEl = state.list[i];
-          %}
-        
+            %}
+            
             <li key={{listEl.a}}>
-              <AuthBarInput key={{listEl.a}} id={{listEl.a}} text={{listEl.b}}    type='text'     value='{{listEl.b}}></AuthBarInput> 
-              <a key={{listEl.a}} id={{listEl.a}}>{{listEl.b}}</a> 
-              <AnchorMain key={{listEl.a}} id={{listEl.a}} text={{listEl.b}} href='#{R}#signup'></AnchorMain>
+              <InputMain 
+                key={{listEl.a}} 
+                id={{listEl.a}} 
+                text={{listEl.b}}    
+                type='text'     
+                value='{{listEl.b}}
+              ></InputMain> 
+              <a 
+                key={{listEl.a}} 
+                id={{listEl.a}}
+              >{{listEl.b}}</a> 
+              <AnchorMain
+                key={{listEl.a}}
+                id={{listEl.a}}
+                text={{listEl.b}}
+                href='#{R}#signup'
+              ></AnchorMain>
             </li>
-        
+            
           {% } %}
-          </ul>
-      
-      
-          <AuthBarInput text='true'    type='text'     id='true'    value='true'></AuthBarInput> 
-          <a>99+</a> 
+    
+
         </PageColumn>
       
       {% } else { %}
         <PageColumn>
-          <AuthBarInput text='false'    type='text'     id='input_login'    value='false'></AuthBarInput> 
-          <a>000</a> 
-          <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}#signup'></AnchorMain>
         </PageColumn>
       {% } %}
       
@@ -127,85 +135,26 @@ export class TestPage extends Component {
   }
 }
 
-//   //<ButtonMain text={{state.btnTestUpdate_text}} id={{state.btnTestUpdate_id}} onClick={{state.btnTestUpdate_onClick}} ></ButtonMain>
 
-// {% if({{state.condition}}) { %}
-// <PageColumn>
-//  <AuthBarInput text='true'    type='text'     id='true'    value='true'></AuthBarInput>
-//  <a>99+</a>
-//   </PageColumn>
-// {% } else { %}
-// <PageColumn>
-//  <AuthBarInput text='false'    type='text'     id='input_login'    value='false'></AuthBarInput>
-//  <a>000</a>
-//  <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}#signup'></AnchorMain>
-// </PageColumn>
-// {% } %}
+      //     <ul className='list-test'>
+      //     {% for (let    i   =    0; i < state.list.length; i++) { 
+      //       const listEl = state.list[i];
+      //     %}
+        
+      //       <li key={{listEl.a}}>
+      //         <InputMain key={{listEl.a}} id={{listEl.a}} text={{listEl.b}}    type='text'     value='{{listEl.b}}></InputMain> 
+      //         <a key={{listEl.a}} id={{listEl.a}}>{{listEl.b}}</a> 
+      //         <AnchorMain key={{listEl.a}} id={{listEl.a}} text={{listEl.b}} href='#{R}#signup'></AnchorMain>
+      //       </li>
+        
+      //     {% } %}
+      //     </ul>
+      
+      
+      //     <InputMain text='true'    type='text'     id='true'    value='true'></InputMain> 
+      //     <a>99+</a> 
 
-// <ul className='list-test'>
-// {% for (let    i   =    0; i < state.list.length; i++) {
-//   const listEl = state.list[i];
-// %}
 
-//   <div key={{listEl.a}}>
-//     <AuthBarInput key={{listEl.a}} id={{listEl.a}} text={{listEl.a}}    type='text'     value='{{listEl.b}}></AuthBarInput>
-//     <a key={{listEl.a}} id={{listEl.a}}>{{listEl.a}}</a>
-//     <AnchorMain key={{listEl.a}} id={{listEl.a}} text={{listEl.a}} href='#{R}#signup'></AnchorMain>
-//   </div>
-
-// {% } %}
-// </ul>
-
-// <ul className='list-test'>
-// {% for (let    i   =    0; i < state.list.length; i++) {
-//   const listEl = state.list[i];
-// %}
-
-//   //<PageColumn key={{listEl.a}}>
-//     <AuthBarInput key={{listEl.a}} id={{listEl.a}} text='true'    type='text'     value='true'></AuthBarInput>
-//     <a key={{listEl.a}} id={{listEl.a}}>99+</a>
-//     <AnchorMain key={{listEl.a}} id={{listEl.a}} text='Test if' href='#{R}#signup'></AnchorMain>
-//   //</PageColumn>
-
-// {% } %}
-// </ul>
-
-// <ContextMenu
-// buttons='add:add|remove:Remove chat'
-// onClick={{state.CM_onClick}}
-// ownerId='CM_OwnerId'
-// menuId='CM_MenuId'
-// ></ContextMenu>
-
-// {% if({{state.condition}}) { %}
-// <AuthBarInput text='login'    type='text'     id='input_login'    value='Test if'></AuthBarInput>
-// {% } else { %}
-// <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}#signup'></AnchorMain>
-// {% } %}
-
-// {% if({{state.condition}}) { %}
-// <AuthBarInput text='login'    type='text'     id='input_login'    value='Test if'></AuthBarInput>
-// {% } %}
-
-// {% } else { %}
-// <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}#signup'></AnchorMain>
-
-// <ContextMenu
-// buttons='add:Add chat|remove:Remove chat'
-// onClick={{state.CM_onClick}}
-// ownerId='CM_OwnerId'
-// menuId='CM_MenuId'
-// ></ContextMenu>
-
-// `<PageColumn>
-// <div class="right-click-area">
-//   <div class="text">
-//     Я - волшебный квадракул
-//     <br>
-//     Тыц правой кнопкой мышки!
-//   </div>
-
-//   <ContextMenu buttons='add:Add chat|remove:Remove chat' onClick={{state.contextMenuOnClick}}></ContextMenu>
-
-// </div>
-// <PageColumn>`
+            //     <InputMain text='false'    type='text'     id='input_login'    value='false'></InputMain> 
+      //     <a>000</a> 
+      //     <AnchorMain text='Test if' id='button_to-sign-up' href='#{R}#signup'></AnchorMain>

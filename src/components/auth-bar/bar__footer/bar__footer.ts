@@ -1,4 +1,4 @@
-import Component from '../../../component/Component'
+import { Component } from '@Component'
 
 class Bar__Footer extends Component {
   template() {

@@ -1,4 +1,4 @@
-import Component from '../../../../component/Component'
+import { Component } from '@Component'
 
 class Messages__Date extends Component {
   template() {

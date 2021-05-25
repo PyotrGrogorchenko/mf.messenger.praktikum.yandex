@@ -27,6 +27,12 @@
     "@typescript-eslint/semi": 0,
     "indent": "off",
     "semi": ["error", "never"],
+    "no-param-reassign": "off",
+    "no-continue": "off",
+    "prefer-destructuring": ["error", {
+      "array": false,
+      "object": true
+    }],
     "@typescript-eslint/indent": [
       "error",
       2

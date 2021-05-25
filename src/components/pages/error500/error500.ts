@@ -1,4 +1,4 @@
-import Component from '../../../component/Component'
+import { Component } from '@Component'
 
 export default class Error500 extends Component {
   template() {

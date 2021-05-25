@@ -1,5 +1,5 @@
 // import { Home } from '@Components/pages/Home/index'
-import TestPage from '@Components/pages/TestPage/index'
+import { TestPage } from '@Components/pages/TestPage/index'
 import { Router } from './Router'
 
 // import Login from '../components/pages/login/login'

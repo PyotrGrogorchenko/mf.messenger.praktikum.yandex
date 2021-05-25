@@ -1,4 +1,4 @@
-import Component from '../../../../component/Component'
+import Component from '../../../../component/Component/Component'
 import { WS } from '../../../../webSocket/WebSoket'
 
 class MessagesBar extends Component {

@@ -1,5 +1,5 @@
+import { Component } from '@Component'
 import { xhrPostUsersSearh, xhrOnError } from '@xhr'
-import Component from '../../../../../component/Component'
 
 class MW__SearchUser extends Component {
   async getUsers(searchString: string = '') {

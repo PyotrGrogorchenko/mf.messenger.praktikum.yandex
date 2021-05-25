@@ -1,4 +1,4 @@
-import Component from '../../component/Component'
+import Component from '../../component/Component/Component'
 
 export default class PagesMenu extends Component {
   template() {

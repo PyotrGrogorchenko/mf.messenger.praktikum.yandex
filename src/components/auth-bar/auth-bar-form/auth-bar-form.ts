@@ -1,4 +1,4 @@
-import Component from '../../../component/Component'
+import { Component } from '@Component'
 
 class AuthBarForm extends Component {
   template() {

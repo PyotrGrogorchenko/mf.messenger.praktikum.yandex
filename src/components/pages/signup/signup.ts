@@ -1,5 +1,5 @@
+import { Component } from '@Component'
 import { xhrPostAuthSignUp } from '@xhr'
-import Component from '../../../component/Component'
 import { defaultPage } from '../../../router/utils'
 
 export default class Signup extends Component {

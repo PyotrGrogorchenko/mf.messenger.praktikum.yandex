@@ -1,9 +1,5 @@
-class EventBus {
+export default class EventBus {
   listeners: Record<string, Array<(...args: any[]) => void>> = {}
-
-  // constructor() {
-  //   this.listeners = {}
-  // }
 
   on(event: string, callback: () => void) {
     if (!this.listeners[event]) {
@@ -33,5 +29,3 @@ class EventBus {
     })
   }
 }
-
-export default EventBus

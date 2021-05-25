@@ -1,0 +1,28 @@
+.auth-bar-input {
+  margin-top: 10px;
+  width: 70%;
+}
+  
+.auth-bar-input__label {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  width: 100%;
+
+  color: var(--color-gray3);
+}
+
+.auth-bar-input__input {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  
+  outline: none;
+  border: none;
+  border-bottom: 1px solid var(--color-blue1);
+
+  width: 100%;
+  margin: 0 0 5px 0 ;
+  color: var(--color-gray1);
+}

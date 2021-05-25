@@ -1,4 +1,4 @@
-import Component from '../../../../../component/Component'
+import { Component } from '@Component'
 
 class MW__AddChat extends Component {
   button_addChatOnClick = async (e:Event) => {

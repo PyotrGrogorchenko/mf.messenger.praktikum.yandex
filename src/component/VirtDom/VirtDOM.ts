@@ -1,12 +1,14 @@
 import { get, regexpMatchAll } from '@utils'
-import Component from '../Component'
+import { Component } from '../Component'
 import { PARSER_TYPES, Node as PARSER_NODE } from '../parser'
 import { Node } from './Node'
-import { codeIsCloseBracket } from './utils'
+import {
+  isCloseBracket, compare, parent, inc, getTagName
+} from './utils'
 
-class VirtDom {
+export class VirtDom {
   private _nodes: Array<Node> = Array<Node>()
-  private _parent: (command: string, node: null | Node) => Node | null = this._func_parent()
+  private _parent: (command: string, node: null | Node) => Node | null = parent()
   private _REGEXP_PARAM: RegExp = /\{\{(.*?)\}\}/gi
   private _deleteMark: boolean = false
 
@@ -55,7 +57,7 @@ class VirtDom {
     const { record } = template
 
     if (record.type === PARSER_TYPES.BEGIN) {
-      const tagName = this._getTagName(record.content)
+      const tagName = getTagName(record.content)
       const newProps = this._getHeaderProps(context, template, tagName)
 
       let node: Node | null = this.getNodeByUidKey(record.uid, newProps.key) as Node
@@ -125,8 +127,8 @@ class VirtDom {
       }
     })
 
-    if (!this._compare(context[iName], sign, right)) {
-      while (!codeIsCloseBracket(template) && template.i < template.list.length) {
+    if (!compare(context[iName], sign, right)) {
+      while (!isCloseBracket(template) && template.i < template.list.length) {
         template.i++
         template.record = template.list[template.i]
       }
@@ -137,10 +139,10 @@ class VirtDom {
     }
 
     const iStart = template.i
-    for (context[iName]; this._compare(context[iName], sign, right); context[iName] = context[iName] + this._inc(step)) {
+    for (context[iName]; compare(context[iName], sign, right); context[iName] += inc(step)) {
       vars.forEach((variable: Array<string>) => {
-        const param_i: RegExpExecArray = /\[(.)\]/gm.exec(variable[1]) as RegExpExecArray
-        context[variable[0]] = window.get(context, variable[1].substring(0, param_i?.index))[context[param_i[1]]]
+        const paramI: RegExpExecArray = /\[(.)\]/gm.exec(variable[1]) as RegExpExecArray
+        context[variable[0]] = get(context, variable[1].substring(0, paramI?.index))[context[paramI[1]]]
       })
 
       template.i = iStart
@@ -152,7 +154,7 @@ class VirtDom {
         template.record = record
 
         if (record.type === PARSER_TYPES.CODE) {
-          if (codeIsCloseBracket(template)) {
+          if (isCloseBracket(template)) {
             template.i++
             template.record = { ...template.list[template.i] }
             break
@@ -174,7 +176,7 @@ class VirtDom {
           const keyIndex = record.content.indexOf('key')
           if (keyIndex > 0) {
             const paramKey = new RegExp(this._REGEXP_PARAM).exec(record.content.substring(keyIndex)) as RegExpExecArray
-            key = window.get(context, paramKey[1], paramKey[1])
+            key = get(context, paramKey[1], paramKey[1])
             record.content = record.content.replace(new RegExp(paramKey[0], 'g'), key)
           } else {
             record.content += ` key=${key}`
@@ -199,7 +201,7 @@ class VirtDom {
     const ifParamL = this._code__calculateValue(context, ifParamCode[0])
     if (ifParamCode[2]) {
       const ifParamR = this._code__calculateValue(context, ifParamCode[2])
-      ifParam = this._compare(ifParamL, ifParamCode[1], ifParamR)
+      ifParam = compare(ifParamL, ifParamCode[1], ifParamR)
     } else {
       ifParam = ifParamL
     }
@@ -212,12 +214,12 @@ class VirtDom {
         if (isElse()) {
           ifParam = !ifParam
           continue
-        } else if (codeIsCloseBracket(template)) {
+        } else if (isCloseBracket(template)) {
           break
         } else if (ifParam) {
           this._compileCode(context, template)
         } else {
-          while (!codeIsCloseBracket(template) && template.i < template.list.length) {
+          while (!isCloseBracket(template) && template.i < template.list.length) {
             template.i++
             template.record = template.list[template.i]
           }
@@ -232,26 +234,22 @@ class VirtDom {
     }
   }
 
-  // _code__isCloseBracket(template: LooseObject): boolean {
-  //   return template.record.content.replace(/ /ig, '') === '{%}%}'
-  // }
-
   _code__calculateValue(context: LooseObject, code: string): any {
     if (code === 'null') {
       return null
     }
 
     let value: any
-    const rg: RegExpExecArray | null = new RegExp(this._REGEXP_PARAM).exec(code)
-    if (rg) {
-      value = get(context, rg[1], rg[1])
+    const rgValue: RegExpExecArray | null = new RegExp(this._REGEXP_PARAM).exec(code)
+    if (rgValue) {
+      value = get(context, rgValue[1], rgValue[1])
     } else {
       value = code
     }
 
     if (value) {
-      regexpMatchAll(value, /[\'\"](.*?)[\'\"]/gi).forEach((rg: RegExpExecArray) => {
-        value = rg[1]
+      regexpMatchAll(value, /['"](.*?)['"]/gi).forEach((rgExe: RegExpExecArray) => {
+        value = rgExe[1]
       })
     }
 
@@ -261,11 +259,11 @@ class VirtDom {
   _getHeaderProps(context: LooseObject, template: LooseObject, tagName: string): any {
     let { content } = template.record
 
-    const node_props: any = {}
+    const nodeProps: any = {}
 
     const cacheTxt: LooseObject = {}
     let count: number = 1
-    regexpMatchAll(content, /[\'\"](.*?)[\'\"]/gi).forEach((txt: RegExpExecArray) => {
+    regexpMatchAll(content, /['"](.*?)['"]/gi).forEach((txt: RegExpExecArray) => {
       if (txt[0]) {
         cacheTxt[`text${count}`] = txt[0]
         content = content.replace(txt[0], `text${count}`)
@@ -287,76 +285,30 @@ class VirtDom {
       const param: RegExpExecArray | null = new RegExp(this._REGEXP_PARAM).exec(arrKeyValue[1])
 
       if (arrKeyValue[0] === 'className') {
-        const strClasses: string = param ? get(context, param[1], '') : arrKeyValue[1].replace(/[\'\"]/g, '').trim()
+        const strClasses: string = param ? get(context, param[1], '') : arrKeyValue[1].replace(/['"]/g, '').trim()
         if (strClasses) {
-          node_props.classes = strClasses.split(' ')
+          nodeProps.classes = strClasses.split(' ')
         }
       } else if (arrKeyValue.length === 1) {
-        node_props[arrKeyValue[0]] = '#noValue'
+        nodeProps[arrKeyValue[0]] = '#noValue'
       } else if (param) {
-        node_props[arrKeyValue[0]] = get(context, param[1], param[1])
+        nodeProps[arrKeyValue[0]] = get(context, param[1], param[1])
       } else {
-        node_props[arrKeyValue[0]] = arrKeyValue[1].replace(/[\'\"]/g, '')
+        nodeProps[arrKeyValue[0]] = arrKeyValue[1].replace(/['"]/g, '')
       }
     })
 
-    return node_props
-  }
-
-  _compare(left: number, sign: string, right: number): boolean {
-    switch (sign) {
-      case '<': return left < right
-      case '<=': return left <= right
-      case '>': return left > right
-      case '>=': return left >= right
-      case '===': return left === right
-      case '!==': return left !== right
-      default:
-        throw new Error('Compare error')
-    }
-  }
-
-  _inc(step: string): number {
-    switch (step) {
-      case '++': return 1
-      case '--': return -1
-      default:
-        throw new Error('Step error')
-    }
+    return nodeProps
   }
 
   _closeTag(): void {
     this._parent('remove', null)
   }
 
-  _func_parent(): (command: string, node: null | Node) => Node | null {
-    const parentsStack: Array<Node> = Array<Node>()
-    return function (command: string = '', node: null | Node = null): Node | null {
-      let res: Node | null = null
-      if (command === 'remove') {
-        parentsStack.pop()
-      } else if (parentsStack.length > 0) {
-        res = parentsStack[parentsStack.length - 1]
-      }
-
-      if (command === 'add') {
-        parentsStack.push(node as Node)
-      }
-
-      return res
-    }
-  }
-
   _setNodesDeleteMark() {
     this._nodes.forEach((node) => {
       node.deleteMark = true
     })
-  }
-
-  _getTagName(str: string): string {
-    const begin: number = 0
-    const end: number = str.indexOf(' ') === -1 ? str.length : str.indexOf(' ')
-    return str.slice(begin, end)
   }
 
   getIsComponent(): Array<Node> {
@@ -372,27 +324,26 @@ class VirtDom {
       const node: Node = this._nodes[i]
       if ((!key && node.uid === uid) || (key && node.key === key && node.uid === uid)) {
         return node
-        break
       }
     }
     return null
   }
 
-  deleteMarkedNodes() {
+  getDeleteMarkedNodes() {
     this._nodes.forEach((node) => {
       if (node.isComponent && node.componentLink) {
-        (node.componentLink as Component).virtDOM?.deleteMarkedNodes()
+        (node.componentLink as Component).virtDOM?.getDeleteMarkedNodes()
       }
-      this._nodes = this._nodes.filter((node:Node) => !node.deleteMark)
+      this._nodes = this._nodes.filter((item:Node) => !item.deleteMark)
     })
   }
 
+  /* eslint-disable no-console */
   printNodes() {
     console.log('////////////////////////////////////////////////')
     this._nodes.forEach((node: Node) => {
       console.log(node.deleteMark, node)
     })
   }
+  /* eslint-enable no-console */
 }
-
-export { VirtDom }

@@ -1,5 +1,5 @@
 import { xhrPostLogout } from '@xhr'
-import Component from '../../../component/Component'
+import Component from '../../../component/Component/Component'
 import { defaultPage } from '../../../router/utils'
 
 export default class UserSettings extends Component {

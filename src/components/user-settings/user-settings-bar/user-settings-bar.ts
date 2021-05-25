@@ -1,9 +1,12 @@
-import Component from '../../../component/Component'
+import { Component } from '@Component'
 
 class UserSettingsBar extends Component {
   template() {
     return (
-      `<form id='form__main' className='user-settings-bar'></div>`
+      `<form
+        id='form__main'
+        className='user-settings-bar'
+      ></div>`
 
     )
   }

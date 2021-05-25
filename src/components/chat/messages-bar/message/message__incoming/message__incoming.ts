@@ -1,4 +1,4 @@
-import Component from '../../../../../component/Component'
+import { Component } from '@Component'
 
 class Message__Incoming extends Component {
   template() {

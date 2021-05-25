@@ -1,5 +1,5 @@
 import { xhrPostChatsToken } from '@xhr'
-import Component from '../../../component/Component'
+import Component from '../../../component/Component/Component'
 import { WS } from '../../../webSocket/WebSoket'
 
 export default class Chat extends Component {

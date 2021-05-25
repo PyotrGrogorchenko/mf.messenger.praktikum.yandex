@@ -1,22 +1,13 @@
 import { copyObj } from '@utils'
 import { createValidateEvents } from '@valid'
-import EventBus from './EventBus'
-import { Node as PARSER_NODE, parser } from './parser'
-import { VirtDom, Node as DOM_NODE } from './VirtDom/index'
-import { onRouteClick } from '../router/events'
+import EventBus from '../EventBus'
+import { Node as PARSER_NODE, parser } from '../parser'
+import { VirtDom, Node as DOM_NODE } from '../VirtDom'
+import { onRouteClick } from '../../router/events'
 import 'regenerator-runtime/runtime'
+import { EVENTS } from './EVENTS'
 
-enum EVENTS {
-  FLOW_CDM = 'flow:component-did-mount',
-  FLOW_CDU = 'flow:component-did-update',
-  FLOW_CWU = 'flow:component-will-update',
-  FLOW_CWM = 'flow:component-will-mount',
-  FLOW_EXECUTE = 'flow:execute',
-  FLOW_COMPILE = 'flow:compile',
-  FLOW_RENDER = 'flow:render'
-}
-
-class Component {
+export class Component {
   private _root: HTMLElement | null = null
   private _virtDOM: VirtDom | null = null
   private _props: any = null
@@ -106,7 +97,6 @@ class Component {
   compile(modifyState: LooseObject = {}) {
     Object.assign(this.state, modifyState)
 
-    // console.log('compile')
     let { parsedTemplate } = this
     if (!parsedTemplate) {
       parsedTemplate = parser(this.template())
@@ -205,10 +195,8 @@ class Component {
     this.eventBus().emit(EVENTS.FLOW_EXECUTE, modifyState)
     this.eventBus().emit(EVENTS.FLOW_CDU, oldProps, this.getProps())
     if (modifyState) {
-      this.virtDOM?.deleteMarkedNodes()
+      this.virtDOM?.getDeleteMarkedNodes()
     }
     createValidateEvents()
   }
 }
-
-export default Component

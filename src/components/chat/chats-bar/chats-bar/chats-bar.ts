@@ -1,4 +1,4 @@
-import Component from '../../../../component/Component'
+import { Component } from '@Component'
 
 class ChatsBar extends Component {
   list_callback = (data: LooseObject) => {

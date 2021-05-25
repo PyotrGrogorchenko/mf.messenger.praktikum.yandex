@@ -1,6 +1,6 @@
-import Component from '@Component'
+import { Component } from '@Component'
 
-export class Home extends Component {
+export default class Home extends Component {
   template() {
     return (
       `<PageColumn>

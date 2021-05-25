@@ -1,4 +1,4 @@
-import Component from '../../../../../component/Component'
+import { Component } from '@Component'
 
 class SearchUser__Item extends Component {
   li_onClick = (e: MouseEvent) => {

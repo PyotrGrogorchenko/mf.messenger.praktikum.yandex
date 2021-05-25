@@ -1,4 +1,4 @@
-import Component from '../../../../component/Component'
+import Component from '../../../../component/Component/Component'
 
 class MessagesBar__Header extends Component {
   template() {

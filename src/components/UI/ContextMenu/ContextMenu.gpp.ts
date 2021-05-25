@@ -1,6 +1,6 @@
-import Component from '../../../component/Component'
+import { Component } from '@Component'
 
-class ContextMenu extends Component {
+export class ContextMenu extends Component {
   targetPath: any
 
   componentDidMount() {
@@ -98,5 +98,3 @@ class ContextMenu extends Component {
     )
   }
 }
-
-export default ContextMenu

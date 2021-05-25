@@ -45,7 +45,12 @@ export const config: Configuration = {
         ],
         use: [
           'babel-loader',
-          'gpp-loader'
+          {
+            loader: 'gpp-loader',
+            options: {
+              componentsDir: 'components'
+            }
+          }
         ]
       },
       {
