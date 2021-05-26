@@ -21,7 +21,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@Component": ["src/component/Component"],
+      "@Component": ["src/component"],
       "@Components/*": ["src/components/*"],
       "@xhr": ["src/xhr/index"],
       "@utils": ["src/utils/index"],

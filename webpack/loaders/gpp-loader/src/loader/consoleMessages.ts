@@ -5,7 +5,7 @@ export const consoleMessages = (props: Props) => {
   const { errors, warnings } = props.messages
   if (!errors.length && !warnings.length) return
 
-  console.log(`${'gpp-loader'.green} in ${props.resourcePath}`)
+  console.log(`\n${'gpp-loader'.green} in ${props.resourcePath}`)
 
   if (errors.length) {
     console.log(`${'ERRORS'.red.bold}`)
@@ -20,6 +20,4 @@ export const consoleMessages = (props: Props) => {
       console.log(` ${warning}`)
     })
   }
-
-  console.log('\n')
 }

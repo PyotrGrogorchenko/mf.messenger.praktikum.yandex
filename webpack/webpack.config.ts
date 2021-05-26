@@ -64,7 +64,7 @@ export const config: Configuration = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './static/index.html'
+      template: '../static/index.html'
     }),
     new CleanWebpackPlugin()
   ]

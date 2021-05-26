@@ -1,6 +1,6 @@
 import {
   regexpMatchAll, get, startsWithUpper, isEqual
-} from '@utils'
+} from '../utils'
 import { Component } from '../Component'
 
 const REGEXP_PARAM: RegExp = /\{\{(.*?)\}\}/gi
@@ -55,14 +55,12 @@ class Node {
   setChangedProps(newProps: any, oldProps: any = null) {
     const res: Array<string> = []
     if (oldProps) {
-      // for (const key in newProps) {
       Object.keys(newProps).forEach(key => {
         if (!isEqual(oldProps[key], newProps[key])) {
           res.push(key)
         }
       })
     } else {
-      // for (const key in newProps) {
       Object.keys(newProps).forEach(key => {
         res.push(key)
       })

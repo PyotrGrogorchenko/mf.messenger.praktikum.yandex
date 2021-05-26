@@ -1,10 +1,10 @@
-import { copyObj } from '@utils'
-import { createValidateEvents } from '@valid'
-import EventBus from '../EventBus'
+import { copyObj } from '../utils'
+// import { createValidateEvents } from '@valid'
+import EventBus from './EventBus'
 import { Node as PARSER_NODE, parser } from '../parser'
-import { VirtDom, Node as DOM_NODE } from '../VirtDom'
+import { VirtDom, Node as NodeDom } from '../VirtDom'
 import { onRouteClick } from '../../router/events'
-import 'regenerator-runtime/runtime'
+// import 'regenerator-runtime/runtime'
 import { EVENTS } from './EVENTS'
 
 export class Component {
@@ -43,8 +43,10 @@ export class Component {
   getProps(): any {return this._props}
   setProps(props: any) {this._props = props}
 
+  /* eslint-disable class-methods-use-this */
   components(): any {return {}}
   template(): string {return ''}
+  /* eslint-enable class-methods-use-this */
 
   _registerEvents(eventBus: EventBus): void {
     eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
@@ -72,23 +74,27 @@ export class Component {
     this._isNew = false
   }
 
+  /* eslint-disable class-methods-use-this */
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   _componentDidMount(props: any = null, state: any = null) {this.componentDidMount(props, state)}
-  componentDidMount(props: any = null, state: any = null) { }
+  componentDidMount(_props: any = null, _state: any = null) { }
 
   _componentDidUpdate(oldProps: any = null, newProps: any = null) {this.componentDidUpdate(oldProps, newProps)}
-  componentDidUpdate(oldProps: any = null, newProps: any = null) { }
+  componentDidUpdate(_oldProps: any = null, _newProps: any = null) { }
 
   _componentWillUpdate(props: any = null, state: any = null) {this.componentWillUpdate(props, state)}
-  componentWillUpdate(props: any = null, state: any = null) { }
+  componentWillUpdate(_props: any = null, _state: any = null) { }
 
   _componentWillMount(props: any = null, state: any = null) {this.componentWillMount(props, state)}
-  componentWillMount(props: any = null, state: any = null) { }
+  componentWillMount(_props: any = null, _state: any = null) { }
 
   _execute(modifyState:LooseObject = {}) {
     this.execute(modifyState)
     this.eventBus().emit(EVENTS.FLOW_COMPILE, modifyState)
   }
-  execute(modifyState:LooseObject = {}): void {}
+  execute(_modifyState:LooseObject = {}): void {}
+  /* eslint-enable @typescript-eslint/no-unused-vars */
+  /* eslint-enable class-methods-use-this */
 
   _compile(modifyState: LooseObject = {}) {
     this.compile(modifyState)
@@ -112,8 +118,12 @@ export class Component {
     this._virtDOM.getIsComponent().forEach((node) => {
       if (node.componentLink) {
         node.componentLink.setProps(node.props)
+      } else if (!components[node.tagName]) {
+        // eslint-disable-next-line no-console
+        console.error(`${node.tagName} is undefined`)
+        throw new Error(`${node.tagName} is undefined`)
       } else {
-        node.componentLink = new components[node.tagName](node.props);
+        node.componentLink = new components[node.tagName](node.props)
       }
       (node.componentLink as Component).deleteMark = node.deleteMark
     })
@@ -123,7 +133,7 @@ export class Component {
     this.render()
   }
   render() {
-    const nodes: Array<DOM_NODE> = (this._virtDOM as VirtDom).getNodes()
+    const nodes: Array<NodeDom> = (this._virtDOM as VirtDom).getNodes()
 
     nodes.forEach(node => {
       const root: HTMLElement | null = node.parent && node.parent.root ? node.parent.root : this._root
@@ -197,6 +207,6 @@ export class Component {
     if (modifyState) {
       this.virtDOM?.getDeleteMarkedNodes()
     }
-    createValidateEvents()
+    // createValidateEvents()
   }
 }

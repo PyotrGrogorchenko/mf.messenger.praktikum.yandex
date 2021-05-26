@@ -1,4 +1,4 @@
-import { get, regexpMatchAll } from '@utils'
+import { get, regexpMatchAll } from '../utils'
 import { Component } from '../Component'
 import { PARSER_TYPES, Node as PARSER_NODE } from '../parser'
 import { Node } from './Node'

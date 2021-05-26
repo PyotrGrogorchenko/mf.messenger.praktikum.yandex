@@ -46,7 +46,7 @@ class Router {
     if (!route) {
       // eslint-disable-next-line no-console
       console.error(`Route not found:${pathname}`)
-      return;
+      return
     }
 
     if (this._currentRoute) {

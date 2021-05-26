@@ -5,16 +5,16 @@ class Route {
   _props: any
 
   constructor(pathname: string, view: any, props: any) {
-    this._pathname = pathname;
-    this._blockClass = view;
-    this._block = view;
-    this._props = props;
+    this._pathname = pathname
+    this._blockClass = view
+    this._block = view
+    this._props = props
   }
 
   navigate(pathname: string) {
     if (this.match(pathname)) {
-      this._pathname = pathname;
-      this.render();
+      this._pathname = pathname
+      this.render()
     }
   }
 
