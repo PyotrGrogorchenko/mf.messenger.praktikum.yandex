@@ -1,6 +1,5 @@
-import { queryStringify } from '@utils'
 import { Methods } from './Methods'
-import { DataCommon, Options, ResponseCommon } from '../types'
+import { Data, Options, Res } from '../types'
 
 export class HTTPTransport {
   private static instance: HTTPTransport
@@ -13,23 +12,17 @@ export class HTTPTransport {
     return HTTPTransport.instance
   }
 
-  get = <D extends DataCommon>(
-    url: string, data: D, options: Options = {}
-  ): Promise<ResponseCommon> => this.request(url, Methods.GET, data, options)
-  post = <D extends DataCommon>(
-    url: string, data: D, options: Options = {}
-  ): Promise<ResponseCommon> => this.request(url, Methods.POST, data, options)
+  get = <D extends Data>(url: string, data: D | null = null, options: Options = {}): Promise<Res> => this.request(url, Methods.GET, data, options)
+  post = <D extends Data>(url: string, data: D, options: Options = {}): Promise<Res> => this.request(url, Methods.POST, data, options)
   // put = (url: string, options: Options, data: Data) => this.request(url, options, Methods.PUT, data)
-  // delet = (url: string, options: Options, data: Data) => this.request(url, options, Methods.DELETE, data)
+  // delete = (url: string, options: Options, data: Data) => this.request(url, options, Methods.DELETE, data)
 
-  request = (url: string, method: Methods, data: DataCommon, options: Options): Promise<ResponseCommon> => {
+  request = (url: string, method: Methods, data: Data | null = null, options: Options): Promise<Res> => {
     const headers = options.headers || { 'content-type': 'application/json' }
     const timeout = options.timeout || 5000
-    const withCredentials = options.withCredentials || false
+    const withCredentials = options.withCredentials || true
 
-    url += method === Methods.GET ? queryStringify(data) : ''
-
-    return new Promise<ResponseCommon>((resolve, reject) => {
+    return new Promise<Res>((resolve, reject) => {
       const xhr = new XMLHttpRequest()
       xhr.open(method as string, url)
       xhr.responseType = 'json'

@@ -1,10 +1,12 @@
+import { User } from '@store/state/types'
+
 export type Options = {
   headers?: LooseObject,
   withCredentials?: boolean
   timeout?: number
 }
 
-type ResponseBase = {
+type ResBase = {
   status: number
   response: {
     error: string
@@ -12,13 +14,17 @@ type ResponseBase = {
   }
 }
 
-export type ResponseSignup = {
+export type ResSignup = {
   response: {
     id: number
   }
-} & ResponseBase
+} & ResBase
 
-export type ResponseCommon = ResponseSignup
+export type ResUser = {
+  response: User
+} & ResBase
+
+export type Res = ResSignup | ResUser
 
 export type DataSignup = {
   first_name: string
@@ -34,4 +40,4 @@ export type DataSignin = {
   password: string
 }
 
-export type DataCommon = DataSignup | DataSignin
+export type Data = DataSignup | DataSignin

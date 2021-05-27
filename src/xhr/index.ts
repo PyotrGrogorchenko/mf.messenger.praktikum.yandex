@@ -1,3 +1,3 @@
-import { xhrSignup } from './methods'
+import { xhrSignup, xhrUser } from './methods'
 
-export { xhrSignup }
+export { xhrSignup, xhrUser }
