@@ -24,8 +24,9 @@
       "@Component": ["src/component"],
       "@Components/*": ["src/components/*"],
       "@xhr": ["src/xhr/index"],
+      "@xhrTypes": ["src/xhr/types"],
       "@utils": ["src/utils/index"],
-      "@valid": ["src/valid/index"]
+      "@validation": ["src/validation/index"]
     }
   },       
   "include": [

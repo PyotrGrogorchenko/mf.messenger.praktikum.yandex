@@ -258,15 +258,15 @@ export class VirtDom {
 
   _getHeaderProps(context: LooseObject, template: LooseObject, tagName: string): any {
     let { content } = template.record
-
     const nodeProps: any = {}
 
+    const prefixCache = '#textCache'
     const cacheTxt: LooseObject = {}
     let count: number = 1
     regexpMatchAll(content, /['"](.*?)['"]/gi).forEach((txt: RegExpExecArray) => {
       if (txt[0]) {
-        cacheTxt[`text${count}`] = txt[0]
-        content = content.replace(txt[0], `text${count}`)
+        cacheTxt[`${prefixCache}${count}`] = txt[0].substr(1, txt[0].length - 2)
+        content = content.replace(txt[0], `${prefixCache}${count}`)
         count++
       }
     })
@@ -292,7 +292,11 @@ export class VirtDom {
       } else if (arrKeyValue.length === 1) {
         nodeProps[arrKeyValue[0]] = '#noValue'
       } else if (param) {
-        nodeProps[arrKeyValue[0]] = get(context, param[1], param[1])
+        if (param[1].startsWith(prefixCache)) {
+          nodeProps[arrKeyValue[0]] = cacheTxt[param[1]]
+        } else {
+          nodeProps[arrKeyValue[0]] = get(context, param[1], param[1])
+        }
       } else {
         nodeProps[arrKeyValue[0]] = arrKeyValue[1].replace(/['"]/g, '')
       }

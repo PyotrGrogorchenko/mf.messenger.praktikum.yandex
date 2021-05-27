@@ -18,7 +18,7 @@ function startRouter():void {
   const router: Router = new Router('.app')
 
   router
-    .use('/', Chat)
+    .use('/', Signup)
     .use('#login', Login)
     .use('#test', TestPage)
     .use('#signup', Signup)

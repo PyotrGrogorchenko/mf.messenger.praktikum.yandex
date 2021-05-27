@@ -1,4 +1,5 @@
 import { Component } from '@Component'
+import { signup } from './utils'
 // import { xhrPostAuthSignUp } from '@xhr'
 // import { defaultPage } from '@utils'
 
@@ -6,7 +7,9 @@ const signUpOnClick = (e:Event) => {
   e.preventDefault()
 
   // eslint-disable-next-line no-console
-  console.log('signUpOnClick')
+  // console.log('signUpOnClick')
+
+  signup()
 
   // const formdata = window.getFormData()
 
@@ -46,23 +49,20 @@ export class Signup extends Component {
   template() {
     return (
       `<PageColumn>
-        <AuthForm>
+        <AuthForm formName={{'userData'}}>
           <AuthHeader text='Sign up'></>
-          
           <AuthContent>
-            <InputMain text='First name'   type='name'     id='input_first-name'   value={{state.first_name}} ></>                  
-            <InputMain text='Second name'  type='name'     id='input_second-name'  value={{state.second_name}} ></>                  
-            <InputMain text='Login'        type='login'    id='input_login'        value={{state.login}} ></>                  
-            <InputMain text='email'        type='mail'     id='input_email'        value={{state.email}} ></>                  
-            <InputMain text='Password'     type='password' id='input_password'     value={{state.password}} ></>                  
-            <InputMain text='Phone'        type='phone'    id='input_phone'        value={{state.phone}} ></>                  
+            <InputMain text='First name'   type='name'     id='first_name'   value={{state.first_name}} ></>                  
+            <InputMain text='Second name'  type='name'     id='second_name'  value={{state.second_name}} ></>                  
+            <InputMain text='Login'        type='login'    id='login'        value={{state.login}} ></>                  
+            <InputMain text='email'        type='mail'     id='email'        value={{state.email}} ></>                  
+            <InputMain text='Password'     type='password' id='password'     value={{state.password}} ></>                  
+            <InputMain text='Phone'        type='phone'    id='phone'        value={{state.phone}} ></>                  
           </AuthContent>
-          
           <AuthFooter>
             <ButtonMain text='Sign up'      id='button-sign-up' onClick={{state.signUpOnClick}}></>
             <ButtonSecondary text='Log in' id='button-to-log-in' onClick={{state.signUpOnClick}}></ButtonSecondary>
           </AuthFooter>
-        
         </AuthForm>
       </PageColumn>`
     )

@@ -1,4 +1,4 @@
-export enum EVENTS {
+export enum Events {
   FLOW_CDM = 'flow:component-did-mount',
   FLOW_CDU = 'flow:component-did-update',
   FLOW_CWU = 'flow:component-will-update',

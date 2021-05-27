@@ -24,6 +24,8 @@
       }
     ],
     "import/prefer-default-export": 0,
+    "no-empty-function": "off",
+    "@typescript-eslint/no-empty-function": ["off"],
     "@typescript-eslint/semi": 0,
     "indent": "off",
     "semi": ["error", "never"],

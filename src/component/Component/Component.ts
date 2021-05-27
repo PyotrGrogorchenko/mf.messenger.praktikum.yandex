@@ -5,7 +5,7 @@ import { Node as PARSER_NODE, parser } from '../parser'
 import { VirtDom, Node as NodeDom } from '../VirtDom'
 import { onRouteClick } from '../../router/events'
 // import 'regenerator-runtime/runtime'
-import { EVENTS } from './EVENTS'
+import { Events } from './Events'
 
 export class Component {
   private _root: HTMLElement | null = null
@@ -49,27 +49,27 @@ export class Component {
   /* eslint-enable class-methods-use-this */
 
   _registerEvents(eventBus: EventBus): void {
-    eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
-    eventBus.on(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this))
-    eventBus.on(EVENTS.FLOW_CWU, this._componentWillUpdate.bind(this))
-    eventBus.on(EVENTS.FLOW_CWM, this._componentWillMount.bind(this))
-    eventBus.on(EVENTS.FLOW_EXECUTE, this._execute.bind(this))
-    eventBus.on(EVENTS.FLOW_COMPILE, this._compile.bind(this))
-    eventBus.on(EVENTS.FLOW_RENDER, this._render.bind(this))
+    eventBus.on(Events.FLOW_CDM, this._componentDidMount.bind(this))
+    eventBus.on(Events.FLOW_CDU, this._componentDidUpdate.bind(this))
+    eventBus.on(Events.FLOW_CWU, this._componentWillUpdate.bind(this))
+    eventBus.on(Events.FLOW_CWM, this._componentWillMount.bind(this))
+    eventBus.on(Events.FLOW_EXECUTE, this._execute.bind(this))
+    eventBus.on(Events.FLOW_COMPILE, this._compile.bind(this))
+    eventBus.on(Events.FLOW_RENDER, this._render.bind(this))
   }
 
   init(root: HTMLElement | null): void {
     this._root = root
     if (this._isNew) {
-      this.eventBus().emit(EVENTS.FLOW_CWM, this.getProps(), this.getProps())
+      this.eventBus().emit(Events.FLOW_CWM, this.getProps(), this.getProps())
     } else {
-      this.eventBus().emit(EVENTS.FLOW_CWU, this.getProps(), this.state)
+      this.eventBus().emit(Events.FLOW_CWU, this.getProps(), this.state)
     }
-    this.eventBus().emit(EVENTS.FLOW_EXECUTE)
+    this.eventBus().emit(Events.FLOW_EXECUTE)
     if (this._isNew) {
-      this.eventBus().emit(EVENTS.FLOW_CDM, this.getProps(), this.state)
+      this.eventBus().emit(Events.FLOW_CDM, this.getProps(), this.state)
     } else {
-      this.eventBus().emit(EVENTS.FLOW_CDU, this.getProps(), this.getProps())
+      this.eventBus().emit(Events.FLOW_CDU, this.getProps(), this.getProps())
     }
     this._isNew = false
   }
@@ -90,7 +90,7 @@ export class Component {
 
   _execute(modifyState:LooseObject = {}) {
     this.execute(modifyState)
-    this.eventBus().emit(EVENTS.FLOW_COMPILE, modifyState)
+    this.eventBus().emit(Events.FLOW_COMPILE, modifyState)
   }
   execute(_modifyState:LooseObject = {}): void {}
   /* eslint-enable @typescript-eslint/no-unused-vars */
@@ -98,7 +98,7 @@ export class Component {
 
   _compile(modifyState: LooseObject = {}) {
     this.compile(modifyState)
-    this.eventBus().emit(EVENTS.FLOW_RENDER, modifyState)
+    this.eventBus().emit(Events.FLOW_RENDER, modifyState)
   }
   compile(modifyState: LooseObject = {}) {
     Object.assign(this.state, modifyState)
@@ -201,9 +201,9 @@ export class Component {
 
   setState(modifyState: LooseObject) {
     const oldProps = copyObj(this.getProps())
-    this.eventBus().emit(EVENTS.FLOW_CWU, this.getProps(), this.state)
-    this.eventBus().emit(EVENTS.FLOW_EXECUTE, modifyState)
-    this.eventBus().emit(EVENTS.FLOW_CDU, oldProps, this.getProps())
+    this.eventBus().emit(Events.FLOW_CWU, this.getProps(), this.state)
+    this.eventBus().emit(Events.FLOW_EXECUTE, modifyState)
+    this.eventBus().emit(Events.FLOW_CDU, oldProps, this.getProps())
     if (modifyState) {
       this.virtDOM?.getDeleteMarkedNodes()
     }
