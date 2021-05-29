@@ -1,49 +1,39 @@
 import { Component } from '@Component'
-import { signup } from './utils'
-// import { xhrPostAuthSignUp } from '@xhr'
-// import { defaultPage } from '@utils'
+import { subscribe } from '@store'
+import { validateField } from '@validation'
+import { initFields } from './utils'
+
+const fields = initFields()
 
 const signUpOnClick = (e:Event) => {
   e.preventDefault()
-
-  // eslint-disable-next-line no-console
-  // console.log('signUpOnClick')
-
-  signup()
-
-  // const formdata = window.getFormData()
-
-  // const body: LooseObject = {}
-  // for (const key in formdata.data) {
-  //   body[formdata.data[key].name] = formdata.data[key].value
-  // }
-
-  // const req = await xhrPostAuthSignUp(body)
-
-  // if (req) {
-  //   if (req.status === 200) {
-  //     defaultPage()
-  //   } else if (req.status >= 400) {
-  //     alert(`Failed to execute sign up. reason ${req.response.reason}`)
-  //   } else {
-  //     alert('Failed to execute sign up.')
-  //   }
-  // } else {
-  //   alert('Failed to execute sign up.')
-  // }
+  // signup()
+  console.log('fields', fields)
 }
 
 export class Signup extends Component {
+  componentDidMount() {
+    // console.log('fields', fields)
+    // subscribe('FLOW_USER', this.onUserChange)
+  }
+
+  onBlur = (e: FocusEvent) => {
+    const input = <HTMLInputElement>e.target
+    const { id, value } = input
+    const field = fields[id]
+    field.value = value
+    fields[id] = validateField(field)
+    this.setState({ fields })
+  }
+
+  onUserChange() {
+    console.log('onUserChange')
+  }
+
   state = {
     signUpOnClick,
-
-    first_name: !localStorage.getItem('first_name') ? '' : localStorage.getItem('first_name'),
-    second_name: !localStorage.getItem('second_name') ? '' : localStorage.getItem('second_name'),
-    login: !localStorage.getItem('login') ? '' : localStorage.getItem('login'),
-    email: !localStorage.getItem('email') ? '' : localStorage.getItem('email'),
-    phone: !localStorage.getItem('phone') ? '' : localStorage.getItem('phone'),
-    password: ''
-
+    onBlur: this.onBlur,
+    ...fields
   }
 
   template() {
@@ -52,16 +42,16 @@ export class Signup extends Component {
         <AuthForm formName={{'userData'}}>
           <AuthHeader text='Sign up'></>
           <AuthContent>
-            <InputMain text='First name'   type='name'     id='first_name'   value={{state.first_name}} ></>                  
-            <InputMain text='Second name'  type='name'     id='second_name'  value={{state.second_name}} ></>                  
-            <InputMain text='Login'        type='login'    id='login'        value={{state.login}} ></>                  
-            <InputMain text='email'        type='mail'     id='email'        value={{state.email}} ></>                  
-            <InputMain text='Password'     type='password' id='password'     value={{state.password}} ></>                  
-            <InputMain text='Phone'        type='phone'    id='phone'        value={{state.phone}} ></>                  
+            <InputField field={{state.first_name}}  onBlur={{state.onBlur}}></>
+            <InputField field={{state.second_name}} onBlur={{state.onBlur}}></>
+            <InputField field={{state.login}}       onBlur={{state.onBlur}}></>
+            <InputField field={{state.email}}       onBlur={{state.onBlur}}></>
+            <InputField field={{state.password}}    onBlur={{state.onBlur}}></>
+            <InputField field={{state.phone}}       onBlur={{state.onBlur}}></>
           </AuthContent>
           <AuthFooter>
-            <ButtonMain text='Sign up'      id='button-sign-up' onClick={{state.signUpOnClick}}></>
-            <ButtonSecondary text='Log in' id='button-to-log-in' onClick={{state.signUpOnClick}}></ButtonSecondary>
+            <ButtonMain text='Sign up' id='button-sign-up' onClick={{state.signUpOnClick}}></>
+            <ButtonSecondary text='Log in' id='button-to-log-in' onClick={{state.signUpOnClick}}></>
           </AuthFooter>
         </AuthForm>
       </PageColumn>`

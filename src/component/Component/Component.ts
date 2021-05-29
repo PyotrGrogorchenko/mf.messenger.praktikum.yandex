@@ -1,10 +1,8 @@
 import { copyObj } from '../utils'
-// import { createValidateEvents } from '@valid'
 import EventBus from './EventBus'
 import { Node as PARSER_NODE, parser } from '../parser'
 import { VirtDom, Node as NodeDom } from '../VirtDom'
 import { onRouteClick } from '../../router/events'
-// import 'regenerator-runtime/runtime'
 import { Events } from './Events'
 
 export class Component {
@@ -24,8 +22,8 @@ export class Component {
 
   constructor(props: any = {}) {
     this._root = null
-    const eventBus: EventBus = new EventBus()
     this._props = props
+    const eventBus: EventBus = new EventBus()
     this.eventBus = () => eventBus
     this._registerEvents(eventBus)
   }
@@ -157,7 +155,10 @@ export class Component {
 
         node.changedProps.forEach(prop => {
           if (prop === 'classes') {
-            (node.props.classes as Array<string>).forEach(nodeClass => {
+            while (element.classList.length > 0) {
+              element.classList.remove(<string>element.classList.item(0))
+            }
+            (<Array<string>>node.props.classes).forEach(nodeClass => {
               element.classList.add(nodeClass)
             })
           } else if (typeof node.props[prop] === 'function') {

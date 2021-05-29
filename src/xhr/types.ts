@@ -1,4 +1,6 @@
-import { User } from '@store/state/types'
+import { User } from '@store'
+
+export type Methods = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
 export type Options = {
   headers?: LooseObject,
@@ -40,4 +42,4 @@ export type DataSignin = {
   password: string
 }
 
-export type Data = DataSignup | DataSignin
+export type Data = DataSignup | DataSignin | null

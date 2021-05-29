@@ -1,7 +1,9 @@
+import { Events } from './Events'
+
 export default class EventBus {
   listeners: Record<string, Array<(...args: any[]) => void>> = {}
 
-  on(event: string, callback: () => void) {
+  on(event: Events, callback: () => void) {
     if (!this.listeners[event]) {
       this.listeners[event] = Array<() => void>()
     }
@@ -9,7 +11,7 @@ export default class EventBus {
     this.listeners[event].push(callback)
   }
 
-  off(event: string, callback: () => void) {
+  off(event: Events, callback: () => void) {
     if (!this.listeners[event]) {
       throw new Error(`Event is undefained: ${event}`)
     }
@@ -19,7 +21,7 @@ export default class EventBus {
     )
   }
 
-  emit(event: string, ...args:any[]) {
+  emit(event: Events, ...args:any[]) {
     if (!this.listeners[event]) {
       throw new Error(`Event is undefained: ${event}`)
     }

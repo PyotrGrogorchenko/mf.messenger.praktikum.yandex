@@ -1,5 +1,6 @@
-import { Methods } from './Methods'
-import { Data, Options, Res } from '../types'
+import {
+  Data, Options, Res, Methods
+} from '../types'
 
 export class HTTPTransport {
   private static instance: HTTPTransport
@@ -12,22 +13,29 @@ export class HTTPTransport {
     return HTTPTransport.instance
   }
 
-  get = <D extends Data>(url: string, data: D | null = null, options: Options = {}): Promise<Res> => this.request(url, Methods.GET, data, options)
-  post = <D extends Data>(url: string, data: D, options: Options = {}): Promise<Res> => this.request(url, Methods.POST, data, options)
-  // put = (url: string, options: Options, data: Data) => this.request(url, options, Methods.PUT, data)
-  // delete = (url: string, options: Options, data: Data) => this.request(url, options, Methods.DELETE, data)
+  exe = <D extends Data, R extends Res>
+  (
+    method: Methods,
+    url: string,
+    optional: {
+      data?: D,
+      options?: Options
+    } = {}
+  ): Promise<R> => this.request(url, method, optional)
 
-  request = (url: string, method: Methods, data: Data | null = null, options: Options): Promise<Res> => {
-    const headers = options.headers || { 'content-type': 'application/json' }
-    const timeout = options.timeout || 5000
-    const withCredentials = options.withCredentials || true
+  request = <R extends Res>(url: string, method: Methods, optional: { data?: Data, options?: Options }): Promise<R> => {
+    const { options, data } = optional
+    const headers = (options && options.headers) || { 'content-type': 'application/json' }
+    const timeout = (options && options.timeout) || 5000
+    const withCredentials = (options && options.withCredentials) || true
 
-    return new Promise<Res>((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest()
-      xhr.open(method as string, url)
+      xhr.open(method, url)
       xhr.responseType = 'json'
 
       xhr.onload = () => {
+        // @ts-ignore
         resolve(xhr)
       }
 
@@ -46,7 +54,7 @@ export class HTTPTransport {
 
       xhr.withCredentials = withCredentials
 
-      if (method === Methods.GET || !data) {
+      if (method === 'GET' || !data) {
         xhr.send()
       } else {
         xhr.send(JSON.stringify(data))

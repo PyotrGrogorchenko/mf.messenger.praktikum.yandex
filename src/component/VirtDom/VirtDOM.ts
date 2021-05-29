@@ -3,13 +3,13 @@ import { Component } from '../Component'
 import { PARSER_TYPES, Node as PARSER_NODE } from '../parser'
 import { Node } from './Node'
 import {
-  isCloseBracket, compare, parent, inc, getTagName
+  isCloseBracket, compare, parent, inc, getTagName, calculateValue, getHeaderProps
 } from './utils'
+import { regExpParam } from './constsnts'
 
 export class VirtDom {
   private _nodes: Array<Node> = Array<Node>()
   private _parent: (command: string, node: null | Node) => Node | null = parent()
-  private _REGEXP_PARAM: RegExp = /\{\{(.*?)\}\}/gi
   private _deleteMark: boolean = false
 
   get deleteMark() {return this._deleteMark}
@@ -58,7 +58,7 @@ export class VirtDom {
 
     if (record.type === PARSER_TYPES.BEGIN) {
       const tagName = getTagName(record.content)
-      const newProps = this._getHeaderProps(context, template, tagName)
+      const newProps = getHeaderProps(context, template, tagName)
 
       let node: Node | null = this.getNodeByUidKey(record.uid, newProps.key) as Node
 
@@ -162,7 +162,7 @@ export class VirtDom {
           this._compileCode(context, template)
         }
 
-        regexpMatchAll(record.content, this._REGEXP_PARAM).forEach((param: any) => {
+        regexpMatchAll(record.content, regExpParam).forEach((param: any) => {
           vars.forEach((variable: Array<string>) => {
             if (param[1] && param[1].startsWith(variable[0])) {
               context.state[variable[0]] = context[variable[0]]
@@ -175,7 +175,7 @@ export class VirtDom {
         if (record.type === PARSER_TYPES.BEGIN) {
           const keyIndex = record.content.indexOf('key')
           if (keyIndex > 0) {
-            const paramKey = new RegExp(this._REGEXP_PARAM).exec(record.content.substring(keyIndex)) as RegExpExecArray
+            const paramKey = new RegExp(regExpParam).exec(record.content.substring(keyIndex)) as RegExpExecArray
             key = get(context, paramKey[1], paramKey[1])
             record.content = record.content.replace(new RegExp(paramKey[0], 'g'), key)
           } else {
@@ -198,9 +198,9 @@ export class VirtDom {
     // ifParam
     let ifParam = true
     const ifParamCode = code.substring(code.indexOf('(') + 1, code.indexOf(')')).trim().split(' ').filter((item:string) => item)
-    const ifParamL = this._code__calculateValue(context, ifParamCode[0])
+    const ifParamL = calculateValue(context, ifParamCode[0])
     if (ifParamCode[2]) {
-      const ifParamR = this._code__calculateValue(context, ifParamCode[2])
+      const ifParamR = calculateValue(context, ifParamCode[2])
       ifParam = compare(ifParamL, ifParamCode[1], ifParamR)
     } else {
       ifParam = ifParamL
@@ -232,77 +232,6 @@ export class VirtDom {
         this._compileItem(context, template)
       }
     }
-  }
-
-  _code__calculateValue(context: LooseObject, code: string): any {
-    if (code === 'null') {
-      return null
-    }
-
-    let value: any
-    const rgValue: RegExpExecArray | null = new RegExp(this._REGEXP_PARAM).exec(code)
-    if (rgValue) {
-      value = get(context, rgValue[1], rgValue[1])
-    } else {
-      value = code
-    }
-
-    if (value) {
-      regexpMatchAll(value, /['"](.*?)['"]/gi).forEach((rgExe: RegExpExecArray) => {
-        value = rgExe[1]
-      })
-    }
-
-    return value
-  }
-
-  _getHeaderProps(context: LooseObject, template: LooseObject, tagName: string): any {
-    let { content } = template.record
-    const nodeProps: any = {}
-
-    const prefixCache = '#textCache'
-    const cacheTxt: LooseObject = {}
-    let count: number = 1
-    regexpMatchAll(content, /['"](.*?)['"]/gi).forEach((txt: RegExpExecArray) => {
-      if (txt[0]) {
-        cacheTxt[`${prefixCache}${count}`] = txt[0].substr(1, txt[0].length - 2)
-        content = content.replace(txt[0], `${prefixCache}${count}`)
-        count++
-      }
-    })
-
-    content.split(' ').forEach((keyValue: string) => {
-      if (!keyValue || keyValue === tagName) {
-        return
-      }
-
-      const arrKeyValue: Array<string> = keyValue.split('=')
-
-      if (cacheTxt[arrKeyValue[1]] && arrKeyValue.length > 1) {
-        arrKeyValue[1] = cacheTxt[arrKeyValue[1]]
-      }
-
-      const param: RegExpExecArray | null = new RegExp(this._REGEXP_PARAM).exec(arrKeyValue[1])
-
-      if (arrKeyValue[0] === 'className') {
-        const strClasses: string = param ? get(context, param[1], '') : arrKeyValue[1].replace(/['"]/g, '').trim()
-        if (strClasses) {
-          nodeProps.classes = strClasses.split(' ')
-        }
-      } else if (arrKeyValue.length === 1) {
-        nodeProps[arrKeyValue[0]] = '#noValue'
-      } else if (param) {
-        if (param[1].startsWith(prefixCache)) {
-          nodeProps[arrKeyValue[0]] = cacheTxt[param[1]]
-        } else {
-          nodeProps[arrKeyValue[0]] = get(context, param[1], param[1])
-        }
-      } else {
-        nodeProps[arrKeyValue[0]] = arrKeyValue[1].replace(/['"]/g, '')
-      }
-    })
-
-    return nodeProps
   }
 
   _closeTag(): void {

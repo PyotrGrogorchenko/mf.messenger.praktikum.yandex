@@ -1,5 +1,5 @@
 {
   "rules": {
-    "class-methods-use-this": ["error", { "exceptMethods": ["template"] }]
+    "class-methods-use-this": "off"
   }
 }

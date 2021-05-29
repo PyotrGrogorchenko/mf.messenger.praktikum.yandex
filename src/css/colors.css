@@ -1,4 +1,8 @@
 :root {
+  --color-main: var(--color-gray1);
+  --color-secondary: var(--color-blue1);
+  --color-err: var(--color-red1);
+
   --color-gray1: #333333;
   --color-gray2: #4F4F4F;
   --color-gray3: #828282;
@@ -25,6 +29,8 @@
 
   --color-white: #FFFFFF;
 }
+
+.c-err {color: var(--color-err);}
 
 /* color */
 .c-gy1 {color: var(--color-gray1);}

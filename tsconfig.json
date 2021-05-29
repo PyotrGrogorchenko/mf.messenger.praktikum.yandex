@@ -27,7 +27,7 @@
       "@xhrTypes": ["src/xhr/types"],
       "@utils": ["src/utils/index"],
       "@validation": ["src/validation/index"],
-      "@store/*": ["src/store/*"]
+      "@store": ["src/store/index"]
     }
   },       
   "include": [

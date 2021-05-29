@@ -1,4 +1,3 @@
-import { xhrSignup } from './xhrSignup'
-import { xhrUser } from './xhrUser'
+import { getUser, postSignup } from './auth'
 
-export { xhrSignup, xhrUser }
+export { getUser, postSignup }

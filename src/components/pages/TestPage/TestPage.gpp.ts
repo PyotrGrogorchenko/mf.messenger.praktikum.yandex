@@ -75,61 +75,63 @@ export class TestPage extends Component {
 
   template() {
     return (
-      `<div className='right-click-area' id='CM_OwnerId' >
+      `<label className='auth-bar-input__label'>'test'</label>`
+
+      // `<div className='right-click-area' id='CM_OwnerId' >
         
-      <ButtonMain 
-        text='test if'
-        id='test-if'
-        onClick={{state.btnTestIf_onClick}}>
-      </ButtonMain>
+      // <ButtonMain 
+      //   text='test if'
+      //   id='test-if'
+      //   onClick={{state.btnTestIf_onClick}}>
+      // </ButtonMain>
       
-      {% if({{state.condition}} === null ) { %}
-        <PageColumn>
+      // {% if({{state.condition}} === null ) { %}
+      //   <PageColumn>
       
-          {% for (let    i   =    0; i < state.list.length; i++) { 
-            const listEl = state.list[i];
-            %}
+      //     {% for (let    i   =    0; i < state.list.length; i++) { 
+      //       const listEl = state.list[i];
+      //       %}
             
-            <li key={{listEl.a}}>
-              <InputMain 
-                key={{listEl.a}} 
-                id={{listEl.a}} 
-                text={{listEl.b}}    
-                type='text'     
-                value='{{listEl.b}}
-              ></InputMain> 
-              <a 
-                key={{listEl.a}} 
-                id={{listEl.a}}
-              >{{listEl.b}}</a> 
-              <AnchorMain
-                key={{listEl.a}}
-                id={{listEl.a}}
-                text={{listEl.b}}
-                href='#{R}#signup'
-              ></AnchorMain>
-            </li>
+      //       <li key={{listEl.a}}>
+      //         <InputMain 
+      //           key={{listEl.a}} 
+      //           id={{listEl.a}} 
+      //           text={{listEl.b}}    
+      //           type='text'     
+      //           value='{{listEl.b}}
+      //         ></InputMain> 
+      //         <a 
+      //           key={{listEl.a}} 
+      //           id={{listEl.a}}
+      //         >{{listEl.b}}</a> 
+      //         <AnchorMain
+      //           key={{listEl.a}}
+      //           id={{listEl.a}}
+      //           text={{listEl.b}}
+      //           href='#{R}#signup'
+      //         ></AnchorMain>
+      //       </li>
             
-          {% } %}
+      //     {% } %}
     
 
-        </PageColumn>
+      //   </PageColumn>
       
-      {% } else { %}
-        <PageColumn>
-        </PageColumn>
-      {% } %}
+      // {% } else { %}
+      //   <PageColumn>
+      //   </PageColumn>
+      // {% } %}
       
 
-        // <ContextMenu 
-        //   buttons='add:add|remove:Remove chat'
-        //   onClick={{state.CM_onClick}}
-        //   ownerId='CM_OwnerId'
-        //   menuId='CM_MenuId'
-        // ></ContextMenu>
+      //   // <ContextMenu 
+      //   //   buttons='add:add|remove:Remove chat'
+      //   //   onClick={{state.CM_onClick}}
+      //   //   ownerId='CM_OwnerId'
+      //   //   menuId='CM_MenuId'
+      //   // ></ContextMenu>
               
 
-      </div>`
+      // </div>`
 
     )
   }

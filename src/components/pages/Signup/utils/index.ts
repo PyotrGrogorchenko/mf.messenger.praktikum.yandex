@@ -1,3 +1,5 @@
 import { signup } from './signup'
+import { getUserData } from './getUserData'
+import { initFields } from './initFields'
 
-export { signup }
+export { signup, getUserData, initFields }

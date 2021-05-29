@@ -1,10 +1,9 @@
-import { valueIsValid } from '@validation'
-import { ValidTypes } from 'src/validation/types'
+import { validateValue, FieldTypes } from '@validation'
 
 type Field = {
   name: string
   value: string
-  type: ValidTypes
+  type: FieldTypes
   valid: boolean
 }
 
@@ -21,7 +20,7 @@ type Result = {
   [key: string]: Form
 }
 
-export const getFormData = (): Result => {
+export const readForm = (): Result => {
   const res: Result = {}
 
   const { forms } = document
@@ -33,8 +32,8 @@ export const getFormData = (): Result => {
     for (let j = 0; j < inputs.length; j++) {
       const input = inputs[j]
       const { id, value } = input
-      const type = (input.type || 'text') as ValidTypes
-      const fieldIsValid = valueIsValid(type, value)
+      const type = (input.type || 'text') as FieldTypes
+      const fieldIsValid = validateValue(type, value)
       data[id] = {
         name: id, value, type, valid: fieldIsValid
       }
