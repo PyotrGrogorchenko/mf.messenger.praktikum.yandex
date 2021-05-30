@@ -1,4 +1,7 @@
 import { setUser, initState } from './setters'
-import { selectUser } from './selectors'
+import { selectUser, selectAuth } from './selectors'
 
-export { setUser, selectUser, initState }
+export {
+  setUser, initState,
+  selectUser, selectAuth
+}

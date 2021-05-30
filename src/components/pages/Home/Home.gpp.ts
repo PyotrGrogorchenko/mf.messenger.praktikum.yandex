@@ -1,11 +1,12 @@
 import { Component } from '@Component'
 
-export default class Home extends Component {
+export class Home extends Component {
   template() {
     return (
       `<PageColumn>
         <h1>Messanger</h1>
-        </PageColumn>`
+        <h3>Individual training project from Yandex.praktikum</h3>
+      </PageColumn>`
     )
   }
 }

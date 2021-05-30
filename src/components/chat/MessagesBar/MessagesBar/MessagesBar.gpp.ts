@@ -95,9 +95,9 @@ export class MessagesBar extends Component {
   template() {
     return (
       `<div className='messages-bar'>
-        // <MessagesBar__Header title={{props.title}} id={{props.chatid}} avatar={{props.avatar}}></MessagesBar__Header>
-        // <MessagesBar__Messages messages={{state.messages}}></MessagesBar__Messages> 
-        // <MessagesBar__Footer sendMessage_onClik={{state.sendMessage_onClik}}></MessagesBar__Footer>
+        <MessagesBarHeader title={{props.title}} id={{props.chatid}} avatar={{props.avatar}}></>
+        <MessagesBarMessages messages={{state.messages}}></> 
+        <MessagesBarFooter sendMessage_onClik={{state.sendMessage_onClik}}></>
       </div>`
     )
   }

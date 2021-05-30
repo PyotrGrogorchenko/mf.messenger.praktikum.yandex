@@ -1,4 +1,3 @@
-import Component from './Home.gpp'
-import './style.css'
+import { Home } from './Home.gpp'
 
-export default Component
+export { Home }

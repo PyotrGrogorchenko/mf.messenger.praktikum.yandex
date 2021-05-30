@@ -1,3 +1,7 @@
-import { getUser, postSignup } from './methods'
+import {
+  getUser, postSignup, postLogout, postSignin
+} from './methods'
 
-export { getUser, postSignup }
+export {
+  getUser, postSignup, postLogout, postSignin
+}

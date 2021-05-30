@@ -30,7 +30,10 @@
   --color-white: #FFFFFF;
 }
 
+.c-main {color: var(--color-main);}
+.c-secondary {color: var(--color-secondary);}
 .c-err {color: var(--color-err);}
+.c-white {color: var(--color-white);}
 
 /* color */
 .c-gy1 {color: var(--color-gray1);}

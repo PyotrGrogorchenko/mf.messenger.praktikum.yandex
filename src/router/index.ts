@@ -1,3 +1,7 @@
-import { startRouter } from './utils'
+import {
+  start, redirect, render, privateRoute
+} from './utils'
 
-export { startRouter }
+export {
+  start, redirect, render, privateRoute
+}

@@ -1,32 +1,30 @@
 import { Events } from './Events'
 
-export default class EventBus {
-  listeners: Record<string, Array<(...args: any[]) => void>> = {}
+export class EventBus {
+  private _listeners: Record<string, Array<(...args: any[]) => void>> = {}
 
   on(event: Events, callback: () => void) {
-    if (!this.listeners[event]) {
-      this.listeners[event] = Array<() => void>()
+    if (!this._listeners[event]) {
+      this._listeners[event] = Array<() => void>()
     }
 
-    this.listeners[event].push(callback)
+    this._listeners[event].push(callback)
   }
 
   off(event: Events, callback: () => void) {
-    if (!this.listeners[event]) {
-      throw new Error(`Event is undefained: ${event}`)
-    }
-
-    this.listeners[event] = this.listeners[event].filter(
+    if (!this._listeners[event]) return
+    this._listeners[event] = this._listeners[event].filter(
       listener => listener !== callback
     )
   }
 
-  emit(event: Events, ...args:any[]) {
-    if (!this.listeners[event]) {
-      throw new Error(`Event is undefained: ${event}`)
-    }
+  offAll() {
+    this._listeners = {}
+  }
 
-    this.listeners[event].forEach((listener) => {
+  emit(event: Events, ...args:any[]) {
+    if (!this._listeners[event]) return
+    this._listeners[event].forEach((listener) => {
       listener(...args)
     })
   }

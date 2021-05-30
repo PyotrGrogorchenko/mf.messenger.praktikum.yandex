@@ -30,6 +30,7 @@
     "indent": "off",
     "semi": ["error", "never"],
     "no-param-reassign": "off",
+    "import/no-cycle": "off",
     "no-continue": "off",
     "prefer-destructuring": ["error", {
       "array": false,

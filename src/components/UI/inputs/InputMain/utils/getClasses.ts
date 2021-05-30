@@ -7,14 +7,16 @@ type Clsses = {
 }
 
 export const getClasses = (field: Field): Clsses => {
+  const valid = field.valid || field.valid === undefined
+
   const input = ['input-main__input']
-  input.push(field.valid ? 'input_main-border' : 'input_err-border')
+  input.push(valid ? 'input_main-border' : 'input_err-border')
 
   const label = ['input-main__label']
-  label.push(field.valid ? 'c-gy3' : 'c-err')
+  label.push(valid ? 'c-gy3' : 'c-err')
 
   const tip = ['input-main__label']
-  tip.push(field.valid ? 'hide' : 'c-err')
+  tip.push(valid ? 'hide' : 'c-err')
 
   return {
     input: input.join(' '),

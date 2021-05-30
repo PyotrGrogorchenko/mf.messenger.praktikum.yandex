@@ -1,3 +1,7 @@
-import { getUser, postSignup } from './auth'
+import {
+  getUser, postSignup, postLogout, postSignin
+} from './auth'
 
-export { getUser, postSignup }
+export {
+  getUser, postSignup, postLogout, postSignin
+}

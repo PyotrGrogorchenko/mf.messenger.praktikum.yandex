@@ -1,7 +1,13 @@
 import { Component } from '@Component'
-import { subscribe, User } from '@store'
-import { validateField, validateFields } from '@validation'
+import { selectUser, subscribe, User } from '@store'
+import { validateFields, validateInput } from '@validation'
+import { redirect } from '@router'
 import { getFields, signup } from './utils'
+
+const signinOnClick = (e:Event) => {
+  e.preventDefault()
+  redirect('#signin')
+}
 
 export class Signup extends Component {
   componentDidMount() {
@@ -9,21 +15,17 @@ export class Signup extends Component {
   }
 
   onBlur = (e: FocusEvent) => {
-    const input = <HTMLInputElement>e.target
-    const { id, value } = input
-    const { fields } = this.state
-    const field = this.state.fields[id]
-    field.value = value
-    fields[id] = validateField(field)
+    e.preventDefault()
+    const fields = validateInput(this.state.fields, <HTMLInputElement>e.target)
     this.setState({ fields })
   }
 
-  signUpOnClick = (e:Event) => {
+  signupOnClick = (e:Event) => {
     e.preventDefault()
     const validation = validateFields(this.state.fields)
     this.setState({ fields: validation.fields })
     if (validation.valid) {
-      signup(validation.fields)
+      signup(validation.fields).then(() => redirect('#chat'))
     }
   }
 
@@ -32,29 +34,30 @@ export class Signup extends Component {
   }
 
   state = {
-    signUpOnClick: this.signUpOnClick,
+    signupOnClick: this.signupOnClick,
+    signinOnClick,
     onBlur: this.onBlur,
-    fields: getFields()
+    fields: getFields(selectUser())
   }
 
   template() {
     return (
       `<PageColumn>
-        <AuthForm formName={{'userData'}}>
-          <AuthHeader text='Sign up'></>
-          <AuthContent>
+        <Form formName={{'userData'}}>
+          <FormHeader text='Sign up'></>
+          <FormContent>
             <InputField field={{state.fields.first_name}}  onBlur={{state.onBlur}}></>
             <InputField field={{state.fields.second_name}} onBlur={{state.onBlur}}></>
             <InputField field={{state.fields.login}}       onBlur={{state.onBlur}}></>
             <InputField field={{state.fields.email}}       onBlur={{state.onBlur}}></>
             <InputField field={{state.fields.password}}    onBlur={{state.onBlur}}></>
             <InputField field={{state.fields.phone}}       onBlur={{state.onBlur}}></>
-          </AuthContent>
-          <AuthFooter>
-            <ButtonMain text='Sign up' id='button-sign-up' onClick={{state.signUpOnClick}}></>
-            <ButtonSecondary text='Log in' id='button-to-log-in' onClick={{state.signUpOnClick}}></>
-          </AuthFooter>
-        </AuthForm>
+          </FormContent>
+          <FormFooter>
+            <Button text='Sign up' id='button_sign-up' onClick={{state.signupOnClick}}></>
+            <Button text='Sign in' id='button_sign-in' onClick={{state.signinOnClick}} margin={{middle}} style={{secondary}}></>
+          </FormFooter>
+        </Form>
       </PageColumn>`
     )
   }

@@ -1,22 +1,14 @@
-import { Signup } from '@Components/pages/Signup'
-import { initState } from '@store'
 import './css/index.css'
-import { startRouter } from './router'
-// import { initDomEvents } from './DOMevents/index'
-// import { defaultPage } from './router/utils'
+import { initState } from '@store'
+import {
+  start, render, privateRoute, redirect
+} from './router'
 
-initState()
-
-// const startApp = () => {
-//   defaultPage(window.location.hash)
-// }
-
-// startRouter()
-// initDomEvents()
-// startApp()
-
-const root: HTMLElement | null = document.querySelector('.app')
-if (root) {
-  const app = new Signup(root)
-  app.init(root)
-}
+initState().then(() => {
+  start()
+  if (privateRoute()) {
+    redirect('#signin')
+  } else {
+    render()
+  }
+})

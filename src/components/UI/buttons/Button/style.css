@@ -1,0 +1,20 @@
+.button {
+  width: 70%;
+  height: 20px;
+  border-radius: 5px;
+  border: none;
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+}
+
+.button-main {
+  color: var(--color-white);
+  background-color: var(--color-secondary);
+}
+
+.button-secondary {
+  color: var(--color-secondary);
+  background-color: var(--color-white);
+}

@@ -13,5 +13,6 @@ export const signup = async (fields: Fields) => {
   } else {
     // eslint-disable-next-line no-alert
     alert(`${res.response.reason}`)
+    throw new Error(res.response.reason)
   }
 }

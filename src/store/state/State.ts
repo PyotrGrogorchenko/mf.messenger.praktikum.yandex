@@ -1,5 +1,6 @@
 import { User } from '../types'
-import EventBus from './EventBus'
+import { EventBus } from './EventBus'
+import { Events } from './Events'
 
 export class State {
   private static __instance: State
@@ -21,5 +22,11 @@ export class State {
     State.getInstance()._eventBus.emit('FLOW_USER', this._user)
   }
 
-  get eventBus() {return this._eventBus}
+  subscribe(event: Events, cb: any) {
+    this._eventBus.on(event, cb)
+  }
+
+  clearSubscribes() {
+    this._eventBus.offAll()
+  }
 }

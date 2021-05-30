@@ -2,7 +2,6 @@ import { copyObj } from '../utils'
 import EventBus from './EventBus'
 import { Node as PARSER_NODE, parser } from '../parser'
 import { VirtDom, Node as NodeDom } from '../VirtDom'
-import { onRouteClick } from '../../router/eventsOld'
 import { Events } from './Events'
 
 export class Component {
@@ -13,6 +12,7 @@ export class Component {
   private _parsedTemplate:Array<PARSER_NODE> | null = null
   private _deleteMark: boolean = false
   private _isNew: boolean = true
+  private _isComponent: boolean = true
 
   private _componentDidMountExecuted: boolean = false
 
@@ -37,6 +37,8 @@ export class Component {
   set parsedTemplate(value) {this._parsedTemplate = value}
 
   get virtDOM() {return this._virtDOM}
+
+  get isComponent() {return this._isComponent}
 
   getProps(): any {return this._props}
   setProps(props: any) {this._props = props}
@@ -167,14 +169,14 @@ export class Component {
             } else {
               element.setAttribute(prop, node.props[prop])
             }
-          } else if ((prop === 'href')) {
-            if (!node.props[prop]) {
-              return
-            }
-            if (node.props[prop].startsWith('#{R}')) {
-              element.addEventListener('click', onRouteClick)
-            }
-            element.setAttribute(prop, node.props[prop])
+          // } else if ((prop === 'href')) {
+          //   if (!node.props[prop]) {
+          //     return
+          //   }
+          //   if (node.props[prop].startsWith('#{R}')) {
+          //     element.addEventListener('click', onRouteClick)
+          //   }
+          //   element.setAttribute(prop, node.props[prop])
           } else if (node.props[prop] === '#noValue') {
             // No actions
           } else {

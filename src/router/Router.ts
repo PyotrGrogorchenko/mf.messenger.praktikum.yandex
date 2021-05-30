@@ -1,21 +1,29 @@
-import Route from './Route'
+// import Route from './Route'
+
+// import { Component } from '@Component'
+import { renderApp } from '@Component'
+import { Signup } from '@Components/pages/Signup'
+// import { RoutesPath } from './RoutesPath'
+import { Routes } from './types'
 
 class Router {
   static __instance: Router
+  private _routes: LooseObject = { }
 
-  routes: Array<Route> = []
+  _block = Signup
+
+  // routes: Routes = {}
   history: History = window.history
-  private _currentRoute: Route | null = null
-  // private _rootQuery: string = ''
+  // private _currentRoute: Route | null = null
 
   private constructor() {}
 
   public static getInstance(): Router {
     if (!Router.__instance) {
       const instance = new this()
-      instance.routes = []
-      instance.history = window.history
-      instance._currentRoute = null
+      // instance._routes = []
+      // instance.history = window.history
+      // instance._currentRoute = null
       Router.__instance = instance
     }
     return Router.__instance
@@ -29,64 +37,75 @@ class Router {
   //   this.routes = []
   //   this.history = window.history
   //   this._currentRoute = null
-  //   this._rootQuery = rootQuery
 
   //   Router.__instance = this
   // }
 
-  use(pathname: string, block: any) {
-    const route = new Route(pathname, block)
-    this.routes.push(route)
+  use(pathname: Routes, Component: any) {
+    // const route = new Route(pathname, block)
+    this._routes[pathname] = Component
     return this
   }
 
   start() {
     // На смену роута вызываем перерисовку
-    // window.addEventListener('popstate', ((event: any) => {
-    this._onRoute(window.location.pathname)
-    // }))
+    window.addEventListener('popstate', ((event: any) => {
+      this._onRoute(event.currentTarget.location.pathname)
+    }))
 
     return this
   }
 
-  renderPage(pathname:string) {
-    this._onRoute(pathname)
+  renderPage() {
+    this._onRoute()
   }
 
-  _onRoute(pathname: string) {
-    const route = this.getRoute(pathname)
+  _onRoute(pathname: Routes = <Routes>window.location.hash || '/') {
+    const Component = this._routes[pathname]
 
-    if (!route) {
+    if (!Component) {
       // eslint-disable-next-line no-console
       console.error(`Route not found:${pathname}`)
       return
     }
 
-    if (this._currentRoute) {
-      this._currentRoute.leave()
-    }
-
-    this._currentRoute = route
-
-    route.render()
+    renderApp(Component)
   }
 
-  go(pathname: string) {
+  // _onRoute(pathname: string) {
+  //   const route = this.getRoute(pathname)
+
+  //   if (!route) {
+  //     // eslint-disable-next-line no-console
+  //     console.error(`Route not found:${pathname}`)
+  //     return
+  //   }
+
+  //   if (this._currentRoute) {
+  //     this._currentRoute.leave()
+  //   }
+
+  //   this._currentRoute = route
+
+  //   route.render()
+  // }
+
+  go(pathname: Routes) {
     this.history.pushState({}, '', pathname)
     this._onRoute(pathname)
   }
 
-  back() {
-    this.history.back()
-  }
+  // back() {
+  //   this.history.back()
+  // }
 
-  forward() {
-    this.history.forward()
-  }
+  // forward() {
+  //   this.history.forward()
+  // }
 
-  getRoute(pathname: string) {
-    return this.routes.find(route => route.match(pathname))
-  }
+  // getRoute(pathname: string) {
+  //   return this.routes.find(route => route.match(pathname))
+  // }
 }
 
 export { Router }

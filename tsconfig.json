@@ -24,10 +24,12 @@
       "@Component": ["src/component"],
       "@Components/*": ["src/components/*"],
       "@xhr": ["src/xhr/index"],
-      "@xhrTypes": ["src/xhr/types"],
+      "@xhrTypes": ["src/xhr/types/index"],
       "@utils": ["src/utils/index"],
       "@validation": ["src/validation/index"],
-      "@store": ["src/store/index"]
+      "@store": ["src/store/index"],
+      "@router": ["src/router/index"],
+      "@HOCs": ["src/HOCs/index"]
     }
   },       
   "include": [
