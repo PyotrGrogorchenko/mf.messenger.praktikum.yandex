@@ -3,14 +3,15 @@ import {
 } from '../types'
 
 export class HTTPTransport {
-  private static instance: HTTPTransport
+  private static __instance: HTTPTransport
+
   private constructor() {}
 
   public static getInstance(): HTTPTransport {
-    if (!HTTPTransport.instance) {
-      HTTPTransport.instance = new this()
+    if (!HTTPTransport.__instance) {
+      HTTPTransport.__instance = new this()
     }
-    return HTTPTransport.instance
+    return HTTPTransport.__instance
   }
 
   exe = <D extends Data, R extends Res>

@@ -2,17 +2,17 @@ import { User } from '../types'
 import EventBus from './EventBus'
 
 export class State {
-  private static _instance: State
+  private static __instance: State
   private _eventBus: EventBus = new EventBus()
   private _user: User | null = null
 
   private constructor() {}
 
   public static getInstance(): State {
-    if (!State._instance) {
-      State._instance = new this()
+    if (!State.__instance) {
+      State.__instance = new this()
     }
-    return State._instance
+    return State.__instance
   }
 
   get user() {return this._user}

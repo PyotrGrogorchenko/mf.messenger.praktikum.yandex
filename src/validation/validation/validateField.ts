@@ -1,4 +1,4 @@
-import { Field } from './types'
+import { Field } from '../types'
 import { validateValue } from './validateValue'
 
 export const validateField = (field: Field): Field => {

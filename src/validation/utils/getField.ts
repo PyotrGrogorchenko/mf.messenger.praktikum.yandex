@@ -1,4 +1,4 @@
-import { Field, FieldTypes } from './types'
+import { Field, FieldTypes } from '../types'
 
 export type Optional = {
   label?: string

@@ -1,4 +1,4 @@
-import { Patterns } from './types'
+import { Patterns } from '../types'
 
 export const patterns: Patterns = {
   text: {

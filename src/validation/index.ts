@@ -1,10 +1,8 @@
-import { validateValue } from './validateValue'
-import { FieldTypes, Field } from './types'
-import { getField } from './getField'
-import { validateField } from './validateField'
-import { getTip } from './getTip'
+import { validateValue, validateField, validateFields } from './validation'
+import { FieldTypes, Field, Fields } from './types'
+import { getTip, getField } from './utils'
 
 export {
-  FieldTypes, Field,
-  validateValue, getField, validateField, getTip
+  FieldTypes, Field, Fields,
+  validateValue, validateField, validateFields, getField, getTip
 }

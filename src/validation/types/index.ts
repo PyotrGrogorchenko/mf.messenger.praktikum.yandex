@@ -15,3 +15,7 @@ export type Field = {
   valid: boolean
   required: boolean
 }
+
+export type Fields = {
+  [key: string]: Field
+}

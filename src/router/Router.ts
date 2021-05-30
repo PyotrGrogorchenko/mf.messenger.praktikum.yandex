@@ -5,33 +5,46 @@ class Router {
 
   routes: Array<Route> = []
   history: History = window.history
-  _currentRoute: Route | null = null
-  _rootQuery: string = ''
+  private _currentRoute: Route | null = null
+  // private _rootQuery: string = ''
 
-  constructor(rootQuery: string = '') {
-    if (Router.__instance) {
-      return Router.__instance
+  private constructor() {}
+
+  public static getInstance(): Router {
+    if (!Router.__instance) {
+      const instance = new this()
+      instance.routes = []
+      instance.history = window.history
+      instance._currentRoute = null
+      Router.__instance = instance
     }
-
-    this.routes = []
-    this.history = window.history
-    this._currentRoute = null
-    this._rootQuery = rootQuery
-
-    Router.__instance = this
+    return Router.__instance
   }
 
+  // constructor(rootQuery: string = '') {
+  //   if (Router.__instance) {
+  //     return Router.__instance
+  //   }
+
+  //   this.routes = []
+  //   this.history = window.history
+  //   this._currentRoute = null
+  //   this._rootQuery = rootQuery
+
+  //   Router.__instance = this
+  // }
+
   use(pathname: string, block: any) {
-    const route = new Route(pathname, block, { rootQuery: this._rootQuery })
+    const route = new Route(pathname, block)
     this.routes.push(route)
     return this
   }
 
   start() {
     // На смену роута вызываем перерисовку
-    window.addEventListener('popstate', ((event: any) => {
-      this._onRoute(event.currentTarget.location.pathname)
-    }))
+    // window.addEventListener('popstate', ((event: any) => {
+    this._onRoute(window.location.pathname)
+    // }))
 
     return this
   }
@@ -68,7 +81,7 @@ class Router {
   }
 
   forward() {
-    window.history.forward()
+    this.history.forward()
   }
 
   getRoute(pathname: string) {

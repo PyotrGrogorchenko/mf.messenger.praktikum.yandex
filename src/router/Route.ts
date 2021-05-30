@@ -1,14 +1,15 @@
+import { Component } from '@Component'
+import { rootQuery } from './const'
+
 class Route {
   _pathname: string
   _blockClass: any
   _block: any
-  _props: any
 
-  constructor(pathname: string, view: any, props: any) {
+  constructor(pathname: string, view: Component) {
     this._pathname = pathname
     this._blockClass = view
     this._block = view
-    this._props = props
   }
 
   navigate(pathname: string) {
@@ -19,9 +20,11 @@ class Route {
   }
 
   leave() {
-    const root: HTMLElement = document.querySelector(this._props.rootQuery)
-    while (root.firstChild) {
-      root.removeChild(root.firstChild)
+    const root: HTMLElement = document.querySelector(rootQuery)
+    if (root) {
+      while (root.firstChild) {
+        root.removeChild(root.firstChild)
+      }
     }
   }
 
@@ -30,10 +33,11 @@ class Route {
   }
 
   render() {
-    const root: HTMLElement = document.querySelector(this._props.rootQuery)
-    const app = new this._blockClass(root)
-    app.init(root)
-    window.createValidateEvents()
+    const root: HTMLElement | null = document.querySelector(rootQuery)
+    if (root) {
+      const app = new this._blockClass(root)
+      app.init(root)
+    }
   }
 }
 
