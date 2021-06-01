@@ -1,0 +1,9 @@
+.chats-bar__header {
+  flex: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 5px;
+  align-items: flex-end;
+  height: 150px;
+}

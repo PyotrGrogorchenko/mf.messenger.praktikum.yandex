@@ -6,7 +6,7 @@
   height: 40px;
   width: 100%;
   margin-top: 10px;
-  border-top: 1px solid var(--color-gray5);
+  border-top: 1px solid var(--color-light);
 }
 
 .footer__middle {

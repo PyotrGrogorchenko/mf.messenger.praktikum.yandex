@@ -1,49 +1,11 @@
-import { User } from '@store'
+import {
+  DataAuth, DataSignin, DataSignup,
+  ResAuth, ResSignin, ResSignup, ResUser, ResLogout
+} from './auth'
 
 export type Methods = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
-export type Options = {
-  headers?: LooseObject,
-  withCredentials?: boolean
-  timeout?: number
+export {
+  DataAuth, DataSignin, DataSignup,
+  ResAuth, ResSignin, ResSignup, ResUser, ResLogout
 }
-
-type ResBase = {
-  status: number
-  response: {
-    error: string
-    reason: string
-  }
-}
-
-export type ResSignup = {
-  response: {
-    id: number
-  }
-} & ResBase
-
-export type ResUser = {
-  response: User
-} & ResBase
-
-export type ResSignin = ResBase
-
-export type ResLogout = ResBase
-
-export type Res = ResSignup | ResUser | ResLogout | ResSignin
-
-export type DataSignup = {
-  first_name: string
-  second_name: string
-  login: string
-  email: string
-  password: string
-  phone: string
-}
-
-export type DataSignin = {
-  login: string
-  password: string
-}
-
-export type Data = DataSignup | DataSignin | null

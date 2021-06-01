@@ -9,7 +9,7 @@ export class MessagesBarHeader extends Component {
           <Avatar avatar={{props.avatar}}></Avatar>
 
           // <div className='avatar-empty'>
-          //   <i className='c-gy3 fas fa-camera'></i>
+          //   <i className='c-white fas fa-camera'></i>
           // </div>
         </div>
         

@@ -2,7 +2,7 @@ import { Component } from '@Component'
 import { Field, getTip } from '@validation'
 import { getClasses } from './utils'
 
-export class InputMain extends Component {
+export class Input extends Component {
   componentDidUpdate(props: Field) {
     if (props.valid === this.state.valid) return
     this.setState({
@@ -26,11 +26,11 @@ export class InputMain extends Component {
 
   template() {
     return (
-      `<div className='input-main'>
+      `<div className='input'>
         <label 
           className={{state.сlasses.label}}
           for={{props.id}}
-        >{{props.text}}</label>
+        >{{props.label}}</label>
         <input 
           className={{state.сlasses.input}}
           type={{props.type}}

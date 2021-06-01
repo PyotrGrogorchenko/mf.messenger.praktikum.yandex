@@ -3,10 +3,6 @@ export type This = {
   _compiler: any
 } & NodeModule
 
-export type LooseObject = {
-  [key: string]: any
-}
-
 export type Messages = {
   errors: string[]
   warnings: string[]

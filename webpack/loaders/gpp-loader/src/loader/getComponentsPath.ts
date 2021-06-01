@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { LooseObject, This } from '../types'
+import { This } from '../types'
 
 export const getComponentsPath = function (this: This, componentsDir: string) {
   const componentsPath: LooseObject = {}

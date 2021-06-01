@@ -1,14 +1,13 @@
 import { Component } from '@Component'
 
-class MW extends Component {
+export class ModalWindow extends Component {
   onClose = ((e:MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
 
-    // document.getElementsByTagName('html')[0].classList.remove('ov-fl_hide')
-
     const props = this.getProps()
     if (!props.callback) {
+      // eslint-disable-next-line no-console
       console.error('ModalWindow: callback function is undefined!')
       return
     }
@@ -35,7 +34,6 @@ class MW extends Component {
               <p className='MW_btn-close' onClick={{state.onClose}}>×</p>
             </div>
             <div className='MW-body'>    
-           
             </div>
           </div>
         </div>
@@ -43,5 +41,3 @@ class MW extends Component {
     )
   }
 }
-
-export default MW

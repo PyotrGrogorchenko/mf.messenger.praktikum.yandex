@@ -7,7 +7,7 @@ export class MessagesBarFooter extends Component {
         
         <div className='footer__left'>
           <button className='button-round bg-w' >
-            <i className='c-gy3 fas fa-paperclip'></i>
+            <i className='c-middle fas fa-paperclip'></i>
           </button>
         </div>       
         
@@ -16,8 +16,8 @@ export class MessagesBarFooter extends Component {
         </div>
   
         <div className='footer__right'>
-          <button className='button-round bg-b1 margin5px' onClick={{props.sendMessage_onClik}}>
-            <i className='c-w fas fa-long-arrow-alt-right'></i>
+          <button className='button-round bg-b1 margin-small' onClick={{props.sendMessage_onClik}}>
+            <i className='c-middle fas fa-long-arrow-alt-right'></i>
           </button>
         </div>
       

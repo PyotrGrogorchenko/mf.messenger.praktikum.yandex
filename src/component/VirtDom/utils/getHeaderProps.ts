@@ -30,7 +30,7 @@ export const getHeaderProps = (context: LooseObject, template: LooseObject, tagN
     const param: RegExpExecArray | null = new RegExp(regExpParam).exec(arrKeyValue[1])
 
     if (arrKeyValue[0] === 'className') {
-      const strClasses: string = param ? get(context, param[1], '') : arrKeyValue[1].replace(/['"]/g, '').trim()
+      const strClasses: string = (param ? get(context, param[1], '') : arrKeyValue[1].replace(/['"]/g, '')).trim()
       if (strClasses) {
         nodeProps.classes = strClasses.split(' ')
       }

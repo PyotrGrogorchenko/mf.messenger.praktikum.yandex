@@ -1,9 +1,5 @@
-// import Route from './Route'
-
-// import { Component } from '@Component'
 import { renderApp } from '@Component'
 import { Signup } from '@Components/pages/Signup'
-// import { RoutesPath } from './RoutesPath'
 import { Routes } from './types'
 
 class Router {

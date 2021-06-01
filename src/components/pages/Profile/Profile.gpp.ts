@@ -37,20 +37,23 @@ export class Profile extends Component {
         <Form>
           <FormHeader text='Profile'></>
           <FormContent>
-            <InputField field={{state.fields.first_name}}  onBlur={{state.onBlur}}></>
-            <InputField field={{state.fields.second_name}} onBlur={{state.onBlur}}></>
-            <InputField field={{state.fields.login}}       onBlur={{state.onBlur}}></>
-            <InputField field={{state.fields.email}}       onBlur={{state.onBlur}}></>
-            <InputField field={{state.fields.phone}}       onBlur={{state.onBlur}}></>
+            <InputField field={{state.fields.first_name}}     onBlur={{state.onBlur}}></>
+            <InputField field={{state.fields.second_name}}    onBlur={{state.onBlur}}></>
+            <InputField field={{state.fields.login}}          onBlur={{state.onBlur}}></>
+            <InputField field={{state.fields.email}}          onBlur={{state.onBlur}}></>
+            <InputField field={{state.fields.phone}}          onBlur={{state.onBlur}}></>
             <InputField field={{state.fields.oldPassword}}    onBlur={{state.onBlur}}></>
             <InputField field={{state.fields.newPassword}}    onBlur={{state.onBlur}}></>
           </FormContent>
           <FormFooter>
             <Button text='Save' id='button_save' onClick={{state.saveOnClick}}></>
-            <Button text='Log out' id='button_logout' onClick={{state.logoutOnClick}} margin={{middle}} style={{secondary}}></>
+            <Button text='Log out' id='button_logout' onClick={{state.logoutOnClick}} style='secondary' margin='middle'></>
+            // <Button text='Log out' id='button_logout' onClick={{state.logoutOnClick}} style='link' icon='arrow' margin='middle'></>
+            // <Button text='Log out' id='button_logout' onClick={{state.logoutOnClick}} style='disabled' icon='arrow' margin='middle'></>
           </FormFooter>
         </Form>
-      </PageColumn>`
+      </PageColumn>
+      `
     )
   }
 }

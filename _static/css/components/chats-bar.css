@@ -2,7 +2,7 @@
   /* display: flex; */
   flex: 1;
   flex-direction: column;
-  height: 900px;
+  /* height: 900px; */
   border-right: 1px solid var(--color-gray5);
 }
 

@@ -11,16 +11,13 @@
   margin-left: 0;
   padding-left: 0;  
   
-  border-top: 1px solid var(--color-gray5);
+  border-top: 1px solid var(--color-light);
 
   min-width: 300px;
-
-  /* cursor: pointer; */
-
 }
 
 .chats-list__chat-item:hover {
-  background: var(--color-gray5);
+  background: var(--color-light);
 } 
 
 .chat-item__avatar {
@@ -45,18 +42,14 @@
 
 .chat-item__content-top {
   flex: 1;
-  
   display: flex;
   flex-direction: row;
- 
 }
 
 .chat-item__content-bottom {
   flex: 3;
-  
   display: flex;
   flex-direction: row;
-  
 }
 
 .chat-item__chatname {
@@ -72,25 +65,20 @@
 
 .last-message-time__value {
   font-size: 10px; 
-  color: var(--color-gray3);
+  color: var(--color-middle);
 }
 
 
 .chat-item__last-message {
   flex: 4;
   max-width: 200px;
-  /* overflow: hidden;
-  white-space: nowrap;  
-  text-overflow: ellipsis; */
 }
 
 .last-message__value {
-
-  color: var(--color-gray2);
+  color: var(--color-light);
   overflow: hidden;
   white-space: nowrap;  
   text-overflow: ellipsis;
-  
 }
 
 .chat-item__count-message {
@@ -102,7 +90,7 @@
 
   height: 30px;
   width: 30px;
-  background: var(--color-blue1);
+  background: var(--color-main);
   border-radius: 50%;
   
   margin: 10px 5px 0 0 ;

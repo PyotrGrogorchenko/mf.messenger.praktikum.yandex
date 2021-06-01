@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;800&display=swap');
-@import 'base.css';
+@import 'root.css';
 @import 'colors.css';
 @import 'properties.css';
-@import 'margin.css';
+@import 'indent.css';
+@import 'align.css';

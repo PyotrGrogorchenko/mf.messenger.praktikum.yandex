@@ -1,14 +1,3 @@
-/* .chats-bar__users-list {
-  flex: 9;
-  display: flex;
-  flex-direction: column;
-} */
-
-/* .chats-list__list { */
-  /* height: 1000; */
-  /* flex: 1; */
-/* } */
-
 .chats-bar__chats-list {
   height: 100%;
 }

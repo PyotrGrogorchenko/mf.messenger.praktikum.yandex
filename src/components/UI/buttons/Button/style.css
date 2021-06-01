@@ -1,20 +1,82 @@
 .button {
-  width: 70%;
+  width: 100%;
   height: 20px;
   border-radius: 5px;
   border: none;
-
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
+  cursor: pointer;
 }
 
+/* content */
+.button-content {
+  display: flex;
+  align-items:center;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 0 5px 0 5px;
+
+}
+.button-content_center {
+  justify-content: center;
+}
+.button-content_start {
+  justify-content: flex-start;
+}
+.button-content_end {
+  justify-content: flex-end;
+}
+
+/* main */
 .button-main {
-  color: var(--color-white);
   background-color: var(--color-secondary);
 }
+.button-main_anchor {
+  color: var(--color-lightest);
+}
+.button-main_icon {
+  color: var(--color-lightest);
+}
 
+/* secondary */
 .button-secondary {
-  color: var(--color-secondary);
   background-color: var(--color-white);
+}
+.button-secondary_anchor {
+  color: var(--color-secondary);
+}
+.button-secondary_icon {
+  color: var(--color-secondary);
+}
+
+/* link */
+.button-link {
+  background-color: var(--color-white);
+}
+.button-link_anchor {
+  color: var(--color-dark);
+}
+.button-link_icon {
+  color: var(--color-dark);
+}
+
+/* disabled */
+.button-disabled { 
+  background-color: var(--color-middle);
+}
+.button-disabled_anchor {
+  color: var(--color-lightest);
+}
+.button-disabled_icon {
+  color: var(--color-lightest);
+}
+
+/* icon */
+.button_icon-end {
+  padding: 0 0 0 3px;
+}
+
+.button_icon-start {
+  padding: 0 3px 0 0;
 }

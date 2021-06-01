@@ -1,10 +1,10 @@
-import { Test } from '@Components/pages/Test'
 import { Signin } from '@Components/pages/Signin'
 import { Signup } from '@Components/pages/Signup'
 import { Error404 } from '@Components/pages/Error404'
 import { Error500 } from '@Components/pages/Error500'
 import { Profile } from '@Components/pages/Profile'
 import { Chat } from '@Components/pages/Chat'
+import { Home } from '@Components/pages/Home'
 import { Router } from '../Router'
 
 export const start = () => {
@@ -13,7 +13,7 @@ export const start = () => {
   router
     .use('/', Chat)
     .use('#signin', Signin)
-    .use('#test', Test)
+    .use('#test', Home)
     .use('#signup', Signup)
     .use('#chat', Chat)
     .use('#error404', Error404)

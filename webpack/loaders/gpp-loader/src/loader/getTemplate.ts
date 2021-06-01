@@ -1,5 +1,3 @@
-import { LooseObject } from 'src/types'
-
 export const getTemplate = (props: LooseObject) => {
   const { source } = props
   const tmplIndex = source.indexOf('template()')

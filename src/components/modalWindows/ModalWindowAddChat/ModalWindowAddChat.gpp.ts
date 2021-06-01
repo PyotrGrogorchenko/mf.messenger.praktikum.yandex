@@ -1,7 +1,8 @@
 import { Component } from '@Component'
 
-class MW__AddChat extends Component {
+export class ModalWindowAddChat extends Component {
   button_addChatOnClick = async (e:Event) => {
+    e.preventDefault()
     this.getProps().callback({ title: (document.getElementById('chat-title') as HTMLLIElement).value })
   }
 
@@ -16,16 +17,15 @@ class MW__AddChat extends Component {
 
   template() {
     return (
-      `{% if({{props.showAddChat}}) { %}
-        <MW title='Add chat' callback={{state.onClose}}>
-          <InputGray5 id='chat-title' title='Title'></InputGray5>
+      `// {% if({{props.showAddChat}}) { %}
+        <ModalWindow title='Add chat' callback={{state.onClose}}>
+          <Input id='mw-add-chat_title' title='Title'></Input>
           <div className='add-chat_buttons'> 
-            <ButtonSecondary text='Add' id='button_add-chat' onClick={{state.button_addChatOnClick}}></ButtonSecondary>
+            <Button text='Add' id='button_add-chat' onClick={{state.button_addChatOnClick}}></Button>
           </div>  
-        </MW>
-      {% } %}`
+        </ModalWindow>
+      // {% } %}
+      `
     )
   }
 }
-
-export default MW__AddChat

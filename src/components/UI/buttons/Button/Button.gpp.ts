@@ -1,28 +1,31 @@
 import { Component } from '@Component'
-import { getClasses, getIcon } from './utils'
+import { getClasses } from './utils'
 
 export class Button extends Component {
-  // componentDidMount(props: any) {
-  //   console.log(getIcon(props))
-  // }
   state = {
-    сlasses: getClasses(this.getProps()),
-    icon: getIcon(this.getProps())
+    сlasses: getClasses(this.getProps())
   }
 
   template() {
     return (
       `<button 
-        type='submit'
+        // type='submit'
         className={{state.сlasses.button}}
         id={{props.id}}
         onClick={{props.onClick}}
       >
-        {% if ({{state.icon}} !== '') { %}
-          <i className={{state.icon}}></i>
-        {% } %} 
-        {{props.text}}
-      </button>`
+        <div className={{state.сlasses.content}}>
+        {% if ({{state.сlasses.iconStart}} !== '') { %}
+          <i className={{state.сlasses.iconStart}}></i>
+        {% } %}
+        <a className={{state.сlasses.anchor}}>
+            {{props.text}}
+          </a>
+          {% if ({{state.сlasses.iconEnd}} !== '') { %}
+            <i className={{state.сlasses.iconEnd}}></i>
+          {% } %}
+          </div>
+        </button>`
     )
   }
 }

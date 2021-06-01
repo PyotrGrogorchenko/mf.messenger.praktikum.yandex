@@ -1,6 +1,6 @@
 .page-column{
   display: flex;
-  height: 900px;
+  /* height: 900px; */
   flex-direction: column;
   justify-content: center;
   align-items: center;

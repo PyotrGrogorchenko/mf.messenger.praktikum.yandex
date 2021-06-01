@@ -1,7 +1,7 @@
 type Indexed<T = number | string | boolean | undefined> = {
-  [key: string]: T | Indexed;
+  [key: string]: T | Indexed
 }
 
-interface LooseObject {
+type LooseObject = {
   [key: string]: any
 }

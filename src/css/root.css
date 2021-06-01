@@ -2,7 +2,8 @@
   margin: 0;
   padding: 0;
   font-family: 'Inter', sans-serif;
-  color: var(--color-main);
+  color: var(--color-darkest);
+  overflow:  hidden;
 } 
 
 .page{
@@ -30,8 +31,4 @@
 
 .hide {
   display: none !important;
-}
-
-.margin5px {
-  margin: 5px;
 }

@@ -1,9 +1,7 @@
 .messages-bar {
-  flex: 5;
+  flex: 1;
   display: flex;
-  height: 900px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: var(--color-gray3);
 }

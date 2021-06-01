@@ -1,35 +1,35 @@
-.input-main {
+.input {
   margin-top: 5px;
-  width: 70%;
+  width: 100%;
 }
   
-.input-main__label {
+.input__label {
   font-style: normal;
   font-weight: normal;
   font-size: 10px;
   line-height: 12px;
   width: 100%;
-
-  /* color: var(--color-gray3); */
 }
 
 .input-main__input {
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
-  
   outline: none;
   border: none;
   width: 100%;
   margin: 0 0 0 0;
-
+  padding: 0 0 0 1px;
 }
 
-.input_main-border {
+.input-main_border {
   border-bottom: 1px solid var(--color-secondary);
 }
 
-.input_err-border {
+.input-err_border {
   border-bottom: 1px solid var(--color-err);
 }
 
+.input-secondary_background {
+  background-color: var(--color-lightest);
+}
