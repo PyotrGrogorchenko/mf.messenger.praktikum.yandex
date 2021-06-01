@@ -1,7 +1,10 @@
 import {
-  getUser, postSignup, postLogout, postSignin,
+  getUser, postSignup, postLogout, postSignin
+} from './auth'
+
+import {
   postChatCreate, getChats
-} from './actions'
+} from './chats'
 
 export {
   getUser, postSignup, postLogout, postSignin,

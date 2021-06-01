@@ -1,9 +1,9 @@
 import {
   DataSignin,
   DataSignup, ResLogout, ResSignin, ResSignup, ResUser
-} from '@xhrTypes'
+} from '../types'
 import { HTTPTransport } from '../HTTPTransport'
-import { Auth } from '../url'
+import { Auth } from '../const'
 import 'regenerator-runtime/runtime'
 
 export const getUser = async (): Promise<ResUser> => {

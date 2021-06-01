@@ -33,7 +33,9 @@
       "@validation": ["src/validation/index"],
       "@store": ["src/store/index"],
       "@router": ["src/router/index"],
-      "@HOCs": ["src/HOCs/index"]
+      "@HOCs": ["src/HOCs/index"],
+      "@chatsController": ["src/chatsController/index"],
+      "@EventsBus": ["src/EventsBus/index"]
     }
   },       
   "include": [

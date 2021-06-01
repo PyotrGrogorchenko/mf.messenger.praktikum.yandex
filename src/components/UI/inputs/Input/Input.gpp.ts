@@ -21,7 +21,8 @@ export class Input extends Component {
     сlasses: getClasses(this.getProps()),
     onBlur: this.onBlur,
     valid: this.getProps().valid,
-    tip: getTip(this.getProps().type)
+    tip: getTip(this.getProps().type),
+    value: this.getProps().value || ''
   }
 
   template() {
@@ -35,7 +36,7 @@ export class Input extends Component {
           className={{state.сlasses.input}}
           type={{props.type}}
           id={{props.id}}
-          value={{props.value}}
+          value={{state.value}}
           onBlur={{state.onBlur}}
         ></input>
         <label

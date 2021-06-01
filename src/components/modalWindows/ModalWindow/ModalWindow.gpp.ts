@@ -3,15 +3,8 @@ import { Component } from '@Component'
 export class ModalWindow extends Component {
   onClose = ((e:MouseEvent) => {
     e.preventDefault()
-    e.stopPropagation()
-
     const props = this.getProps()
-    if (!props.callback) {
-      // eslint-disable-next-line no-console
-      console.error('ModalWindow: callback function is undefined!')
-      return
-    }
-    props.callback()
+    if (props.cb) props.cb()
   })
 
   onClick = ((e:MouseEvent) => {
@@ -26,14 +19,14 @@ export class ModalWindow extends Component {
 
   template() {
     return (
-      `<div id='MW' className='MW' onClick={{state.onClick}}>
-        <div className='MW-dialog'>
-          <div className='MW-content'>
-            <div className='MW-header'>
-              <h4 className='MW-title'>{{props.title}}</h4>
-              <p className='MW_btn-close' onClick={{state.onClose}}>×</p>
+      `<div id='mw' className='mw' onClick={{state.onClick}}>
+        <div className='mw-dialog'>
+          <div className='mw-content'>
+            <div className='mw-header'>
+              <h4 className='mw-title'>{{props.title}}</h4>
+              <p className='mw_btn-close' onClick={{state.onClose}}>×</p>
             </div>
-            <div className='MW-body'>    
+            <div className='mw-body'>    
             </div>
           </div>
         </div>

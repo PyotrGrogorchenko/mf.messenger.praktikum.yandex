@@ -8,7 +8,6 @@ export const getClasses = (props: any): Clsses => {
   const {
     style
   } = props
-  console.log('props', style)
 
   const valid = props.valid || props.valid === undefined
 

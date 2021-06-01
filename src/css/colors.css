@@ -9,6 +9,8 @@
   --color-middle: #828282;
   --color-dark: #4F4F4F;
   --color-darkest: #333333;
+
+  --color-transparency: rgba(0, 0, 0, 0.05)
 }
 
 .c-main {color: var(--color-main);}
@@ -21,3 +23,5 @@
 .c-middle {color: var(--color-middle);}
 .c-dark {color: var(--color-dark);}
 .c-darkest {color: var(--color-darkest);}
+
+.c-transparency {color: var(--color-transparency);}

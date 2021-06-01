@@ -1,9 +1,9 @@
-import { Events } from './Events'
+import { Events } from './types'
 
-export class EventBus {
+export class EventBus<E extends Events> {
   private _listeners: Record<string, Array<(...args: any[]) => void>> = {}
 
-  on(event: Events, callback: () => void) {
+  on(event: E, callback: () => void) {
     if (!this._listeners[event]) {
       this._listeners[event] = Array<() => void>()
     }
@@ -11,7 +11,7 @@ export class EventBus {
     this._listeners[event].push(callback)
   }
 
-  off(event: Events, callback: () => void) {
+  off(event: E, callback: () => void) {
     if (!this._listeners[event]) return
     this._listeners[event] = this._listeners[event].filter(
       listener => listener !== callback
@@ -22,7 +22,7 @@ export class EventBus {
     this._listeners = {}
   }
 
-  emit(event: Events, ...args:any[]) {
+  emit(event: E, ...args:any[]) {
     if (!this._listeners[event]) return
     this._listeners[event].forEach((listener) => {
       listener(...args)

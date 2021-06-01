@@ -1,35 +1,43 @@
 import { Component } from '@Component'
-
-const chatAddOnClick = (e:MouseEvent) => {
-  e.preventDefault()
-  // e.path.forEach((item) => console.log(item))
-  console.log(e)
-}
+import { createChat } from '@chatsController'
 
 export class ChatsButtons extends Component {
+  chatCreateClick = (e:MouseEvent) => {
+    e.preventDefault()
+    this.setState({ chatCreateShow: true })
+  }
+
+  chatCreateCb = (chatName: string) => {
+    this.setState({ chatCreateShow: false })
+    if (!chatName) return
+    createChat(chatName)
+  }
+
   state = {
-    chatAddOnClick
+    chatCreateClick: this.chatCreateClick,
+    chatCreateCb: this.chatCreateCb,
+    chatCreateShow: false
   }
 
   template() {
     return (
       `<div id='chats-bar__buttons'>
           <Button
-            text='Add chat'
-            id='button_chatAdd'
-            onClick={{state.chatAddOnClick}}
+            text='Create chat'
+            id='button_chatCreate'
+            onClick={{state.chatCreateClick}}
             align='start'
             style='link'
-            icon='chatAdd'
+            icon='chatCreate'
             margin='middle'
           ></>
           <Button
-            text='Remove chat'
-            id='button_chatRemove'
+            text='Delete chat'
+            id='button_chatDelete'
             onClick={{state.onClick}}
             align='start'
             style='link'
-            icon='chatRemove'
+            icon='chatDelete'
             margin='small'
           ></>
           <Button
@@ -52,8 +60,9 @@ export class ChatsButtons extends Component {
           ></>        
         </div>
         
-        // <ModalWindowAddChat showAddChat={{state.showAddChat}} callback={{state.addChat_callback}}></>
-
+        {% if({{state.chatCreateShow}}) { %}
+          <ModalWindowChatCreate cb={{state.chatCreateCb}}></>
+        {% } %}
         
         `
     )
