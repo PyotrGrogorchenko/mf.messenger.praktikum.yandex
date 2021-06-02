@@ -1,14 +1,14 @@
 import {
   DataSignin,
-  DataSignup, ResLogout, ResSignin, ResSignup, ResUser
+  DataSignup, ResLogout, ResSignin, ResSignup, ResUserGet
 } from '../types'
 import { HTTPTransport } from '../HTTPTransport'
 import { Auth } from '../const'
 import 'regenerator-runtime/runtime'
 
-export const getUser = async (): Promise<ResUser> => {
+export const getUser = async (): Promise<ResUserGet> => {
   try {
-    return await HTTPTransport.getInstance().exe<null, ResUser>('GET', Auth.user)
+    return await HTTPTransport.getInstance().exe<null, ResUserGet>('GET', Auth.user)
   } catch (err) {
     throw new Error(err)
   }

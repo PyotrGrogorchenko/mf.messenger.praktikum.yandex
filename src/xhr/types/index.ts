@@ -1,28 +1,40 @@
 import {
   DataAuth, DataSignin, DataSignup,
-  ResAuth, ResSignin, ResSignup, ResUser, ResLogout
+  ResAuth, ResSignin, ResSignup, ResUserGet, ResLogout
 } from './auth'
 import { Options } from './common'
 
 import {
-  DataChatCreate, DataChats, DataChatDelete,
-  ResChatCreate, ResChats, ResChatsGet, ResChatDelete,
+  DataChats, DataChatCreate, DataChatDelete, DataChatAddUsers, DataChatToken,
+  ResChats, ResChatCreate, ResChatsGet, ResChatDelete, ResChatAddUsers, ResChatToken,
   Chat
 } from './chats'
 
+import {
+  DataUser, DataUserSearch,
+  ResUser, ResUserSearch,
+  User
+} from './user'
+
 export type Methods = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
-export type Res = ResAuth | ResChats | null
-export type Data = DataAuth | DataChats | DataChatDelete | null
+export type Res = null | ResAuth | ResChats | ResUser
+export type Data = null | DataAuth | DataChats | DataUser
 export { Options }
 
 export {
   DataAuth, DataSignin, DataSignup,
-  ResAuth, ResSignin, ResSignup, ResUser, ResLogout
+  ResAuth, ResSignin, ResSignup, ResUserGet, ResLogout
 }
 
 export {
-  DataChatCreate, DataChatDelete,
-  ResChatCreate, ResChatsGet, ResChatDelete,
+  DataChatCreate, DataChatDelete, DataChatAddUsers, DataChatToken,
+  ResChatCreate, ResChatsGet, ResChatDelete, ResChatAddUsers, ResChatToken,
   Chat
+}
+
+export {
+  DataUserSearch,
+  ResUserSearch,
+  User
 }

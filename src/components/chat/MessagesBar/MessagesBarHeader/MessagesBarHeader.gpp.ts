@@ -1,33 +1,31 @@
+import { selectCerrentChat, selectCerrentId, subscribe } from '@chatsController'
 import { Component } from '@Component'
 
 export class MessagesBarHeader extends Component {
+  componentDidMount() {
+    subscribe('FLOW_CURRENT_ID', this.onCurrnetId)
+  }
+
+  onCurrnetId = () => {
+    if (!selectCerrentId()) return
+    this.setState({ chat: selectCerrentChat() })
+  }
+
+  state = {
+    chat: selectCerrentChat()
+  }
+
   template() {
     return (
-      `<div className='messages-bar__header' id={{props.id}}>
-        
+      `<div className='messages-bar__header' id={{state.chat.id}}>
         <div className='header__avatar'>
-          <Avatar avatar={{props.avatar}}></Avatar>
-
-          // <div className='avatar-empty'>
-          //   <i className='c-white fas fa-camera'></i>
-          // </div>
+          <Avatar avatar={{state.chat.avatar}}></Avatar>
         </div>
-        
         <div className='header__content'>
           <div className='header__username'>
-            <h1>{{props.title}}</h1>
-          </div>
-          <div className='header__last-seen'>
-            {{props.lastSeen}}
+            <h1>{{state.chat.title}}</h1>
           </div>
         </div>
-        
-        <div className='header__menu'>
-          // <button className='button-vertical bg-w'>
-          //   <i className='fas fa-ellipsis-v'></i>
-          // </button>  
-        </div>
-      
       </div>`
 
     )

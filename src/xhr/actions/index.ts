@@ -3,10 +3,15 @@ import {
 } from './auth'
 
 import {
-  postChatCreate, getChats, deleteChat
+  postChatCreate, getChats, deleteChat, putAddChatUser, postChatToken
 } from './chats'
+
+import {
+  postUserSearch
+} from './user'
 
 export {
   getUser, postSignup, postLogout, postSignin,
-  postChatCreate, getChats, deleteChat
+  postChatCreate, getChats, deleteChat, putAddChatUser, postChatToken,
+  postUserSearch
 }

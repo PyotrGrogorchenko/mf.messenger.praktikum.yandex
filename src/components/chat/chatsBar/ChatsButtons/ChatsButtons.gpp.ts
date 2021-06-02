@@ -1,5 +1,5 @@
 import { Component } from '@Component'
-import { createChat, deleteChat } from '@chatsController'
+import { deleteChat, selectCerrentId } from '@chatsController'
 
 export class ChatsButtons extends Component {
   chatCreateClick = (e:MouseEvent) => {
@@ -7,10 +7,8 @@ export class ChatsButtons extends Component {
     this.setState({ chatCreateShow: true })
   }
 
-  chatCreateCb = (chatName: string) => {
+  chatCreateCb = () => {
     this.setState({ chatCreateShow: false })
-    if (!chatName) return
-    createChat(chatName)
   }
 
   chatDeleteClick = (e:MouseEvent) => {
@@ -20,6 +18,11 @@ export class ChatsButtons extends Component {
 
   userAddClick = (e:MouseEvent) => {
     e.preventDefault()
+    if (!selectCerrentId()) {
+      // eslint-disable-next-line no-alert
+      alert('Select a chat, please')
+      return
+    }
     this.setState({ userAddShow: true })
   }
 
@@ -67,22 +70,13 @@ export class ChatsButtons extends Component {
             icon='userAdd'
             margin='small'
           ></>
-          <Button
-            text='Remove user'
-            id='button_userRemove'
-            onClick={{state.onClick}}
-            align='start'
-            style='link'
-            icon='userRemove'
-            margin='small'
-          ></>        
         </div>
         
         {% if({{state.chatCreateShow}}) { %}
-          <ModalWindowChatCreate cb={{state.chatCreateCb}}></>
+          <ChatCreateForm cb={{state.chatCreateCb}}></>
         {% } %}
         {% if({{state.userAddShow}}) { %}
-          <ModalWindowSearchUser cb={{state.userAddCb}}></>
+          <UserSearchForm cb={{state.userAddCb}}></>
         {% } %}`
     )
   }

@@ -1,27 +1,36 @@
 import { Component } from '@Component'
 
 export class MessagesBarFooter extends Component {
+  onClick = (e:MouseEvent) => {
+    e.preventDefault()
+    console.log('send message')
+  }
+
+  state = {
+    onClick: this.onClick
+  }
+
   template() {
     return (
-      `<form id='form__footer' className='messages-bar__footer'>
-        
-        <div className='footer__left'>
-          <button className='button-round bg-w' >
-            <i className='c-middle fas fa-paperclip'></i>
-          </button>
-        </div>       
-        
-        <div className='footer__middle'>
-          // <InputGray5 type='text' id='input_send-message' placeholder='Write...'></InputGray5>
+      `<div id='form__footer' className='messages-bar__footer'>
+        <div className='footer__content'>
+          <div className='footer__middle'>
+            <Input
+              id='send-message_input'
+              style='secondary'
+              fontSize='big'
+            ></Input>
+          </div>
+          <div className='footer__right'>
+            <Button
+              id='send-message_button'
+              onClick={{state.onClick}}
+              icon='paperPlane'
+          ></div>
         </div>
-  
-        <div className='footer__right'>
-          <button className='button-round bg-b1 margin-small' onClick={{props.sendMessage_onClik}}>
-            <i className='c-middle fas fa-long-arrow-alt-right'></i>
-          </button>
-        </div>
+      </div>
       
-      </form>`
+      </div>`
     )
   }
 }

@@ -1,23 +1,5 @@
 import { ResBase } from './common'
 
-// Data
-export type DataChatCreate = {
-  title: string
-}
-
-export type DataChats = DataChatCreate
-
-export type DataChatDelete = {
-  chatId: number
-}
-
-// Res
-export type ResChatCreate = {
-  response: {
-    id: number
-  }
-} & ResBase
-
 export type Chat = {
   avatar: string
   created_by: number
@@ -25,6 +7,22 @@ export type Chat = {
   last_message: string | null
   title: number
   unread_count: number
+}
+
+// create
+export type DataChatCreate = {
+  title: string
+}
+
+export type ResChatCreate = {
+  response: {
+    id: number
+  }
+} & ResBase
+
+// delete
+export type DataChatDelete = {
+  chatId: number
 }
 
 export type ResChatDelete = {
@@ -38,8 +36,30 @@ export type ResChatDelete = {
   }
 } & ResBase
 
+// chats get
 export type ResChatsGet = {
   response: Chat[]
 } & ResBase
 
-export type ResChats = ResChatCreate | ResChatDelete
+// chat put users
+export type DataChatAddUsers = {
+  chatId: number
+  users: number[]
+}
+
+export type ResChatAddUsers = ResBase
+
+// token
+export type DataChatToken = {
+  chatId: number
+}
+
+export type ResChatToken = {
+  response: {
+    token: string
+  }
+} & ResBase
+
+// common
+export type DataChats = DataChatCreate | DataChatDelete | DataChatAddUsers | DataChatToken
+export type ResChats = ResChatCreate | ResChatDelete | ResChatAddUsers | ResChatToken

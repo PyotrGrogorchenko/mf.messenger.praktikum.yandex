@@ -1,6 +1,12 @@
 import { Component } from '@Component'
+import { getChatToken } from './utils'
 
 export class MessagesBarMessages extends Component {
+  componentDidMount() {
+    getChatToken().then((token) => {
+      const socket = new WebSocket('wss://ya-praktikum.tech/ws/chats/<USER_ID>/<CHAT_ID>/<TOKEN_VALUE>')
+    })
+  }
   template() {
     return (
       `<ul className='messages-bar__messages'>

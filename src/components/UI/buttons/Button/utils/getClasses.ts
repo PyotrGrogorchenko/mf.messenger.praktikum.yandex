@@ -1,14 +1,7 @@
-import { icons } from './icons'
+import { getIconClass } from '@icons'
+import { Classes } from '../types'
 
-type Res = {
-  button: string,
-  content: string,
-  anchor: string,
-  iconEnd: string,
-  iconStart: string
-}
-
-export const getClasses = (props: any): Res => {
+export const getClasses = (props: any): Classes => {
   const {
     style, margin, align, icon
   } = props
@@ -26,8 +19,8 @@ export const getClasses = (props: any): Res => {
   const iconEnd = ['']
   const iconStart = ['']
 
-  if (icon && icons[icon]) {
-    const iconClass = icons[icon]
+  const iconClass = getIconClass(icon)
+  if (icon && iconClass) {
     if (align === 'end') {
       iconEnd.push(iconClass)
       iconEnd.push(`button-${style || 'main'}_anchor`)

@@ -1,7 +1,7 @@
-import { User } from '@store'
 import { ResBase } from './common'
+import { User } from './user'
 
-// Data
+// signup
 export type DataSignup = {
   first_name: string
   second_name: string
@@ -11,26 +11,28 @@ export type DataSignup = {
   phone: string
 }
 
-export type DataSignin = {
-  login: string
-  password: string
-}
-
-export type DataAuth = DataSignup | DataSignin | null
-
-// Res
 export type ResSignup = {
   response: {
     id: number
   }
 } & ResBase
 
-export type ResUser = {
-  response: User
-} & ResBase
+// signin
+export type DataSignin = {
+  login: string
+  password: string
+}
 
 export type ResSignin = ResBase
 
+// user
+export type ResUserGet = {
+  response: User
+} & ResBase
+
+// logout
 export type ResLogout = ResBase
 
-export type ResAuth = ResSignup | ResUser | ResLogout | ResSignin
+// common
+export type DataAuth = DataSignup | DataSignin
+export type ResAuth = ResSignup | ResUserGet | ResLogout | ResSignin

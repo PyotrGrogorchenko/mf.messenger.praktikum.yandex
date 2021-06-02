@@ -28,8 +28,7 @@ export class ChatsList extends Component {
 
   template() {
     return (
-      `
-      <div 
+      `<div 
         className='chats-bar__chats-list' 
         onClick={{state.chatsOnClick}} 
         id='chats-list'
@@ -42,19 +41,7 @@ export class ChatsList extends Component {
             ></ChatItem>
           {% } %}
         </ul>
-      </div>
-
-      // <ContextMenu 
-      //   buttons='addChat:add:Add chat|removeChat:remove:Remove chat|addUser:add:Add user|removeUser:remove:Remove user'
-      //   //blockButtons='addChat|removeChat'
-      //   onClick={{state.CM_onClick}}
-      //   ownerId='chats-list'
-      //   menuId='chats-list-context-menu'
-      // ></ContextMenu>
-  
-      // <MW__SearchUser showSearchUsers={{state.showSearchUsers}} callback={{state.searchUsers_callback}}></MW__SearchUser>
-      // <MW__AddChat showAddChat={{state.showAddChat}} callback={{state.addChat_callback}}></MW__AddChat>
-      `
+      </div>`
     )
   }
 }

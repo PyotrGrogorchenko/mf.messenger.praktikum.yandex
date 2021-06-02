@@ -4,7 +4,7 @@ export class MessagesBarHome extends Component {
   template() {
     return (
       `<div class='messages-bar'>
-        Для добавления чатов/пользователей используй контестное меню списка чатов
+        Please select a chat to start messaging
       </div>`
     )
   }

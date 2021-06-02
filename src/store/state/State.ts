@@ -1,5 +1,5 @@
 import { EventBus, EventsStore as Events } from '@EventsBus'
-import { User } from '../types'
+import { User } from '@xhrTypes'
 
 export class State {
   private static __instance: State

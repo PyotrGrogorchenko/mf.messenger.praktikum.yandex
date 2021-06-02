@@ -1,17 +1,16 @@
-type Clsses = {
-  input: string,
-  label: string,
-  tip: string
-}
+import { Classes, ClassesProps } from '../types'
 
-export const getClasses = (props: any): Clsses => {
+// font-size_small
+
+export const getClasses = (props: ClassesProps): Classes => {
   const {
-    style
+    style, fontSize
   } = props
 
   const valid = props.valid || props.valid === undefined
 
   const input = ['input-main__input']
+  input.push(`font-size_${fontSize || 'small'}`)
   input.push(`input-${style || 'main'}_background`)
   if (!valid) {
     input.push('input-err_border')

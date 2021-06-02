@@ -1,9 +1,11 @@
 import {
   getUser, postSignup, postLogout, postSignin,
-  postChatCreate, getChats, deleteChat
+  postChatCreate, getChats, deleteChat, putAddChatUser, postChatToken,
+  postUserSearch
 } from './actions'
 
 export {
   getUser, postSignup, postLogout, postSignin,
-  postChatCreate, getChats, deleteChat
+  postChatCreate, getChats, deleteChat, putAddChatUser, postChatToken,
+  postUserSearch
 }

@@ -1,14 +1,16 @@
 import { readChats } from '@chatsController'
 import { deleteChat as deleteChatXhr } from '@xhr'
-import { getCerrentId } from './getters'
+import { selectCerrentId } from './selectots'
+import { setCerrentId } from './setters'
 
 export const deleteChat = async () => {
-  if (!getCerrentId()) {
+  if (!selectCerrentId()) {
     // eslint-disable-next-line no-alert
     alert('Select a chat, please')
     return
   }
-  const res = await deleteChatXhr({ chatId: getCerrentId() })
+  const res = await deleteChatXhr({ chatId: selectCerrentId() })
   if (res.status !== 200) return
   readChats()
+  setCerrentId(0)
 }

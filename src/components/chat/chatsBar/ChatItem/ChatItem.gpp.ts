@@ -1,4 +1,4 @@
-import { getCerrentId, setCerrentId, subscribe } from '@chatsController'
+import { selectCerrentId, setCerrentId, subscribe } from '@chatsController'
 import { Component } from '@Component'
 import { getClasses } from './utils'
 
@@ -8,17 +8,17 @@ export class ChatItem extends Component {
   }
 
   onCurrentId = () => {
-    this.setState({ classes: getClasses(getCerrentId() === this.state.id) })
+    this.setState({ classes: getClasses(selectCerrentId() === this.state.id) })
   }
 
   onClick = (e: Event) => {
     e.preventDefault()
-    if (getCerrentId() === this.state.id) return
+    if (selectCerrentId() === this.state.id) return
     setCerrentId(this.state.id)
   }
 
   state = {
-    id: this.getProps().key,
+    id: Number(this.getProps().key),
     onClick: this.onClick,
     classes: getClasses()
   }

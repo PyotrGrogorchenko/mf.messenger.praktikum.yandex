@@ -32,7 +32,7 @@ export class ChatsController {
 
   get currentId() {return this._currentId}
   set currentId(value) {
-    this._currentId = value
-    this._eventBus.emit('FLOW_CURRENT_ID', value)
+    this._currentId = Number(value)
+    this._eventBus.emit('FLOW_CURRENT_ID', this._currentId)
   }
 }
