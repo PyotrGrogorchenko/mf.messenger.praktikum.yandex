@@ -1,1 +1,1 @@
-export type EventsChatsController = 'FLOW_CHATS'
+export type EventsChatsController = 'FLOW_CHATS' | 'FLOW_CURRENT_ID'

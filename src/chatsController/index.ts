@@ -1,7 +1,10 @@
-import { createChat, readChats } from './actions'
+import {
+  createChat, readChats, setCerrentId, getCerrentId, deleteChat
+} from './actions'
 import { subscribe } from './utils'
 
 export {
-  createChat, readChats,
+  setCerrentId, getCerrentId,
+  deleteChat, createChat, readChats,
   subscribe
 }

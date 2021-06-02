@@ -1,15 +1,35 @@
+import { getCerrentId, setCerrentId, subscribe } from '@chatsController'
 import { Component } from '@Component'
+import { getClasses } from './utils'
 
 export class ChatItem extends Component {
-  componentDidMount(props: any) {
-    console.log('props', props)
+  componentDidMount() {
+    subscribe('FLOW_CURRENT_ID', this.onCurrentId)
   }
+
+  onCurrentId = () => {
+    this.setState({ classes: getClasses(getCerrentId() === this.state.id) })
+  }
+
+  onClick = (e: Event) => {
+    e.preventDefault()
+    if (getCerrentId() === this.state.id) return
+    setCerrentId(this.state.id)
+  }
+
+  state = {
+    id: this.getProps().key,
+    onClick: this.onClick,
+    classes: getClasses()
+  }
+
   template() {
     return (
       `<li 
-        className='chats-list__chat-item'
+        className={{state.classes.li}}
         id={{props.chat.id}} 
         key={{props.chat.id}}
+        onClick={{state.onClick}}
       >
         <div className='chat-item__avatar'>
           <Avatar avatar={{props.chat.avatar}}></Avatar>

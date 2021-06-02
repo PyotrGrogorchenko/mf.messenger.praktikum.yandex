@@ -5,6 +5,7 @@ export class ChatsController {
   static __instance: ChatsController
   private _eventBus: EventBus<Events> = new EventBus()
   private _chats: Chat[] = []
+  private _currentId: number = 0
 
   private constructor() {}
 
@@ -26,6 +27,12 @@ export class ChatsController {
   get chats() {return this._chats}
   set chats(value) {
     this._chats = value
-    ChatsController.getInstance()._eventBus.emit('FLOW_CHATS', this._chats)
+    this._eventBus.emit('FLOW_CHATS', this._chats)
+  }
+
+  get currentId() {return this._currentId}
+  set currentId(value) {
+    this._currentId = value
+    this._eventBus.emit('FLOW_CURRENT_ID', value)
   }
 }

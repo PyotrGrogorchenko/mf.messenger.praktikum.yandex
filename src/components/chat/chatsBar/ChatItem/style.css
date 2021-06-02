@@ -7,17 +7,14 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-
   margin-left: 0;
   padding-left: 0;  
-  
   border-top: 1px solid var(--color-light);
-
   min-width: 300px;
 }
 
 .chats-list__chat-item:hover {
-  background: var(--color-light);
+  background: var(--color-lightest);
 } 
 
 .chat-item__avatar {
@@ -25,17 +22,13 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
   width: 60px;
   height: 60px;
-
   padding: 5px;
-
 }
 
 .chat-item__content {
   flex: 5;
-  
   display: flex;
   flex-direction: column;
 }
@@ -68,7 +61,6 @@
   color: var(--color-middle);
 }
 
-
 .chat-item__last-message {
   flex: 4;
   max-width: 200px;
@@ -82,22 +74,22 @@
 }
 
 .chat-item__count-message {
-
   display: flex;
   flex-direction: column;
   justify-content: center;  
   align-items: center;
-
   height: 30px;
   width: 30px;
   background: var(--color-main);
   border-radius: 50%;
-  
-  margin: 10px 5px 0 0 ;
-
+  margin: 10px 5px 0 0;
 }
 
 .count-message__value {
   font-size: 12px; 
   color: var(--color-white);  
+}
+
+.mark {
+  background: var(--color-lightest);
 }

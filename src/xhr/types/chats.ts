@@ -7,6 +7,10 @@ export type DataChatCreate = {
 
 export type DataChats = DataChatCreate
 
+export type DataChatDelete = {
+  chatId: number
+}
+
 // Res
 export type ResChatCreate = {
   response: {
@@ -23,8 +27,19 @@ export type Chat = {
   unread_count: number
 }
 
+export type ResChatDelete = {
+  response: {
+    result: {
+      id: number,
+      title: string,
+      avatar: string | null,
+      created_by: number
+    }
+  }
+} & ResBase
+
 export type ResChatsGet = {
   response: Chat[]
 } & ResBase
 
-export type ResChats = ResChatCreate
+export type ResChats = ResChatCreate | ResChatDelete

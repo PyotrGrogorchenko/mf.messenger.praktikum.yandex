@@ -1,5 +1,5 @@
 import { Component } from '@Component'
-import { createChat } from '@chatsController'
+import { createChat, deleteChat } from '@chatsController'
 
 export class ChatsButtons extends Component {
   chatCreateClick = (e:MouseEvent) => {
@@ -13,10 +13,28 @@ export class ChatsButtons extends Component {
     createChat(chatName)
   }
 
+  chatDeleteClick = (e:MouseEvent) => {
+    e.preventDefault()
+    deleteChat()
+  }
+
+  userAddClick = (e:MouseEvent) => {
+    e.preventDefault()
+    this.setState({ userAddShow: true })
+  }
+
+  userAddCb = () => {
+    this.setState({ userAddShow: false })
+  }
+
   state = {
     chatCreateClick: this.chatCreateClick,
     chatCreateCb: this.chatCreateCb,
-    chatCreateShow: false
+    chatDeleteClick: this.chatDeleteClick,
+    userAddClick: this.userAddClick,
+    userAddCb: this.userAddCb,
+    chatCreateShow: false,
+    userAddShow: false
   }
 
   template() {
@@ -34,7 +52,7 @@ export class ChatsButtons extends Component {
           <Button
             text='Delete chat'
             id='button_chatDelete'
-            onClick={{state.onClick}}
+            onClick={{state.chatDeleteClick}}
             align='start'
             style='link'
             icon='chatDelete'
@@ -43,7 +61,7 @@ export class ChatsButtons extends Component {
           <Button
             text='Add user'
             id='button_userAdd'
-            onClick={{state.onClick}}
+            onClick={{state.userAddClick}}
             align='start'
             style='link'
             icon='userAdd'
@@ -63,8 +81,9 @@ export class ChatsButtons extends Component {
         {% if({{state.chatCreateShow}}) { %}
           <ModalWindowChatCreate cb={{state.chatCreateCb}}></>
         {% } %}
-        
-        `
+        {% if({{state.userAddShow}}) { %}
+          <ModalWindowSearchUser cb={{state.userAddCb}}></>
+        {% } %}`
     )
   }
 }

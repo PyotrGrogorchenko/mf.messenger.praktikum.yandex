@@ -25,10 +25,6 @@
   border: none;
 }
 
-.mark {
-  background-color: var(--color-gray5);
-}
-
 .hide {
   display: none !important;
 }
