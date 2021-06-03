@@ -1,3 +1,4 @@
+import { Socket } from '@Socket'
 import { Chat } from '@xhrTypes'
 import { ChatsController } from '../ChatsController'
 
@@ -9,3 +10,5 @@ export const selectCerrentChat = (): Chat | null => {
   if (!currentId) return null
   return chats.filter((chat) => chat.id === currentId)[0]
 }
+
+export const selectSocket = (): Socket | null => ChatsController.getInstance().socket

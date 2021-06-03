@@ -36,7 +36,8 @@
       "@HOCs": ["src/HOCs/index"],
       "@chatsController": ["src/chatsController/index"],
       "@EventsBus": ["src/EventsBus/index"],
-      "@icons": ["src/icons/index"]
+      "@icons": ["src/icons/index"],
+      "@Socket": ["src/Socket/index"]
     }
   },       
   "include": [

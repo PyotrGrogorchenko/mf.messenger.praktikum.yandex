@@ -1,11 +1,12 @@
 import { createChat } from './createChat'
 import { deleteChat } from './deleteChat'
 import { readChats } from './readChats'
-import { setCerrentId } from './setters'
-import { selectCerrentId, selectCerrentChat } from './selectots'
+import { initWebSocket } from './initWebSocket'
+import { setCerrentId, setSocket } from './setters'
+import { selectCerrentId, selectCerrentChat, selectSocket } from './selectors'
 
 export {
-  createChat, readChats, deleteChat,
-  setCerrentId,
-  selectCerrentId, selectCerrentChat
+  createChat, readChats, deleteChat, initWebSocket,
+  setCerrentId, setSocket,
+  selectCerrentId, selectCerrentChat, selectSocket
 }

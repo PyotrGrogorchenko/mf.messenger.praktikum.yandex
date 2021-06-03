@@ -1,4 +1,4 @@
-import { subscribe } from '@chatsController'
+import { initWebSocket, subscribe } from '@chatsController'
 import { Component } from '@Component'
 
 export class MessagesBar extends Component {
@@ -8,6 +8,7 @@ export class MessagesBar extends Component {
 
   onCurrnetId = (currentId: number) => {
     this.setState({ showMessages: !!currentId })
+    initWebSocket()
   }
 
   state = {

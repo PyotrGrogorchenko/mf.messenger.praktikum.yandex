@@ -1,4 +1,5 @@
 import { EventBus, EventsChatsController as Events } from '@EventsBus'
+import { Socket } from '@Socket'
 import { Chat } from '@xhrTypes'
 
 export class ChatsController {
@@ -6,6 +7,7 @@ export class ChatsController {
   private _eventBus: EventBus<Events> = new EventBus()
   private _chats: Chat[] = []
   private _currentId: number = 0
+  private _socket: Socket | null = null
 
   private constructor() {}
 
@@ -34,5 +36,11 @@ export class ChatsController {
   set currentId(value) {
     this._currentId = Number(value)
     this._eventBus.emit('FLOW_CURRENT_ID', this._currentId)
+  }
+
+  get socket() {return this._socket}
+  set socket(value) {
+    this._socket = value
+    this._eventBus.emit('FLOW_SOCKET', this._socket)
   }
 }

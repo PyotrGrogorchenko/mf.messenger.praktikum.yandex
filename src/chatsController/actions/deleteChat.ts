@@ -1,6 +1,6 @@
 import { readChats } from '@chatsController'
 import { deleteChat as deleteChatXhr } from '@xhr'
-import { selectCerrentId } from './selectots'
+import { selectCerrentId } from './selectors'
 import { setCerrentId } from './setters'
 
 export const deleteChat = async () => {
