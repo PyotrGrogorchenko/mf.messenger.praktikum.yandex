@@ -1,13 +1,13 @@
 import {
-  createChat, readChats, deleteChat, initWebSocket,
+  createChat, getChats, deleteChat, initWebSocket, sendMessage,
   setCerrentId, setSocket,
   selectCerrentId, selectCerrentChat, selectSocket
 } from './actions'
 import { subscribe } from './utils'
 
 export {
+  deleteChat, createChat, getChats, initWebSocket, sendMessage,
   setCerrentId, setSocket,
   selectCerrentId, selectCerrentChat, selectSocket,
-  deleteChat, createChat, readChats, initWebSocket,
   subscribe
 }

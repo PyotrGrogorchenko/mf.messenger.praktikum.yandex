@@ -5,6 +5,6 @@ export const setCerrentId = (id: number) => {
   ChatsController.getInstance().currentId = id
 }
 
-export const setSocket = (socket: Socket) => {
+export const setSocket = (socket: Socket | null) => {
   ChatsController.getInstance().socket = socket
 }

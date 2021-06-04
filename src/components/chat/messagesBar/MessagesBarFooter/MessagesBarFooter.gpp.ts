@@ -1,9 +1,12 @@
+import { sendMessage } from '@chatsController'
 import { Component } from '@Component'
 
 export class MessagesBarFooter extends Component {
   onClick = (e:MouseEvent) => {
     e.preventDefault()
-    console.log('send message')
+    const input = <HTMLInputElement>document.getElementById('send-message_input')
+    sendMessage(input.value)
+    input.value = ''
   }
 
   state = {

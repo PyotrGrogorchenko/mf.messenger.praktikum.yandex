@@ -1,4 +1,4 @@
-import { readChats } from '@chatsController'
+import { getChats } from '@chatsController'
 import { deleteChat as deleteChatXhr } from '@xhr'
 import { selectCerrentId } from './selectors'
 import { setCerrentId } from './setters'
@@ -11,6 +11,6 @@ export const deleteChat = async () => {
   }
   const res = await deleteChatXhr({ chatId: selectCerrentId() })
   if (res.status !== 200) return
-  readChats()
+  getChats()
   setCerrentId(0)
 }

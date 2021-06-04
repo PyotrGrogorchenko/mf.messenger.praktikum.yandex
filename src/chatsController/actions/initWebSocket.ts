@@ -4,6 +4,7 @@ import { postChatToken } from '@xhr'
 import { selectCerrentId } from './selectors'
 
 export const initWebSocket = async () => {
+  setSocket(null)
   const res = await postChatToken({ chatId: selectCerrentId() })
   if (res.status !== 200) throw Error('Request failed')
   const socket = new Socket(res.response.token)
