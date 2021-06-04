@@ -6,7 +6,8 @@ import { queryStringify } from './queryStringify'
 import { copyObj } from './copyObj'
 import { readForm } from './readForm'
 import { fillForm } from './fillForm'
+import { formatDate } from './formatDate'
 
 export {
-  get, isEqual, startsWithUpper, regexpMatchAll, queryStringify, copyObj, readForm, fillForm
+  get, isEqual, startsWithUpper, regexpMatchAll, queryStringify, copyObj, readForm, fillForm, formatDate
 }
