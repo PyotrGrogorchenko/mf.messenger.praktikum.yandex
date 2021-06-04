@@ -1,4 +1,4 @@
-import { EventBus, EventsStore as Events } from '@EventsBus'
+import { EventBus, EventsStore as Events } from '@eventsBus'
 import { User } from '@xhrTypes'
 
 export class State {

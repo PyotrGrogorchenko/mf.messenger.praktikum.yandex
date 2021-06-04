@@ -1,21 +1,27 @@
 import { Component } from '@Component'
 import { formatDate } from '@utils'
+import { Props } from './types'
+import { getClasses, show } from './utils'
 
 export class Message extends Component {
   state = {
-    date: formatDate(this.getProps().message.time)
+    сlasses: getClasses(this.getProps()),
+    date: formatDate(this.getProps<Props>().message.time),
+    show: show(this.getProps())
   }
 
   template() {
     return (
-      `<div className='message'>
-        <a className='message_date'>
-          {{state.date}}
-        </a>  
-        <div className='message_content'>
-          {{props.message.content}} 
+      `{% if ({{state.show}}) { %}
+        <div className={{state.сlasses.root}}>
+          <a className={{state.сlasses.date}}>
+            {{state.date}}
+          </a>  
+          <div className={{state.сlasses.content}}>
+            {{props.message.content}} 
+          </div>
         </div>
-      </div>`
+        {% } %} `
     )
   }
 }

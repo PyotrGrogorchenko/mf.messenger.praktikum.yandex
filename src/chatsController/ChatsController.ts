@@ -1,5 +1,5 @@
-import { EventBus, EventsChatsController as Events } from '@EventsBus'
-import { Socket } from '@Socket'
+import { EventBus, EventsChatsController as Events } from '@eventsBus'
+import { Socket } from '@socket'
 import { Chat } from '@xhrTypes'
 
 export class ChatsController {

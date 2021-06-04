@@ -1,24 +1,24 @@
-import { initWebSocket, subscribe } from '@chatsController'
+import { initSocket, subscribe } from '@chatsController'
 import { Component } from '@Component'
-import { Socket, MessageType } from '@Socket'
+import { Socket, Message as TypeMessage } from '@socket'
 
 export class MessagesBarMessages extends Component {
   async componentDidMount() {
-    subscribe('FLOW_SOCKET', this.onSocketCb)
-    subscribe('FLOW_CURRENT_ID', this.onCurrentCb)
-    initWebSocket()
+    subscribe('FLOW_CURRENT_ID', this.onCurrentId)
+    subscribe('FLOW_SOCKET', this.onSocket)
+    initSocket()
   }
 
-  onSocketCb = (socket: Socket | null) => {
+  onSocket = (socket: Socket | null) => {
     if (socket) {
       socket.onMessage = this.onMessage
       socket.onClose = this.onClose
     }
   }
 
-  onCurrentCb = () => {
+  onCurrentId = () => {
     this.setState({ messages: [] })
-    initWebSocket()
+    initSocket()
   }
 
   onMessage = (e: MessageEvent<any>) => {
@@ -33,11 +33,11 @@ export class MessagesBarMessages extends Component {
 
   onClose = (e: CloseEvent) => {
     e.preventDefault()
-    initWebSocket()
+    initSocket()
   }
 
   state = {
-    messages: <MessageType[]>[]
+    messages: <TypeMessage[]>[]
   }
 
   template() {

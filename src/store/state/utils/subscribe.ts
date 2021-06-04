@@ -1,4 +1,4 @@
-import { EventsStore } from '@EventsBus'
+import { EventsStore } from '@eventsBus'
 import { State } from '../State'
 
 export const subscribe = (event: EventsStore, cb: any) => {

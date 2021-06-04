@@ -1,7 +1,7 @@
 import { copyObj } from '../utils'
 import EventBus from './EventBus'
 import { Node as PARSER_NODE, parser } from '../parser'
-import { VirtDom, Node as NodeDom } from '../VirtDom'
+import { VirtDom, Node as NodeDom } from '../virtDom'
 import { Events } from './Events'
 
 export class Component {
@@ -40,8 +40,8 @@ export class Component {
 
   get isComponent() {return this._isComponent}
 
-  getProps(): any {return this._props}
-  setProps(props: any) {this._props = props}
+  getProps<P>(): P {return this._props}
+  setProps<P>(props: P) {this._props = props}
 
   /* eslint-disable class-methods-use-this */
   components(): any {return {}}
@@ -169,14 +169,6 @@ export class Component {
             } else {
               element.setAttribute(prop, node.props[prop])
             }
-          // } else if ((prop === 'href')) {
-          //   if (!node.props[prop]) {
-          //     return
-          //   }
-          //   if (node.props[prop].startsWith('#{R}')) {
-          //     element.addEventListener('click', onRouteClick)
-          //   }
-          //   element.setAttribute(prop, node.props[prop])
           } else if (node.props[prop] === '#noValue') {
             // No actions
           } else {

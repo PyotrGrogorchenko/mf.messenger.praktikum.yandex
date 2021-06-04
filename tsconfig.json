@@ -34,10 +34,10 @@
       "@store": ["src/store/index"],
       "@router": ["src/router/index"],
       "@HOCs": ["src/HOCs/index"],
-      "@chatsController": ["src/chatsController/index"],
-      "@EventsBus": ["src/EventsBus/index"],
+      "@chatsController": ["src/chatsController/utils/index"],
+      "@eventsBus": ["src/eventsBus/index"],
       "@icons": ["src/icons/index"],
-      "@Socket": ["src/Socket/index"]
+      "@socket": ["src/socket/index"]
     }
   },       
   "include": [
