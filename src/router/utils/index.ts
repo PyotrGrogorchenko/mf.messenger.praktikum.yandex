@@ -1,8 +1,8 @@
 import { start } from './start'
 import { redirect } from './redirect'
 import { render } from './render'
-import { privateRoute } from './privateRoute'
+import { isPrivateRoute } from './isPrivateRoute'
 
 export {
-  start, redirect, render, privateRoute
+  start, redirect, render, isPrivateRoute
 }

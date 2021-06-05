@@ -1,4 +1,4 @@
-import { clearEvents } from './clearEvents'
+import { clearSubscribes } from './clearSubscribes'
 import { subscribe } from './subscribe'
 
-export { clearEvents, subscribe }
+export { clearSubscribes, subscribe }

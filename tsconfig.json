@@ -26,7 +26,8 @@
     ],
     "paths": {
       "@Component": ["src/component"],
-      "@Components/*": ["src/components/*"],
+      "@components/*": ["src/components/*"],
+      "@pages/*": ["src/pages/*"],
       "@xhr": ["src/xhr/index"],
       "@xhrTypes": ["src/xhr/types/index"],
       "@utils": ["src/utils/index"],

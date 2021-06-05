@@ -88,6 +88,9 @@ export class Component {
   _componentWillMount(props: any = null, state: any = null) {this.componentWillMount(props, state)}
   componentWillMount(_props: any = null, _state: any = null) { }
 
+  componentWillUnmount() { }
+  componentDidUnmount() { }
+
   _execute(modifyState:LooseObject = {}) {
     this.execute(modifyState)
     this.eventBus().emit(Events.FLOW_COMPILE, modifyState)
@@ -119,8 +122,6 @@ export class Component {
       if (node.componentLink) {
         node.componentLink.setProps(node.props)
       } else if (!components[node.tagName]) {
-        // eslint-disable-next-line no-console
-        console.error(`${node.tagName} is undefined`)
         throw new Error(`${node.tagName} is undefined`)
       } else {
         node.componentLink = new components[node.tagName](node.props)
@@ -202,6 +203,9 @@ export class Component {
     if (modifyState) {
       this.virtDOM?.getDeleteMarkedNodes()
     }
-    // createValidateEvents()
+  }
+
+  unmount() {
+    this.virtDOM?.clear()
   }
 }

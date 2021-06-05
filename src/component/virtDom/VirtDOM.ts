@@ -271,6 +271,15 @@ export class VirtDom {
     })
   }
 
+  clear() {
+    this._nodes.forEach((node) => {
+      if (node.isComponent && node.componentLink) {
+        (node.componentLink as Component).virtDOM?.clear()
+      }
+      this._nodes = []
+    })
+  }
+
   /* eslint-disable no-console */
   printNodes() {
     console.log('////////////////////////////////////////////////')

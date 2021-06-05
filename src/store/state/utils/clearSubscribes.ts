@@ -1,5 +1,5 @@
 import { State } from '..'
 
-export const clearEvents = () => {
+export const clearSubscribes = () => {
   State.getInstance().clearSubscribes()
 }

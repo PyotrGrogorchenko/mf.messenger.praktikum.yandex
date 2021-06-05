@@ -1,7 +1,8 @@
 import { Component } from '@Component'
 import { validateFields, validateInput } from '@validation'
 import { redirect } from '@router'
-import { selectUser, subscribe, User } from '@store'
+import { selectUser } from '@store'
+import { User } from '@xhrTypes'
 import { getFields, signin } from './utils'
 
 const signupOnClick = (e:Event) => {
@@ -10,10 +11,6 @@ const signupOnClick = (e:Event) => {
 }
 
 export class Signin extends Component {
-  componentDidMount() {
-    subscribe('FLOW_USER', this.onUserChange)
-  }
-
   onBlur = (e: FocusEvent) => {
     e.preventDefault()
     const fields = validateInput(this.state.fields, <HTMLInputElement>e.target)
@@ -42,19 +39,21 @@ export class Signin extends Component {
 
   template() {
     return (
-      `<PageColumn>
-        <Form>
-          <FormHeader text='Sign in'></>
-          <FormContent>
-            <InputField field={{state.fields.login}}       onBlur={{state.onBlur}}></>
-            <InputField field={{state.fields.password}}    onBlur={{state.onBlur}}></>
-          </FormContent>
-          <FormFooter>
-            <Button text='Sign in' id='button_sign-in' onClick={{state.signinOnClick}}></>
-            <Button text='Sign up' id='button_sign-up' onClick={{state.signupOnClick}} margin={{middle}} style={{secondary}}></>
-          </FormFooter>
-        </Form>
-      </PageColumn>`
+      `<Root>
+        <div className='flex-column'>
+          <Form>
+            <FormHeader text='Sign in'></>
+            <FormContent>
+              <InputField field={{state.fields.login}}       onBlur={{state.onBlur}}></>
+              <InputField field={{state.fields.password}}    onBlur={{state.onBlur}}></>
+            </FormContent>
+            <FormFooter>
+              <Button text='Sign in' id='button_sign-in' onClick={{state.signinOnClick}}></>
+              <Button text='Sign up' id='button_sign-up' onClick={{state.signupOnClick}} margin={{middle}} style={{secondary}}></>
+            </FormFooter>
+          </Form>
+        </div>
+      </Root>`
     )
   }
 }

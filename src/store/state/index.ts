@@ -1,4 +1,4 @@
 import { State } from './State'
-import { subscribe, clearEvents } from './utils'
+import { subscribe, clearSubscribes } from './utils'
 
-export { State, subscribe, clearEvents }
+export { State, subscribe, clearSubscribes }

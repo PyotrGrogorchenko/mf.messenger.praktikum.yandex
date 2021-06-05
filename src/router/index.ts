@@ -1,7 +1,7 @@
 import {
-  start, redirect, render, privateRoute
+  start, redirect, render, isPrivateRoute
 } from './utils'
 
 export {
-  start, redirect, render, privateRoute
+  start, redirect, render, isPrivateRoute
 }

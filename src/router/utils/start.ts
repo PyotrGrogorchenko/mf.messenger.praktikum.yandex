@@ -1,10 +1,10 @@
-import { Signin } from '@Components/pages/Signin'
-import { Signup } from '@Components/pages/Signup'
-import { Error404 } from '@Components/pages/Error404'
-import { Error500 } from '@Components/pages/Error500'
-import { Profile } from '@Components/pages/Profile'
-import { Chat } from '@Components/pages/Chat'
-import { Home } from '@Components/pages/Home'
+import { Signin } from '@pages/Signin'
+import { Signup } from '@pages/Signup'
+import { Error404 } from '@pages/Error404'
+import { Error500 } from '@pages/Error500'
+import { Profile } from '@pages/Profile'
+import { Chat } from '@pages/Chat'
+import { Home } from '@pages/Home'
 import { Router } from '../Router'
 
 export const start = () => {

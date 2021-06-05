@@ -1,10 +1,10 @@
 import {
   initState, setUser, selectUser, selectAuth
 } from './actions'
-import { subscribe, clearEvents } from './state'
+import { subscribe, clearSubscribes } from './state'
 
 export {
   initState, setUser,
   selectUser, selectAuth,
-  subscribe, clearEvents
+  subscribe, clearSubscribes
 }

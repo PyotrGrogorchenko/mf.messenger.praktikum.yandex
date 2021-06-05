@@ -3,8 +3,8 @@ import { Component } from '@Component'
 export class ErrorBar extends Component {
   template() {
     return (
-      `<PageColumn>
-        <div class='error-bar'>
+      `<div className='flex-column'>
+        <div className='error-bar'>
           <h1>{{props.errCode}}</h1>
           <div>{{props.message}}</div>
           <AnchorMain 
@@ -13,7 +13,7 @@ export class ErrorBar extends Component {
             href={{props.href}}
           </AnchorMain>
         </div>
-      </PageColumn>`
+      </div>`
 
     )
   }
