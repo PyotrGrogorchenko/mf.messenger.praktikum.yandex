@@ -1,6 +1,6 @@
 import { Component } from '@Component'
 import { isPrivateRoute, redirect } from '@router'
-import { subscribe } from '@store'
+import { Err, subscribe } from '@store'
 import { User } from '@xhrTypes'
 
 const onUser = (user: User) => {
@@ -9,8 +9,15 @@ const onUser = (user: User) => {
   }
 }
 
+const onErr = (err: Err) => {
+  if (err) {
+    redirect('#error')
+  }
+}
+
 export class Root extends Component {
   componentWillMount() {
     subscribe('FLOW_USER', onUser)
+    subscribe('FLOW_ERR', onErr)
   }
 }

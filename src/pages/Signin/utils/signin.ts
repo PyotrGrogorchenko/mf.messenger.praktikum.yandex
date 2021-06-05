@@ -1,3 +1,4 @@
+import { setUser } from '@store'
 import { Fields } from '@validation'
 import { postSignin } from '@xhr'
 import { DataSignin } from '@xhrTypes'
@@ -9,7 +10,7 @@ export const signin = async (fields: Fields) => {
   })
   const res = await postSignin(<DataSignin>data)
   if (res.status >= 200 && res.status < 300) {
-    // redirect
+    await setUser()
   } else {
     // eslint-disable-next-line no-alert
     alert(`${res.response.reason}`)

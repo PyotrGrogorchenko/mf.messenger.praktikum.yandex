@@ -11,9 +11,9 @@ import {
 } from './chats'
 
 import {
-  DataUser, DataUserSearch,
-  ResUser, ResUserSearch,
-  User
+  DataUser, DataUserSearch, DataUserProfile,
+  ResUser, ResUserSearch, ResUserProfile,
+  User, UserData
 } from './user'
 
 export type Methods = 'GET' | 'POST' | 'PUT' | 'DELETE'
@@ -34,7 +34,7 @@ export {
 }
 
 export {
-  DataUserSearch,
-  ResUserSearch,
-  User
+  DataUserSearch, DataUserProfile,
+  ResUserSearch, ResUserProfile,
+  User, UserData
 }

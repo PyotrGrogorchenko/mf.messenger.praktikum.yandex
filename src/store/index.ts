@@ -1,10 +1,12 @@
 import {
-  initState, setUser, selectUser, selectAuth
+  initState, setUser, selectUser, selectAuth, setErr, selectErr, resetUser
 } from './actions'
-import { subscribe, clearSubscribes } from './state'
+import { subscribe, clearSubscribes, throwError } from './state'
+import { Err } from './types'
 
 export {
-  initState, setUser,
-  selectUser, selectAuth,
-  subscribe, clearSubscribes
+  initState, setUser, setErr, resetUser,
+  selectUser, selectAuth, selectErr,
+  subscribe, clearSubscribes, throwError,
+  Err
 }

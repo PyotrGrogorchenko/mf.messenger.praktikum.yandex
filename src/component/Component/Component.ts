@@ -29,6 +29,7 @@ export class Component {
   }
 
   get rootOut(): HTMLElement | null {return this._rootOut}
+  get root(): HTMLElement | null {return this._root}
 
   get deleteMark() {return this._deleteMark}
   set deleteMark(value) {this._deleteMark = value}

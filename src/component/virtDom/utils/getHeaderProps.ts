@@ -40,7 +40,7 @@ export const getHeaderProps = (context: LooseObject, template: LooseObject, tagN
       if (param[1].startsWith(prefixCache)) {
         nodeProps[arrKeyValue[0]] = cacheTxt[param[1]]
       } else {
-        nodeProps[arrKeyValue[0]] = get(context, param[1], param[1])
+        nodeProps[arrKeyValue[0]] = get(context, param[1], '')
       }
     } else {
       nodeProps[arrKeyValue[0]] = arrKeyValue[1].replace(/['"]/g, '')

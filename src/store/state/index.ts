@@ -1,4 +1,4 @@
 import { State } from './State'
-import { subscribe, clearSubscribes } from './utils'
+import { subscribe, clearSubscribes, throwError } from './utils'
 
-export { State, subscribe, clearSubscribes }
+export { State, subscribe, clearSubscribes, throwError }

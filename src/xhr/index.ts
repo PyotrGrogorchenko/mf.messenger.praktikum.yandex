@@ -1,11 +1,13 @@
 import {
   getUser, postSignup, postLogout, postSignin,
   postChatCreate, getChats, deleteChat, putAddChatUser, postChatToken,
-  postUserSearch
+  postUserSearch, putProfile
 } from './actions'
+
+import { urlBase } from './const'
 
 export {
   getUser, postSignup, postLogout, postSignin,
   postChatCreate, getChats, deleteChat, putAddChatUser, postChatToken,
-  postUserSearch
+  postUserSearch, putProfile, urlBase
 }

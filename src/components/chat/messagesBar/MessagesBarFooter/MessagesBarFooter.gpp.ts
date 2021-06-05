@@ -1,12 +1,36 @@
-import { sendMessage } from '@chatsController'
+import { initSocket, selectSocket, subscribe } from '@chatsController'
 import { Component } from '@Component'
+import { Socket } from '@socket'
+
+let message = ''
+let input: HTMLInputElement
 
 export class MessagesBarFooter extends Component {
+  componentDidMount() {
+    subscribe('FLOW_SOCKET_OPEN', this.onOpen)
+    input = <HTMLInputElement>document.getElementById('send-message_input')
+  }
+
+  onOpen = (socket: Socket) => {
+    if (message) {
+      socket.send(message)
+      input.value = ''
+      message = ''
+    }
+  }
+
   onClick = (e:MouseEvent) => {
     e.preventDefault()
-    const input = <HTMLInputElement>document.getElementById('send-message_input')
-    sendMessage(input.value)
-    input.value = ''
+    message = input.value
+    if (!message) return
+    const socket = selectSocket()
+    if (!socket || !socket.isOpen()) {
+      initSocket()
+    } else {
+      socket.send(message)
+      input.value = ''
+      message = ''
+    }
   }
 
   state = {

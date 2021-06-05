@@ -1,7 +1,7 @@
 import { Component } from '@Component'
 import { validateFields, validateInput } from '@validation'
 import { redirect } from '@router'
-import { selectUser } from '@store'
+import { selectUser, subscribe } from '@store'
 import { User } from '@xhrTypes'
 import { getFields, signin } from './utils'
 
@@ -11,6 +11,16 @@ const signupOnClick = (e:Event) => {
 }
 
 export class Signin extends Component {
+  componentDidMount() {
+    subscribe('FLOW_USER', this.onUser)
+  }
+
+  onUser = (user: User) => {
+    if (user) {
+      redirect('#chat')
+    }
+  }
+
   onBlur = (e: FocusEvent) => {
     e.preventDefault()
     const fields = validateInput(this.state.fields, <HTMLInputElement>e.target)
@@ -22,7 +32,7 @@ export class Signin extends Component {
     const validation = validateFields(this.state.fields)
     this.setState({ fields: validation.fields })
     if (validation.valid) {
-      signin(validation.fields).then(() => redirect('#chat'))
+      signin(validation.fields)
     }
   }
 
@@ -49,7 +59,7 @@ export class Signin extends Component {
             </FormContent>
             <FormFooter>
               <Button text='Sign in' id='button_sign-in' onClick={{state.signinOnClick}}></>
-              <Button text='Sign up' id='button_sign-up' onClick={{state.signupOnClick}} margin={{middle}} style={{secondary}}></>
+              <Button text='Sign up' id='button_sign-up' onClick={{state.signupOnClick}} style='secondary' margin='middle'></>
             </FormFooter>
           </Form>
         </div>

@@ -1,5 +1,6 @@
 import { getUser } from '@xhr'
 import { State } from '../state'
+import { Err } from '../types'
 
 export const setUser = async () => {
   const res = await getUser()
@@ -10,6 +11,14 @@ export const setUser = async () => {
   }
 }
 
+export const resetUser = () => {
+  State.getInstance().user = null
+}
+
 export const initState = async () => {
   await setUser()
+}
+
+export const setErr = (err: Err | null) => {
+  State.getInstance().err = err
 }

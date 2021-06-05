@@ -1,5 +1,7 @@
 import { logout } from './logout'
-import { getUserData } from './getUserData'
 import { getFields } from './getFields'
+import { save } from './save'
 
-export { logout, getUserData, getFields }
+export {
+  logout, getFields, save
+}

@@ -3,6 +3,7 @@ import { postSignup } from '@xhr'
 import { DataSignup } from '@xhrTypes'
 
 export const signup = async (fields: Fields) => {
+  console.log('signup1')
   const data: LooseObject = {}
   Object.keys(fields).forEach(key => {
     data[key] = fields[key].value

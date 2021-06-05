@@ -1,6 +1,6 @@
 export type Classes = {
-  input: string,
-  label: string,
+  input: string
+  label: string
   tip: string
 }
 

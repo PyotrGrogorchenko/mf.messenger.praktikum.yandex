@@ -176,7 +176,7 @@ export class VirtDom {
           const keyIndex = record.content.indexOf('key')
           if (keyIndex > 0) {
             const paramKey = new RegExp(regExpParam).exec(record.content.substring(keyIndex)) as RegExpExecArray
-            key = get(context, paramKey[1], paramKey[1])
+            key = get(context, paramKey[1], '')
             record.content = record.content.replace(new RegExp(paramKey[0], 'g'), key)
           } else {
             record.content += ` key=${key}`

@@ -1,18 +1,20 @@
 import { Component } from '@Component'
-// import { env } from '../../../const/index'
+import { getAvatarSrc, getClasses } from './utils'
 
 export class Avatar extends Component {
+  state = {
+    сlasses: getClasses(this.getProps()),
+    src: getAvatarSrc(this.getProps())
+  }
+
   template() {
     return (
-      `{% if({{props.avatar}} === null ) { %}
-          <div className='avatar-empty'>
-            <i className='c-middle fas fa-camera'></i>  
-          </div>
-        {% } else { %}
-          <div className='avatar'>
-            <img src={{props.avatar}}></img>
-          </div>
-      {% } %}`
+      `<div className={{state.сlasses.avatarEmpty}}>
+        <i className={{state.сlasses.icon}}></i>  
+      </div>
+      <div className={{state.сlasses.avatar}}>
+        <img src={{state.src}}></img>
+      </div>`
     )
   }
 }

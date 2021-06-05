@@ -1,7 +1,6 @@
 import { Signin } from '@pages/Signin'
 import { Signup } from '@pages/Signup'
-import { Error404 } from '@pages/Error404'
-import { Error500 } from '@pages/Error500'
+import { Error } from '@pages/Error'
 import { Profile } from '@pages/Profile'
 import { Chat } from '@pages/Chat'
 import { Home } from '@pages/Home'
@@ -16,8 +15,7 @@ export const start = () => {
     .use('#test', Home)
     .use('#signup', Signup)
     .use('#chat', Chat)
-    .use('#error404', Error404)
-    .use('#error500', Error500)
+    .use('#error', Error)
     .use('#profile', Profile)
     .start()
 }

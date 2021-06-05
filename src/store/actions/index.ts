@@ -1,7 +1,9 @@
-import { setUser, initState } from './setters'
-import { selectUser, selectAuth } from './selectors'
+import {
+  setUser, initState, setErr, resetUser
+} from './setters'
+import { selectUser, selectAuth, selectErr } from './selectors'
 
 export {
-  setUser, initState,
-  selectUser, selectAuth
+  setUser, initState, setErr,
+  selectUser, selectAuth, selectErr, resetUser
 }

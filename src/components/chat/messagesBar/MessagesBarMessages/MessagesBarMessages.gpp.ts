@@ -1,28 +1,28 @@
 import { initSocket, subscribe } from '@chatsController'
 import { Component } from '@Component'
-import { Socket, Message as TypeMessage } from '@socket'
+import { Message as TypeMessage } from '@socket'
 
 export class MessagesBarMessages extends Component {
-  async componentDidMount() {
+  componentDidMount() {
     subscribe('FLOW_CURRENT_ID', this.onCurrentId)
-    subscribe('FLOW_SOCKET', this.onSocket)
+    subscribe('FLOW_SOCKET_MESSAGE', this.onMessage)
     initSocket()
   }
 
-  onSocket = (socket: Socket | null) => {
-    if (socket) {
-      socket.onMessage = this.onMessage
-      socket.onClose = this.onClose
-    }
-  }
+  // onSocket = (socket: Socket | null) => {
+  //   if (socket) {
+  //     socket.onMessage = this.onMessage
+  //     // socket.onClose = this.onClose
+  //   }
+  // }
 
   onCurrentId = () => {
     this.setState({ messages: [] })
     initSocket()
   }
 
-  onMessage = (e: MessageEvent<any>) => {
-    const data = JSON.parse(e.data)
+  onMessage = (dataStr: string) => {
+    const data = JSON.parse(dataStr)
     if (Array.isArray(data)) {
       data.sort((prev, next): number => (new Date(prev.time) > new Date(next.time) ? 1 : -1))
       this.setState({ messages: [...data] })
@@ -31,10 +31,10 @@ export class MessagesBarMessages extends Component {
     }
   }
 
-  onClose = (e: CloseEvent) => {
-    e.preventDefault()
-    initSocket()
-  }
+  // onClose = (e: CloseEvent) => {
+  //   e.preventDefault()
+  //   initSocket()
+  // }
 
   state = {
     messages: <TypeMessage[]>[]

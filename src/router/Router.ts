@@ -22,8 +22,7 @@ class Router {
   }
 
   start() {
-    // На смену роута вызываем перерисовку
-    window.addEventListener('popstate', ((event: any) => {
+    window.addEventListener('hashchange', ((event: any) => {
       this._onRoute(event.currentTarget.location.pathname)
     }))
 

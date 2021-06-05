@@ -41,6 +41,18 @@ export class ChatsController {
   get socket() {return this._socket}
   set socket(value) {
     this._socket = value
-    this._eventBus.emit('FLOW_SOCKET', this._socket)
+    if (this._socket) {
+      this._socket.onMessage = this.onMessage
+      this._socket.onOpen = this.onOpen
+    }
+    // this._eventBus.emit('FLOW_SOCKET', this._socket)
+  }
+
+  onMessage = (e: MessageEvent<any>) => {
+    this._eventBus.emit('FLOW_SOCKET_MESSAGE', e.data)
+  }
+
+  onOpen = () => {
+    this._eventBus.emit('FLOW_SOCKET_OPEN', this._socket)
   }
 }

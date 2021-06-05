@@ -1,4 +1,4 @@
-import { User } from '@store'
+import { User } from '@xhrTypes'
 import { Fields, getField } from '@validation'
 
 const getValue = (name: string, user: User | null): string => {
@@ -9,6 +9,10 @@ const getValue = (name: string, user: User | null): string => {
 
 export const getFields = (user: User | null = null): Fields => {
   const res = {
+    display_name: getField('display_name', {
+      label: 'First name',
+      value: getValue('display_name', user)
+    }),
     first_name: getField('first_name', {
       label: 'First name',
       value: getValue('first_name', user)
@@ -30,14 +34,6 @@ export const getFields = (user: User | null = null): Fields => {
       label: 'Phone',
       type: 'phone',
       value: getValue('phone', user)
-    }),
-    oldPassword: getField('oldPassword', {
-      label: 'Old password',
-      type: 'password'
-    }),
-    newPassword: getField('newPassword', {
-      label: 'New password',
-      type: 'password'
     })
   }
   return res

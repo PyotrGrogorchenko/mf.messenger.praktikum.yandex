@@ -9,7 +9,7 @@ export const calculateValue = (context: LooseObject, code: string): any => {
   let value: any
   const rgValue: RegExpExecArray | null = new RegExp(regExpParam).exec(code)
   if (rgValue) {
-    value = get(context, rgValue[1], rgValue[1])
+    value = get(context, rgValue[1], '')
   } else {
     value = code
   }

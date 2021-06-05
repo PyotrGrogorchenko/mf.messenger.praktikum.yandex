@@ -6,5 +6,6 @@ export const iconsClasses = {
   userAdd: 'fas fa-user-plus',
   userRemove: 'fas fa-user-minus',
   search: 'fas fa-search',
-  paperPlane: 'fas fa-paper-plane'
+  paperPlane: 'fas fa-paper-plane',
+  camera: 'c-middle fas fa-camera'
 }

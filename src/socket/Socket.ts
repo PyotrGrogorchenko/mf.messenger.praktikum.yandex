@@ -63,4 +63,9 @@ export class Socket {
       type
     }))
   }
+
+  isOpen(): boolean {
+    if (!this._socket) return false
+    return this._socket.readyState === 1
+  }
 }
