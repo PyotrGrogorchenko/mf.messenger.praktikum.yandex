@@ -45,7 +45,6 @@ export class ChatsController {
       this._socket.onMessage = this.onMessage
       this._socket.onOpen = this.onOpen
     }
-    // this._eventBus.emit('FLOW_SOCKET', this._socket)
   }
 
   onMessage = (e: MessageEvent<any>) => {

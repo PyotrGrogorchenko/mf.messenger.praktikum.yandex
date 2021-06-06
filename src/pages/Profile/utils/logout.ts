@@ -1,5 +1,5 @@
 import { redirect } from '@router'
-import { resetUser } from '@store'
+import { resetUser, throwError } from '@store'
 import { postLogout } from '@xhr'
 
 export const logout = async () => {
@@ -8,7 +8,7 @@ export const logout = async () => {
     resetUser()
     redirect('#signin')
   } else {
-    // eslint-disable-next-line no-alert
-    alert(`${res.response.reason}`)
+    throwError(res.response.reason, res.status)
+    throw new Error(res.response.reason)
   }
 }

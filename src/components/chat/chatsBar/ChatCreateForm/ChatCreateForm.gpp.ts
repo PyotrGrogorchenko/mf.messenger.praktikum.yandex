@@ -1,5 +1,6 @@
 import { createChat } from '@chatsController'
 import { Component } from '@Component'
+import { Props } from './types'
 
 export class ChatCreateForm extends Component {
   onChatCreate = async (e:Event) => {
@@ -12,12 +13,12 @@ export class ChatCreateForm extends Component {
       return
     }
     createChat(value).then(() => {
-      if (this.getProps().cb) this.getProps().cb()
+      if (this.getProps<Props>().cb) this.getProps<Props>().cb()
     })
   }
 
   onClose = () => {
-    if (this.getProps().cb) this.getProps().cb()
+    if (this.getProps<Props>().cb) this.getProps<Props>().cb()
   }
 
   state = {

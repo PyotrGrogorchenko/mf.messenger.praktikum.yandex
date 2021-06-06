@@ -14,5 +14,6 @@ export const save = async (fields: Fields) => {
     alert('User data is saved')
   } else {
     throwError(res.response.reason, res.status)
+    throw new Error(res.response.reason)
   }
 }

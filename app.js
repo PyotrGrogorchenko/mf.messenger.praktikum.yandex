@@ -10,11 +10,7 @@ app.get('/', (request, res) => {
   res.status(200).sendFile('index.html', { root: path.join(__dirname, './dist') })
 })
 
-// app.use(express.static(path.join(__dirname, 'static')))
-// app.get('/', function (request, res) {
-//     res.status(200).sendFile('indexOld.html', { root: path.join(__dirname, './static') })
-// })
-
 app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
   console.log(`Example app listening on port ${PORT}!`)
 })

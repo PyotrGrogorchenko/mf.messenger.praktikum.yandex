@@ -23,7 +23,7 @@ class Router {
 
   start() {
     window.addEventListener('hashchange', ((event: any) => {
-      this._onRoute(event.currentTarget.location.pathname)
+      this._onRoute(event.currentTarget.location.hash)
     }))
 
     return this
@@ -33,8 +33,8 @@ class Router {
     this._onRoute()
   }
 
-  _onRoute(pathname: Routes = <Routes>window.location.hash || '/') {
-    const Component = this._routes[pathname]
+  _onRoute(pathname: Routes = '/') {
+    const Component = this._routes[pathname || '/']
 
     if (!Component) {
       // eslint-disable-next-line no-console

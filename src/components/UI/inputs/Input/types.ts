@@ -4,8 +4,13 @@ export type Classes = {
   tip: string
 }
 
-export type ClassesProps = {
+export type Props = {
+  label: string
+  type: string
+  id: string
   style: 'main' | 'secondary'
-  valid: boolean
   fontSize: 'big' | 'middle' | 'small'
+  value: string
+  valid: boolean
+  onBlur: (e: FocusEvent) => void
 }

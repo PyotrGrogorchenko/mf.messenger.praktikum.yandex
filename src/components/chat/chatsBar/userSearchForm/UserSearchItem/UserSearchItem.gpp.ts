@@ -1,14 +1,15 @@
 import { Component } from '@Component'
+import { Props } from './types'
 
 export class UserSearchItem extends Component {
   onClick = (e: MouseEvent) => {
     e.preventDefault()
-    if (this.getProps().cb) this.getProps().cb(this.state.id)
+    if (this.getProps<Props>().cb) this.getProps<Props>().cb(this.state.id)
   }
 
   state = {
     onClick: this.onClick,
-    id: this.getProps().id
+    id: this.getProps<Props>().id
   }
 
   template() {

@@ -1,7 +1,7 @@
 export const copyObj = (obj: any): any => {
   const res: any = {}
 
-  for (const key in obj) {
+  Object.keys(obj).forEach(key => {
     if (typeof obj[key] === 'function') {
       res[key] = obj[key]
     } else if (Array.isArray(obj[key])) {
@@ -12,7 +12,7 @@ export const copyObj = (obj: any): any => {
     } else {
       res[key] = obj[key]
     }
-  }
+  })
 
   return res
 }

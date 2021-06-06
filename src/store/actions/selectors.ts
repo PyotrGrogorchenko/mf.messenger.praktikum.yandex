@@ -12,7 +12,7 @@ export const selectAuth = (): boolean => {
   return !!state.user
 }
 
-export const selectErr = (): Err => {
+export const selectErr = (): Err | null => {
   const state = State.getInstance()
   return state.err
 }

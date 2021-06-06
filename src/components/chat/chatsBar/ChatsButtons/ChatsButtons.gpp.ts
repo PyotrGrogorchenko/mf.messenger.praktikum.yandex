@@ -7,7 +7,7 @@ export class ChatsButtons extends Component {
     this.setState({ chatCreateShow: true })
   }
 
-  chatCreateCb = () => {
+  onChatCreate = () => {
     this.setState({ chatCreateShow: false })
   }
 
@@ -26,16 +26,16 @@ export class ChatsButtons extends Component {
     this.setState({ userAddShow: true })
   }
 
-  userAddCb = () => {
+  onUserAdd = () => {
     this.setState({ userAddShow: false })
   }
 
   state = {
     chatCreateClick: this.chatCreateClick,
-    chatCreateCb: this.chatCreateCb,
+    onChatCreate: this.onChatCreate,
     chatDeleteClick: this.chatDeleteClick,
     userAddClick: this.userAddClick,
-    userAddCb: this.userAddCb,
+    onUserAdd: this.onUserAdd,
     chatCreateShow: false,
     userAddShow: false
   }
@@ -73,10 +73,10 @@ export class ChatsButtons extends Component {
         </div>
         
         {% if({{state.chatCreateShow}}) { %}
-          <ChatCreateForm cb={{state.chatCreateCb}}></>
+          <ChatCreateForm cb={{state.onChatCreate}}></>
         {% } %}
         {% if({{state.userAddShow}}) { %}
-          <UserSearchForm cb={{state.userAddCb}}></>
+          <UserSearchForm cb={{state.onUserAdd}}></>
         {% } %}`
     )
   }

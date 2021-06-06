@@ -1,10 +1,10 @@
 import { Component } from '@Component'
+import { Props } from './types'
 
 export class ModalWindow extends Component {
   onClose = ((e:MouseEvent) => {
     e.preventDefault()
-    const props = this.getProps()
-    if (props.cb) props.cb()
+    if (this.getProps<Props>().cb) this.getProps<Props>().cb()
   })
 
   onClick = ((e:MouseEvent) => {

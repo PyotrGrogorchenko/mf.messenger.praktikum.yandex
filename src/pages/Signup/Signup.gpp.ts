@@ -17,7 +17,7 @@ export class Signup extends Component {
 
   onUser = (user: User) => {
     if (user) {
-      redirect('#chat')
+      this.setState({ fields: getFields(user) })
     }
   }
 
@@ -33,6 +33,7 @@ export class Signup extends Component {
     this.setState({ fields: validation.fields })
     if (validation.valid) {
       signup(validation.fields)
+        .then(() => redirect('#chat'))
     }
   }
 

@@ -28,20 +28,20 @@ export class Socket {
         type: 'get old'
       }))
       // eslint-disable-next-line no-console
-      console.log('Соединение установлено')
+      console.log('Connection established')
       if (this.onOpen) this.onOpen(e)
     })
 
     this._socket?.addEventListener('close', (e) => {
       if (e.wasClean) {
         // eslint-disable-next-line no-console
-        console.log('Соединение закрыто чисто')
+        console.log('Connection closed cleanly')
       } else {
         // eslint-disable-next-line no-console
-        console.log('Обрыв соединения')
+        console.log('Connection failure')
       }
       // eslint-disable-next-line no-console
-      console.log(`Код: ${e.code} | Причина: ${e.reason}`)
+      console.log(`Code: ${e.code} | Reason: ${e.reason}`)
 
       if (this.onClose) this.onClose(e)
     })
@@ -52,7 +52,7 @@ export class Socket {
 
     this._socket?.addEventListener('error', (e) => {
       // eslint-disable-next-line no-console
-      console.log('Ошибка', e)
+      console.log('Error', e)
       if (this.onError) this.onError(e)
     })
   }

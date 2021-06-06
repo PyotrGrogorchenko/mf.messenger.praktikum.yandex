@@ -1,4 +1,5 @@
 import { selectCerrentId } from '@chatsController'
+import { throwError } from '@store'
 import { putAddChatUser } from '@xhr'
 
 export const addUsers = async (userId: number) => {
@@ -6,7 +7,10 @@ export const addUsers = async (userId: number) => {
     chatId: selectCerrentId(),
     users: [userId]
   })
-  if (res.status !== 200) throw Error('Request failed')
+  if (res.status !== 200) {
+    throwError(res.response.reason, res.status)
+    throw Error(res.response.reason)
+  }
   // eslint-disable-next-line no-alert
   alert('User added')
 }

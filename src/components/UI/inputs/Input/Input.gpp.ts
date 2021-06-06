@@ -1,9 +1,10 @@
 import { Component } from '@Component'
-import { Field, getTip } from '@validation'
+import { getTip, FieldTypes } from '@validation'
 import { getClasses } from './utils'
+import { Props } from './types'
 
 export class Input extends Component {
-  componentDidUpdate(props: Field) {
+  componentDidUpdate(props: Props) {
     if (props.valid === this.state.valid) return
     this.setState({
       сlasses: getClasses(props),
@@ -12,16 +13,14 @@ export class Input extends Component {
   }
 
   onBlur = (e: FocusEvent) => {
-    if (this.getProps().onBlur) {
-      this.getProps().onBlur(e)
-    }
+    if (this.getProps<Props>().onBlur) this.getProps<Props>().onBlur(e)
   }
 
   state = {
     сlasses: getClasses(this.getProps()),
     onBlur: this.onBlur,
-    valid: this.getProps().valid,
-    tip: getTip(this.getProps().type)
+    valid: this.getProps<Props>().valid,
+    tip: getTip(this.getProps<Props>().type as FieldTypes)
   }
 
   template() {

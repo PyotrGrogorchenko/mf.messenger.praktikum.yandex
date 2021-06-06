@@ -5,11 +5,3 @@
   color: var(--color-darkest);
   overflow:  hidden;
 } 
-
-.page{
-  display: flex;
-}
-
-.hide {
-  display: none !important;
-}

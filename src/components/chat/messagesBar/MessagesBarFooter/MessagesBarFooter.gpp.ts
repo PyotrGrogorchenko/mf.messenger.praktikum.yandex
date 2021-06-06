@@ -53,10 +53,9 @@ export class MessagesBarFooter extends Component {
               id='send-message_button'
               onClick={{state.onClick}}
               icon='paperPlane'
-          ></div>
+            ></Button>
+          </div>
         </div>
-      </div>
-      
       </div>`
     )
   }

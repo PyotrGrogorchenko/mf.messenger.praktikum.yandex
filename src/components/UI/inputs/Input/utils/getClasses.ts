@@ -1,8 +1,6 @@
-import { Classes, ClassesProps } from '../types'
+import { Classes, Props } from '../types'
 
-// font-size_small
-
-export const getClasses = (props: ClassesProps): Classes => {
+export const getClasses = (props: Props): Classes => {
   const {
     style, fontSize
   } = props
@@ -11,7 +9,7 @@ export const getClasses = (props: ClassesProps): Classes => {
 
   const input = ['input-main__input']
   input.push(`font-size_${fontSize || 'small'}`)
-  input.push(`input-${style || 'main'}_background`)
+  input.push(`input-${style || 'main'}`)
   if (!valid) {
     input.push('input-err_border')
   } else {

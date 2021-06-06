@@ -4,7 +4,7 @@ import { Err, subscribe } from '@store'
 import { User } from '@xhrTypes'
 
 const onUser = (user: User) => {
-  if (!user && isPrivateRoute()) {
+  if (isPrivateRoute() && !user) {
     redirect('#signin')
   }
 }

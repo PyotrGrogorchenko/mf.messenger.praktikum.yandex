@@ -1,6 +1,7 @@
 import { selectCerrentId, setCerrentId, subscribe } from '@chatsController'
 import { Component } from '@Component'
 import { getClasses } from './utils'
+import { Props } from './types'
 
 export class ChatItem extends Component {
   componentDidMount() {
@@ -18,7 +19,7 @@ export class ChatItem extends Component {
   }
 
   state = {
-    id: Number(this.getProps().key),
+    id: Number(this.getProps<Props>().key),
     onClick: this.onClick,
     classes: getClasses()
   }

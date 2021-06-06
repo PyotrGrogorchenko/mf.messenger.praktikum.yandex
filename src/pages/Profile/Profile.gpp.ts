@@ -74,8 +74,6 @@ export class Profile extends Component {
               <InputField field={{state.fields.login}}          onBlur={{state.onBlur}}></>
               <InputField field={{state.fields.email}}          onBlur={{state.onBlur}}></>
               <InputField field={{state.fields.phone}}          onBlur={{state.onBlur}}></>
-              // <InputField field={{state.fields.oldPassword}}    onBlur={{state.onBlur}}></>
-              // <InputField field={{state.fields.newPassword}}    onBlur={{state.onBlur}}></>
             </FormContent>
             <FormFooter>
               <Button text='Save' id='button_save' onClick={{state.saveOnClick}}></>

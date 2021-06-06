@@ -1,14 +1,9 @@
-export const queryStringify = (data: Indexed): string => {
-  if (!data) {
-    return ''
-  }
-
+export const queryStringify = (data: LooseObject): string => {
+  if (!data) return ''
   let res: string = ''
-  for (const [key, value] of Object.entries(data)) {
-    res += `&${key}=${value}`
-  }
-  if (res) {
-    res = `?${res.substr(1)}`
-  }
+  Object.keys(data).forEach(key => {
+    res += `&${key}=${data[key]}`
+  })
+  if (res) res = `?${res.substr(1)}`
   return res
 }

@@ -9,13 +9,6 @@ export class MessagesBarMessages extends Component {
     initSocket()
   }
 
-  // onSocket = (socket: Socket | null) => {
-  //   if (socket) {
-  //     socket.onMessage = this.onMessage
-  //     // socket.onClose = this.onClose
-  //   }
-  // }
-
   onCurrentId = () => {
     this.setState({ messages: [] })
     initSocket()
@@ -30,11 +23,6 @@ export class MessagesBarMessages extends Component {
       this.setState({ messages: [...this.state.messages, ...[data]] })
     }
   }
-
-  // onClose = (e: CloseEvent) => {
-  //   e.preventDefault()
-  //   initSocket()
-  // }
 
   state = {
     messages: <TypeMessage[]>[]

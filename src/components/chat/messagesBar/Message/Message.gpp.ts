@@ -21,7 +21,7 @@ export class Message extends Component {
             {{props.message.content}} 
           </div>
         </div>
-        {% } %} `
+        {% } %}`
     )
   }
 }

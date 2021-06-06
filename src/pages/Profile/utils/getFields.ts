@@ -10,7 +10,7 @@ const getValue = (name: string, user: User | null): string => {
 export const getFields = (user: User | null = null): Fields => {
   const res = {
     display_name: getField('display_name', {
-      label: 'First name',
+      label: 'Display name',
       value: getValue('display_name', user)
     }),
     first_name: getField('first_name', {

@@ -1,10 +1,11 @@
 import { Component } from '@Component'
 import { addUsers, searchUsers } from './utils'
+import { Props } from './types'
 
 export class UserSearchForm extends Component {
   onClose = (e: Event | null = null) => {
     if (e) e.preventDefault()
-    if (this.getProps().cb) this.getProps().cb()
+    if (this.getProps<Props>().cb) this.getProps<Props>().cb()
   }
   onClick = (e: Event) => {
     e.preventDefault()
