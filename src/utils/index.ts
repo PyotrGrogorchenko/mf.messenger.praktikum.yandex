@@ -7,7 +7,9 @@ import { copyObj } from './copyObj'
 import { readForm } from './readForm'
 import { fillForm } from './fillForm'
 import { formatDate } from './formatDate'
+import { consoleDebug } from './consoleDebug'
 
 export {
-  get, isEqual, startsWithUpper, regexpMatchAll, queryStringify, copyObj, readForm, fillForm, formatDate
+  get, isEqual, startsWithUpper, regexpMatchAll, queryStringify,
+  copyObj, readForm, fillForm, formatDate, consoleDebug
 }

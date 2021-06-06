@@ -1,5 +1,6 @@
 import { selectCerrentId } from '@chatsController'
 import { selectUser } from '@store'
+import { consoleDebug } from '@utils'
 
 export class Socket {
   private _socket: WebSocket | null = null
@@ -13,8 +14,7 @@ export class Socket {
     const userId = selectUser()?.id
     const chatId = selectCerrentId()
     if (!userId || !chatId) {
-      // eslint-disable-next-line no-console
-      console.error('WebSocket is undefined')
+      consoleDebug('WebSocket is undefined')
       return
     }
     this._socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`)
@@ -27,22 +27,17 @@ export class Socket {
         content: '0',
         type: 'get old'
       }))
-      // eslint-disable-next-line no-console
-      console.log('Connection established')
+      consoleDebug('Connection established')
       if (this.onOpen) this.onOpen(e)
     })
 
     this._socket?.addEventListener('close', (e) => {
       if (e.wasClean) {
-        // eslint-disable-next-line no-console
-        console.log('Connection closed cleanly')
+        consoleDebug('Connection closed cleanly')
       } else {
-        // eslint-disable-next-line no-console
-        console.log('Connection failure')
+        consoleDebug('Connection failure')
       }
-      // eslint-disable-next-line no-console
-      console.log(`Code: ${e.code} | Reason: ${e.reason}`)
-
+      consoleDebug(`Code: ${e.code} | Reason: ${e.reason}`)
       if (this.onClose) this.onClose(e)
     })
 
@@ -51,8 +46,7 @@ export class Socket {
     })
 
     this._socket?.addEventListener('error', (e) => {
-      // eslint-disable-next-line no-console
-      console.log('Error', e)
+      consoleDebug('Error', e)
       if (this.onError) this.onError(e)
     })
   }

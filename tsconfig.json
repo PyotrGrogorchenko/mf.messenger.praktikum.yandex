@@ -34,7 +34,6 @@
       "@validation": ["src/validation/index"],
       "@store": ["src/store/index"],
       "@router": ["src/router/index"],
-      "@HOCs": ["src/HOCs/index"],
       "@chatsController": ["src/chatsController/utils/index"],
       "@eventsBus": ["src/eventsBus/index"],
       "@icons": ["src/icons/index"],
