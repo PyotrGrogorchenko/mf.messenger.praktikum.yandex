@@ -1,5 +1,5 @@
+import { Component } from 'gpp-templator'
 import { initSocket, subscribe } from '@chatsController'
-import { Component } from '@Component'
 import { Message as TypeMessage } from '@socket'
 
 export class MessagesBarMessages extends Component {

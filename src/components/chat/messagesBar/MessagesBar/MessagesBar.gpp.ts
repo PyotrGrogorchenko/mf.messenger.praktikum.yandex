@@ -1,5 +1,5 @@
+import { Component } from 'gpp-templator'
 import { subscribe } from '@chatsController'
-import { Component } from '@Component'
 
 export class MessagesBar extends Component {
   componentDidMount() {

@@ -1,4 +1,4 @@
-import { Component } from '@Component'
+import { Component } from 'gpp-templator'
 
 export class InputField extends Component {
   template() {

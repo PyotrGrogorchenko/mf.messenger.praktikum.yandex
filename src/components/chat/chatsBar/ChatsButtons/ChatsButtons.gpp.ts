@@ -1,4 +1,4 @@
-import { Component } from '@Component'
+import { Component } from 'gpp-templator'
 import { deleteChat, selectCerrentId } from '@chatsController'
 
 export class ChatsButtons extends Component {

@@ -1,4 +1,4 @@
-import { Component } from '@Component'
+import { Component } from 'gpp-templator'
 import { redirect } from '@router'
 
 const profileOnClick = (e:Event) => {

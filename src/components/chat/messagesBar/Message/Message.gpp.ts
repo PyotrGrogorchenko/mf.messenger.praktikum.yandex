@@ -1,4 +1,4 @@
-import { Component } from '@Component'
+import { Component } from 'gpp-templator'
 import { formatDate } from '@utils'
 import { Props } from './types'
 import { getClasses, show } from './utils'

@@ -1,4 +1,4 @@
-import { Component } from '@Component'
+import { Component } from 'gpp-templator'
 import { Chat } from '@xhrTypes'
 import { getChats, subscribe } from '@chatsController'
 

@@ -1,5 +1,5 @@
+import { Component } from 'gpp-templator'
 import { initSocket, selectSocket, subscribe } from '@chatsController'
-import { Component } from '@Component'
 import { Socket } from '@socket'
 
 let message = ''

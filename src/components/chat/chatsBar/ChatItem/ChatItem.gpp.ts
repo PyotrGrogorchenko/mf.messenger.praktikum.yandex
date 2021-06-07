@@ -1,5 +1,5 @@
 import { selectCerrentId, setCerrentId, subscribe } from '@chatsController'
-import { Component } from '@Component'
+import { Component } from 'gpp-templator'
 import { getClasses } from './utils'
 import { Props } from './types'
 

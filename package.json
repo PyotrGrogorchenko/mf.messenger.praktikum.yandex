@@ -1,7 +1,7 @@
 {
   "name": "mf.messenger.praktikum.yandex",
-  "version": "1.0.0",
-  "description": "[![Deploy](https://img.shields.io/badge/Deploy-passing-green)](https://cranky-mcnulty-59af15.netlify.app/) [![Fligma](https://img.shields.io/badge/Fligma-v1-yellow)](https://www.figma.com/file/G8Nrm7vN2ijZqRR2zBlyUc/messanger?node-id=0%3A1)",
+  "version": "5.1.1",
+  "description": "Individual training project from Yandex.praktikum",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -33,10 +33,12 @@
     "dotenv": "^8.2.0",
     "express-async-errors": "^3.1.1",
     "express-jwt": "^6.0.0",
+    "gpp-templator": "^1.0.7",
     "loglevel": "^1.7.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "pug": "^3.0.0",
+    "remove": "^0.1.5",
     "serve-favicon": "^2.5.0",
     "strip-ansi": "^6.0.0"
   },
@@ -79,6 +81,7 @@
     "faker": "^5.1.0",
     "file-loader": "^6.2.0",
     "filehound": "^1.17.4",
+    "gpp-loader": "^1.0.8",
     "html-webpack-plugin": "^5.3.1",
     "husky": "^4.3.8",
     "jest": "^26.6.3",

@@ -1,4 +1,4 @@
-import { Component } from '@Component'
+import { Component } from 'gpp-templator'
 import { getAvatarSrc, getClasses } from './utils'
 
 export class Avatar extends Component {

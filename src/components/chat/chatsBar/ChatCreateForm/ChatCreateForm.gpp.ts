@@ -1,5 +1,5 @@
 import { createChat } from '@chatsController'
-import { Component } from '@Component'
+import { Component } from 'gpp-templator'
 import { Props } from './types'
 
 export class ChatCreateForm extends Component {

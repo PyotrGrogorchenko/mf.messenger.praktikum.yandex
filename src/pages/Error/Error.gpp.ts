@@ -1,4 +1,4 @@
-import { Component } from '@Component'
+import { Component } from 'gpp-templator'
 import { goBack } from '@router'
 import { getData } from './utils'
 

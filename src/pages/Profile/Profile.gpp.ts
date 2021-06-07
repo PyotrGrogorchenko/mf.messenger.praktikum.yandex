@@ -1,7 +1,8 @@
-import { Component } from '@Component'
+import { Component } from 'gpp-templator'
 import { selectUser, subscribe } from '@store'
 import { validateFields, validateInput } from '@validation'
 import { User } from '@xhrTypes'
+import { redirect } from '@router'
 import { getFields, logout, save } from './utils'
 
 export class Profile extends Component {
@@ -50,6 +51,7 @@ export class Profile extends Component {
   logoutOnClick = (e:Event) => {
     e.preventDefault()
     logout()
+      .then(() => redirect('#signin'))
   }
 
   state = {

@@ -1,5 +1,5 @@
+import { Component } from 'gpp-templator'
 import { selectCerrentChat, selectCerrentId, subscribe } from '@chatsController'
-import { Component } from '@Component'
 
 export class MessagesBarHeader extends Component {
   componentDidMount() {

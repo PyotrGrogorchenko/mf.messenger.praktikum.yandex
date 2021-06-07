@@ -1,4 +1,4 @@
-import { Component } from '@Component'
+import { Component } from 'gpp-templator'
 import { Props } from './types'
 
 export class ModalWindow extends Component {

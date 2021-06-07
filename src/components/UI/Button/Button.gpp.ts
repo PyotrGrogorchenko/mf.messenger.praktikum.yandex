@@ -1,4 +1,4 @@
-import { Component } from '@Component'
+import { Component } from 'gpp-templator'
 import { getClasses } from './utils'
 
 export class Button extends Component {

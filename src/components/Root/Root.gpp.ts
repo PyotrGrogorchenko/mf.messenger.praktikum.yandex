@@ -1,6 +1,6 @@
-import { Component } from '@Component'
+import { Component } from 'gpp-templator'
 import { isPrivateRoute, redirect } from '@router'
-import { Err, subscribe } from '@store'
+import { Err, selectAuth, subscribe } from '@store'
 import { User } from '@xhrTypes'
 
 const onUser = (user: User) => {
@@ -19,5 +19,8 @@ export class Root extends Component {
   componentWillMount() {
     subscribe('FLOW_USER', onUser)
     subscribe('FLOW_ERR', onErr)
+    if (isPrivateRoute() && !selectAuth()) {
+      redirect('#signin')
+    }
   }
 }

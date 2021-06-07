@@ -33,8 +33,9 @@ export const config: Configuration = {
   devtool: 'source-map',
   resolveLoader: {
     modules: [
-      'node_modules',
-      path.resolve(__dirname, 'loaders')]
+      'node_modules'
+      // path.resolve(__dirname, 'loaders')
+    ]
   },
   module: {
     rules: [

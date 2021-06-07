@@ -1,4 +1,4 @@
-import { Component } from '@Component'
+import { Component } from 'gpp-templator'
 import { addUsers, searchUsers } from './utils'
 import { Props } from './types'
 

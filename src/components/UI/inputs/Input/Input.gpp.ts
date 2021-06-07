@@ -1,4 +1,4 @@
-import { Component } from '@Component'
+import { Component } from 'gpp-templator'
 import { getTip, FieldTypes } from '@validation'
 import { getClasses } from './utils'
 import { Props } from './types'

@@ -1,4 +1,5 @@
-import { renderApp } from '@Component'
+import { throwError } from '@store'
+import { renderApp } from 'gpp-templator'
 import { Routes } from './types'
 
 class Router {
@@ -33,12 +34,12 @@ class Router {
     this._onRoute()
   }
 
-  _onRoute(pathname: Routes = '/') {
-    const Component = this._routes[pathname || '/']
+  _onRoute(pathname: Routes | null = null) {
+    const route = pathname === null ? window.location.hash || '/' : pathname || '/'
+    const Component = this._routes[route]
 
     if (!Component) {
-      // eslint-disable-next-line no-console
-      console.error(`Route not found:${pathname}`)
+      throwError(`Route not found:${route}`, 404)
       return
     }
 

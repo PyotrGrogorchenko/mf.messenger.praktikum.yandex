@@ -1,4 +1,4 @@
-import { Component } from '@Component'
+import { Component } from 'gpp-templator'
 
 export class ChatsBar extends Component {
   template() {

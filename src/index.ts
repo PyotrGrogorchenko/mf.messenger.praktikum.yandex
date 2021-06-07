@@ -1,7 +1,13 @@
 import './css/index.css'
-import { initState } from '@store'
+import { initState, throwError } from '@store'
 import { start, render } from './router'
 
 initState()
-start()
-render()
+  .then(
+    () => {
+      start()
+      render()
+    }
+  ).catch(() => {
+    throwError('Something went wrong', 500)
+  })

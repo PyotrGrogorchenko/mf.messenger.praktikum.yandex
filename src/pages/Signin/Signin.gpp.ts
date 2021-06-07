@@ -1,4 +1,4 @@
-import { Component } from '@Component'
+import { Component } from 'gpp-templator'
 import { validateFields, validateInput } from '@validation'
 import { redirect } from '@router'
 import { selectUser, subscribe } from '@store'
