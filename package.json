@@ -1,7 +1,7 @@
 {
   "name": "mf.messenger.praktikum.yandex",
   "version": "5.1.1",
-  "description": "Individual training project from Yandex.praktikum",
+  "description": "Individual training project from Yandex.praktikum: middle frontend developer",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -15,12 +15,10 @@
   "homepage": "https://github.com/PyotrGrogorchenko/mf.messenger.praktikum.yandex#readme",
   "scripts": {
     "dev": "webpack serve --mode=development --progress",
-    "prod": "npm run build && npm run webpack:prod",
+    "prod": "cross-env NODE_ENV=production npx webpack --mode=production",
     "start": "node app.js",
     "test": "jest",
     "test:single": "jest -t 'Component'",
-    "webpack:dev": "webpack --mode development",
-    "webpack:prod": "cross-env NODE_ENV=production npx webpack --mode=production --config webpack/webpack.config.prod.js",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix"
   },
