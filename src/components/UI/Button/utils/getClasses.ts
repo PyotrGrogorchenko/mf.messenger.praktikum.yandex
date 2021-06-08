@@ -1,7 +1,7 @@
-import { getIconClass } from '@icons'
-import { Classes } from '../types'
+import { getIconClass, IconTypes } from '@icons'
+import { Classes, Props } from '../types'
 
-export const getClasses = (props: any): Classes => {
+export const getClasses = (props: Props): Classes => {
   const {
     style, margin, align, icon
   } = props
@@ -19,7 +19,7 @@ export const getClasses = (props: any): Classes => {
   const iconEnd = ['']
   const iconStart = ['']
 
-  const iconClass = getIconClass(icon)
+  const iconClass = getIconClass(<IconTypes>icon)
   if (icon && iconClass) {
     if (align === 'end') {
       iconEnd.push(iconClass)

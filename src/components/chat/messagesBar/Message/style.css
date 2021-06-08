@@ -16,15 +16,16 @@
   width: 60%;
   margin: 3px 10px 10px 10px;
   padding: 10px;
-  background-color: var(--color-lightest);
 }
 
 .message-content_out {
   border-radius: 20px 20px 0 20px;
+  background-color: #6fcf977e;
 }
 
 .message-content_in {
-  border-radius: 20px 20px 20px 0;
+  border-radius: 0 20px 20px 20px;
+  background-color: #f2c84c7c;
 }
 
 .message-date {

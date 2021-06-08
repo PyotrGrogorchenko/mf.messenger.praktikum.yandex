@@ -9,7 +9,6 @@ export class Button extends Component {
   template() {
     return (
       `<button 
-        // type='submit'
         className={{state.сlasses.button}}
         id={{props.id}}
         onClick={{props.onClick}}
