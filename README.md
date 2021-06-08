@@ -13,7 +13,7 @@ $ npm install
 // development
 $ npm run dev
 // production
-$ npm run start
+$ npm run prod
 $ npm run start
 
 ```
