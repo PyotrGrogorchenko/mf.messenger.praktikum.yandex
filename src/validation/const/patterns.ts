@@ -2,23 +2,23 @@ import { Patterns } from '../types'
 
 export const patterns: Patterns = {
   text: {
-    pattern: /.{1,100}/gm,
+    pattern: /^.{1,100}$/gm,
     tip: 'length 1-100'
   },
   name: {
-    pattern: /.{1,100}/gm,
+    pattern: /^.{1,100}$/gm,
     tip: 'length 1-100'
   },
   login: {
-    pattern: /.{1,100}/gm,
-    tip: 'length 1-100'
+    pattern: /^(?=.*[a-z0-9_-]$)[a-z0-9][a-z0-9-_]{3,25}$/gm,
+    tip: 'length 4-25, a-z, 0-9, _, -'
   },
   phone: {
     pattern: /^((8|\+7)[- ]?)?(\(?\d{3}\)?[- ]?)?[\d\- ]{7,10}$/im,
     tip: '+79261234567, 89261234567, 79261234567'
   },
   password: {
-    pattern: /.{1,100}/gm,
+    pattern: /^.{1,100}$/gm,
     tip: 'length 1-100'
   },
   email: {
