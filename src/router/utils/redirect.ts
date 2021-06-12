@@ -1,10 +1,10 @@
-import { reset } from '@chatsController'
-import { clearSubscribes } from '@store'
+import { reset as resetChats } from '@chatsController'
+import { reset as resetStore } from '@store'
 import { Router } from '../Router'
 import { Routes } from '../types'
 
 export const redirect = (route: Routes) => {
-  clearSubscribes()
-  reset()
+  resetStore()
+  resetChats()
   Router.getInstance().go(route)
 }

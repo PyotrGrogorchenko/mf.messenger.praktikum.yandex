@@ -1,6 +1,8 @@
 import { State } from './State'
-import { subscribe, clearSubscribes, throwError } from './utils'
+import {
+  subscribe, clearSubscribes, throwError, reset
+} from './utils'
 
 export {
-  State, subscribe, clearSubscribes, throwError
+  State, subscribe, clearSubscribes, throwError, reset
 }

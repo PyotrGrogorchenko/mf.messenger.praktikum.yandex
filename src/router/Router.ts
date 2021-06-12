@@ -1,5 +1,6 @@
 import { throwError } from '@store'
-import { renderApp } from 'gpp-templator'
+import { consoleDebug } from '@utils'
+import { renderPage } from './utils'
 import { Routes } from './types'
 
 class Router {
@@ -30,7 +31,7 @@ class Router {
     return this
   }
 
-  renderPage() {
+  render() {
     this._onRoute()
   }
 
@@ -43,7 +44,9 @@ class Router {
       return
     }
 
-    renderApp(Component)
+    consoleDebug('_onRoute:', route)
+
+    renderPage(Component)
   }
 
   go(pathname: Routes) {
