@@ -1,6 +1,6 @@
 # [Messanger](https://ya-mf-messanger.herokuapp.com/)&middot; [![Deploy](https://img.shields.io/badge/deploy-v5.1.1-success)](https://ya-mf-messanger.herokuapp.com/) [![gpp-templator](https://img.shields.io/badge/gpp--templator-v1.x-success)](https://www.npmjs.com/package/gpp-templator) [![gpp-loader](https://img.shields.io/badge/gpp--loader-v1.x-success)](https://www.npmjs.com/package/gpp-loader) [![Fligma](https://img.shields.io/badge/fligma-v1.0-success)](https://www.figma.com/file/G8Nrm7vN2ijZqRR2zBlyUc/messanger?node-id=0%3A1) 
 
-![JavaScript](https://img.shields.io/badge/-JavaScript-090909?style=for-the-badge&logo=JavaScript&logoColor=#0000)
+![JavaScript](https://img.shields.io/badge/-JavaScript-0000?style=for-the-badge&logo=JavaScript&logoColor=#0000)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-090909?style=for-the-badge&logo=TypeScript&logoColor=E9D54D)
 
 ## Description
