@@ -11,6 +11,10 @@ Individual training project from Yandex.praktikum: middle frontend developer.
 
 * **Result:** During development, the Сomponent class was implemented, from which the application components are inherited. The Class and its auxiliary objects were separated into a separate subsystem and published as [gpp-templator](https://www.npmjs.com/package/gpp-templator). In gpp-components, you must import and export the Components used in the template. It is inconvenient to do this manually and clutters up the code. To automate this, [gpp-loader](https://www.npmjs.com/package/gpp-loader) for [webpack](https://github.com/webpack/webpack) is implemented.
 
+## Project phase
+
+The project is completed, only bugs fix.
+
 ## Install
 
 > node 14.x
