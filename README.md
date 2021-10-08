@@ -25,4 +25,4 @@ $ npm run start
 ```
 ## Credits
 
-* [PyotrGrogorchenko](https://github.com/PyotrGrogorchenko) - Developer
+* [PyotrGrigorchenko](https://github.com/PyotrGrogorchenko) - Developer
